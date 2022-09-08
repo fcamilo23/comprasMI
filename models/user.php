@@ -10,7 +10,7 @@ class UserModel extends Model{
 			$password = md5($post['password']);
 			require './assets/utils/mail.php';
 			
-			if($post['cedula'] == '' || $post['email'] == '' || $post['password'] == '' || $post['telefono'] == ''){
+			if($post['cedula'] == '' || $post['email'] == '' || $post['password'] == ''){
 				Messages::setMsg('Please Fill In All Fields', 'error');
 				return;
 			}
@@ -27,15 +27,12 @@ class UserModel extends Model{
 				$codigo = strval(rand(1111, 1000000));
 				$habilitado = 0;
 				// Insert into MySQL
-				$this->query('INSERT INTO usuarios(cedula, email, telefono, nombre, apellido, imagen, habilitado, biografia, password, codigo) VALUES(:cedula, :email, :telefono, :nombre, :apellido, :imagen, :habilitado, :biografia, :password, :codigo)');
+				$this->query('INSERT INTO usuarios(cedula, email, nombre, apellido, habilitado, password, codigo) VALUES(:cedula, :email, :nombre, :apellido, :habilitado, :password, :codigo)');
 				$this->bind(':cedula', $post['cedula']);
 				$this->bind(':email', $post['email']);
-				$this->bind(':telefono', $post['telefono']);
 				$this->bind(':nombre', $post['nombre']);
 				$this->bind(':apellido', $post['apellido']);
-				$this->bind(':imagen', $post['imagen']);
 				$this->bind(':habilitado', $habilitado);
-				$this->bind(':biografia', $post['biografia']);
 				$this->bind(':password', $password);
 				$this->bind(':codigo', $codigo);
 				$this->execute();
@@ -43,12 +40,7 @@ class UserModel extends Model{
 				echo sendEmail($post['email'], $codigo);
 
 
-				$this->query('INSERT INTO referencias(invitado, referido, estado) VALUES(:invitado, :referido, :estado)');
-				$this->bind(':invitado',  $post['cedula']);
-				$this->bind(':referido', $post['personaReferida']);
-				$this->bind(':estado', 'activo');
-				$this->execute();
-
+				
 				header('Location: '.ROOT_URL.'users/verifyEmail');
 			}
 		}

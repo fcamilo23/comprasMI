@@ -4,7 +4,7 @@
 define("DB_HOST", "localhost");
 define("DB_USER", "root");
 define("DB_PASS", "");
-define("DB_NAME", "laboratorio");
+define("DB_NAME", "minterior");
 
 // Define URL
 define("ROOT_PATH", "/comprasMI/");

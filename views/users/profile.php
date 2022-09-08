@@ -1,6 +1,6 @@
 <div class="row col-12" style="height: 850px; margin-top: 50px; background: #e9e9e9;">
-    <div class="col-lg-6 ooo" style="" >
-    <a href="<?php echo ROOT_URL; ?>comprar/pedidosUser"><div class="opciones"><img class="icons" src="<?php echo ROOT_PATH; ?>imagenes/usuarios.png" alt=""><label class="etiqueta firstIcon" for="">Gestión de Usuarios</label> </div></a><br> <br>
+    <div class="col-lg-6" style="margin-top: 0px;" >
+    <a href="<?php echo ROOT_URL; ?>comprar/pedidosUser"><div class="opciones"><img class="icons" src="<?php echo ROOT_PATH; ?>imagenes/usuarios.png" alt=""><label class="etiqueta" for="">Gestión de Usuarios</label> </div></a><br> <br>
     <a href="<?php echo ROOT_URL; ?>comprar/pedidosUser"><div class="opciones"><img class="icons" src="<?php echo ROOT_PATH; ?>imagenes/proveedores.png" alt=""><label class="etiqueta" for="">Gestión de Proveedores</label></div></a> <br> <br>
         
         <!--
@@ -19,7 +19,7 @@
 
     </div>
     
-    <div class="col-lg-6" style="">
+    <div class="col-lg-6" style="margin-top: 0px;" >
         <div>
 
         <a href="<?php echo ROOT_URL; ?>comprar/pedidosUser"><div class="opciones"><img class="icons" src="<?php echo ROOT_PATH; ?>imagenes/oficinas.png" alt=""><label class="etiqueta"  for="">Gestión de Oficinas</label></div></a><br><br>
@@ -39,11 +39,9 @@
 
 </div></div>
 
-<div class="" >
 <div style="">
 <a href="<?php echo ROOT_URL; ?>users/logout"><button  style="margin-left: 30%; margin-bottom: 20%; background: #cfd1d1; border: none; color: black;" class="btn btn-primary sombra res">Editar perfil</button></a>
 <a href="<?php echo ROOT_URL; ?>users/logout"><button  style="margin-left: 2%; margin-bottom: 20%; background: #7c1010; border: none;" class="btn btn-primary sombraRoja res">Logout</button></a><br>
-</div>
 </div>
        
 

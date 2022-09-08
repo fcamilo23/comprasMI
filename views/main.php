@@ -32,16 +32,17 @@
 
 <body style="background: #e9e9e9" >
     <nav>
-        
+    
         <?php if(isset($_SESSION['is_logged_in'])) : ?>
+            <a href="<?php echo ROOT_URL.'users/profile'; ?>"><div class="hv" >
             <label for="" class="interacciones">
-                <a href="<?php echo ROOT_URL.'users/profile'; ?>"><i style="margin-right: 40px;"
-                        class="fas fa-user elhov"></i></a>
+                <i style="margin-right: 40px;"
+                        class="fas fa-user elhov"></i>
             </label>
             
 
-           
-        <ul>
+        <ul>    
+       <!--
         <li style="margin-right: 0px; margin-top: 20px">
         <form id="formBusqueda">
         <select name="select" id="select" style="border-radius: 6px; margin-left:10px; margin-top: 0px; margin-right: 0px; height: 40px; width: 70px; float: left">
@@ -53,14 +54,15 @@
    
         <button name="Btn_buscar" id="Btn_buscar" type="submit" class="btn btn-primary" style="display: none;border: 1px solid; margin-left: 10px; margin-top: 0px; margin-right: 0px; height: 40px; width: 80px; float: left; margin-right: 200px; background: #0d0f1d">Buscar</button>
      </form>
-        </li>
-        <li><a style="text-decoration: none" href="<?php echo ROOT_URL; ?>users/profile"><?php echo $_SESSION['user_data']['nombre']; ?> <?php echo $_SESSION['user_data']['apellido']; ?></a></li>
+        </li>-->
+        <li><label style="text-decoration: none" class="elhov1"><?php echo $_SESSION['user_data']['nombre']; ?> <?php echo $_SESSION['user_data']['apellido']; ?></label></li>
 
         </ul>
+        </div></a>
     
         <?php else : ?>
                 <a style="display: none; cursor: pointer;" class="loginregisterBtn" href="<?php echo ROOT_URL; ?>users/register" >Registrarse</a> 
-                <a style="cursor: pointer;" class="btn btn-primary loginBtn" href="<?php echo ROOT_URL; ?>users/login">Iniciar Sesión</a>
+                <a style="cursor: pointer;" class="btn btn-primary loginBtn sombraAzul" href="<?php echo ROOT_URL; ?>users/login">Iniciar Sesión</a>
                 
         <?php endif; ?>
 

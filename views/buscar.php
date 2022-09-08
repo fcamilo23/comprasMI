@@ -2,7 +2,7 @@
 
     required('../config.php');
 
-    $con = new PDO(mysql:host="localhost";dbname="laboratorio", "root", "");
+    $con = new PDO(mysql:host="localhost";dbname="minterior", "root", "");
 
     $this->query('SELECT * FROM pedido');
     $rows2 = $this->resultSet();

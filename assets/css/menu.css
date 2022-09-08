@@ -71,8 +71,8 @@
 
 .sombra:hover{
     box-shadow: 0px 15px 15px 15px #a87a25;
-    -webkit-box-shadow: 0px 0px 5px 5px #555555;
-    -webkit-transform:scale(1.0);transform:scale(1.0);
+    -webkit-box-shadow: 5px 5px 5px 5px #555555;
+    -webkit-transform:scale(1.085);transform:scale(1.085);
     
     
     transition: all .1s;
@@ -80,8 +80,17 @@
 }
 .sombraRoja:hover{
     box-shadow: 0px 15px 15px 15px #a87a25;
-    -webkit-box-shadow: 0px 0px 5px 5px #5e0101;
-    -webkit-transform:scale(1.0);transform:scale(1.0);
+    -webkit-box-shadow: 5px 5px 5px 5px #c98080;
+    -webkit-transform:scale(1.085);transform:scale(1.085);
+    
+    
+    transition: all .1s;
+
+}
+.sombraAzul:hover{
+    box-shadow: 0px 15px 15px 15px #a87a25;
+    -webkit-box-shadow: 5px 5px 5px 5px #afbaf8;
+    -webkit-transform:scale(1.085);transform:scale(1.085);
     
     
     transition: all .1s;
@@ -118,8 +127,20 @@
 
 }
 
-.ooo:hover .iii{
+.hv:hover .elhov{
+    cursor: pointer;
+    color:#020942;
 }
+.hv:hover .elhov1{
+    cursor: pointer;
+    color:#06138b;
+}
+
+.hv:hover{
+    cursor: pointer;
+}
+
+
 
 .verde{
     color:#1a8504;
@@ -161,8 +182,8 @@ nav ul li{
     -ms-transform: translateY(-50%);
     transform: translateY(-50%); 
 }
-nav ul li a{
-    color: rgb(11, 3, 121);
+nav ul li label{
+    color: rgb(28, 28, 29);
     font-size: 30px;
     border-radius: 3px;
 
@@ -286,10 +307,7 @@ nav ul li a{
 .elhov{
     color:rgb(43, 42, 42);
 }
-.elhov:hover{
-    color:rgb(88, 88, 88);
 
-}
 .loginregisterBtn{
     background-color: #1e1f1f;
     height: 50px;
@@ -337,14 +355,30 @@ section{
 }
 
 .homeimg{
-    margin-left: 15%; 
+    margin-left: 0%; 
     width: 800px;  
     height: 400px;
 }
+.homeimg1{
+    margin-left: 5%;
+    text-align: center;
 
+    width: 500px;  
+    height: 250px;
+}
+.logandpass{
+    width: 100%;
+}
+.center{
+    width: 600px;
+    margin: 0 auto;
+}
+@media (max-width: 550px){
+   
+}
 @media (max-width: 1350px){
     .homeimg{
-        margin-left: 5%; 
+        margin-left: 0%; 
         
     }
     .icons{
