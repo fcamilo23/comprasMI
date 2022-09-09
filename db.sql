@@ -17,3 +17,25 @@ CREATE TABLE `Usuarios` (
     PRIMARY KEY (
         `cedula`
     );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--INSERTS
+
+INSERT INTO `solicitudescompra` (`id`, `SR`, `planificado`, `gastos_inversiones`, `grupoAS`, `artServ`, `detalle`, `cantidad`, `estado`, `oficinaSolicitante`, `fechaHora`, `costoAprox`, `referente`, `contactoReferente`, `observaciones`, `procedimiento`) VALUES (NULL, '123', '1', '1', '1', 'Lorem ipsum lorem impsum', 'Lorem ipsum lorem impsum', '5', 'Pendiente', '002', '2022-09-09 04:42:15.000000', '145050,55', 'Jorge Martinez', 'jorge@gmail.com', 'Lorem ipsum lorem impsum', 'LP');

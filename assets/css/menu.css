@@ -96,7 +96,30 @@
     transition: all .1s;
 
 }
+.sombraAzul1:hover{
+    box-shadow: 0px 15px 15px 15px #a87a25;
+    -webkit-box-shadow: 5px 5px 5px 5px #001d5a;
+    -webkit-transform:scale(1.085);transform:scale(1.085);
+    
+    
+    transition: all .1s;
 
+}
+.sombraVerde:hover{
+    box-shadow: 0px 15px 15px 15px #a87a25;
+    -webkit-box-shadow: 5px 5px 5px 5px #015513;
+    -webkit-transform:scale(1.085);transform:scale(1.085);
+    
+    
+    transition: all .1s;
+
+}
+
+.excel{
+    border: none;
+    float: right;
+    margin-right: 30px;
+}
 .icons{
     width: 130px;
     height: 130px;
@@ -116,9 +139,8 @@
     -webkit-border-radius:49%;
     box-shadow: 0px 15px 15px 15px #a87a25;
     -webkit-box-shadow: 0px 0px 15px 15px #7983ce;
-    -webkit-transform:scale(1.0);transform:scale(1.0);
-    width: 160px;
-    height: 160px;
+    -webkit-transform:scale(1.1);transform:scale(1.1);
+    
     
     transition: all .2s;
 
@@ -199,39 +221,42 @@ nav ul li label{
 
 }
 
-.table{
-    width: 100%;
-    margin-right: 0px;
-    background-color: #eff3f7;
-    overflow-x: auto;
+body{
+	background-color: #632432;
+	font-family: Arial;
 }
-.table td{
-    --bs-table-bg: transparent;
-    --bs-table-accent-bg: transparent;
-    --bs-table-striped-color: #212529;
-    --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
-    --bs-table-active-color: #212529;
-    --bs-table-active-bg: rgba(0, 0, 0, 0.1);
-    --bs-table-hover-color: #212529;
-    --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
-    height: 30px;
-    
-    text-align: center;
-    margin-bottom: 1rem;
-    color: #f1f3f5;
-    font-size: 20px;
-    vertical-align: top;
-    background-color: #0d0f1d;
-    border-color: #070707;
-  }
-  
 
-  .tbody th{
-      background-color: #0c0c0c;
-  }
+#main-container{
+	margin: 100px auto;
+	width: 600px;
+}
 
-.thead{
-  background-color: #0c5734;
+table{
+	background-color: white;
+	text-align: left;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+th, td{
+	padding: 20px;
+}
+
+thead{
+	background-color: #001d5a;
+	border-bottom: solid 5px #000d27;
+	color: white;
+}
+
+tr:nth-child(even){
+	background-color: #ddd;
+}
+
+tr:hover td{
+	background-color: #637294;
+	color: white;
+    transition: all .3s;
+
 }
 
 
@@ -282,7 +307,7 @@ nav ul li label{
     font-size: 40px;
     line-height: 80px;
     margin-right: 20px;
-    margin-top: 25px;
+    margin-top: 20px;
     cursor: pointer;
 }
 

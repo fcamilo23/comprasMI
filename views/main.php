@@ -149,9 +149,9 @@
     <!--  <section></section> -->
     <!-- /.container -->
 </body>
-<div class="container">
+<div class="">
 
-    <div style="width: 100%;" class="row">
+    <div style="" class="">
         <!-- <div class="col-lg-3" style="background-color:red;">dasddsadas</div> -->
         <?php Messages::display(); ?>
         <?php require($view); ?>

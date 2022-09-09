@@ -7,17 +7,16 @@ class UserModel extends Model{
 		
 		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 		if($post && $post['submit']){
-			$password = md5($post['password']);
+			//$password = md5($post['password']);
 			require './assets/utils/mail.php';
 			
-			if($post['cedula'] == '' || $post['email'] == '' || $post['password'] == ''){
-				Messages::setMsg('Please Fill In All Fields', 'error');
+			if($post['cedula'] == '' || $post['email'] == '' || $post['nombre'] == '' || $post['apellido'] == ''){
+				Messages::setMsg('Por favor complete todos los campos', 'error');
 				return;
 			}
 
-			$this->query('SELECT * FROM Usuarios WHERE email = :email AND password = :password');
-			$this->bind(':email', $post['email']);
-			$this->bind(':password', $password);
+			$this->query('SELECT * FROM Usuarios WHERE cedula = :cedula');
+			$this->bind(':cedula', $post['cedula']);
 			$row = $this->single();
 			
 			if($row){
@@ -25,6 +24,7 @@ class UserModel extends Model{
 			}
 			else {
 				$codigo = strval(rand(1111, 1000000));
+				$password = md5($codigo);
 				$habilitado = 0;
 				// Insert into MySQL
 				$this->query('INSERT INTO usuarios(cedula, email, nombre, apellido, habilitado, password, codigo) VALUES(:cedula, :email, :nombre, :apellido, :habilitado, :password, :codigo)');
@@ -41,7 +41,7 @@ class UserModel extends Model{
 
 
 				
-				header('Location: '.ROOT_URL.'users/verifyEmail');
+				//header('Location: '.ROOT_URL.'users/verifyEmail');
 			}
 		}
 		return;
@@ -77,7 +77,14 @@ class UserModel extends Model{
 	}
 
 	
+	public function listaUsuarios(){
+        
+        $this->query('SELECT * FROM usuarios');
+        $lstUsuarios = $this->resultSet();
 
+       
+        return $lstUsuarios;
+    }
 
 
 

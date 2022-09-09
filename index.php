@@ -13,11 +13,19 @@ require('classes/Model.php');
 require('controllers/home.php');
 require('controllers/users.php');
 require('controllers/menu.php');
+require('controllers/solicitudes.php');
+
+
 
 
 
 require('models/home.php');
 require('models/user.php');
+require('models/menu.php');
+require('models/solicitudes.php');
+
+
+
 
 
 $bootstrap = new Bootstrap($_GET);

@@ -10,26 +10,18 @@ class Users extends Controller{
 		$this->returnView($viewmodel->verifyEmail(), true);
 	}
 
-	protected function notificacionesUser(){
+	protected function listaUsuarios(){
 		$viewmodel = new UserModel();
-		$this->returnView($viewmodel->notificacionesUser(), true);
+		$this->returnView($viewmodel->listaUsuarios(), true);
 	}
 
-	
-	protected function cuponesUser(){
-		$viewmodel = new UserModel();
-		$this->returnView($viewmodel->cuponesUser(), true);
-	}
 
 	protected function profile(){
 		$viewmodel = new UserModel();
 		$this->returnView($viewmodel->profile(), true);
 	}
 
-	protected function postulacionesUser(){
-		$viewmodel = new UserModel();
-		$this->returnView($viewmodel->postulacionesUser(), true);
-	}
+
 
 	protected function validatecedula(){
 		include './assets/utils/validationAjax.php';
@@ -38,24 +30,14 @@ class Users extends Controller{
 		}
 		else{
 			if(!isValidatedcedula(new UserModel(), $_POST["cedula"])){
-				echo "<tr><td class=rojo>Ya existe un usuario con este cedula</td></tr>"; 
+				echo "<label class=rojo>Ya existe un usuario con este cedula</label>"; 
 			}
 			else{
-				echo "<tr><td class=verde>cedula disponible</td></tr>"; 
+				echo "<label class=verde>cedula disponible</label>"; 
 			}
 		}
 	}
 
-	protected function validatePersonaReferida(){
-		include './assets/utils/validationAjax.php';
-
-			if(!isValidatedcedula(new UserModel(), $_POST["personaReferida"])){
-				echo "<tr><td class=verde>cedula válido</td></tr>"; 
-			}
-			else{
-				echo "<tr><td class=rojo>Este usuario no existe</td></tr>"; 
-			}
-	}
 
 	protected function validateEmail(){
 		include './assets/utils/validationAjax.php';
@@ -64,10 +46,10 @@ class Users extends Controller{
 		}
 		else{
 			if(!isValidatedcedula(new UserModel(), $_POST["email"])){
-				echo "<tr><td class=rojo>Ya existe un usuario con este email</td></tr>"; 
+				echo "<label class=rojo>Ya existe un usuario con este email</label>"; 
 			}
 			else{
-				echo "<tr><td class=verde>Email disponible</td></tr>"; 
+				echo "<label class=verde>Email disponible</label>"; 
 			}
 		}
 	}
