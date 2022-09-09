@@ -5,9 +5,9 @@ class Users extends Controller{
 		$viewmodel = new UserModel();
 		$this->returnView($viewmodel->register(), true);
 	}
-	protected function verifyEmail(){
+	protected function setPass(){
 		$viewmodel = new UserModel();
-		$this->returnView($viewmodel->verifyEmail(), true);
+		$this->returnView($viewmodel->setPass(), true);
 	}
 
 	protected function listaUsuarios(){

@@ -36,43 +36,27 @@ class UserModel extends Model{
 				$this->bind(':password', $password);
 				$this->bind(':codigo', $codigo);
 				$this->execute();
-				$_SESSION['verifyEmail'] = $post['email'];
+				
 				echo sendEmail($post['email'], $codigo);
 
 
 				
-				//header('Location: '.ROOT_URL.'users/verifyEmail');
+				//header('Location: '.ROOT_URL.'users/setPass');
 			}
 		}
 		return;
 	}
 
-	public function verifyEmail(){
+	public function setPass(){
 		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 		if($post && $post['submit']){
-			$this->query('SELECT * FROM Usuarios WHERE email = :email AND codigo = :codigo');
-			$this->bind(':email', $_SESSION['verifyEmail']);
-			$this->bind(':codigo',  $post["codigo"]);
-			$row = $this->single();
-			if($row){
-				$this->query('UPDATE Usuarios SET habilitado = 1 WHERE email = :email');
-				$this->bind(':email', $_SESSION['verifyEmail']);
+			if($post['password1'] == $post['password2']){
+				$this->query('UPDATE usuarios SET password = "' . md5($post['password2']) . '" WHERE cedula = "'. $_SESSION['setPass'].'"');
 				$this->execute();
-				//$_SESSION['is_logged_in'] = true;
-				$_SESSION['user_data'] = array(
-					"cedula"	=> $row['cedula'],
-					"email"	=> $row['email']
-				);
 				
-				header('Location: '.ROOT_URL.'home');
-
-			} else {
-				Messages::setMsg('Incorrect cypher', 'error');
+			}else{
+				echo "La contraseña no coincide";
 			}
-		}
-
-		else{
-			return;
 		}
 	}
 
@@ -113,7 +97,7 @@ class UserModel extends Model{
 				$password = md5($post['password']);
 			}
 			// Compare Login
-			$this->query('SELECT * FROM Usuarios WHERE cedula = :cedula AND password = :password AND habilitado = true');
+			$this->query('SELECT * FROM Usuarios WHERE cedula = :cedula AND password = :password');
 			$this->bind(':cedula', $post['cedula']);
 			$this->bind(':password', $password);
 			//$this->bind(':cedula', 'usuario1');
@@ -122,6 +106,12 @@ class UserModel extends Model{
 			$row = $this->single();
 
 			if($row){
+				if($row['password'] == md5($row['codigo'])){
+				$_SESSION['setPass'] = $post['cedula'];
+				header('Location: '.ROOT_URL.'users/setPass');
+					
+				}else{
+
 				$_SESSION['is_logged_in'] = true;
 				$_SESSION['user_data'] = array(
 					"cedula"	=> $row['cedula'],
@@ -138,6 +128,7 @@ class UserModel extends Model{
 				<?php
 				
 				header('Location: '.ROOT_URL.'users/profile');
+			}
 
 			} else {
 				Messages::setMsg('Incorrect Login', 'error');
