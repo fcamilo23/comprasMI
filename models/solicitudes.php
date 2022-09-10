@@ -14,6 +14,12 @@ class SolicitudesModel extends Model{
          
         return;
     }
+
+    public function nuevaSolicitud(){
+        
+       
+        return;
+    }
  
         
 

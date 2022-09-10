@@ -16,9 +16,9 @@
 		<div class="form-group">
 		<label style="margin-top: 25px; color: #001d5a">Rol</label>
 			<select name="rol" class="form-control">
-				<option value="consultor" selected>Consultor</option>
-				<option value="operador">Operador</option>
-				<option value="administrador">Administrador</option>
+				<option value="Consultor" selected>Consultor</option>
+				<option value="Operador">Operador</option>
+				<option value="Administrador">Administrador</option>
 			</select>
     	</div>
 

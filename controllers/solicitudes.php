@@ -4,6 +4,10 @@ class Solicitudes extends Controller{
 		$viewmodel = new SolicitudesModel();
 		$this->returnView($viewmodel->listaSolicitudes(), true);
 	}
+	protected function nuevaSolicitud(){
+		$viewmodel = new SolicitudesModel();
+		$this->returnView($viewmodel->nuevaSolicitud(), true);
+	}
 
     protected function downloadFile(){
         ob_start();

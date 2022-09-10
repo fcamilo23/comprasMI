@@ -27,7 +27,7 @@ class UserModel extends Model{
 				$password = md5($codigo);
 				$habilitado = 0;
 				// Insert into MySQL
-				$this->query('INSERT INTO usuarios(cedula, email, nombre, apellido, habilitado, password, codigo) VALUES(:cedula, :email, :nombre, :apellido, :habilitado, :password, :codigo)');
+				$this->query('INSERT INTO usuarios(cedula, email, nombre, apellido, habilitado, password, codigo, rol) VALUES(:cedula, :email, :nombre, :apellido, :habilitado, :password, :codigo, :rol)');
 				$this->bind(':cedula', $post['cedula']);
 				$this->bind(':email', $post['email']);
 				$this->bind(':nombre', $post['nombre']);
@@ -35,6 +35,8 @@ class UserModel extends Model{
 				$this->bind(':habilitado', $habilitado);
 				$this->bind(':password', $password);
 				$this->bind(':codigo', $codigo);
+				$this->bind(':rol', $post['rol']);
+
 				$this->execute();
 				
 				echo sendEmail($post['email'], $codigo);

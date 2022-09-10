@@ -10,6 +10,8 @@
                     <th>Apellido</th>
                     <th>Email</th>
                     <th>Rol</th>
+                    <th></th>
+
 				</tr>
 			</thead>
             <tbody >
@@ -19,6 +21,9 @@
                 <td><?php echo $item['apellido'] ?></td>
                 <td><?php echo $item['email'] ?></td>
                 <td><?php echo $item['rol'] ?></td>
+                <td><input type="submit" value="Editar" style="background: #001d5a; border: none" class="btn btn-primary somraAzul1"/>
+                <input type="submit" value="Eliminar" style="color: #fff; border: none" class="btn btnEliminar somraAzul1"/></td>
+
 
                 
 			</tr> <?php endforeach; ?>
