@@ -1,5 +1,5 @@
 <?php
-header("Content-Type: application/vnd.ms-excel; charset=iso-8859-1");
+header("Content-Type: application/vnd.ms-excel;");
 header("Content-Disposition: attachment; filename=solicitudes.xls");
 
 ?>
@@ -46,3 +46,40 @@ header("Content-Disposition: attachment; filename=solicitudes.xls");
             </tbody>
 		</table>
 
+
+<style type="text/css">
+    
+
+
+table{
+	background-color: white;
+	text-align: left;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+th, td{
+	padding: 20px;
+}
+
+thead{
+	background-color: #001d5a;
+	border-bottom: solid 5px #000d27;
+	color: white;
+}
+
+tr:nth-child(even){
+	background-color: #ddd;
+}
+
+tr:hover td{
+	background-color: #b4bacc;
+	color: black;
+    transition: all .3s;
+
+}
+
+
+
+
+</style>

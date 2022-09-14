@@ -11,7 +11,7 @@ require './PHPMailer/SMTP.php';
 
 //Create an instance; passing `true` enables exceptions
 function sendEmail($email, $key){
-    echo $email;
+    //echo $email;
     $mail = new PHPMailer(true);
     try {
         //Server settings
@@ -37,7 +37,7 @@ function sendEmail($email, $key){
         $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
         $mail->send();
-        echo 'Message has been sent';
+        //echo 'Message has been sent';
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }

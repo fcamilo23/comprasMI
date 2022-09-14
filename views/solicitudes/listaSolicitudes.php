@@ -1,10 +1,22 @@
-<a href="<?php echo ROOT_PATH; ?>solicitudes/downloadFile"><button type="button" class="excel sombraVerde"> <img src="<?php echo ROOT_PATH; ?>imagenes/Excel1.jpg" width="150px" height="50px" ></button></a>
+
+
+    <script>
+        $(document).ready(function() {
+        $('#solis').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'excel'
+            ]
+        } );
+    } );
+    </script>
+<!--<button type="button" tabindex="0" aria-controls="solis" class="excel sombraVerde"> <img src="<?php echo ROOT_PATH; ?>imagenes/Excel1.jpg" width="150px" height="50px" ></button>-->
 <a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaSolicitud"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaSoli.jpg" width="190px" height="50px" ></button></a>
+<h1 style="color: #001d5a" class="center">Solicitudes de Compra</h1>
 
-<div id="main-container" style="width: 100%; overflow: auto; padding: 15px;">
+<div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
 
-		<table style="width: 100%">
-        
+		<table id="solis" style="width: 100%;">
 
 			<thead>
                 
@@ -33,12 +45,12 @@
             <tbody >
 			<tr><?php foreach($viewmodel as $item) : ?>
                 <td><?php echo $item['SR'] ?></td>
-                <td><?php echo $item['procedimiento'] ?></td>
+                <td><?php echo substr($item['procedimiento'],0,3); ?></td>
                 <td><?php echo $item['artServ'] ?></td>
                 <td><?php echo $item['grupoAS'] ?></td>
                 <td><?php echo $item['gastos_inversiones'] ?></td>
                 <td><?php echo $item['cantidad'] ?></td>
-                <td><?php echo $item['costoAprox'] ?></td>
+                <td>$<?php echo $item['costoAprox'] ?></td>
                 <td><?php echo $item['planificado'] ?></td>
                 <td><?php echo $item['estado'] ?></td>
                 <td><?php echo $item['oficinaSolicitante'] ?></td>
@@ -47,8 +59,11 @@
                 <td><?php echo $item['fechaHora'] ?></td>
                 <td><?php echo $item['detalle'] ?></td>
                 <td><?php echo $item['observaciones'] ?></td>
-                <td><input type="submit" value="Ampliar" style="background: #001d5a; border: none" class="btn btn-primary somraAzul1"/></td>
 
+                <form id="filtro" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">       
+                <td><input type="text" name="numero" style="display: none" value="<?php echo $item['SR']; ?>"/>
+                <input type="submit" name="submit" value="Ampliar" style="background: #001d5a; border: none" class="btn btn-primary somraAzul1"/></td>
+                </form>
                 
 			</tr> <?php endforeach; ?>
             </tbody>

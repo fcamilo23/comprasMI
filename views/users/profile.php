@@ -39,9 +39,9 @@
 
 </div></div>
 
-<div style="">
-<a href="<?php echo ROOT_URL; ?>users/logout"><button  style="margin-left: 30%; margin-bottom: 20%; background: #cfd1d1; border: none; color: black;" class="btn btn-primary sombra res">Editar perfil</button></a>
-<a href="<?php echo ROOT_URL; ?>users/logout"><button  style="margin-left: 2%; margin-bottom: 20%; background: #7c1010; border: none;" class="btn btn-primary sombraRoja res">Logout</button></a><br>
+<div style="" class="center">
+<!--<a href="<?php echo ROOT_URL; ?>users/logout"><button  style="margin-left: 30%; margin-bottom: 20%; background: #cfd1d1; border: none; color: black;" class="btn btn-primary sombra res">Editar perfil</button></a>
+--><a href="<?php echo ROOT_URL; ?>users/logout"><button  style="margin-left: 15%; margin-bottom: 20%; background: #7c1010; border: none; width: 130px" class="btn btn-primary sombraRoja res">Logout</button></a><br>
 </div>
        
 

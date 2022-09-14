@@ -39,11 +39,11 @@ class UserModel extends Model{
 
 				$this->execute();
 				
-				echo sendEmail($post['email'], $codigo);
+				sendEmail($post['email'], $codigo);
 
 
 				
-				//header('Location: '.ROOT_URL.'users/setPass');
+				header('Location: '.ROOT_URL.'users/profile');
 			}
 		}
 		return;
@@ -55,6 +55,8 @@ class UserModel extends Model{
 			if($post['password1'] == $post['password2']){
 				$this->query('UPDATE usuarios SET password = "' . md5($post['password2']) . '" WHERE cedula = "'. $_SESSION['setPass'].'"');
 				$this->execute();
+				header('Location: '.ROOT_URL.'users/login');
+
 				
 			}else{
 				echo "La contraseña no coincide";
@@ -121,9 +123,6 @@ class UserModel extends Model{
 					"nombre"	=> $row['nombre'],
 					"apellido"	=> $row['apellido'],
 					"rol"	=> $row['rol'],
-					"reputacion"	=> $row['reputacion'],
-					"biografia"	=> $row['biografia'],
-					"imagen"	=> $row['imagen']
 				);
 				?>
 					<h1>llegamos aca1</h1>

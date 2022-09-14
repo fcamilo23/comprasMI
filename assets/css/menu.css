@@ -231,7 +231,7 @@ body{
 }
 
 #main-container{
-	margin: 100px auto;
+	margin: 20px auto;
 	width: 600px;
 }
 
@@ -261,6 +261,10 @@ tr:hover td{
 	color: black;
     transition: all .3s;
 
+}
+
+.yo{
+    background-color:rgb(136, 143, 184);
 }
 
 

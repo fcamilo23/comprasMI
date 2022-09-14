@@ -15,5 +15,11 @@ class Solicitudes extends Controller{
 		$this->returnView($viewmodel->downloadFile(), true);
 	}
 
+	protected function verSolicitud(){
+		$viewmodel = new SolicitudesModel();
+		$this->returnView($viewmodel->verSolicitud(), true);
+	}
+
+
 
 }
