@@ -47,7 +47,7 @@
                 <td><?php echo $item['SR'] ?></td>
                 <td><?php echo substr($item['procedimiento'],0,3); ?></td>
                 <td><?php echo $item['artServ'] ?></td>
-                <td><?php echo $item['grupoAS'] ?></td>
+                <td><?php echo substr($item['grupoAS'],0,30); ?></td>
                 <td><?php echo $item['gastos_inversiones'] ?></td>
                 <td><?php echo $item['cantidad'] ?></td>
                 <td>$<?php echo $item['costoAprox'] ?></td>
@@ -62,7 +62,7 @@
 
                 <form id="filtro" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">       
                 <td><input type="text" name="numero" style="display: none" value="<?php echo $item['SR']; ?>"/>
-                <input type="submit" name="submit" value="Ampliar" style="background: #001d5a; border: none" class="btn btn-primary somraAzul1"/></td>
+                <input type="submit" name="submit" value="Ampliar" style="background: #001d5a; border: none" class="btn btn-primary sombraAzul"/></td>
                 </form>
                 
 			</tr> <?php endforeach; ?>
