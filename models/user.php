@@ -79,7 +79,7 @@ class UserModel extends Model{
 
 	public function profile(){
 		$n = $_SESSION['user_data']['cedula'];
-		$this->query('SELECT * FROM puntuaciones WHERE cedula = "' . $n . '"');
+		$this->query('SELECT * FROM usuarios WHERE cedula = "' . $n . '"');
 		$row = $this->resultSet();
         
 
