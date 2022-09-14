@@ -1,5 +1,4 @@
-<a href="<?php echo ROOT_PATH; ?>solicitudes/downloadFile"><button type="button" class="excel sombraVerde"> <img src="<?php echo ROOT_PATH; ?>imagenes/Excel1.jpg" width="150px" height="50px" ></button></a>
-
+<a href="<?php echo ROOT_PATH; ?>oficina/listaOficinas"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOfi.jpg" width="190px" height="50px" ></button></a>
 <div id="main-container" style="width: 100%; overflow: auto; padding: 15px;">
 
 		<table style="width: 100%">

@@ -5,8 +5,8 @@
                 <div class="card-body">
                     <h2 class="card-title">PROVEEDOR</h2>
                     <hr>
-                    <!-- 
-                    <form action="<?php echo ROOT_URL; ?>proveedor/agregarProveedor" method ="POST" enctype="multipart/form-data" >
+
+              <!--       <form action="<?php echo ROOT_URL; ?>proveedor/agregarProveedor" method ="POST" enctype="multipart/form-data" >
                            <label for="empresa" class="form-label">Nombre Empresa</label>
                             <div class="input-group mb-3">
                                 <input id="empresa" name="empresa" type="text" class="form-control">
@@ -53,9 +53,23 @@
                                     <th>Referentes</th>
                                     <th>Telefono</th>
                                     <th>Correo</th>
+                                    <th></th>
 
                                 </tr>
                             </thead>
+                            <tr>
+
+                                <td><input type="text" class="form-control" id="nreferente" name="nreferente"></td>
+                                <td><input type="text" class="form-control" id="ncorreo" name="ncorreo"></td>
+                                <td><input type="text" class="form-control" id="ntelefono" name="ntelefono"></td>
+                                <td>
+                                <form action="<?php echo ROOT_PATH; ?>proveedor/verProveedor" method="POST">
+                                        <input type="hidden" name="id" id="id" value="<?php echo $item['id']?>">
+                                        <button type="submit" class = "btn btn-success">Ampliar</button>
+                                    </form>
+                                </td>
+
+                            </tr> 
                             <tbody >
 
 

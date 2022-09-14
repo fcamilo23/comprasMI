@@ -25,10 +25,14 @@ class ProveedorModel extends Model{
             $this->bind(':email', $post['email']);
             $this->bind(':rut', $post['rut']);
             $this->execute();
-            
-            if($this->lastInsertId()){
 
-                header('Location: '.ROOT_URL.'proveedor/ver');
+            if($this->lastInsertId()){
+                Messages::setMsg('Proveedor agregado', 'success');
+            }
+                      
+            if($this->lastInsertId()){
+                $post['id']= $idProveedor;
+                header('Location: '.ROOT_URL.'proveedor/listaProveedores');
             }
         }
         return;
@@ -42,7 +46,14 @@ class ProveedorModel extends Model{
         $row = $this->single();
         return $row;
     }
+    /*public function verProveedor ($id){
 
+        $this->query('SELECT * FROM proveedores WHERE id = :id');
+        $this->bind(':id', $id);
+        $row = $this->single();
+        return $row;
+    }
+*/
 
     
 }
