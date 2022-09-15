@@ -9,7 +9,12 @@
             ]
         } );
     } );
+
+
     </script>
+    
+
+
 <!--<button type="button" tabindex="0" aria-controls="solis" class="excel sombraVerde"> <img src="<?php echo ROOT_PATH; ?>imagenes/Excel1.jpg" width="150px" height="50px" ></button>-->
 <a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaSolicitud"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaSoli.jpg" width="190px" height="50px" ></button></a>
 <h1 style="color: #001d5a" class="center">Solicitudes de Compra</h1>
@@ -33,7 +38,7 @@
                     <th>Oficina Solicitante</th>
                     <th>Referente</th>
                     <th>Contacto</th>
-                    <th>Fecha</th>
+                    <th style="width:150px">Fecha y Hora (YYYY-mm-dd)</th>
                     <th>Detalle</th>
                     <th>Observaciones</th>
                     <th></th>

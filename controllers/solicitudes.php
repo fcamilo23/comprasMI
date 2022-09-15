@@ -9,15 +9,18 @@ class Solicitudes extends Controller{
 		$this->returnView($viewmodel->nuevaSolicitud(), true);
 	}
 
-    protected function downloadFile(){
-        ob_start();
+    protected function pruebaPDF(){
 		$viewmodel = new SolicitudesModel();
-		$this->returnView($viewmodel->downloadFile(), true);
+		$this->returnView($viewmodel->pruebaPDF(), true);
 	}
 
 	protected function verSolicitud(){
 		$viewmodel = new SolicitudesModel();
 		$this->returnView($viewmodel->verSolicitud(), true);
+	}
+	protected function editarSolicitud(){
+		$viewmodel = new SolicitudesModel();
+		$this->returnView($viewmodel->editarSolicitud(), true);
 	}
 
 

@@ -127,6 +127,7 @@
 .icons{
     width: 130px;
     height: 130px;
+    opacity: 0.9;
     /*margin-left: 25%;*/
 
     
@@ -264,7 +265,8 @@ tr:hover td{
 }
 
 .yo{
-    background-color:rgb(136, 143, 184);
+    background-color:#345aac;
+    color:white;
 }
 
 
@@ -399,6 +401,15 @@ section{
     width: 500px;  
     height: 250px;
 }
+
+
+.iconmargen{
+    margin-right: 15px;
+}
+
+.iconmargen1{
+    margin-right: 0px;
+}
 .logandpass{
     width: 100%;
 }
@@ -416,6 +427,15 @@ section{
     .homeimg{
         margin-left: 0%; 
         
+    }
+
+    .iconmargen{
+        margin-right: 45px;
+    }
+
+
+    .iconmargen1{
+        margin-right: 50px;
     }
     .icons{
         margin-left: 10%;
@@ -448,7 +468,6 @@ section{
         transition: all .5s;
     }
     .interacciones{
-       font-size: 30px;
         text-align: right;
         transition: all .5s;
     }
@@ -467,7 +486,6 @@ section{
     
     
     .interacciones{
-        font-size: 30px;
         text-align: right;
         transition: all .5s;
     }

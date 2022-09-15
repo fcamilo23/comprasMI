@@ -1,9 +1,19 @@
 <a href="<?php echo ROOT_PATH; ?>users/register"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoUser.jpg" width="200px" height="50px" ></button></a>
 <h1  class="center" style="color: #001d5a; margin-left: 40%">Usuarios</h1>
 
+<script>
+        $(document).ready(function() {
+        $('#us').DataTable( {
+            
+        } );
+    } );
+    </script>
+
 <div id="main-container" style="width: 100%; overflow: auto; padding: 15px;">
 
-		<table style="width: 100%">
+
+
+		<table id="us" style="width: 100%">
 			<thead>
 				<tr>
 					<th>CI</th>

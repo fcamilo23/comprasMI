@@ -1,7 +1,7 @@
 <div class="row col-12" style="height: 850px; margin-top: 50px; background: #e9e9e9; width: 80%; margin-left: 15%">
     <div class="col-lg-6" style="margin-top: 0px;" >
     <a href="<?php echo ROOT_URL; ?>users/listaUsuarios"><div class="opciones"><img class="icons" src="<?php echo ROOT_PATH; ?>imagenes/usuarios.png" alt=""><label class="etiqueta" for="">Gestión de Usuarios</label> </div></a><br> <br>
-    <a href="<?php echo ROOT_URL; ?>comprar/pedidosUser"><div class="opciones"><img class="icons" src="<?php echo ROOT_PATH; ?>imagenes/proveedores.png" alt=""><label class="etiqueta" for="">Gestión de Proveedores</label></div></a> <br> <br>
+    <a href="<?php echo ROOT_URL; ?>proveedor/listaProveedores"><div class="opciones"><img class="icons" src="<?php echo ROOT_PATH; ?>imagenes/proveedores.png" alt=""><label class="etiqueta" for="">Gestión de Proveedores</label></div></a> <br> <br>
         
         <!--
     <div>
@@ -22,7 +22,7 @@
     <div class="col-lg-6" style="margin-top: 0px;" >
         <div>
 
-        <a href="<?php echo ROOT_URL; ?>comprar/pedidosUser"><div class="opciones"><img class="icons" src="<?php echo ROOT_PATH; ?>imagenes/oficinas.png" alt=""><label class="etiqueta"  for="">Gestión de Oficinas</label></div></a><br><br>
+        <a href="<?php echo ROOT_URL; ?>oficina/listaOficinas"><div class="opciones"><img class="icons" src="<?php echo ROOT_PATH; ?>imagenes/oficinas.png" alt=""><label class="etiqueta"  for="">Gestión de Oficinas</label></div></a><br><br>
         <a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes"><div class="opciones"><img class="icons" src="<?php echo ROOT_PATH; ?>imagenes/solicitudes.png" alt=""><label class="etiqueta" for="">Solicitudes de Compra</label></div></a>
 
             <!--

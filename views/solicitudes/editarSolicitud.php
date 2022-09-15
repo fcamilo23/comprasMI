@@ -1,11 +1,16 @@
 <div class="row col-12">
     <div class="col-lg-6 center">
         <form id="verSolicitud" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
+
+        <input type="number" id="id" name="id" class="form-control" value="<?php echo $_SESSION['solicitudActual']['id']; ?>" style="margin-top: 0px; display:none" placeholder="Ingrese el número SR"  required >
+
+
+
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Número SR</label>
-        <input type="number" id="sr" name="sr" class="form-control" value="<?php echo $_SESSION['solicitudActual']['SR']; ?>" style="margin-top: 0px;" placeholder="Ingrese el número SR" disabled required >
+        <input type="number" id="sr" name="sr" class="form-control" value="<?php echo $_SESSION['solicitudActual']['SR']; ?>" style="margin-top: 0px;" placeholder="Ingrese el número SR"  readonly >
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Gastos e Inversiones</label>
-        <select name="gastos_inversiones" class="form-control" disabled >
+        <select name="gastos_inversiones" class="form-control"  >
 				<option <?php if ($_SESSION['solicitudActual']['gastos_inversiones'] == "Bienes de Consumo"){?> selected <?php } ?> value="Bienes de Consumo">Bienes de Consumo</option>
 				<option <?php if ($_SESSION['solicitudActual']['gastos_inversiones'] == "Servicios No Personales"){?> selected <?php } ?> value="Servicios No Personales">Servicios No Personales</option>
 				<option <?php if ($_SESSION['solicitudActual']['gastos_inversiones'] == "Bienes de Uso"){?> selected <?php } ?> value="Bienes de Uso">Bienes de Uso</option>
@@ -13,7 +18,7 @@
 
    
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Tipo de Procedimiento</label>
-        <select name="procedimiento" class="form-control" disabled>
+        <select name="procedimiento" class="form-control" >
 				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "LP - Licitación Pública"){?> selected <?php } ?> value="LP - Licitación Pública" selected>LP - Licitación Pública</option>
 				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "LA - Licitación Abreviada"){?> selected <?php } ?> value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
 				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CD - Compra Directa"){?> selected <?php } ?> value="CD - Compra Directa">CD - Compra Directa</option>
@@ -26,7 +31,7 @@
 			</select> 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Grupos Art/Serv</label>
-        <select name="grupoAS" class="form-control" disabled>
+        <select name="grupoAS" class="form-control" >
 				<option <?php if ($_SESSION['solicitudActual']['grupoAS'] == "Artículos y Accesorios de Informática"){?> selected <?php } ?> value="Artículos y Accesorios de Informática" selected>Artículos y Accesorios de Informática</option>
                 <option <?php if ($_SESSION['solicitudActual']['grupoAS'] == "Teléfono y Similares"){?> selected <?php } ?> value="Teléfono y Similares" >Teléfono y Similares</option>
 				<option <?php if ($_SESSION['solicitudActual']['grupoAS'] == "Arrendamiento de Equipos Computación (Cámara de Video Vigilancia)"){?> selected <?php } ?> value="Arrendamiento de Equipos Computación (Cámara de Video Vigilancia)" >Arrendamiento de Equipos Computación (Cámara de Video Vigilancia)</option>
@@ -40,7 +45,7 @@
 			</select> 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Art/Serv</label>
-        <select name="artServ" class="form-control" disabled>
+        <select name="artServ" class="form-control" >
 				
 
 
@@ -48,7 +53,7 @@
 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Estado</label>
-        <select name="estado" class="form-control" disabled>
+        <select name="estado" class="form-control" >
             <option <?php if ($_SESSION['solicitudActual']['estado'] == "Pendiente"){?> selected <?php } ?> value="Pendiente" >Pendiente</option>
             <option <?php if ($_SESSION['solicitudActual']['estado'] == "Solicitada"){?> selected <?php } ?> value="Solicitada" >Solicitada</option>
             <option <?php if ($_SESSION['solicitudActual']['estado'] == "Publicada"){?> selected <?php } ?> value="Publicada" >Publicada</option>
@@ -63,40 +68,41 @@
 		</select> 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Referente de Compra</label>
-        <input type="text" name="costo" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['referente'] ?>" required placeholder="Ingrese el referente" disabled>
+        <input type="text" name="referente" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['referente'] ?>" required placeholder="Ingrese el referente" >
         
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Contacto Referente</label>
-        <input type="text" name="costo" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['contactoReferente'] ?>" required placeholder="Ingrese el correo del referente" disabled>
+        <input type="text" name="contactoReferente" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['contactoReferente'] ?>" required placeholder="Ingrese el correo del referente" >
         
-
         <label  style="margin-top: 40px; color: rgb(130, 130, 130); font-size:20px">Fecha de Emisión: <?php echo $_SESSION['solicitudActual']['fechaHora'] ?></label>
+        <input type="text" name="fechaHora" class="form-control" style="margin-top: 0px; display:none" value="<?php echo $_SESSION['solicitudActual']['fechaHora'] ?>" required placeholder="Ingrese el correo del referente" >
+        
 
 
     </div>
     <div class="col-lg-6 center">
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Cantidad</label>
-        <input type="number" name="cantidad" min="1" value="<?php echo $_SESSION['solicitudActual']['cantidad'] ?>" class="form-control" style="margin-top: 0px;" required placeholder="Ingrese la cantidad" disabled>
+        <input type="number" name="cantidad" min="1" value="<?php echo $_SESSION['solicitudActual']['cantidad'] ?>" class="form-control" style="margin-top: 0px;" required placeholder="Ingrese la cantidad" >
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
-        <input type="number" name="costo" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['costoAprox'] ?>" required placeholder="Ingrese el costo estimado de la compra" disabled>
+        <input type="number" name="costo" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['costoAprox'] ?>" required placeholder="Ingrese el costo estimado de la compra" >
         
         
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Planificado</label>
-        <select name="planificado" class="form-control" disabled>
+        <select name="planificado" class="form-control">
 				<option <?php if ($_SESSION['solicitudActual']['planificado'] == "Si"){?> selected <?php } ?> value="Si" selected>Si</option>
 				<option <?php if ($_SESSION['solicitudActual']['planificado'] == "No"){?> selected <?php } ?> value="No">No</option>
 			</select> 
 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Oficina Solicitante</label>
-        <select name="oficinaSolicitante" class="form-control" disabled>
+        <select name="oficinaSolicitante" class="form-control" >
 		</select> 
 
         <label  style="margin-top: 30px; color: rgb(130, 130, 130)">Detalle</label>
-        <textarea class="form-control" name="detalle" cols="40" rows="5" style="margin-top: 0px;" placeholder="No hay detalles" disabled><?php echo $_SESSION['solicitudActual']['detalle'] ?></textarea>
+        <textarea class="form-control" name="detalle" cols="40" rows="5" style="margin-top: 0px;" placeholder="Ingrese un detalle aquí" ><?php echo $_SESSION['solicitudActual']['detalle'] ?></textarea>
 
         <label  style="margin-top: 30px; color: rgb(130, 130, 130)">Observaciones</label>
-        <textarea class="form-control" name="observaciones" cols="40" rows="5" style="margin-top: 0px;" value="" placeholder="No hay observaciones" disabled><?php echo $_SESSION['solicitudActual']['observaciones'] ?></textarea>
+        <textarea class="form-control" name="observaciones" cols="40" rows="5" style="margin-top: 0px;" value="" placeholder="Ingrese observaciones aquí" ><?php echo $_SESSION['solicitudActual']['observaciones'] ?></textarea>
 
        
     </div>
@@ -105,124 +111,6 @@
 
 </div>
 <div class="col-12 center" style="text-align: center; margin-top: 100px">
-        <a href="<?php echo ROOT_URL; ?>solicitudes/editarSolicitud"><input class="btn btn-primary" value="Editar Solicitud" style="width: 150px;"/> </a>
+        <input type="submit" id="submit" name="submit" class="btn btn-primary" value="Guardar Cambios" style="width: 150px;"/> 
     </div>
 </form>
-
-<div style="margin-top: 100px">
-<a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaSolicitud"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOrden.jpg" width="190px" height="50px" ></button></a>
-<h1 style="color: #001d5a; margin-left: 25px" class="">Órdenes de Compra</h1>
-
-
-<div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
-
-		<table id="solis" style="width: 100%;">
-
-			<thead>
-                
-				<tr>
-					<th>Número</th>
-                    <th>Procedimiento</th>
-                    <th>Proveedor</th>
-                    <th>Monto Real ($U)</th>
-                    <th>Plazo de Entrega</th>
-                    <th>Forma de Pago</th>
-                    <th>Fecha Inicio</th>
-                    <th>Fecha Vencimiento</th>
-                    <th></th>
-
-
-
-				</tr>
-			</thead>
-            <tbody >
-            <tr>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td><input type="submit" name="submit" value="Ampliar" style="background: #001d5a; border: none" class="btn btn-primary sombraAzul"/></td>
-
-                </tr> <tr>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td><input type="submit" name="submit" value="Ampliar" style="background: #001d5a; border: none" class="btn btn-primary sombraAzul"/></td>
-                </tr> <tr>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td><input type="submit" name="submit" value="Ampliar" style="background: #001d5a; border: none" class="btn btn-primary sombraAzul"/></td>
-
-                </tr> <tr>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td><input type="submit" name="submit" value="Ampliar" style="background: #001d5a; border: none" class="btn btn-primary sombraAzul"/></td>
-
-                </tr>
-
-            </tbody>
-		</table>
-	</div>
-</div>
-
-
-
-<div style="margin-top: 150px; align-text: center">
-<a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaSolicitud"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaNovedad.jpg" width="218px" height="48px" ></button></a>
-<h1  class="" style="color: #001d5a; margin-left: 25px">Novedades</h1>
-
-<div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
-
-		<table id="solis" style="width: 100%;">
-
-			<thead>
-                
-				<tr>
-                    <th style="width: 5%">Id</th>
-					<th>Novedad</th>
-                    
-				</tr>
-			</thead>
-            <tbody >
-            <tr>
-                <td>ejemplo</td>
-                <td>ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo </td>
-            </tr>
-            <tr>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-            </tr>
-            <tr>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-            </tr>
-            <tr>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-            </tr>
-
-            </tbody>
-		</table>
-	</div>
-</div>

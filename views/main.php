@@ -23,7 +23,6 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!--Excel -->
-    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet"/>
 
 <link href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" rel="stylesheet"/>
 
@@ -41,6 +40,9 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="<?php echo ROOT_PATH; ?>assets/css/botoneslib.min.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="<?php echo ROOT_PATH; ?>assets/css/search.min.css?v=<?php echo time(); ?>">
+
+
 
     <link rel="stylesheet" href="<?php echo ROOT_PATH; ?>assets/css/menu.css?v=<?php echo time(); ?>">
 
@@ -53,12 +55,25 @@
     <nav>
     
         <?php if(isset($_SESSION['is_logged_in'])) : ?>
+            <a href="<?php echo ROOT_URL.'users/logout'; ?>"><div class="hv" >
+            <label for="" alt="Cerrar Sesión" class="interacciones" style="margin-top:15px; margin-left: 0px">
+                <i class="elhov" style="margin-right: 0px; margin-left: 0px"><img src="<?php echo ROOT_URL.'imagenes/logout.png' ?>" style="width:50px; height:50px;" alt=""></i>
+
+
+            </label>
+            <ul>
+            <li class="iconmargen"><label style="text-decoration: none; margin-right: 0px" class="elhov1">Logout</label></li>
+            </ul>
+        </div></a>
+
             <a href="<?php echo ROOT_URL.'users/profile'; ?>"><div class="hv" >
             <label for="" class="interacciones">
-                <i style="margin-right: 40px;"
-                        class="fas fa-user elhov"></i>
+                <i 
+                        class="fas fa-user elhov iconmargen1"></i>
+
             </label>
             
+
 
         <ul>    
        <!--
@@ -74,10 +89,12 @@
         <button name="Btn_buscar" id="Btn_buscar" type="submit" class="btn btn-primary" style="display: none;border: 1px solid; margin-left: 10px; margin-top: 0px; margin-right: 0px; height: 40px; width: 80px; float: left; margin-right: 200px; background: #0d0f1d">Buscar</button>
      </form>
         </li>-->
-        <li><label style="text-decoration: none" class="elhov1"><?php echo $_SESSION['user_data']['nombre']; ?> <?php echo $_SESSION['user_data']['apellido']; ?></label></li>
+        
+        <li class="iconmargen" ><label style="text-decoration: none" class="elhov1"><?php echo $_SESSION['user_data']['nombre']; ?> <?php echo $_SESSION['user_data']['apellido']; ?></label></li>
 
         </ul>
         </div></a>
+        
     
         <?php else : ?>
                 <a style="display: none; cursor: pointer;" class="loginregisterBtn" href="<?php echo ROOT_URL; ?>users/register" >Registrarse</a> 
