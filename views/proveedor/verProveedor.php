@@ -1,47 +1,38 @@
+<body>
+
 <div class="container mt-5 mb-5">
     <div class="row d-flex justify-content-center">
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10">
             <div class="card">
                 <div class="card-body">
                     <h2 class="card-title">PROVEEDOR</h2>
                     <hr>
+                    <?php
+                    if(isset($viewmodel["id"]) && $viewmodel["id"] != '') {
+                     
+                    ?>
+                     <form  id="editarProveedor" action="<?php echo ROOT_PATH; ?>proveedor/verProveedor" method="POST">
+                        <h5><b>NOMBRE EMPRESA: </b></h5>
+                        <input id="empresa" name="empresa" type="text" value="<?php echo $viewmodel["empresa"] ?>" class="editar form-control editar" >
+                        <div id="empresaError"></div>
+                        <h5><b>RAZON SOCIAL: </b></h5>
+                        <input id="razon_social" name="razon_social" type="text" value="<?php echo $viewmodel["razon_social"] ?>" class="editar form-control" >
+                        <br>
+                        <h5><b>R.U.T.: </b></h5>
+                        <input id="rut" name="rut" type="text" value="<?php echo $viewmodel["rut"] ?>" class="editar form-control" >
+                        <br>
+                        <h5><b>TELEFONO: </b></h5>
+                        <input id="telefono" name="telefono" type="text" value="<?php echo $viewmodel["telefono"] ?>" class="editar form-control" >
+                        <br>
+                        <h5><b>CORREO: </b></h5>
+                        <input id="email" name="email" type="text" value="<?php echo $viewmodel["email"] ?>" class="editar form-control" >
+                        <br>
+                        
+                        <input type="hidden" id="id" name="id" value="<?php echo $viewmodel["id"] ?>">
+                        <input type="hidden" id="accion" name="accion" value="editarProveedor">
+                        <button class="btn btn-success" type="submit">EDITAR</button>
 
-              <!--       <form action="<?php echo ROOT_URL; ?>proveedor/agregarProveedor" method ="POST" enctype="multipart/form-data" >
-                           <label for="empresa" class="form-label">Nombre Empresa</label>
-                            <div class="input-group mb-3">
-                                <input id="empresa" name="empresa" type="text" class="form-control">
-                                <div id=empresaError" class="invalid-feedback"></div>
-                            </div>
-                            <label for="razon_social" class="form-label">Razon Social</label>
-                            <div class="input-group mb-3">
-                                <input id="razon_social" name="razon_social" type="text" class="form-control">
-                                <div id="razon_socialError" class="invalid-feedback"></div>
-                            </div>
-                            <label for="rut" class="form-label">R.U.T.</label>
-                            <div class="input-group mb-3">
-                                <input id="rut" name="rut" type="text" class="form-control">
-                                <div id="rutError" class="invalid-feedback"></div>
-                            </div>
-                            <label for="telefono" class="form-label">Telefono</label>
-                            <div class="input-group mb-3">
-                                <input id="telefono" name="telefono" type="text" class="form-control">
-                                <div id="telefonoError" class="invalid-feedback"></div>
-                            </div>
-                            <label for="email" class="form-label">Correo</label>
-                            <div class="input-group mb-3">
-                                <input id="email" name="email" type="text" class="form-control">
-                                <div id="emailError" class="invalid-feedback"></div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Guardar</button>
-                    </form>-->
-                    <!-- obtener de $viewmodel la row singular empresa-->
-
-                    <h4><b>NOMBRE EMPRESA: </b> <?php echo  $viewmodel["empresa"] ?></h4>
-                    <h4><b>RAZON SOCIAL: </b> <?php echo $viewmodel ["razon_social"] ?></h4>
-                    <h4><b>R.U.T.: </b> <?php  echo $viewmodel ["rut"] ?></h4>
-                    <h4><b>TELEFONO: </b> <?php echo $viewmodel ["telefono"] ?></h4>
-                    <h4><b>CORREO: </b> <?php echo $viewmodel ["email"] ?></h4>
-
+                    </form>
                     <div id="main-container" style="width: 100%; overflow: auto; padding: 15px;">
 
                         <table style="width: 100%">
@@ -50,7 +41,7 @@
                             <thead>
                                 
                                 <tr>
-                                    <th>Referentes</th>
+                                    <th>Referente</th>
                                     <th>Telefono</th>
                                     <th>Correo</th>
                                     <th></th>
@@ -58,15 +49,30 @@
                                 </tr>
                             </thead>
                             <tr>
-
-                                <td><input type="text" class="form-control" id="nreferente" name="nreferente"></td>
-                                <td><input type="text" class="form-control" id="ncorreo" name="ncorreo"></td>
-                                <td><input type="text" class="form-control" id="ntelefono" name="ntelefono"></td>
-                                <td>
-                                <form action="<?php echo ROOT_PATH; ?>proveedor/verProveedor" method="POST">
-                                        <input type="hidden" name="id" id="id" value="<?php echo $item['id']?>">
-                                        <button type="submit" class = "btn btn-success">Ampliar</button>
-                                    </form>
+                            <?php foreach($viewmodel['referentes'] as $ref) : ?>
+                            <tr>
+                                <form  action="<?php echo ROOT_PATH; ?>proveedor/verProveedor" method="POST">
+                                    <td><input type="text" class="form-control" id="ereferente" name="ereferente" value="<?php echo $ref['nombre'] ?>"></td>
+                                    <td><input type="text" class="form-control" id="etelefono" name="etelefono" value="<?php echo $ref['telefono'] ?>"></td>
+                                    <td><input type="text" class="form-control" id="ecorreo" name="ecorreo" value="<?php echo $ref['email'] ?>"></td>
+                                    <input type="hidden" name="id" id="id" value="<?php echo $viewmodel["id"] ?>">
+                                    <input type="hidden" name="idReferente" id="idReferente" value="<?php echo $ref["id"] ?>">
+                                    <input type="hidden" name="accion" id="accion" value="ediproveedor">
+                                    <td><button type="submit" class="btn btn-success"> ></button></td>
+                                </form>
+                            </tr>
+                                <?php endforeach; ?>
+                                <form id="nform" action="<?php echo ROOT_PATH; ?>proveedor/verProveedor" method="POST">
+                                    <td><input type="text" class="form-control" id="nreferente" name="nreferente"></td>
+                                    <div id="nreferenteError"></div>
+                                    <td><input type="text" class="form-control" id="ncorreo" name="ncorreo"></td>
+                                    <td><input type="text" class="form-control" id="ntelefono" name="ntelefono"></td>
+                                    <td>
+                                    
+                                    <input type="hidden" name="id" id="id" value="<?php echo $viewmodel["id"] ?>">
+                                    <input type="hidden" name="accion" id="accion" value="newreferente">
+                                    <button type="submit" id="nuevo-ref" class = "btn btn-primary">+</button>
+                                </form>
                                 </td>
 
                             </tr> 
@@ -78,3 +84,62 @@
         </div>
     </div>
 </div>
+<?php
+}else {
+    echo "No se ha encontrado el proveedor";
+}
+?>
+
+<script type="text/javascript">
+    document.getElementById("empresa").addEventListener("keyup", empresa_vacio);
+    document.getElementById("empresa").addEventListener("blur", empresa_vacio);
+
+
+    
+    function nreferente_vacio(){
+        var nreferente = document.getElementById("nreferente").value;
+        if(nreferente == null || nreferente.length == 0 || /^\s+$/.test(nreferente)){
+            document.getElementById("nreferente").style.border = "1px solid red";
+            document.getElementById("nreferenteError").innerHTML = "El Rederente esta vacio";
+            return false;
+        }else{
+            document.getElementById("nreferente").style.border = "1px solid green";
+            document.getElementById("nreferenteError").innerHTML = "";
+            return true;
+        }
+    }
+    ///no permitir enviar formulario id nform si hay errores en el campo nreferente o ncorreo o ntelefono
+    document.getElementById("nform").addEventListener("submit", function(event){
+        if(nreferente_vacio() == false){
+            event.preventDefault();
+        }
+    });
+
+
+
+
+    function empresa_vacio(){
+        
+        var nombre = document.getElementById('empresa');
+        
+        if(nombre.value == ""){
+            nombre.classList.add("is-invalid");
+            nombre.classList.remove("is-valid");
+            document.getElementById("empresaError").innerHTML = "El nombre de la empresa es obligatorio";
+        }
+        else{
+            nombre.classList.add("is-valid");
+            nombre.classList.remove("is-invalid");
+            document.getElementById("empresaError").innerHTML = "";
+        }
+}
+//no permitir enviar formulario si empresa esta vacio
+document.getElementById("editarProveedor").addEventListener("submit", function(event){
+    if(empresa_vacio() == false){
+        event.preventDefault();
+    }
+});
+
+</script>
+</body>
+
