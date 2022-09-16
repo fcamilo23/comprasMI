@@ -70,6 +70,16 @@ class ProveedorModel extends Model{
 
     public function agregarReferente(){
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        //controlar si el nombre se repite
+        $this->query('SELECT * FROM referentes WHERE nombre = :nombre');
+        $this->bind(':nombre', $post['nreferente']);
+        $row = $this->single();
+
+        if($row){
+            Messages::setMsg('El referente ya existe', 'error');
+            return;
+        }
+        
 
         $this->query('INSERT INTO referentes (nombre, telefono, email, idProveedor) VALUES(:nombre, :telefono, :email, :idProveedor)');
         $this->bind(':nombre', $post['nreferente']);

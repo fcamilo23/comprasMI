@@ -522,3 +522,8 @@ section{
         margin-top: 150px
     }
 }
+.miniinput{
+
+    max-width: 8rem;
+
+}
