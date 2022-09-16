@@ -1,3 +1,5 @@
+<a href="<?php echo ROOT_URL; ?>solicitudes/verSolicitud"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
+
 <div class="row col-12">
     <div class="col-lg-6 center">
         <form id="verSolicitud" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">

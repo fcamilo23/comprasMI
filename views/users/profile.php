@@ -1,21 +1,11 @@
-<div class="row col-12" style="height: 850px; margin-top: 50px; background: #e9e9e9; width: 80%; margin-left: 15%">
+
+
+<div class="row col-12" style="height: 850px; margin-top: 10px; background: #e9e9e9; width: 80%; margin-left: 15%">
     <div class="col-lg-6" style="margin-top: 0px;" >
     <a href="<?php echo ROOT_URL; ?>users/listaUsuarios"><div class="opciones"><img class="icons" src="<?php echo ROOT_PATH; ?>imagenes/usuarios.png" alt=""><label class="etiqueta" for="">Gestión de Usuarios</label> </div></a><br> <br>
     <a href="<?php echo ROOT_URL; ?>proveedor/listaProveedores"><div class="opciones"><img class="icons" src="<?php echo ROOT_PATH; ?>imagenes/proveedores.png" alt=""><label class="etiqueta" for="">Gestión de Proveedores</label></div></a> <br> <br>
         
-        <!--
-    <div>
-    <img src="<?php echo ROOT_PATH; ?>imagenes/sss.png" alt="" class="iii" style="width: 300px; height: 170px;margin-top: 20px; margin-bottom: 30px;">
-    </div>   
-    <input class="form-control" style="border: none; font-size: 20px; width: 100%; margin-bottom: 0px" value="<?php echo $_SESSION['user_data']['cedula']; ?>" disabled/> <br>
-    <input class="form-control" style="border: none; font-size: 20px; width: 100%; margin: 0px" value="<?php echo $_SESSION['user_data']['nombre']; ?> <?php echo $_SESSION['user_data']['apellido']; ?>" disabled/> <br>
-    <input class="form-control" style="border: none; font-size: 20px; width: 100%; margin: 0px"value="<?php echo $_SESSION['user_data']['email']; ?>" disabled/> <br>
-    <input class="form-control" style="border: none; font-size: 20px; width: 100%; margin: 0px" value="<?php echo $_SESSION['user_data']['rol']; ?>" disabled/> 
-    <a href="<?php echo ROOT_URL; ?>users/logout"><button style="margin-bottom: 20%; margin-top: 10%; background: #cfd1d1; border: 2px solid black; color: black; width: 35%;" class="btn btn-primary">Editar</button></a>
-    <a href="<?php echo ROOT_URL; ?>users/logout"><button style="margin-bottom: 20%; margin-top: 10%; background: #7c1010; border: none; width: 35%;" class="btn btn-primary">Logout</button></a><br>
-
-
--->
+     
 
     </div>
     
@@ -39,9 +29,24 @@
 
 </div></div>
 
-<div style="" class="center">
-<!--<a href="<?php echo ROOT_URL; ?>users/logout"><button  style="margin-left: 30%; margin-bottom: 20%; background: #cfd1d1; border: none; color: black;" class="btn btn-primary sombra res">Editar perfil</button></a>
---><a href="<?php echo ROOT_URL; ?>users/logout"><button  style="margin-left: 15%; margin-bottom: 20%; background: #7c1010; border: none; width: 130px" class="btn btn-primary sombraRoja res">Logout</button></a><br>
-</div>
+
+
        
+<div class="perfil" style="">
+   
+    <div  >
+    <!--<img src="<?php echo ROOT_PATH; ?>imagenes/sss.png" alt="" class="iii " style="width: 300px; height: 170px;margin-top: 20px; margin-bottom: 30px; margin-left: 20%">-->
+    <h2 style="margin-bottom: 30px; margin-top:100px; margin-left: 35%">Mis datos</h2>
+    </div>   
+    <input class="form-control" style="border: none; font-size: 20px; width: 100%; margin-bottom: 0px" value="<?php echo $_SESSION['user_data']['cedula']; ?>" disabled/> <br>
+    <input class="form-control" style="border: none; font-size: 20px; width: 100%; margin: 0px" value="<?php echo $_SESSION['user_data']['nombre']; ?> <?php echo $_SESSION['user_data']['apellido']; ?>" disabled/> <br>
+    <input class="form-control" style="border: none; font-size: 20px; width: 100%; margin: 0px"value="<?php echo $_SESSION['user_data']['email']; ?>" disabled/> <br>
+    <input class="form-control" style="border: none; font-size: 20px; width: 100%; margin: 0px" value="<?php echo $_SESSION['user_data']['rol']; ?>" disabled/> 
+
+
+</div>
+<div>
+    <h1 style="visibility: hidden"> asdasd</h1>
+</div>
+<div></div>
 

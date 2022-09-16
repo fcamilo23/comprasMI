@@ -52,28 +52,70 @@ class SolicitudesModel extends Model{
         $this->query('INSERT INTO subirPDF(archivo) VALUES("'. $post['pdf'] .'")');
         $this->execute();
 */
+if (isset($_POST['submit'])) {
+ 
+    $name = $_POST['name'];
 
-    if (isset($_POST['submit'])) {
-    $pdf=$_FILES['pdf']['name'];
-    $pdf_type=$_FILES['pdf']['type'];
-    $pdf_size=$_FILES['pdf']['size'];
-    $pdf_tem_loc=$_FILES['pdf']['tmp_name'];
-    $pdf_store="pdf/".$pdf;
+    if (isset($_FILES['pdf_file']['name']))
+    {
+      $file_name = $_FILES['pdf_file']['name'];
+      $file_tmp = $_FILES['pdf_file']['tmp_name'];
 
-    move_uploaded_file($pdf_tem_loc,$pdf_store);
+      //move_uploaded_file($file_tmp,"./pdf/".$file_name);
 
-    $this->query('INSERT INTO subirpdf(pdf) values("'. $pdf . '")');
-    $$this->execute();
+      $this->query("INSERT INTO pdf_data(username,filename) VALUES('$name','$file_name')");
+      $this->execute();
+    }
+    else
+    {
+       ?>
+        <div class=
+        "alert alert-danger alert-dismissible
+        fade show text-center">
+          <a class="close" data-dismiss="alert"
+             aria-label="close">×</a>
+          <strong>Failed!</strong>
+              File must be uploaded in PDF format!
+        </div>
+      <?php
+    }
+}
 
 
 
-  }
+  
          
         return;
     }
 
     public function verSolicitud(){
+
+        $this->query('SELECT * FROM novedades WHERE idSolicitud="'.$_SESSION['solicitudActual']['id'].'" ORDER BY id DESC');
+        $_SESSION['novedades'] = $this->resultSet();
+
+
         
+
+
+        return;
+        
+         
+    }
+
+
+    public function nuevaNovedad(){
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+		if($post && $post['submit']){
+            $date = new DateTime("now", new DateTimeZone('America/Montevideo') );
+            $fecha = $date->format('Y-m-d H:i:s');
+            $this->query('INSERT INTO novedades(idSolicitud, texto, fecha) VALUES("'. $_SESSION['solicitudActual']['id'] .'","'. $post['texto'] .'", "'. $fecha. '")');
+            $this->execute();
+            //agregarCartel
+            header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+
+
+        }
 
 
         return;
@@ -99,7 +141,7 @@ class SolicitudesModel extends Model{
 				$this->bind(':artServ', $post['grupoAS']);
 				$this->bind(':detalle', $post['detalle']);
 				$this->bind(':cantidad', $post['cantidad']);
-				$this->bind(':estado', 'Pendiente');
+				$this->bind(':estado', $post['estado']);
 				$this->bind(':oficinaSolicitante', 1);
 				$this->bind(':costoAprox', $post['costo']);
 				$this->bind(':referente', $post['referente']);

@@ -1,3 +1,7 @@
+<a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
+<a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaNovedad"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaNovedad.jpg" width="218px" height="48px" ></button></a>
+<a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaOrden"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOrden.jpg" width="190px" height="50px" ></button></a>
+
 <div class="row col-12">
     <div class="col-lg-6 center">
         <form id="verSolicitud" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
@@ -189,7 +193,9 @@
 
 
 <div style="margin-top: 150px; align-text: center">
-<a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaSolicitud"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaNovedad.jpg" width="218px" height="48px" ></button></a>
+<a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaNovedad"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaNovedad.jpg" width="218px" height="48px" ></button></a>
+<?php if($_SESSION['novedades'] != null){?>
+
 <h1  class="" style="color: #001d5a; margin-left: 25px">Novedades</h1>
 
 <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
@@ -199,30 +205,28 @@
 			<thead>
                 
 				<tr>
-                    <th style="width: 5%">Id</th>
+                    <th style="width:200px">Fecha</th>
 					<th>Novedad</th>
                     
 				</tr>
 			</thead>
             <tbody >
-            <tr>
-                <td>ejemplo</td>
-                <td>ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo ejemplo </td>
-            </tr>
-            <tr>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-            </tr>
-            <tr>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-            </tr>
-            <tr>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-            </tr>
+            <tr><?php foreach($_SESSION['novedades'] as $item) : ?>
+                <td><?php $date = new DateTime($item['fecha'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y H:i:s') ?></td>
+
+                <td><?php echo $item['texto'] ?></td>
+            </tr> <?php endforeach; ?>
+
+           
 
             </tbody>
 		</table>
+        <?php }else{
+            ?>
+            <h1 class="center">No hay novedades</h1>
+
+            <?php
+
+        }?>
 	</div>
 </div>

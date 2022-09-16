@@ -264,7 +264,7 @@ tr:hover td{
 
 }
 
-.yo{
+.yo1{
     background-color:#345aac;
     color:white;
 }
@@ -381,7 +381,10 @@ tr:hover td{
 }
 
 
-
+.azul{
+    background: #001d5a;
+    border: none;
+}
 section{
     background: url(../../imagenes/home.png) no-repeat;
     background-size: 30%;
@@ -420,6 +423,12 @@ section{
 .center1{
     margin: 0 auto;
 }
+
+.perfil{
+    width: 600px; 
+    margin-left:25%; 
+    margin-top: 150px
+}
 @media (max-width: 550px){
    
 }
@@ -429,6 +438,13 @@ section{
         
     }
 
+    .perfil{
+        width: 600px; 
+        margin-left:10%; 
+        margin-top: 150px
+    }
+
+  
     .iconmargen{
         margin-right: 45px;
     }
@@ -446,7 +462,6 @@ section{
         width: 20%;
     }
     .logo{
-        height: 60px;
         text-align: center;
     }
     .enlace{
@@ -475,7 +490,6 @@ section{
 
 @media (max-width: 1350px){
     .logo{
-        height: 60px;
         align-items: center;
     }
     .enlace{
@@ -500,5 +514,11 @@ section{
         height: 250px;
         transition: all .5s;
 
+    }
+
+    .perfil{
+        width: 600px; 
+        margin-left:0%; 
+        margin-top: 150px
     }
 }

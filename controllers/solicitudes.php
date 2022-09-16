@@ -22,6 +22,10 @@ class Solicitudes extends Controller{
 		$viewmodel = new SolicitudesModel();
 		$this->returnView($viewmodel->editarSolicitud(), true);
 	}
+	protected function nuevaNovedad(){
+		$viewmodel = new SolicitudesModel();
+		$this->returnView($viewmodel->nuevaNovedad(), true);
+	}
 
 
 
