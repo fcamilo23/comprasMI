@@ -60,12 +60,11 @@ class OficinaModel extends Model{
                 }else{
                     Messages::setMsg('Dejo al menos un campo vacio', 'error');
                     return;
+
                 }
             
             }
     }   
-
-
     
 }
 

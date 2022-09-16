@@ -21,7 +21,7 @@
     } );
 } );
 </script>
-
+<a href="<?php echo ROOT_URL; ?>users/profile"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
 <a href="<?php echo ROOT_PATH; ?>proveedor/nuevoProveedor"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaProv.jpg" width="190px" height="50px" ></button></a>
 
 <div id="main-container" style="width: 100%; overflow: auto; padding: 15px;">

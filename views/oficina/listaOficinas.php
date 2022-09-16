@@ -1,5 +1,6 @@
 <body>
-    
+<a href="<?php echo ROOT_URL; ?>users/profile"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
+  
 <div class="container mt-5 mb-5">
     <div class="row d-flex justify-content-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10">
