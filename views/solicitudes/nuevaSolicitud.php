@@ -1,25 +1,28 @@
 <div class="row col-12">
     <div class="col-lg-6 center">
         <form id="nuevaSolicitud" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
-        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Número SR</label>
-        <input type="number" name="sr" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el número SR" required >
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">SR</label>
+        <input type="text" name="sr" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el SR" required >
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Gastos e Inversiones</label>
         <select name="gastos_inversiones" class="form-control">
-				<option value="Bienes de Consumo" selected>Bienes de Consumo</option>
+                <option value="0" selected>Seleccione una opción</option>
+                <option value="Bienes de Consumo" >Bienes de Consumo</option>
 				<option value="Servicios No Personales">Servicios No Personales</option>
 				<option value="Bienes de Uso">Bienes de Uso</option>
 			</select> 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Planificado</label>
         <select name="planificado" class="form-control">
-				<option value="Si" selected>Si</option>
+                <option value="0" selected>Seleccione una opción</option>
+				<option value="Si">Si</option>
 				<option value="No">No</option>
 			</select> 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Tipo de Procedimiento</label>
         <select name="procedimiento" class="form-control">
-				<option value="LP - Licitación Pública" selected>LP - Licitación Pública</option>
+                <option value="0" selected>Seleccione una opción</option>
+				<option value="LP - Licitación Pública">LP - Licitación Pública</option>
 				<option value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
 				<option value="CD - Compra Directa">CD - Compra Directa</option>
                 <option value="CE - Compra por Excepción">CE - Compra por Excepción</option>
@@ -32,7 +35,8 @@
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Grupos Art/Serv</label>
         <select name="grupoAS" class="form-control">
-				<option value="Artículos y Accesorios de Informática" selected>Artículos y Accesorios de Informática</option>
+                <option value="0" selected>Seleccione una opción</option>
+				<option value="Artículos y Accesorios de Informática" >Artículos y Accesorios de Informática</option>
                 <option value="Teléfono y Similares" >Teléfono y Similares</option>
 				<option value="Arrendamiento de Equipos Computación (Cámara de Video Vigilancia)" >Arrendamiento de Equipos Computación (Cámara de Video Vigilancia)</option>
 				<option value="Arrendamiento Dispositivos Electrónicos (Tobilleras)" >Arrendamiento Dispositivos Electrónicos (Tobilleras)</option>
@@ -45,29 +49,44 @@
 			</select> 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Art/Serv</label>
-        <select name="artServ" class="form-control">
+        <input name="artServ" class="form-control" placeholder="Ingrese un artículo o servicio">
+
+        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Oficina Solicitante</label>
+
+            <select name="oficinaSolicitante" style="" class="form-control">
+                
+                <option value="0" selected>Seleccione una opción</option>
+                <?php foreach($viewmodel as $item) : ?>
+                <option value="<?php echo $item['unidad'] . ' ' . $item['ue'] ?>" ><?php echo $item['unidad'] . ' ' . $item['ue'] ?></option>
+                <?php endforeach; ?>
+            </select> 
 				
 
 
-		</select> 
 
     </div>
     <div class="col-lg-6 center">
-        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Cantidad</label>
-        <input type="number" name="cantidad" min="1" value="1" class="form-control" style="margin-top: 0px;" required placeholder="Ingrese la cantidad">
+        <label style="margin-top: 20px; color: rgb(130, 130, 130)">Cantidad | Unidad</label>
+        <div class="input-group">
 
-        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
+        <input style="width: 18%; border-right: 3px solid grey"type="number" name="cantidad" min="1"  class="form-control" style="margin-top: 0px;" required placeholder="Cantidad">
+        <input style="width: 80%; border-left: 3px solid grey"type="text" name="unidad" class="form-control" style="margin-top: 0px;" required placeholder="Ingrese la unidad">
+        </div>
+
+        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
         <input type="number" name="costo" class="form-control" style="margin-top: 0px;" required placeholder="Ingrese el costo estimado de la compra">
         
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Oficina Solicitante</label>
-        <select name="oficinaSolicitante" class="form-control">
-		</select> 
+        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Referente</label>
+        <input type="text" name="referente" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el nombre de un referente para esta solicitud" required >
 
-        <label  style="margin-top: 30px; color: rgb(130, 130, 130)">Detalle</label>
-        <textarea class="form-control" name="detalle" cols="40" rows="4" style="margin-top: 0px;" placeholder="Ingrese un detalle aquí"></textarea>
+        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Contacto Referente</label>
+        <input type="text" name="contactoReferente" class="form-control" style="margin-top: 0px;" placeholder="Ingrese correo del referente" required >
 
-        <label  style="margin-top: 30px; color: rgb(130, 130, 130)">Observaciones</label>
-        <textarea class="form-control" name="observaciones" cols="40" rows="4" style="margin-top: 0px;" placeholder="Ingrese observaciones aquí"></textarea>
+        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Detalle</label>
+        <textarea class="form-control" name="detalle" cols="40" rows="4" style="margin-top: 0px;" placeholder="Ingrese un detalle aquí (opcional)"></textarea>
+
+        <label  style="margin-top: 10px; color: rgb(130, 130, 130)">Observaciones</label>
+        <textarea class="form-control" name="observaciones" cols="40" rows="4" style="margin-top: 0px;" placeholder="Ingrese observaciones aquí (opcional)"></textarea>
 
     </div>
 

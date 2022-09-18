@@ -41,7 +41,7 @@ class SolicitudesModel extends Model{
         return $lstSolicitudes;
     }
 
-    public function pruebaPDF(){
+    public function nuevoArchivo(){
 
 /*
                 //subir pdf
@@ -87,6 +87,36 @@ if (isset($_POST['submit'])) {
          
         return;
     }
+
+    public function prueba (){
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(isset($post['pdf'])){
+            $pdf = $post['pdf'];
+            $this->query('INSERT INTO subirpdf (archivo) VALUES (:pdf)');
+            $this->bind(':pdf', $pdf);
+            $this->execute();
+            if($this->lastInsertId()){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+
+
+        
+    public function obtener ($idpdf){
+        $this->query('SELECT * FROM pdf WHERE idpdf = :id');
+        $this->bind(':id', $idpdf);
+        $row = $this->single();
+        $pdf = base64_decode($row['pdf']);
+        $row['pdflegible'] = $pdf;
+        return $row;
+
+    }
+
+
+
 
     public function verSolicitud(){
 
@@ -191,8 +221,6 @@ if (isset($_POST['submit'])) {
             $row = $this->single();
 
             if($row == null){
-                $email = $_SESSION['user_data']['email'];
-                $nombre = $_SESSION['user_data']['nombre'] .' '. $_SESSION['user_data']['apellido'];
 
                 $date = new DateTime("now", new DateTimeZone('America/Montevideo') );
                 $fecha = $date->format('Y-m-d H:i:s');
@@ -200,8 +228,8 @@ if (isset($_POST['submit'])) {
 
                // $fecha = date('Y-m-d h:i:sa');
 
-                $this->query('INSERT INTO solicitudescompra(`SR`, `planificado`, `gastos_inversiones`, `grupoAS`, `artServ`, `detalle`, `cantidad`, `estado`, `oficinaSolicitante`, `fechaHora`, `costoAprox`, `referente`, `contactoReferente`, `observaciones`, `procedimiento`) 
-                VALUES(:sr, :planificado, :gastos_inversiones, :grupoAS, :artServ, :detalle, :cantidad, :estado, :oficinaSolicitante, :fechaHora, :costoAprox, :referente, :contactoReferente, :observaciones, :procedimiento)');
+                $this->query('INSERT INTO solicitudescompra(`SR`, `planificado`, `gastos_inversiones`, `grupoAS`, `artServ`, `detalle`, `cantidad`, `unidad`, `estado`, `oficinaSolicitante`, `fechaHora`, `costoAprox`, `referente`, `contactoReferente`, `observaciones`, `procedimiento`) 
+                VALUES(:sr, :planificado, :gastos_inversiones, :grupoAS, :artServ, :detalle, :cantidad, :unidad, :estado, :oficinaSolicitante, :fechaHora, :costoAprox, :referente, :contactoReferente, :observaciones, :procedimiento)');
                 $this->bind(':sr', $post['sr']);
 				$this->bind(':planificado', $post['planificado']);
                 $this->bind(':gastos_inversiones', $post['gastos_inversiones']);
@@ -209,12 +237,13 @@ if (isset($_POST['submit'])) {
 				$this->bind(':artServ', $post['grupoAS']);
 				$this->bind(':detalle', $post['detalle']);
 				$this->bind(':cantidad', $post['cantidad']);
+                $this->bind(':unidad', $post['unidad']);
 				$this->bind(':estado', 'Pendiente');
 				$this->bind(':oficinaSolicitante', 1);
 				$this->bind(':fechaHora', $fecha);
 				$this->bind(':costoAprox', $post['costo']);
-				$this->bind(':referente', $nombre);
-				$this->bind(':contactoReferente', $email);
+				$this->bind(':referente', $post['referente']);
+				$this->bind(':contactoReferente', $post['contactoReferente']);
                 $this->bind(':observaciones', $post['observaciones']);
 				$this->bind(':procedimiento', $post['procedimiento']);
 
@@ -230,7 +259,9 @@ if (isset($_POST['submit'])) {
             }
         }
 
-        return;
+        $this->query('SELECT * FROM oficinas');
+        $row = $this->resultSet();
+        return $row;
     }
  
         

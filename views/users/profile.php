@@ -35,7 +35,7 @@
 <div class="perfil" style="">
    
     <div  >
-    <!--<img src="<?php echo ROOT_PATH; ?>imagenes/sss.png" alt="" class="iii " style="width: 300px; height: 170px;margin-top: 20px; margin-bottom: 30px; margin-left: 20%">-->
+    <!--<img src="<?php echo ROOT_PATH; ?>imagenes/minterior1.png" alt="" class="iii " style="width: 300px; height: 170px;margin-top: 20px; margin-bottom: 30px; margin-left: 20%">-->
     <h2 style="margin-bottom: 30px; margin-top:100px; margin-left: 35%">Mis datos</h2>
     </div>   
     <input class="form-control" style="border: none; font-size: 20px; width: 100%; margin-bottom: 0px" value="<?php echo $_SESSION['user_data']['cedula']; ?>" disabled/> <br>

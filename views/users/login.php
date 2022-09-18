@@ -3,7 +3,7 @@
 <div class="col-12 panel panel-default">
     
     <div class="center" style="">
-	    <img src="<?php echo ROOT_PATH; ?>imagenes/sss.png" alt="" style="margin-top: 40px;" class="homeimg1">
+	    <img src="<?php echo ROOT_PATH; ?>imagenes/minterior.png" alt="" style="margin-top: 40px;" class="homeimg1">
 
     </div>
     <div class="panel-body center">

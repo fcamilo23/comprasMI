@@ -9,9 +9,9 @@ class Solicitudes extends Controller{
 		$this->returnView($viewmodel->nuevaSolicitud(), true);
 	}
 
-    protected function pruebaPDF(){
+    protected function nuevoArchivo(){
 		$viewmodel = new SolicitudesModel();
-		$this->returnView($viewmodel->pruebaPDF(), true);
+		$this->returnView($viewmodel->nuevoArchivo(), true);
 	}
 
 	protected function verSolicitud(){
@@ -26,7 +26,15 @@ class Solicitudes extends Controller{
 		$viewmodel = new SolicitudesModel();
 		$this->returnView($viewmodel->nuevaNovedad(), true);
 	}
+	protected function prueba(){
+		$viewmodel = new SolicitudesModel();
+		$this->returnView($viewmodel->prueba(), true);
+	}
 
+	protected function obtener($idpdf){
+		$viewmodel = new SolicitudesModel();
+		$this->returnView($viewmodel->obtener($idpdf), true);
+	}
 
 
 }

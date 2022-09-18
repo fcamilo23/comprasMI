@@ -30,10 +30,10 @@ class Users extends Controller{
 		}
 		else{
 			if(!isValidatedcedula(new UserModel(), $_POST["cedula"])){
-				echo "<label class=rojo>Ya existe un usuario con este cedula</label>"; 
+				echo "<label class=rojo>Ya existe un usuario con esta CI</label>"; 
 			}
 			else{
-				echo "<label class=verde>cedula disponible</label>"; 
+				echo "<label class=verde>CI disponible</label>"; 
 			}
 		}
 	}
