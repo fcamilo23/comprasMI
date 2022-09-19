@@ -249,10 +249,15 @@
                     <form action="<?php echo ROOT_PATH; ?>solicitudes/verArchivo" method="post">
                         <input type="hidden" name="id" value="<?php echo $item['id'] ?>">
                         
-                        <input type="submit" name="" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
-                        <input type="submit" name="submit" value="Ver" style="background: #001d5a; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul"/>
+                       <input type="submit" name="submit" value="Ver" style="background: #001d5a; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul"/>
 
-                    </form>
+                    </form>   
+                                         
+                    <form action="<?php echo ROOT_PATH; ?>solicitudes/eliminarArchivo" method="post">
+                        <input type="hidden" name="id" value="<?php echo $item['id'] ?>">
+                        
+                        <input type="submit" name="" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
+                    </form>  
                 </td>
                 </tr> <?php endforeach; ?>
             </tbody>
