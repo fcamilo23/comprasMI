@@ -9,7 +9,7 @@
             ],
             dom: 'lBfrtip',
             "columnDefs": [ {
-                "targets": [5,7,8,10,11,12,13,14,15],
+                "targets": [5,6,7,8,10,11,12,13,14,15],
                 "searchable": false,
                 
                 } ,
@@ -123,7 +123,7 @@
                     <th>Oficina Solicitante</th>
                     <th>Referente</th>
                     <th>Contacto</th>
-                    <th style="width:150px">Fecha y Hora</th>
+                    <th style="width:90px">Fecha</th>
                     <th>Detalle</th>
                     <th>Observaciones</th>
                     <th></th>
@@ -146,7 +146,7 @@
                 <td><?php echo $item['oficinaSolicitante'] ?></td>
                 <td><?php echo $item['referente'] ?></td>
                 <td><?php echo $item['contactoReferente'] ?></td>
-                <td><?php $date = new DateTime($item['fechaHora'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y H:i:s') ?></td>
+                <td><?php $date = new DateTime($item['fechaHora'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y') ?></td>
                 <td><?php echo $item['detalle'] ?></td>
                 <td><?php echo $item['observaciones'] ?></td>
 
@@ -167,14 +167,17 @@
 
 
         abrirModal.addEventListener("click",()=>{
-           
-                modal.show();
 
+            abrirModal.classList.add("mystyle");
+
+               modal.show();
             
         })
         cerrarModal.addEventListener("click",()=>{
-           
-           modal.close();
+
+                modal.close();
+                abrirModal.classList.remove("mystyle");
+
 
        
         })

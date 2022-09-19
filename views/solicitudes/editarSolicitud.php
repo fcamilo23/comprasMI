@@ -97,8 +97,13 @@
 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Oficina Solicitante</label>
-        <select name="oficinaSolicitante" class="form-control" >
-		</select> 
+        <select name="oficinaSolicitante" style="" class="form-control">
+                
+                <option value="0" selected>Seleccione una opción</option>
+                <?php foreach($viewmodel as $item) : ?>
+                <option <?php $ofi = $item['unidad'] . ' ' . $item['ue']; if($_SESSION['solicitudActual']['oficinaSolicitante'] == $ofi){ ?> selected <?php } ?>value="<?php echo $ofi ?>" ><?php echo $ofi ?></option>
+                <?php endforeach; ?>
+            </select> 
 
         <label  style="margin-top: 30px; color: rgb(130, 130, 130)">Detalle</label>
         <textarea class="form-control" name="detalle" cols="40" rows="5" style="margin-top: 0px;" placeholder="Ingrese un detalle aquí" ><?php echo $_SESSION['solicitudActual']['detalle'] ?></textarea>

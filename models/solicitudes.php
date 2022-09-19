@@ -140,6 +140,9 @@ if (isset($_POST['submit'])) {
 
     public function editarSolicitud(){
 
+        $this->query('SELECT * FROM oficinas');
+        $row = $this->resultSet();
+
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
 		if($post && $post['submit']){
@@ -192,7 +195,7 @@ if (isset($_POST['submit'])) {
 
         }
 
-        return;  
+        return $row;  
     }
 
     public function nuevaSolicitud(){

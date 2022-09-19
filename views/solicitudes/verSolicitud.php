@@ -94,8 +94,7 @@
 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Oficina Solicitante</label>
-        <select name="oficinaSolicitante" class="form-control" disabled>
-		</select> 
+        <input type="text" name="oficinaSolicitante" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['oficinaSolicitante'] ?>" disabled>
 
         <label  style="margin-top: 30px; color: rgb(130, 130, 130)">Detalle</label>
         <textarea class="form-control" name="detalle" cols="40" rows="5" style="margin-top: 0px;" placeholder="No hay detalles" disabled><?php echo $_SESSION['solicitudActual']['detalle'] ?></textarea>
@@ -224,16 +223,17 @@
 		</table>
         <?php }else{
             ?>
-            <h1 class="center">No hay novedades</h1>
+            <h1 style="color: grey" class="center">• No hay novedades</h1>
 
             <?php
 
         }?>
 	</div>
     <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
+    <a  href="<?php echo ROOT_PATH; ?>solicitudes/nuevoArchivo"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button></a>
     <?php if($_SESSION['archivos'] != null){?>
     <h1  class="" style="color: #001d5a; margin-left: 25px">Archivos</h1>
-		<table id="solis" style="width: 100%;">
+		<table id="solis" style="width: 100%; margin-top: 30px;">
 			<thead>
 				<tr>
 					<th>Nombre</th>
@@ -248,7 +248,10 @@
                 <td>
                     <form action="<?php echo ROOT_PATH; ?>solicitudes/verArchivo" method="post">
                         <input type="hidden" name="id" value="<?php echo $item['id'] ?>">
-                        <input type="submit" name="submit" value="Ver" style="background: #001d5a; border: none" class="btn btn-primary sombraAzul"/>
+                        
+                        <input type="submit" name="" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
+                        <input type="submit" name="submit" value="Ver" style="background: #001d5a; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul"/>
+
                     </form>
                 </td>
                 </tr> <?php endforeach; ?>
@@ -256,7 +259,7 @@
 		</table>
         <?php }else{
             ?>
-            <h1 class="center">No hay archivos anexados</h1>
+            <h1 style="color: grey" class="center">• No hay archivos anexados</h1>
             <?php
         }?>
 	</div>
