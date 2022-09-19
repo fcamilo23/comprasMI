@@ -230,4 +230,34 @@
 
         }?>
 	</div>
+    <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
+    <?php if($_SESSION['archivos'] != null){?>
+    <h1  class="" style="color: #001d5a; margin-left: 25px">Archivos</h1>
+		<table id="solis" style="width: 100%;">
+			<thead>
+				<tr>
+					<th>Nombre</th>
+                    <th></th>
+				</tr>
+			</thead>
+            <tbody >
+            <?php foreach($_SESSION['archivos'] as $item) : ?>
+                <tr>
+					<td><?php echo $item ['nombre'] ?></td>
+
+                <td>
+                    <form action="<?php echo ROOT_PATH; ?>solicitudes/verArchivo" method="post">
+                        <input type="hidden" name="id" value="<?php echo $item['id'] ?>">
+                        <input type="submit" name="submit" value="Ver" style="background: #001d5a; border: none" class="btn btn-primary sombraAzul"/>
+                    </form>
+                </td>
+                </tr> <?php endforeach; ?>
+            </tbody>
+		</table>
+        <?php }else{
+            ?>
+            <h1 class="center">No hay archivos anexados</h1>
+            <?php
+        }?>
+	</div>
 </div>

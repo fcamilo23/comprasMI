@@ -103,30 +103,14 @@ if (isset($_POST['submit'])) {
         }
     }
 
-
-        
-    public function obtener ($idpdf){
-        $this->query('SELECT * FROM pdf WHERE idpdf = :id');
-        $this->bind(':id', $idpdf);
-        $row = $this->single();
-        $pdf = base64_decode($row['pdf']);
-        $row['pdflegible'] = $pdf;
-        return $row;
-
-    }
-
-
-
-
     public function verSolicitud(){
 
         $this->query('SELECT * FROM novedades WHERE idSolicitud="'.$_SESSION['solicitudActual']['id'].'" ORDER BY id DESC');
         $_SESSION['novedades'] = $this->resultSet();
 
-
+        $this->query('SELECT * FROM archivosSolicitudes WHERE idSolicitud="'.$_SESSION['solicitudActual']['id'].'"');
+        $_SESSION['archivos'] = $this->resultSet();
         
-
-
         return;
         
          
@@ -263,6 +247,45 @@ if (isset($_POST['submit'])) {
         $row = $this->resultSet();
         return $row;
     }
+
+    public function subirArchivos(){
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        for($i=0; $i<sizeof($post['pdf']); $i++){
+            $this->query('INSERT INTO archivosSolicitudes(`idSolicitud`, `nombre`, `pdf`) VALUES(:idSolicitud, :nombre, :pdf)');
+            $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+            $this->bind(':nombre', $post['pdfnombre'][$i]);
+            $this->bind(':pdf', $post['pdf'][$i]);
+            $this->execute();
+            
+        }
+        header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+
+
+    }
+
+    public function obtener ($idpdf){
+        $this->query('SELECT * FROM archivosSolicitudes WHERE id = :id');
+        $this->bind(':id', $idpdf);
+        $row = $this->single();
+        $pdf = base64_decode($row['pdf']);
+        $row['pdflegible'] = $pdf;
+        return $row;
+    }
+
+    public function verArchivo(){
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $this->query('SELECT * FROM archivosSolicitudes WHERE id = :id');
+        $this->bind(':id', $post['id']);
+        $row = $this->single();
+        $pdf = base64_decode($row['pdf']);
+        $row['pdflegible'] = $pdf;
+        return $row;
+    }
+
+   
+
+ 
+
  
         
 

@@ -31,10 +31,17 @@ class Solicitudes extends Controller{
 		$this->returnView($viewmodel->prueba(), true);
 	}
 
-	protected function obtener($idpdf){
+	protected function subirarchivos(){
 		$viewmodel = new SolicitudesModel();
-		$this->returnView($viewmodel->obtener($idpdf), true);
+		$this->returnView($viewmodel->subirarchivos(), true);
+
 	}
+
+	protected function verArchivo(){
+		$viewmodel = new SolicitudesModel();
+		$this->returnView($viewmodel->verArchivo(), true);
+	}
+
 
 
 }
