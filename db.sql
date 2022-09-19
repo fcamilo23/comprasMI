@@ -61,8 +61,24 @@ CREATE TABLE `oficinas` (
   `borrado` tinyint(1) NOT NULL
 );
 
+CREATE TABLE `archivossolicitudes` (
+  `id` int(11) NOT NULL,
+  `idSolicitud` int(11) NOT NULL,
+  `nombre` text NOT NULL,
+  `pdf` longblob NOT NULL
+)
 
+ALTER TABLE `archivossolicitudes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `archivossolicitudes_ibfk` (`idSolicitud`);
 
+ALTER TABLE `archivossolicitudes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+ALTER TABLE `archivossolicitudes`
+  ADD CONSTRAINT `archivossolicitudes_ibfk` FOREIGN KEY (`idSolicitud`) REFERENCES `solicitudescompra` (`id`);
+COMMIT;
 
 
 

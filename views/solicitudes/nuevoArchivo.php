@@ -3,6 +3,8 @@
     <div class="row d-flex justify-content-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8">
             <div class="card">
+                <br>
+            <h1 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h1>
                 <div class="card-body">
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Default file input example</label>
