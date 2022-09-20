@@ -2,8 +2,15 @@
 class SolicitudesModel extends Model{
 	public function listaSolicitudes(){
 
+
+        $this->query('SELECT * FROM solicitudescompra');
+        $lstSolicitudes = $this->resultSet();
+        $_SESSION['solicitudesExcel'] = $lstSolicitudes;
+
+
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if(isset($post) && isset($post['submit'])){
+            if($_POST['submit'] == 'Ampliar'){
             $sr = $post['numero'];
             $this->query('SELECT * FROM solicitudescompra WHERE sr = "'. $sr .'"');
             $row = $this->single();
@@ -30,13 +37,36 @@ class SolicitudesModel extends Model{
             );
 
             header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+        }
+
+        if($_POST['submit'] == 'Filtrar'){
+
+            $consulta = "SELECT * FROM solicitudescompra WHERE ";
+
+            if($post['fechaIni'] != "" && $post['fechaFin'] != "" ){
+                $consulta = $consulta . "fechaHora BETWEEN '" . $post['fechaIni'] . "' AND '" . $post['fechaFin'] . "'";
+                if($post['estado'] != '0' || $post['planificado'] != '0'){$consulta .= " AND ";}
+            }
+
+            if($post['estado'] != '0'){
+                $consulta = $consulta . "estado = '" . $post['estado'] . "'";
+                if($post['planificado'] != '0'){$consulta .= " AND ";}
+            }
+
+            if($post['planificado'] != '0'){
+                $consulta = $consulta . "planificado = '" . $post['planificado'] . "'";
+            }
+            echo $consulta;
+            $this->query($consulta);
+            $lstSolicitudes = $this->resultSet();
             
 
         }
+    }
+
         
-        $this->query('SELECT * FROM solicitudescompra');
-        $lstSolicitudes = $this->resultSet();
-        $_SESSION['solicitudesExcel'] = $lstSolicitudes;
+        
+       
        
         return $lstSolicitudes;
     }
