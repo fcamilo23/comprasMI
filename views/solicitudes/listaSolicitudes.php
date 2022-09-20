@@ -65,7 +65,7 @@
 
 <dialog class="divfiltros center" id="modalfiltros" style="z-index: 1; animation: createBox .15s">
 <h2 class="" style="display: inline-block; ">Filtros</h2>
-    <button id="cerrarFiltros" style="display: inline-block; font-size: 40px; background: none; border: none; float:right">×</button>
+    <label id="cerrarFiltros" style="cursor: pointer; display: inline-block; font-size: 40px; background: none; border: none; float:right">×</label>
     <div class="">
     <label class="center" style="color:grey" for="">Desde</label>
     <input class="form-control" style="" id="fechaIni" type="date" name="fechaIni" onChange="cambiarFecha(this)">
@@ -103,7 +103,7 @@
         </div>
 
         <input type="submit" name="submit"  class="btn sombraAzul center " style="color:white; float:right; margin-right: 2%; width: 100px; margin-top:40px; background: #001d5a" value="Filtrar">/>
-
+        <button  class="btn sombra center " style="color:white; float:right; margin-right: 4%; width: 100px; margin-top:40px; background: #999999">Limpiar </button>
 </dialog>
 
 

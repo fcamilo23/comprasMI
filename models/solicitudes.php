@@ -56,7 +56,7 @@ class SolicitudesModel extends Model{
             if($post['planificado'] != '0'){
                 $consulta = $consulta . "planificado = '" . $post['planificado'] . "'";
             }
-            echo $consulta;
+            //echo $consulta;
             $this->query($consulta);
             $lstSolicitudes = $this->resultSet();
             
