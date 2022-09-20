@@ -43,5 +43,11 @@ class Solicitudes extends Controller{
 	}
 
 
+	protected function eliminarArchivo(){
+		$viewmodel = new SolicitudesModel();
+		$this->returnView($viewmodel->eliminarArchivo(), true);
+	}
+
+
 
 }

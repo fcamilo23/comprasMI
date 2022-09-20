@@ -314,6 +314,15 @@ if (isset($_POST['submit'])) {
         $row['pdflegible'] = $pdf;
         return $row;
     }
+  
+
+    public function eliminarArchivo(){
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $this->query('DELETE FROM archivosSolicitudes WHERE id = :id');
+        $this->bind(':id', $post['id']);
+        $this->execute();
+        header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+    }
 
    
 
