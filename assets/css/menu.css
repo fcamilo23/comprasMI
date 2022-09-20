@@ -676,8 +676,10 @@ section{
         margin-top: 150px
     }
 }
+.miniinput2{
+        max-width: 10rem;
+    }
+
 .miniinput{
-
     max-width: 8rem;
-
 }

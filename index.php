@@ -16,6 +16,7 @@ require('controllers/menu.php');
 require('controllers/solicitudes.php');
 require('controllers/oficina.php');
 require('controllers/proveedor.php');
+require('controllers/orden.php');
 
 
 
@@ -27,6 +28,7 @@ require('models/menu.php');
 require('models/solicitudes.php');
 require('models/oficina.php');
 require('models/proveedor.php');
+require('models/orden.php');
 
 
 
