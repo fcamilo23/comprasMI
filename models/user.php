@@ -43,7 +43,7 @@ class UserModel extends Model{
 
 
 				
-				header('Location: '.ROOT_URL.'users/profile');
+				header('Location: '.ROOT_URL.'');
 			}
 		}
 		return;
@@ -128,7 +128,7 @@ class UserModel extends Model{
 					<h1>llegamos aca1</h1>
 				<?php
 				
-				header('Location: '.ROOT_URL.'users/profile');
+				header('Location: '.ROOT_URL.'');
 			}
 
 			} else {

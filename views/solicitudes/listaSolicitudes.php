@@ -55,23 +55,26 @@
     </script>
 
     
-    <a href="<?php echo ROOT_URL; ?>users/profile"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
+    <a href="<?php echo ROOT_URL; ?>"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
 
 
 <!--<button type="button" tabindex="0" aria-controls="solis" class="excel sombraVerde"> <img src="<?php echo ROOT_PATH; ?>imagenes/Excel1.jpg" width="150px" height="50px" ></button>-->
 <a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaSolicitud"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaSoli.jpg" width="190px" height="50px" ></button></a>
-<button class="filtrado sombra" style ="cursor: pointer; padding:5px; font-size: 25px; float:right; margin-right: 40px; border:none; background:#e9e9e9" id="abrirFiltros" > <i class="fas fa-filter"></i> Filtros</button>
-<dialog class="divfiltros center" id="modalfiltros" style="z-index: 1;">
-    <button id="cerrarFiltros" style="font-size: 60px; width: 40px; background: none; border: none; float:right">×</button>
+<button class="filtrado sombra" style ="cursor: pointer; padding:5px; font-size: 25px; float:right; margin-right: 40px; border:none; background:#e9e9e9" id="abrirFiltros" > <i class="fas fa-filter" style="color:#303030" ></i> Filtros</button>
+<form id="filtro" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">       
+
+<dialog class="divfiltros center" id="modalfiltros" style="z-index: 1; animation: createBox .15s">
+<h2 class="" style="display: inline-block; ">Filtros</h2>
+    <label id="cerrarFiltros" style="cursor: pointer; display: inline-block; font-size: 40px; background: none; border: none; float:right">×</label>
     <div class="">
-    <label class="" style="color:grey" for="">Desde</label>
-    <input class="form-control center" style="width:205px;" type="date">
+    <label class="center" style="color:grey" for="">Desde</label>
+    <input class="form-control" style="" id="fechaIni" type="date" name="fechaIni" onChange="cambiarFecha(this)">
     <label style="margin-top: 5px; color:grey;" for="">Hasta</label>
-    <input class="form-control center" style="width:200px;" type="date"><br>
+    <input class="form-control" style="" id="fechaFin" type="date" name="fechaFin"><br>
 
     
     <label  style="margin-top: 15px; color: rgb(130, 130, 130)">Estado</label>
-        <select style ="width:200px;" name="estado" class="form-control center" >
+        <select style ="" name="estado" class="form-control" >
             <option value="0" >Ninguno</option>
 
             <option value="Pendiente" >Pendiente</option>
@@ -88,7 +91,7 @@
 		</select> 
 
         <label  style="margin-top: 15px; color: rgb(130, 130, 130)">Planificado</label>
-        <select style ="width:200px;" name="estado" class="form-control center" >
+        <select style ="" name="planificado" class="form-control" >
             <option value="0" >Ninguno</option>
             <option value="Si" >Si</option>
             <option value="No" >No</option>
@@ -99,8 +102,8 @@
 
         </div>
 
-        <button class="btn btn-primary sombraAzul center " style="float:right; margin-right: 25%; width: 100px; margin-top:40px">Filtrar</button>
-
+        <input type="submit" name="submit"  class="btn sombraAzul center " style="color:white; float:right; margin-right: 2%; width: 100px; margin-top:40px; background: #001d5a" value="Filtrar">/>
+        <button  class="btn sombra center " style="color:white; float:right; margin-right: 4%; width: 100px; margin-top:40px; background: #999999">Limpiar </button>
 </dialog>
 
 
@@ -150,14 +153,15 @@
                 <td><?php echo $item['detalle'] ?></td>
                 <td><?php echo $item['observaciones'] ?></td>
 
-                <form id="filtro" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">       
                 <td><input type="text" name="numero" style="display: none" value="<?php echo $item['SR']; ?>"/>
                 <input type="submit" name="submit" value="Ampliar" style="background: #001d5a; border: none" class="btn btn-primary sombraAzul"/></td>
-                </form>
                 
 			</tr> <?php endforeach; ?>
             </tbody>
 		</table>
+
+        </form>
+
 	</div>
 
     <script>
@@ -181,6 +185,13 @@
 
        
         })
+
+
+        function cambiarFecha(ini){
+            
+            const fin = document.getElementById("#fechaIni").value;
+            document.getElementById("#fechaFin").setValue(fin);
+        }
 
 
 

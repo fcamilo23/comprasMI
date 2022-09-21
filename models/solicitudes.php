@@ -2,8 +2,15 @@
 class SolicitudesModel extends Model{
 	public function listaSolicitudes(){
 
+
+        $this->query('SELECT * FROM solicitudescompra');
+        $lstSolicitudes = $this->resultSet();
+        $_SESSION['solicitudesExcel'] = $lstSolicitudes;
+
+
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if(isset($post) && isset($post['submit'])){
+            if($_POST['submit'] == 'Ampliar'){
             $sr = $post['numero'];
             $this->query('SELECT * FROM solicitudescompra WHERE sr = "'. $sr .'"');
             $row = $this->single();
@@ -18,6 +25,7 @@ class SolicitudesModel extends Model{
                 "artServ"	=> $row['artServ'],
                 "detalle"	=> $row['detalle'],
                 "cantidad"	=> $row['cantidad'],
+                "unidad"	=> $row['unidad'],
                 "estado"	=> $row['estado'],
                 "oficinaSolicitante"	=> $row['oficinaSolicitante'],
                 "fechaHora"	=> $row['fechaHora'],
@@ -30,13 +38,36 @@ class SolicitudesModel extends Model{
             );
 
             header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+        }
+
+        if($_POST['submit'] == 'Filtrar'){
+
+            $consulta = "SELECT * FROM solicitudescompra WHERE ";
+
+            if($post['fechaIni'] != "" && $post['fechaFin'] != "" ){
+                $consulta = $consulta . "fechaHora BETWEEN '" . $post['fechaIni'] . "' AND '" . $post['fechaFin'] . "'";
+                if($post['estado'] != '0' || $post['planificado'] != '0'){$consulta .= " AND ";}
+            }
+
+            if($post['estado'] != '0'){
+                $consulta = $consulta . "estado = '" . $post['estado'] . "'";
+                if($post['planificado'] != '0'){$consulta .= " AND ";}
+            }
+
+            if($post['planificado'] != '0'){
+                $consulta = $consulta . "planificado = '" . $post['planificado'] . "'";
+            }
+            //echo $consulta;
+            $this->query($consulta);
+            $lstSolicitudes = $this->resultSet();
             
 
         }
+    }
+
         
-        $this->query('SELECT * FROM solicitudescompra');
-        $lstSolicitudes = $this->resultSet();
-        $_SESSION['solicitudesExcel'] = $lstSolicitudes;
+        
+       
        
         return $lstSolicitudes;
     }
@@ -144,7 +175,7 @@ if (isset($_POST['submit'])) {
             
 
 
-                $this->query('UPDATE solicitudescompra SET SR = :sr, planificado = :planificado, gastos_inversiones = :gastos_inversiones, grupoAS=:grupoAS, artServ=:artServ, detalle=:detalle, cantidad=:cantidad, estado=:estado, oficinaSolicitante=:oficinaSolicitante, costoAprox=:costoAprox, referente=:referente, contactoReferente=:contactoReferente, observaciones=:observaciones, procedimiento=:procedimiento WHERE id=:id'); 
+                $this->query('UPDATE solicitudescompra SET SR = :sr, planificado = :planificado, gastos_inversiones = :gastos_inversiones, grupoAS=:grupoAS, artServ=:artServ, detalle=:detalle, cantidad=:cantidad, unidad=:unidad, estado=:estado, oficinaSolicitante=:oficinaSolicitante, costoAprox=:costoAprox, referente=:referente, contactoReferente=:contactoReferente, observaciones=:observaciones, procedimiento=:procedimiento WHERE id=:id'); 
                 $this->bind(':sr', $post['sr']);
 				$this->bind(':planificado', $post['planificado']);
                 $this->bind(':gastos_inversiones', $post['gastos_inversiones']);
@@ -152,6 +183,7 @@ if (isset($_POST['submit'])) {
 				$this->bind(':artServ', $post['grupoAS']);
 				$this->bind(':detalle', $post['detalle']);
 				$this->bind(':cantidad', $post['cantidad']);
+                $this->bind(':unidad', $post['unidad']);
 				$this->bind(':estado', $post['estado']);
 				$this->bind(':oficinaSolicitante', 1);
 				$this->bind(':costoAprox', $post['costo']);
@@ -173,6 +205,7 @@ if (isset($_POST['submit'])) {
                     "artServ"	=> $post['artServ'],
                     "detalle"	=> $post['detalle'],
                     "cantidad"	=> $post['cantidad'],
+                    "unidad"	=> $post['unidad'],
                     "estado"	=> $post['estado'],
                     "oficinaSolicitante"	=> $post['oficinaSolicitante'],
                     "fechaHora"	=> $post['fechaHora'],

@@ -77,10 +77,26 @@
     box-shadow: 0px 15px 15px 15px #a87a25;
     -webkit-box-shadow: 5px 5px 5px 5px #333333;
     -webkit-transform:scale(1.085);transform:scale(1.085);
+
     
+
     
     transition: all .2s;
 }
+@keyframes createBox {
+    from {
+      transform: scale(0);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+
+  dialog::backdrop {
+    background-color: rgb(20, 18, 15);
+    opacity: 1;
+  }
 
 .sombra:hover{
     box-shadow: 0px 15px 15px 15px #a87a25;
@@ -88,7 +104,8 @@
     -webkit-transform:scale(1.085);transform:scale(1.085);
     
     
-    transition: all .1s;
+    transition: all .3s;
+    border-radius: 2px;
 
 }
 .sombraRoja:hover{
@@ -98,6 +115,7 @@
     
     
     transition: all .1s;
+
 
 }
 .sombraAzul:hover{
@@ -114,8 +132,10 @@
     -webkit-box-shadow: 5px 5px 5px 5px #001d5a;
     -webkit-transform:scale(1.085);transform:scale(1.085);
     
-    
-    transition: all .1s;
+    transition: all .3s;
+    border-radius: 2px;
+
+
 
 }
 .sombraVerde:hover{
@@ -136,7 +156,7 @@
 .icons{
     width: 130px;
     height: 130px;
-    opacity: 0.9;
+    opacity: 0.5;
     /*margin-left: 25%;*/
 
     
@@ -536,22 +556,30 @@ section{
 }
 
 .homeimg{
-    margin-left: 0%; 
-    margin-top: 20px;
-    width: 650px;
-    height: 700px;
+    margin: 0 auto;
+    width: 950px;
+    height: 380px;
     border-radius: 10px;
+    margin-top: 10%;
 }
 .homeimg1{
-    margin-left: 2%;
-    margin-bottom: 50px;
+    margin: 0 auto;
+    background: white;
+    height: 100%;
+    width: 100%;
 
-    text-align: center;
-
-    width: 550px;  
-    height: 250px;
 }
 
+.fullancho{
+    width: 100%;
+}
+
+.logindiv{
+    background: white;
+    width: 100%;
+    border-radius: 5px;
+    padding: 20px;
+}
 
 .iconmargen{
     margin-right: 15px;
@@ -572,30 +600,41 @@ section{
 }
 
 .perfil{
-    width: 600px; 
-    margin-left:25%; 
-    margin-top: 150px
+    margin-top: 150px;
+    border-radius: 5px;
+    text-align: center;
 }
 @media (max-width: 550px){
     
    
 }
 @media (max-width: 1350px){
-    .homeimg{
 
-        margin-left: -40%; 
-        width: 500px;  
-        height: 520px;
-        margin-top: 200px;
-        width: 550px;
-        height: 580px;
+    .logindiv{
+        background: white;
+        width: 100%;
+        border-radius: 5px;
+        padding: 20px;
+    }
+
+
+    .homeimg{
+        margin: 50% auto;
+        width: 600px;
+        height: 300px;
         border-radius: 10px;
     }
 
+    .homeimg1{
+        margin: 0 auto;
+        height: 100%;
+    
+    }
+    
+
     .perfil{
-        width: 600px; 
-        margin-left:10%; 
-        margin-top: 150px
+        width: 100%; 
+        margin-top: 0px;
     }
 
   
