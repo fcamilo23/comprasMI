@@ -1,5 +1,7 @@
-<div class="row col-12">
-    <div class="col-lg-6 center">
+<a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
+
+<div class="row col-12 center" style="background: white; width: 70%; padding: 40px; border: 1px solid rgba(220, 220, 220); border-radius: 5px; margin-top: 3%" >
+    <div class="col-lg-6 center" >
         <form id="nuevaSolicitud" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">SR</label>
         <input type="text" name="sr" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el SR" required >
@@ -18,6 +20,33 @@
 				<option value="Si">Si</option>
 				<option value="No">No</option>
 			</select> 
+
+        <!-- Por si hay que poner el procedimiento con numero y año como dijo Saul: Procedimiento|Numero|Año ---------------------------------------------------- 
+        <label style="margin-top: 20px; color: rgb(130, 130, 130)">Procedimiento | Número | Año</label>
+        <div class="input-group">
+
+        <select name="procedimiento" class="form-control" style="width: 42%">
+                <option value="0" selected>Seleccione una opción</option>
+				<option value="LP - Licitación Pública">LP - Licitación Pública</option>
+				<option value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
+				<option value="CD - Compra Directa">CD - Compra Directa</option>
+                <option value="CE - Compra por Excepción">CE - Compra por Excepción</option>
+				<option value="CP - Concurso de Precios">CP - Concurso de Precios</option>
+				<option value="PCE - Procedimientos de Contratación Especiales">PCE - Procedimientos de Contratación Especiales</option>
+				<option value="ARR - Arrendamiento">ARR - Arrendamiento</option>
+				<option value="CCH - Caja Chica">CCH - Caja Chica</option>
+
+			</select> 
+
+        <input style="width: 10%; border-left: 3px solid grey"type="number" name="numProc" min="1"  class="form-control" style="margin-top: 0px;" required placeholder="Número">
+        <input style="width: 10%; border-left: 3px solid grey"type="number" name="añoProc" min="1" class="form-control" style="margin-top: 0px;" required placeholder="Año">
+        </div>
+
+         ------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+
+
+
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Tipo de Procedimiento</label>
         <select name="procedimiento" class="form-control">

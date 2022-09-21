@@ -25,6 +25,7 @@ class SolicitudesModel extends Model{
                 "artServ"	=> $row['artServ'],
                 "detalle"	=> $row['detalle'],
                 "cantidad"	=> $row['cantidad'],
+                "unidad"	=> $row['unidad'],
                 "estado"	=> $row['estado'],
                 "oficinaSolicitante"	=> $row['oficinaSolicitante'],
                 "fechaHora"	=> $row['fechaHora'],
@@ -180,7 +181,7 @@ if (isset($_POST['submit'])) {
             
 
 
-                $this->query('UPDATE solicitudescompra SET SR = :sr, planificado = :planificado, gastos_inversiones = :gastos_inversiones, grupoAS=:grupoAS, artServ=:artServ, detalle=:detalle, cantidad=:cantidad, estado=:estado, oficinaSolicitante=:oficinaSolicitante, costoAprox=:costoAprox, referente=:referente, contactoReferente=:contactoReferente, observaciones=:observaciones, procedimiento=:procedimiento WHERE id=:id'); 
+                $this->query('UPDATE solicitudescompra SET SR = :sr, planificado = :planificado, gastos_inversiones = :gastos_inversiones, grupoAS=:grupoAS, artServ=:artServ, detalle=:detalle, cantidad=:cantidad, unidad=:unidad, estado=:estado, oficinaSolicitante=:oficinaSolicitante, costoAprox=:costoAprox, referente=:referente, contactoReferente=:contactoReferente, observaciones=:observaciones, procedimiento=:procedimiento WHERE id=:id'); 
                 $this->bind(':sr', $post['sr']);
 				$this->bind(':planificado', $post['planificado']);
                 $this->bind(':gastos_inversiones', $post['gastos_inversiones']);
@@ -188,6 +189,7 @@ if (isset($_POST['submit'])) {
 				$this->bind(':artServ', $post['grupoAS']);
 				$this->bind(':detalle', $post['detalle']);
 				$this->bind(':cantidad', $post['cantidad']);
+                $this->bind(':unidad', $post['unidad']);
 				$this->bind(':estado', $post['estado']);
 				$this->bind(':oficinaSolicitante', 1);
 				$this->bind(':costoAprox', $post['costo']);
@@ -209,6 +211,7 @@ if (isset($_POST['submit'])) {
                     "artServ"	=> $post['artServ'],
                     "detalle"	=> $post['detalle'],
                     "cantidad"	=> $post['cantidad'],
+                    "unidad"	=> $post['unidad'],
                     "estado"	=> $post['estado'],
                     "oficinaSolicitante"	=> $post['oficinaSolicitante'],
                     "fechaHora"	=> $post['fechaHora'],

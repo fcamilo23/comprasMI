@@ -3,7 +3,7 @@
 <a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaOrden"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOrden.jpg" width="190px" height="50px" ></button></a>
 <a href="<?php echo ROOT_PATH; ?>solicitudes/nuevoArchivo"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button></a>
 
-<div class="row col-12">
+<div class="row col-12 center" style="background: white; width: 70%; padding: 40px; border: 1px solid rgba(220, 220, 220); border-radius: 5px; margin-top: 3%;">
     <div class="col-lg-6 center">
         <form id="verSolicitud" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Número SR</label>
@@ -79,8 +79,16 @@
 
     </div>
     <div class="col-lg-6 center">
-        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Cantidad</label>
+        <!--<label  style="margin-top: 20px; color: rgb(130, 130, 130)">Cantidad</label>
         <input type="number" name="cantidad" min="1" value="<?php echo $_SESSION['solicitudActual']['cantidad'] ?>" class="form-control" style="margin-top: 0px;" required placeholder="Ingrese la cantidad" disabled>
+-->
+
+        <label style="margin-top: 20px; color: rgb(130, 130, 130)">Cantidad | Unidad</label>
+        <div class="input-group">
+            <input style="width: 18%; border-right: 3px solid grey" value="<?php echo $_SESSION['solicitudActual']['cantidad'] ?>" type="number" name="cantidad" min="1"  class="form-control" style="margin-top: 0px;" required disabled placeholder="Cantidad">
+            <input style="width: 80%; border-left: 3px solid grey" value="<?php echo $_SESSION['solicitudActual']['unidad'] ?>" type="text" name="unidad" class="form-control" style="margin-top: 0px;" required disabled placeholder="Ingrese la unidad">
+        </div>
+
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
         <input type="number" name="costo" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['costoAprox'] ?>" required placeholder="Ingrese el costo estimado de la compra" disabled>
@@ -105,12 +113,12 @@
        
     </div>
 
-    
-
-</div>
-<div class="col-12 center" style="text-align: center; margin-top: 100px">
+    <div class="col-12 center" style="text-align: center; margin-top: 60px">
         <a href="<?php echo ROOT_URL; ?>solicitudes/editarSolicitud"><input class="btn btn-primary" value="Editar Solicitud" style="width: 150px;"/> </a>
     </div>
+
+</div>
+
 </form>
 
 <div style="margin-top: 100px">

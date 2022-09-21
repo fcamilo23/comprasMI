@@ -1,6 +1,6 @@
 <a href="<?php echo ROOT_URL; ?>solicitudes/verSolicitud"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
 
-<div class="row col-12">
+<div class="row col-12 center" style="background: white; width: 70%; padding: 40px; border: 1px solid rgba(220, 220, 220); border-radius: 5px; margin-top: 3%;">
     <div class="col-lg-6 center">
         <form id="verSolicitud" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
 
@@ -82,8 +82,16 @@
 
     </div>
     <div class="col-lg-6 center">
-        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Cantidad</label>
+        <!--<label  style="margin-top: 20px; color: rgb(130, 130, 130)">Cantidad</label>
         <input type="number" name="cantidad" min="1" value="<?php echo $_SESSION['solicitudActual']['cantidad'] ?>" class="form-control" style="margin-top: 0px;" required placeholder="Ingrese la cantidad" >
+        -->
+        <label style="margin-top: 20px; color: rgb(130, 130, 130)">Cantidad | Unidad</label>
+        <div class="input-group">
+            <input style="width: 18%; border-right: 3px solid grey" value="<?php echo $_SESSION['solicitudActual']['cantidad'] ?>" type="number" name="cantidad" min="1"  class="form-control" style="margin-top: 0px;" required  placeholder="Cantidad">
+            <input style="width: 80%; border-left: 3px solid grey" value="<?php echo $_SESSION['solicitudActual']['unidad'] ?>" type="text" name="unidad" class="form-control" style="margin-top: 0px;" required  placeholder="Ingrese la unidad">
+        </div>
+
+
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
         <input type="number" name="costo" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['costoAprox'] ?>" required placeholder="Ingrese el costo estimado de la compra" >
@@ -114,10 +122,10 @@
        
     </div>
 
-    
-
-</div>
-<div class="col-12 center" style="text-align: center; margin-top: 100px">
+    <div class="col-12 center" style="text-align: center; margin-top: 60px">
         <input type="submit" id="submit" name="submit" class="btn btn-primary" value="Guardar Cambios" style="width: 150px;"/> 
     </div>
+
+</div>
+
 </form>

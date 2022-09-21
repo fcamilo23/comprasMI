@@ -1,3 +1,5 @@
+<a href="<?php echo ROOT_URL; ?>solicitudes/verSolicitud"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
+
 <?php $cant=0; ?>
 <div class="container mt-5 mb-5">
     <div class="row d-flex justify-content-center">

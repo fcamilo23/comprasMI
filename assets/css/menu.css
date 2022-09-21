@@ -156,7 +156,7 @@
 .icons{
     width: 130px;
     height: 130px;
-    opacity: 0.9;
+    opacity: 0.5;
     /*margin-left: 25%;*/
 
     
@@ -556,20 +556,16 @@ section{
 }
 
 .homeimg{
-    margin-left: 0%; 
-    margin-top: 20px;
     width: 650px;
     height: 700px;
     border-radius: 10px;
+    margin-top: 10%;
 }
 .homeimg1{
-    margin-left: 2%;
-    margin-bottom: 50px;
+    margin: 0 auto;
+    background: white;
+    height: 100%;
 
-    text-align: center;
-
-    width: 550px;  
-    height: 250px;
 }
 
 
@@ -592,9 +588,9 @@ section{
 }
 
 .perfil{
-    width: 600px; 
-    margin-left:25%; 
-    margin-top: 150px
+    margin-top: 150px;
+    border-radius: 5px;
+    text-align: center;
 }
 @media (max-width: 550px){
     
@@ -602,20 +598,22 @@ section{
 }
 @media (max-width: 1350px){
     .homeimg{
-
-        margin-left: -40%; 
-        width: 500px;  
-        height: 520px;
-        margin-top: 200px;
+        margin: 50% auto;
         width: 550px;
         height: 580px;
         border-radius: 10px;
     }
 
+    .homeimg1{
+        margin: 0 auto;
+        height: 100%;
+    
+    }
+    
+
     .perfil{
-        width: 600px; 
-        margin-left:10%; 
-        margin-top: 150px
+        width: 100%; 
+        margin-top: 0px;
     }
 
   

@@ -1,5 +1,5 @@
 <body>
-<a href="<?php echo ROOT_URL; ?>users/profile"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
+<a href="<?php echo ROOT_URL; ?>"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
   
 <div class="container mt-5 mb-5">
     <div class="row d-flex justify-content-center">
