@@ -6,5 +6,162 @@ class OrdenModel extends Model{
         $lstProveedores = $this->resultSet();
          return $lstProveedores;
     }
+
+    public function agregarOrden(){
+
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $fechaini=null; 
+            $fechafin=null;
+            $esservicio = 'no';
+            
+            if($post['siservicio'] == 'si'){
+                $fechaini = $post['inicio'];
+                $fechafin = $post['fin'];
+                $esservicio = 'si';
+                print_r($post);
+            }
+    ////aqui se agrega la orden
+
+            $this->query('INSERT INTO   ordenes (numero, anio, moneda, montoReal, procedimiento, plazoEntrega, formaPago, servicio, fechaInicio, fechaFin, idProveedor,idSolicitud) VALUES (:numero, :anio, :moneda, :montoReal, :procedimiento, :plazoEntrega, :formaPago, :servicio, :fechaInicio, :fechaFin, :idProveedor, :idSolicitud)');
+            $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+            $this->bind(':numero', $post['numero']);
+            $this->bind(':anio', $post['anio']);
+            $this->bind(':moneda', $post['moneda']);
+            $this->bind(':montoReal', $post['montoReal']);
+            $this->bind(':procedimiento', $post['procedimiento']);
+            $this->bind(':formaPago', $post['formaPago']);
+            $this->bind(':plazoEntrega', $post['plazoEntrega']);
+            $this->bind(':servicio', $esservicio);
+            $this->bind(':fechaInicio', $fechaini);
+            $this->bind(':fechaFin', $fechafin);
+            $this->bind(':idProveedor', $post['idProveedor']);
+            $this->execute();
+
+
+
+            $this->query('SELECT id FROM ordenes WHERE idSolicitud = :idSolicitud AND numero = :numero AND anio = :anio LIMIT 1' );
+            $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+            $this->bind(':numero', $post['numero']);
+            $this->bind(':anio', $post['anio']);
+            $this->execute();
+            $idOrden = $this->single();
+            print_r($idOrden);
+            print_r($_SESSION['solicitudActual']['id']);
+
+
+            for($i=0; $i<sizeof($post['pdf']); $i++){
+                $this->query('INSERT INTO archivosordenes (`idSolicitud`,`idOrden`, `nombre`, `pdf`) VALUES(:idSolicitud, :idOrden, :nombre, :pdf)');
+                $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+                $this->bind(':idOrden', $idOrden['id']);
+                $this->bind(':nombre', $post['pdfnombre'][$i]);
+                $this->bind(':pdf', $post['pdf'][$i]);
+
+                $this->execute();
+            }
+
+        header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+        return;
+    }
+    ///ver orden
+    public function verOrden(){
+
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(isset($post['idOrden'])){
+            $_SESSION['ordenActual'] = $post['idOrden'];
+        }
+        $this->query('SELECT * FROM ordenes WHERE id = :id');
+        $this->bind(':id',  $_SESSION['ordenActual'] );
+        $orden = $this->single();
+        $this->query('SELECT id, nombre FROM archivosordenes WHERE idOrden = :idOrden');
+        $this->bind(':idOrden',  $_SESSION['ordenActual'] );
+        $archivos = $this->resultSet();
+        $this->query('SELECT * FROM proveedores WHERE id = :id');
+        $this->bind(':id', $orden['idProveedor']);
+        $proveedor = $this->single();
+        
+        $viewmodel = array(
+            'orden' => $orden,
+            'archivos' => $archivos,
+            'proveedor' => $proveedor
+        );
+        return $viewmodel;
+
+    }
+
+    public function verArchivo(){
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $this->query('SELECT * FROM archivosordenes WHERE id = :id');
+        $this->bind(':id', $post['idArchivo']);
+        $viewmodel=$this->single();
+        return $viewmodel;
+    }
+
+    public function eliminarArchivo(){
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $this->query('DELETE FROM archivosordenes WHERE id = :id');
+        $this->bind(':id', $post['idArchivo']);
+        $this->execute();
+        header('Location: '.ROOT_URL.'orden/verOrden');
+        return;
+    }
+
+    public function subirArchivos (){
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        for($i=0; $i<sizeof($post['pdf']); $i++){
+            $this->query('INSERT INTO archivosordenes (`idSolicitud`,`idOrden`, `nombre`, `pdf`) VALUES(:idSolicitud, :idOrden, :nombre, :pdf)');
+            $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+            $this->bind(':idOrden', $_SESSION['ordenActual']);
+            $this->bind(':nombre', $post['pdfnombre'][$i]);
+            $this->bind(':pdf', $post['pdf'][$i]);
+
+            $this->execute();
+        }  
+        header('Location: '.ROOT_URL.'orden/verOrden');
+    }
+    
+    public function editarOrden(){
+        //traer todos los proveedores
+        $this->query('SELECT * FROM proveedores');
+        $proveedores = $this->resultSet();
+        //traer la orden
+        $this->query('SELECT * FROM ordenes WHERE id = :id');
+        $this->bind(':id', $_SESSION['ordenActual']);
+        $orden = $this->single();
+        $viewmodel = array(
+            'proveedores' => $proveedores,
+            'orden' => $orden
+        );
+        return $viewmodel;
+    }
+
+    public function modificarOrden(){
+        $fechaini=null; 
+        $fechafin=null;
+        $esservicio = 'no';
+        
+        if($post['siservicio'] == 'si'){
+            $fechaini = $post['inicio'];
+            $fechafin = $post['fin'];
+            $esservicio = 'si';
+            print_r($post);
+        }
+        $this->query('UPDATE ordenes SET numero = :numero, anio = :anio, moneda = :moneda, montoReal = :montoReal, procedimiento = :procedimiento, plazoEntrega = :plazoEntrega, formaPago = :formaPago, servicio = :servicio, fechaInicio = :fechaInicio, fechaFin = :fechaFin, idProveedor = :idProveedor WHERE id = :id');
+        $this->bind(':id', $_SESSION['ordenActual']);
+        $this->bind(':numero', $post['numero']);
+        $this->bind(':anio', $post['anio']);
+        $this->bind(':moneda', $post['moneda']);
+        $this->bind(':montoReal', $post['montoReal']);
+        $this->bind(':procedimiento', $post['procedimiento']);
+        $this->bind(':formaPago', $post['formaPago']);
+        $this->bind(':plazoEntrega', $post['plazoEntrega']);
+        $this->bind(':servicio', $esservicio);
+        $this->bind(':fechaInicio', $fechaini);
+        $this->bind(':fechaFin', $fechafin);
+        $this->bind(':idProveedor', $post['idProveedor']);
+        $this->execute();
+        header('Location: '.ROOT_URL.'orden/verOrden');
+        return;
+    }
+
 }
 ?>

@@ -43,15 +43,6 @@ class SolicitudesModel extends Model{
 
     public function nuevoArchivo(){
 
-/*
-                //subir pdf
-
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        if(isset($post) && isset($post['upload'])){
-
-        $this->query('INSERT INTO subirPDF(archivo) VALUES("'. $post['pdf'] .'")');
-        $this->execute();
-*/
 if (isset($_POST['submit'])) {
  
     $name = $_POST['name'];
@@ -110,6 +101,9 @@ if (isset($_POST['submit'])) {
 
         $this->query('SELECT * FROM archivosSolicitudes WHERE idSolicitud="'.$_SESSION['solicitudActual']['id'].'"');
         $_SESSION['archivos'] = $this->resultSet();
+
+        $this->query('SELECT *, p.empresa as proveedor, o.id as idOrden FROM ordenes o JOIN proveedores p ON o.idProveedor = p.id WHERE o.idSolicitud="'.$_SESSION['solicitudActual']['id'].'"');
+        $_SESSION['ordenes'] = $this->resultSet();
         
         return;
         

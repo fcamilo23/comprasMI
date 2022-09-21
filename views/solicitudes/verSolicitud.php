@@ -1,6 +1,6 @@
 <a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
 <a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaNovedad"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaNovedad.jpg" width="218px" height="48px" ></button></a>
-<a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaOrden"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOrden.jpg" width="190px" height="50px" ></button></a>
+<a href="<?php echo ROOT_PATH; ?>orden/nuevaOrden"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOrden.jpg" width="190px" height="50px" ></button></a>
 <a href="<?php echo ROOT_PATH; ?>solicitudes/nuevoArchivo"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button></a>
 
 <div class="row col-12">
@@ -114,7 +114,7 @@
 </form>
 
 <div style="margin-top: 100px">
-<a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaSolicitud"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOrden.jpg" width="190px" height="50px" ></button></a>
+<a href="<?php echo ROOT_PATH; ?>orden/nuevaOrden"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOrden.jpg" width="190px" height="50px" ></button></a>
 <h1 style="color: #001d5a; margin-left: 25px" class="">Órdenes de Compra</h1>
 
 
@@ -130,9 +130,6 @@
                     <th>Proveedor</th>
                     <th>Monto Real ($U)</th>
                     <th>Plazo de Entrega</th>
-                    <th>Forma de Pago</th>
-                    <th>Fecha Inicio</th>
-                    <th>Fecha Vencimiento</th>
                     <th></th>
 
 
@@ -140,50 +137,44 @@
 				</tr>
 			</thead>
             <tbody >
-            <tr>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td><input type="submit" name="submit" value="Ampliar" style="background: #001d5a; border: none" class="btn btn-primary sombraAzul"/></td>
-
-                </tr> <tr>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td><input type="submit" name="submit" value="Ampliar" style="background: #001d5a; border: none" class="btn btn-primary sombraAzul"/></td>
-                </tr> <tr>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td><input type="submit" name="submit" value="Ampliar" style="background: #001d5a; border: none" class="btn btn-primary sombraAzul"/></td>
-
-                </tr> <tr>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td>ejemplo</td>
-                <td><input type="submit" name="submit" value="Ampliar" style="background: #001d5a; border: none" class="btn btn-primary sombraAzul"/></td>
-
-                </tr>
+            
+                <?php foreach ($_SESSION['ordenes']  as $orden) : ?>
+                    <tr>
+                    <td>OC <?php echo $orden['numero']; ?>-<?php echo $orden['anio']; ?></td>
+                    <td><?php echo $orden['procedimiento']; ?></td>
+                    <td><?php echo $orden['proveedor']; ?></td>
+                    <?php
+                    $moneda;
+                    if($orden['moneda'] == "$ (Pesos Uruguayos)"){
+                        $moneda = '$U';
+                    }else{
+                        if($orden['moneda'] == "U.I.(Unidades Indexadas)"){
+                            $moneda = "U.I.";
+                        }else{
+                            if($orden['moneda'] == "U.R. (Unidades Reajustables)"){
+                                $moneda = "U.R.";
+                            }else{
+                                if($orden['moneda'] == "€ (Euro)"){
+                                    $moneda = "€";
+                                }else{
+                                    $moneda = 'U$S';
+                                }
+                            }
+                        }
+                    }
+                    ?>
+                    <td> <?php echo $moneda; ?> <?php echo $orden['montoReal']; ?> </td>
+                    
+                    <td><?php echo $orden['plazoEntrega']; ?></td>
+                    <td>
+                        <form  action="<?php echo ROOT_PATH; ?>orden/verOrden" method="POST">
+                            <input type="hidden" name="idOrden" value="<?php echo $orden['idOrden']; ?>">
+                            <button style="background: #001d5a; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul">VER</button>
+                        </form>
+                    </td>
+                    </tr>
+                <?php endforeach; ?>
+            
 
             </tbody>
 		</table>
