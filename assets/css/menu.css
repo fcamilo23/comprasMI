@@ -556,8 +556,9 @@ section{
 }
 
 .homeimg{
-    width: 650px;
-    height: 700px;
+    margin: 0 auto;
+    width: 950px;
+    height: 380px;
     border-radius: 10px;
     margin-top: 10%;
 }
@@ -565,9 +566,20 @@ section{
     margin: 0 auto;
     background: white;
     height: 100%;
+    width: 100%;
 
 }
 
+.fullancho{
+    width: 100%;
+}
+
+.logindiv{
+    background: white;
+    width: 100%;
+    border-radius: 5px;
+    padding: 20px;
+}
 
 .iconmargen{
     margin-right: 15px;
@@ -597,10 +609,19 @@ section{
    
 }
 @media (max-width: 1350px){
+
+    .logindiv{
+        background: white;
+        width: 100%;
+        border-radius: 5px;
+        padding: 20px;
+    }
+
+
     .homeimg{
         margin: 50% auto;
-        width: 550px;
-        height: 580px;
+        width: 600px;
+        height: 300px;
         border-radius: 10px;
     }
 

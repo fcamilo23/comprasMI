@@ -1,9 +1,9 @@
-<div class="text-center homeimg1"  style="">
+<div class="text-center homeimg1"  style="width: 100%">
 
 
 
-<div class="center" style="">
-	<img src="<?php echo ROOT_PATH; ?>imagenes/minterior1.png" alt="" style="" class="homeimg">
+<div class="center" style=" width: 100%">
+	<img src="<?php echo ROOT_PATH; ?>imagenes/asd.png" alt="" style="" class="homeimg">
 
 </div>
 

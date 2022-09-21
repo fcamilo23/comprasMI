@@ -32,7 +32,7 @@
 
 
        
-<div class="col-12 perfil center" style="padding: 50px; background: white">
+<div class="col-12 perfil center" style="padding: 50px; background: white; margin-top: 60px">
    
     <div  >
     <!--<img src="<?php echo ROOT_PATH; ?>imagenes/minterior1.png" alt="" class="iii " style="width: 300px; height: 170px;margin-top: 20px; margin-bottom: 30px; margin-left: 20%">-->
