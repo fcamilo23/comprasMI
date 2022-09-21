@@ -42,6 +42,10 @@
                                 <textarea id="formaPago" name="formaPago" class="form-control" readonly><?php  echo$viewmodel["orden"]["formaPago"] ?></textarea>
                             </div>
                             <br>
+                            <div class="input-group mb-3">
+                            <p class="m-2">Nº Amplición</p>
+                                <input id="numeroAmpliacion" style="max-width: 20rem" name="numeroAmpliacion" type="text" class="form-control"  value="<?php  echo$viewmodel["orden"]["numeroAmpliacion"] ?>" readonly>
+                            </div>
                             <hr>
                             <?php if($viewmodel["orden"]["servicio"] == "si"){ ?>
                             <div class="input-group mb-3">
@@ -54,6 +58,7 @@
                             </div>
                             <br>
                             <?php } ?>
+
                             <div>
                                 <h3>PROVEEDOR: <?php  echo $viewmodel["proveedor"]["empresa"] ?></h3>
                             </div>

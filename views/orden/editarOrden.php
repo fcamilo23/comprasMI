@@ -1,13 +1,14 @@
-<a href="<?php echo ROOT_URL; ?>solicitudes/verSolicitud"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
+<a href="<?php echo ROOT_URL; ?>orden/verOrden"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
 
-<div class="container mt-5 mb-5">
+<div class="container mt-3 mb-3">
     <div class="row d-flex justify-content-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10">
             <div class="card">
                 <br>
-            <h2 style="color: #001d5a; margin-left: 25px" class="">VER ORDEN</h1>
+            <h2 style="color: #001d5a; margin-left: 25px" class="">EDITAR ORDEN</h1>
                 <div class="card-body">
-                <form action="" id="formOrden"></form>
+                <form action="<?php echo ROOT_URL; ?>orden/modificarOrden" method ="POST" enctype="multipart/form-data" id="formOrden">
+                    <input type="hidden" name="idProveedor" value="<?php  echo $viewmodel["orden"]["idProveedor"] ?>" />
                             <label for="oc" class="form-label">OC</label>
                             <div class="input-group mb-3">
                                 <p class="m-2">Numero   </p>
@@ -49,9 +50,13 @@
                             <div class="input-group mb-3">
                                 <textarea id="formaPago" name="formaPago" class="form-control"><?php  echo$viewmodel["orden"]["formaPago"] ?></textarea>
                             </div>
-
                             <br>
-                            <h4 id="proveedorNombre"></h4>
+                            <div class="input-group mb-3">
+                            <p class="m-2">Nº Amplición</p>
+                                <input id="numeroAmpliacion" style="max-width: 20rem" name="numeroAmpliacion" type="text" class="form-control"  value="<?php  echo$viewmodel["orden"]["numeroAmpliacion"] ?>" >
+                            </div>
+                            <br>
+                            
                             <hr>
                             <?php if($viewmodel["orden"]["servicio"] == "si"){ ?>
                             <div class="input-group mb-3">
@@ -64,8 +69,10 @@
                             </div>
                             <br>
                             <?php } ?>
+                            <h4 id="proveedorNombre">PROVEEDOR: <?php echo $viewmodel["orden"]["nombreEmpresa"] ?></h4>
+                            
                             <div>
-                                <button class="btn btn-success" id="editor" onclick ="accion()">CAMBIAR PROVEEDOR</button>
+                                <input type="button" class="btn btn-success" id="editor" onclick ="accion()" value="CAMBIAR PROVEEDOR">
                             </div>
 
                             <hr>
@@ -130,7 +137,7 @@
         input.name = "editadoIdProveedor";
         input.value = id;
         document.getElementById("formOrden").appendChild(input);
-
+    
         document.getElementById("proveedorNombre").innerHTML = "PROVEDOR: "+empresa+"";
     }
        

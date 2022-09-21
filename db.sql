@@ -67,6 +67,63 @@ CREATE TABLE `archivossolicitudes` (
   `nombre` text NOT NULL,
   `pdf` longblob NOT NULL
 )
+---`-------------------ORDENES---------------------
+CREATE TABLE `ordenes` (
+  `id` int(11) NOT NULL,
+  `numero` int(11) NOT NULL,
+  `anio` int(11) NOT NULL,
+  `numeroAmpliacion` varchar(50) DEFAULT NULL,
+  `moneda` varchar(35) NOT NULL,
+  `montoReal` int(11) NOT NULL,
+  `plazoEntrega` date NOT NULL,
+  `formaPago` text NOT NULL,
+  `servicio` varchar(5) NOT NULL,
+  `fechaInicio` date DEFAULT NULL,
+  `fechaFin` date DEFAULT NULL,
+  `idSolicitud` int(11) NOT NULL,
+  `idProveedor` int(11) NOT NULL,
+  `procedimiento` varchar(50) NOT NULL
+)
+
+ALTER TABLE `ordenes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ordenes_ibfk` (`idSolicitud`),
+  ADD KEY `ordenes_idProveedor_ibfk` (`idProveedor`);
+
+ALTER TABLE `ordenes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ 
+ALTER TABLE `ordenes`
+  ADD CONSTRAINT `ordenes_ibfk` FOREIGN KEY (`idSolicitud`) REFERENCES `solicitudescompra` (`id`),
+  ADD CONSTRAINT `ordenes_idProveedor_ibfk` FOREIGN KEY (`idProveedor`) REFERENCES `proveedores` (`id`); 
+
+--------------------------ArchivoOrden---------------------------------
+
+
+CREATE TABLE `archivosordenes` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `pdf` longblob NOT NULL,
+  `idOrden` int(11) NOT NULL,
+  `idSolicitud` int(11) NOT NULL
+) 
+
+ALTER TABLE `archivosordenes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `archivosordenes_orden_ibfk` (`idSolicitud`),
+  ADD KEY `archivos_orden_idOrdenes_ibfk` (`idOrden`);
+
+  ALTER TABLE `archivosordenes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
+ALTER TABLE `archivosordenes`
+  ADD CONSTRAINT `archivos_orden_idOrdenes_ibfk` FOREIGN KEY (`idOrden`) REFERENCES `ordenes` (`id`),
+  ADD CONSTRAINT `archivosordenes_orden_ibfk` FOREIGN KEY (`idSolicitud`) REFERENCES `ordenes` (`id`),
+  ADD CONSTRAINT `archivosordenes_solicitud_ibfk` FOREIGN KEY (`idSolicitud`) REFERENCES `solicitudescompra` (`id`);
+
+  --------------------------archivossolicitudes-----------------------------------
+
 
 ALTER TABLE `archivossolicitudes`
   ADD PRIMARY KEY (`id`),
@@ -78,8 +135,6 @@ ALTER TABLE `archivossolicitudes`
 --
 ALTER TABLE `archivossolicitudes`
   ADD CONSTRAINT `archivossolicitudes_ibfk` FOREIGN KEY (`idSolicitud`) REFERENCES `solicitudescompra` (`id`);
-COMMIT;
-
 
 
 

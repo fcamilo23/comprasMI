@@ -101,14 +101,14 @@ function readAsBase64() {
 
 </script>
 
-<div class="container mt-5 mb-5">
-    <div class="row d-flex justify-content-center">
+<div class="container">
+    <div class="row d-flex justify-content-center ">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8">
             <div class="card">
                 <br>
             <h2 style="color: #001d5a; margin-left: 25px" class="">Subir Orden</h1>
                 
-            <div class="card-body">
+            <div class="card-body ">
                 
                     <form id="formOrden" action="<?php echo ROOT_URL; ?>orden/agregarOrden" method ="POST" enctype="multipart/form-data" >
 
@@ -163,6 +163,12 @@ function readAsBase64() {
                             <div class="input-group mb-3">
                                 <textarea id="formaPago" name="formaPago" class="form-control"></textarea>
                                 <div id="telefonoError" class="invalid-feedback"></div>
+                            </div>
+                            <br>
+                            <label for="numeroAmplicacion"></label>
+                            <div class="input-group mb-3">
+                            <p class="m-2">Nº Amplición</p>
+                                <input id="numeroAmplicacion" style="max-width: 20rem" name="numeroAmplicacion" type="text" class="form-control">
                             </div>
                             <br>
 

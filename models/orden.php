@@ -124,7 +124,7 @@ class OrdenModel extends Model{
         $this->query('SELECT * FROM proveedores');
         $proveedores = $this->resultSet();
         //traer la orden
-        $this->query('SELECT * FROM ordenes WHERE id = :id');
+        $this->query('SELECT *, p.empresa as nombreEmpresa FROM ordenes o JOIN proveedores p on o.idProveedor = p.id WHERE o.id = :id');
         $this->bind(':id', $_SESSION['ordenActual']);
         $orden = $this->single();
         $viewmodel = array(
@@ -133,19 +133,26 @@ class OrdenModel extends Model{
         );
         return $viewmodel;
     }
-
+    
     public function modificarOrden(){
+        
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $fechaini=null; 
         $fechafin=null;
         $esservicio = 'no';
+        $proveedor = $post['idProveedor'];
         
         if($post['siservicio'] == 'si'){
             $fechaini = $post['inicio'];
             $fechafin = $post['fin'];
-            $esservicio = 'si';
-            print_r($post);
+            $esservicio = $post;
         }
-        $this->query('UPDATE ordenes SET numero = :numero, anio = :anio, moneda = :moneda, montoReal = :montoReal, procedimiento = :procedimiento, plazoEntrega = :plazoEntrega, formaPago = :formaPago, servicio = :servicio, fechaInicio = :fechaInicio, fechaFin = :fechaFin, idProveedor = :idProveedor WHERE id = :id');
+        
+        if(isset($post['editadoIdProveedor'])){
+            $proveedor = $post['editadoIdProveedor'];
+        }
+
+        $this->query('UPDATE ordenes SET numero = :numero, anio = :anio, moneda = :moneda, montoReal = :montoReal, procedimiento = :procedimiento, plazoEntrega = :plazoEntrega, formaPago = :formaPago, servicio = :servicio, fechaInicio = :fechaInicio, fechaFin = :fechaFin, idProveedor = :idProveedor, numeroAmpliacion = :numeroAmpliacion WHERE id = :id');
         $this->bind(':id', $_SESSION['ordenActual']);
         $this->bind(':numero', $post['numero']);
         $this->bind(':anio', $post['anio']);
@@ -157,7 +164,9 @@ class OrdenModel extends Model{
         $this->bind(':servicio', $esservicio);
         $this->bind(':fechaInicio', $fechaini);
         $this->bind(':fechaFin', $fechafin);
-        $this->bind(':idProveedor', $post['idProveedor']);
+        $this->bind(':idProveedor', $proveedor);
+        $this->bind(':numeroAmpliacion', $post['numeroAmpliacion']);
+
         $this->execute();
         header('Location: '.ROOT_URL.'orden/verOrden');
         return;
