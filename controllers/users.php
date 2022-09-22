@@ -22,6 +22,13 @@ class Users extends Controller{
 	}
 
 
+	protected function editar(){
+		$viewmodel = new UserModel();
+		$this->returnView($viewmodel->editar(), true);
+	}
+
+
+
 
 	protected function validatecedula(){
 		include './assets/utils/validationAjax.php';

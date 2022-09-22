@@ -598,6 +598,10 @@ section{
 .center1{
     margin: 0 auto;
 }
+.center2{
+    width: 600px;
+    margin: 0 auto;
+}
 
 .perfil{
     margin-top: 150px;
@@ -609,6 +613,14 @@ section{
    
 }
 @media (max-width: 1350px){
+
+
+    .center2{
+        width: 500px;
+        margin-left: -3%;
+
+    
+    }
 
     .logindiv{
         background: white;

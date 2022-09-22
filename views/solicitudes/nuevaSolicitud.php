@@ -1,6 +1,8 @@
 <a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
-
-<div class="row col-12 center" style="background: white; width: 70%; padding: 40px; border: 1px solid rgba(220, 220, 220); border-radius: 5px; margin-top: 3%" >
+<div class="row col-12 center" style="background: white; width: 70%; padding: 40px; border: 1px solid rgba(220, 220, 220); border-bottom: none; border-radius: 5px; margin-top: 3%" >
+    <h1 class="center " style="text-align: center; color: #001d5a">Nueva Solicitud</h1>
+</div>
+<div class="row col-12 center" style="background: white; width: 70%; padding: 40px; border: 1px solid rgba(220, 220, 220); border-radius: 5px; border-top: none; " >
     <div class="col-lg-6 center" >
         <form id="nuevaSolicitud" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">SR</label>
@@ -77,10 +79,10 @@
 
 			</select> 
 
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Art/Serv</label>
+        <label  style="margin-top: 45px; color: rgb(130, 130, 130)">Art/Serv</label>
         <input name="artServ" class="form-control" placeholder="Ingrese un artículo o servicio">
 
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Oficina Solicitante</label>
+        <label  style="margin-top: 45px; color: rgb(130, 130, 130)">Oficina Solicitante</label>
 
             <select name="oficinaSolicitante" style="" class="form-control">
                 
@@ -119,10 +121,10 @@
 
     </div>
 
-    
-
-</div>
-<div class="col-12 center" style="text-align: center; margin-top: 100px">
+    <div class="col-12 center" style="text-align: center; margin-top: 100px">
         <input type="submit" id="submit" name="submit" class="btn btn-primary" value="Confirmar" style="width: 150px;"/>
     </div>
+
+</div>
+
 </form>

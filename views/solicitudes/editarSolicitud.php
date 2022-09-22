@@ -47,11 +47,10 @@
 			</select> 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Art/Serv</label>
-        <select name="artServ" class="form-control" >
-				
+        <input type="text" name="artServ" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['artServ'] ?>" required placeholder="Ingrese el artículo/servicio" >
 
 
-		</select> 
+ 
 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Estado</label>

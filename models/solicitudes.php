@@ -12,6 +12,8 @@ class SolicitudesModel extends Model{
         if(isset($post) && isset($post['submit'])){
             if($_POST['submit'] == 'Ampliar'){
             $sr = $post['numero'];
+
+            
             $this->query('SELECT * FROM solicitudescompra WHERE sr = "'. $sr .'"');
             $row = $this->single();
 
@@ -67,7 +69,7 @@ class SolicitudesModel extends Model{
 
         
         
-       
+
        
         return $lstSolicitudes;
     }
@@ -180,7 +182,7 @@ if (isset($_POST['submit'])) {
 				$this->bind(':planificado', $post['planificado']);
                 $this->bind(':gastos_inversiones', $post['gastos_inversiones']);
 				$this->bind(':grupoAS', $post['grupoAS']);
-				$this->bind(':artServ', $post['grupoAS']);
+				$this->bind(':artServ', $post['artServ']);
 				$this->bind(':detalle', $post['detalle']);
 				$this->bind(':cantidad', $post['cantidad']);
                 $this->bind(':unidad', $post['unidad']);

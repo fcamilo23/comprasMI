@@ -45,11 +45,10 @@
 			</select> 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Art/Serv</label>
-        <select name="artServ" class="form-control" disabled>
+        <input type="text" name="artServ" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['artServ'] ?>" required placeholder="" disabled>
 				
 
 
-		</select> 
 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Estado</label>
@@ -121,10 +120,11 @@
 
 </form>
 
+<?php if($_SESSION['ordenes'] != null){?>
+
 <div style="margin-top: 100px">
 <a href="<?php echo ROOT_PATH; ?>orden/nuevaOrden"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOrden.jpg" width="190px" height="50px" ></button></a>
 <h1 style="color: #001d5a; margin-left: 25px" class="">Órdenes de Compra</h1>
-
 
 <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
 
@@ -188,12 +188,20 @@
 		</table>
 	</div>
 </div>
+<?php }else{?>
+    
+    <!-- <h1 style="color: grey; text-align: center" class="center">No hay ordenes de compra</h1> -->
+
+
+<?php } ?>
 
 
 
-<div style="margin-top: 150px; align-text: center">
-<a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaNovedad"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaNovedad.jpg" width="218px" height="48px" ></button></a>
+
+<div style="margin-top: 40px; align-text: center">
 <?php if($_SESSION['novedades'] != null){?>
+<a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaNovedad"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaNovedad.jpg" width="218px" height="48px" ></button></a>
+
 
 <h1  class="" style="color: #001d5a; margin-left: 25px">Novedades</h1>
 
@@ -222,15 +230,16 @@
 		</table>
         <?php }else{
             ?>
-            <h1 style="color: grey" class="center">• No hay novedades</h1>
+            <!-- <h1 style="color: grey; text-align: center" class="center">No hay novedades</h1> -->
 
             <?php
 
         }?>
 	</div>
     <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
-    <a  href="<?php echo ROOT_PATH; ?>solicitudes/nuevoArchivo"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button></a>
     <?php if($_SESSION['archivos'] != null){?>
+    <a  href="<?php echo ROOT_PATH; ?>solicitudes/nuevoArchivo"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button></a>
+
     <h1  class="" style="color: #001d5a; margin-left: 25px">Archivos</h1>
 		<table id="solis" style="width: 100%; margin-top: 30px;">
 			<thead>
@@ -245,6 +254,12 @@
 					<td><?php echo $item ['nombre'] ?></td>
 
                 <td>
+
+                    <form action="<?php echo ROOT_PATH; ?>solicitudes/eliminarArchivo" method="post">
+                            <input type="hidden" name="id" value="<?php echo $item['id'] ?>">
+                            
+                            <input type="submit" name="" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
+                    </form>  
                     <form action="<?php echo ROOT_PATH; ?>solicitudes/verArchivo" method="post">
                         <input type="hidden" name="id" value="<?php echo $item['id'] ?>">
                         
@@ -252,18 +267,14 @@
 
                     </form>   
                                          
-                    <form action="<?php echo ROOT_PATH; ?>solicitudes/eliminarArchivo" method="post">
-                        <input type="hidden" name="id" value="<?php echo $item['id'] ?>">
-                        
-                        <input type="submit" name="" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
-                    </form>  
+                    
                 </td>
                 </tr> <?php endforeach; ?>
             </tbody>
 		</table>
         <?php }else{
             ?>
-            <h1 style="color: grey" class="center">• No hay archivos anexados</h1>
+           <!--  <h1 style="color: grey; text-align: center" class="center">No hay archivos anexados</h1>-->
             <?php
         }?>
 	</div>

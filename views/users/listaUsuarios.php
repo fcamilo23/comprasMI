@@ -28,28 +28,24 @@
 				</tr>
 			</thead>
             <tbody >
-                <tr class="yo"><?php foreach($viewmodel as $item) : if($item['cedula'] == $_SESSION['user_data']['cedula']){?>
-                    <td><?php echo $item['cedula']; ?></td>
-                    <td><?php echo $item['nombre']; ?></td>
-                    <td><?php echo $item['apellido']; ?></td>
-                    <td><?php echo $item['email']; ?></td>
-                    <td><?php echo $item['rol']; ?></td>
-                    <td><input type="submit" value="Editar" style="background: #001d5a; border: none" class="btn btn-primary somraAzul1"/></td>
-
-         
-                </tr> <?php }endforeach; ?>
-			<tr><?php foreach($viewmodel as $item) : if($item['cedula'] != $_SESSION['user_data']['cedula']){?>
+                
+			<tr><?php foreach($viewmodel as $item) : //if($item['cedula'] != $_SESSION['user_data']['cedula']){?>
                 <td><?php echo $item['cedula'] ?></td>
                 <td><?php echo $item['nombre'] ?></td>
                 <td><?php echo $item['apellido'] ?></td>
                 <td><?php echo $item['email'] ?></td>
                 <td><?php echo $item['rol'] ?></td>
-                <td><input type="submit" value="Editar" style="background: #001d5a; border: none" class="btn btn-primary somraAzul1"/>
-                <input type="submit" value="Eliminar" style="color: #fff; border: none" class="btn btnEliminar somraAzul1"/></td>
+                <td>
+                <form id="editarUser" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
+                <input type="text" name="ciuser" value="<?php echo $item['cedula'] ?>" style="display:none" />    
+                <input type="submit" name="submit" value="Editar" style="background: #001d5a; border: none" class="btn btn-primary "/>
+                <!--<input type="submit" value="Eliminar" style="color: #fff; border: none" class="btn btnEliminar "/>-->
+                </form>
+                </td>
 
 
                 
-			</tr> <?php }endforeach; ?>
+			</tr> <?php endforeach; ?>
             </tbody>
 		</table>
 	</div>

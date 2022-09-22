@@ -66,6 +66,22 @@ class UserModel extends Model{
 
 	
 	public function listaUsuarios(){
+
+		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+		if(isset($post) && isset($post['submit'])){
+				if($post['submit'] == 'Editar'){
+
+					$this->query('SELECT * FROM usuarios WHERE cedula = "'. $post['ciuser'] .'"');
+					$_SESSION['usuarioActual'] = $this->single();
+
+					header('Location: '.ROOT_URL.'users/editar');
+
+
+				}
+
+		}
+
         
         $this->query('SELECT * FROM usuarios');
         $lstUsuarios = $this->resultSet();
@@ -78,11 +94,56 @@ class UserModel extends Model{
 
 
 	public function profile(){
-		$n = $_SESSION['user_data']['cedula'];
-		$this->query('SELECT * FROM usuarios WHERE cedula = "' . $n . '"');
-		$row = $this->resultSet();
-        
+	
+		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+		if(isset($post) && isset($post['submit'])){
 
+			$_SESSION['usuarioActual'] = $_SESSION['user_data'];
+			header('Location: '.ROOT_URL.'users/editar');
+
+		}
+
+
+        
+		
+		return;
+	}
+
+
+	public function editar(){
+		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+		if(isset($post) && isset($post['submit'])){
+			if($post['submit'] == 'Guardar Cambios'){
+
+				
+				$this->query('UPDATE usuarios SET cedula = "'.$post['ci'].'", nombre = "'.$post['nombre'].'", apellido = "'.$post['apellido'].'", email = "'.$post['email'].'", rol = "'.$post['rol'].'" WHERE cedula = "'. $post['ciActual'].'" ');
+				$this->execute();
+
+				if($_SESSION['user_data']['cedula'] == $post['ciActual']){
+					$_SESSION['user_data']['cedula'] = $post['ci'];
+					$_SESSION['user_data']['nombre'] = $post['nombre'];
+					$_SESSION['user_data']['apellido'] = $post['apellido'];
+					$_SESSION['user_data']['email'] = $post['email'];
+					$_SESSION['user_data']['rol'] = $post['rol'];
+				}
+
+				header('Location: '.ROOT_URL.'users/listaUsuarios');
+
+			}
+
+			if($post['submit'] == 'Eliminar Usuario'){
+
+				$this->query('DELETE FROM usuarios WHERE cedula = "'.$post['ciActual'].'"');
+				$this->execute();
+
+				header('Location: '.ROOT_URL.'users/listaUsuarios');
+
+
+				
+			}
+
+			
+		}
         
 		
 		return;

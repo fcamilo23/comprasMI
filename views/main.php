@@ -39,19 +39,24 @@
 <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js" crossorigin="anonymous"></script>
 
 
+<script src="<?php echo ROOT_PATH; ?>assets/alertas.js?v=<?php echo time(); ?>" crossorigin="anonymous"></script>
+
+
+
 
 
     <!-- Styles -->
     <link rel="stylesheet" href="<?php echo ROOT_PATH; ?>assets/css/botoneslib.min.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="<?php echo ROOT_PATH; ?>assets/css/search.min.css?v=<?php echo time(); ?>">
-
-
-
-
     <link rel="stylesheet" href="<?php echo ROOT_PATH; ?>assets/css/menu.css?v=<?php echo time(); ?>">
 
+
+
+
+
+
     
-    <link rel="icon" href="../imagenes/minterior1.png">
+    <link rel="icon" href="../imagenes/minterior1 - copia.png">
 </head>
 
 
