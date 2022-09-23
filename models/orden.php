@@ -142,29 +142,26 @@ class OrdenModel extends Model{
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $fechaini=null; 
         $fechafin=null;
-        $esservicio = 'no';
+
         $proveedor = $post['idProveedor'];
         
         if(isset($post['inicio']) && isset($post['fin']) && $post['inicio'] != '' && $post['fin'] != ''){
             $fechaini = $post['inicio'];
             $fechafin = $post['fin'];
-            $esservicio = $post;
         }
         
         if(isset($post['editadoIdProveedor'])){
             $proveedor = $post['editadoIdProveedor'];
         }
 
-        $this->query('UPDATE ordenes SET numero = :numero, anio = :anio, moneda = :moneda, montoReal = :montoReal, procedimiento = :procedimiento, plazoEntrega = :plazoEntrega, formaPago = :formaPago, servicio = :servicio, fechaInicio = :fechaInicio, fechaFin = :fechaFin, idProveedor = :idProveedor, numeroAmpliacion = :numeroAmpliacion WHERE id = :id');
+        $this->query('UPDATE ordenes SET moneda = :moneda, montoReal = :montoReal, procedimiento = :procedimiento, plazoEntrega = :plazoEntrega, formaPago = :formaPago, fechaInicio = :fechaInicio, fechaFin = :fechaFin, idProveedor = :idProveedor, numeroAmpliacion = :numeroAmpliacion WHERE id = :id');
         $this->bind(':id', $_SESSION['ordenActual']);
-        $this->bind(':numero', $post['numero']);
-        $this->bind(':anio', $post['anio']);
         $this->bind(':moneda', $post['moneda']);
         $this->bind(':montoReal', $post['montoReal']);
         $this->bind(':procedimiento', $post['procedimiento']);
         $this->bind(':formaPago', $post['formaPago']);
         $this->bind(':plazoEntrega', $post['plazoEntrega']);
-        $this->bind(':servicio', $esservicio);
+
         $this->bind(':fechaInicio', $fechaini);
         $this->bind(':fechaFin', $fechafin);
         $this->bind(':idProveedor', $proveedor);

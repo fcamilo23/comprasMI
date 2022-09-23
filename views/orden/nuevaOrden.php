@@ -11,13 +11,14 @@
 function seleccionaProveedor(id, empresa){
 
     document.getElementById("main-container").style.display = "none";
-
-    var input = document.createElement("input");
+    // guardar datos en el formulario
+    document.getElementById("idProveedor").value = id;
+   /* var input = document.createElement("input");
     input.type = "hidden";
     input.name = "idProveedor";
     input.value = id;
     document.getElementById("formOrden").appendChild(input);
-
+*/
     document.getElementById("proveedorNombre").innerHTML = empresa ;
 
 
@@ -41,7 +42,7 @@ function seleccionaProveedor(id, empresa){
         }
     }
 
-    ////DE ACA TEMAS DE PDF
+
 
 let cant = 0;
 function readAsBase64() {
@@ -94,11 +95,8 @@ function readAsBase64() {
 
     }
 
-    
-
-
 </script>
-
+</body>
 <div class="container" >
     <div class="row d-flex justify-content-center ">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8" >
@@ -108,18 +106,20 @@ function readAsBase64() {
                 
             <div class="card-body ">
                 
-                    <form id="formOrden" action="<?php echo ROOT_URL; ?>orden/agregarOrden" method ="POST" enctype="multipart/form-data" >
+                    <form id="formOrden" onsubmit="validarFormulario(event)" action="<?php echo ROOT_URL; ?>orden/agregarOrden" method ="POST" enctype="multipart/form-data" >
 
-                            <label for="oc" class="form-label"></label>
+                            <label for="numero" class="form-label"></label>
                             <div class="input-group mb-3 center2">
                                 <p class="m-3">Numero</p>
-                                <input id="numero" name="numero" min="0" max="9999999"type="number" class="m-2 miniinput2 form-control" required>
-                                <div id=ocError" class="invalid-feedback"></div>
+                                <input id="numero" name="numero" min="1" max="9999999"type="number" class="m-2 miniinput2 form-control " required>
                                 <p class="m-3" style="margin-left: 200px;" >              Año: </p>
                                 <input id="anio" name="anio" type="number" min="2010" max="2060" class="m-2 miniinput2 form-control" value="<?php echo date('Y') ?>" required>
-                                <div id=ocError" class="invalid-feedback"></div>
+                                <div id="numeroAnioError" style="color:red" ></div>
                             </div>
-                            <br>
+
+                            
+                            
+                       
                             
                             <div class="input-group mb-3 center2">
                                 <p class="m-3">Moneda</p>
@@ -132,8 +132,9 @@ function readAsBase64() {
                                     </select>
                                <p class="m-3">          Monto:</p>
                                 <input id="montoReal" name="montoReal" type="number" min="0"class="m-2 miniinput2 form-control" required>
-                                <div id=montoError" class="invalid-feedback"></div>
                             </div>
+                            <div id="montoRealError" class="center2"style="color:red" ></div>
+
                             <br>
 
                             <label for="procedimiento" style="margin-top: 50px" class="form-label">Tipo de Procedimiento</label>
@@ -149,21 +150,20 @@ function readAsBase64() {
                                         <option value="CCH - Caja Chica">CCH - Caja Chica</option>
                                     </select> 
                             </div>
-                            <br>
+
  
                             
                             <label for="formaPago" class="form-label">Forma de Pago:</label>
                             <div class="input-group mb-3">
                                 <textarea id="formaPago" name="formaPago" class="form-control"></textarea>
-                                <div id="telefonoError" class="invalid-feedback"></div>
-                            </div>
+                             </div>
                             <br>
 
                             <div class="input-group mb-3" style="">
                             <label for="plazoEntrega" class="m-2 form-label" >Fecha Entrega</label>
                                 <input id="plazoEntrega" name="plazoEntrega" type="date" class="form-control" style="max-width: 15rem" required>
-                                <div id="plazoEntregaError" class="invalid-feedback"></div>
                             </div>
+                            <div id="plazoEntregaError" style="color:red" class="center2"></div>
 
 
 
@@ -190,6 +190,9 @@ function readAsBase64() {
                                 <input id="fin" name="fin" type="date" class="miniinput2 form-control" readonly>
                             </div>
                             <br>
+                            <!-- aqui se va a guardar proveedor -->
+                            <input id="idProveedor" name="idProveedor" type="hidden" >
+                            <!--  -->
                             <div>
                                 <p><b>PROVEEDOR: </b></p><p id="proveedorNombre" ></p>
                             </div>
@@ -242,7 +245,7 @@ function readAsBase64() {
                                 </table>
                                 <br>
                             <div >           
-                                <a class="ml-2" href="<?php echo ROOT_PATH; ?>solicitudes/verSolicitud"><button type="button" class="btn btn-secondary ml-3">CANCELAR</button></a>
+                                <a class="ml-2" href="<?php echo ROOT_PATH; ?>solicitudes/verSolicitud"><button type="button"  class="btn btn-secondary ml-3">CANCELAR</button></a>
     
                                 <button type="submit" class="float-right btn btn-primary ">GUARDAR</button>
                             </div>
@@ -252,3 +255,86 @@ function readAsBase64() {
         </div>
     </div>
 </div>
+</body>
+<script>
+
+
+    document.getElementById("numero").addEventListener("blur", errorNumero);
+    document.getElementById("anio").addEventListener("blur", errorNumero);
+
+    document.getElementById("montoReal").addEventListener("blur", errorMonto);
+
+    document.getElementById("plazoEntrega").addEventListener("blur", errorPlazoEntrega);
+
+
+
+    
+    function errorNumero(){
+        var numero = document.getElementById("numero").value;
+        var anio = document.getElementById("anio").value;
+
+        if(numero.length < 1 || anio.length < 1){
+            if(numero.length < 1 && anio.length < 1){
+                document.getElementById("numeroAnioError").innerHTML = "              El numero de orden y año es obligatorio ❌";
+            }else {
+                if(numero.length < 1){
+                    document.getElementById("numeroAnioError").innerHTML = "              El numero de orden es obligatorio ❌";
+                }else{
+                    document.getElementById("numeroAnioError").innerHTML = "              El campo año es obligatorio entre 2010 y 2050 ❌ ";
+                }
+            }
+        }
+        else{
+            document.getElementById("numeroAnioError").innerHTML = "";
+        }
+ 
+    }
+
+
+    function errorMonto(){
+        var monto = document.getElementById("montoReal").value;
+
+        if(monto.length < 1){
+            document.getElementById("montoRealError").innerHTML = "              El monto es obligatorio ❌";
+        }
+        else{
+            document.getElementById("montoRealError").innerHTML = "";
+        }
+ 
+    }
+
+    function errorPlazoEntrega(){
+        var plazoEntrega = document.getElementById("plazoEntrega").value;
+
+        if(plazoEntrega.length < 1){
+            document.getElementById("plazoEntregaError").innerHTML = "              El plazo de entrega es obligatorio ❌" ;
+        }
+        else{
+            document.getElementById("plazoEntregaError").innerHTML = "";
+        }
+ 
+    }
+    //evitar mandar formulario si idProveedor esta vacio
+    function validarFormulario(event){
+        var idProveedor = document.getElementById("idProveedor").value;
+        
+        if(idProveedor.length < 1){
+            alert("Debe seleccionar un proveedor");
+            event.preventDefault();
+        }
+
+        var siservicio = document.getElementById("inicio").value;
+        var fin = document.getElementById("fin").value;
+        var inicio = document.getElementById("inicio").value;
+        if(siservicio == 'si' || fin.length > 1 && inicio.length > 1){
+            if(fin <= inicio){
+                alert("La fecha de inicio debe ser menor a la fecha de fin");
+            event.preventDefault();
+            }
+        }
+        event.preventDefault();
+    }
+
+    
+
+</script>
