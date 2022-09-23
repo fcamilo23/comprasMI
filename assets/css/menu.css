@@ -13,7 +13,14 @@
 
 .btnEliminar{
     background:rgb(68, 17, 17);
+    color: white;
 }
+
+.btnEliminar1{
+    background:rgb(126, 6, 6);
+    color: white;
+}
+
 
 .etiqueta {
     margin-left: 40px;

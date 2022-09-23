@@ -1,6 +1,16 @@
 <?php
 class SolicitudesModel extends Model{
+
+
+
+
+
 	public function listaSolicitudes(){
+        $this->limpiarMemoria();
+        $_SESSION['items'] = array();
+
+        
+
 
 
         $this->query('SELECT * FROM solicitudescompra');
@@ -229,55 +239,142 @@ if (isset($_POST['submit'])) {
 
     public function nuevaSolicitud(){
 
+/*
+        $_SESSION['items'] = array(
+            array(
+            "cantidad"	=> "facu",
+            "unidad"	=> "camilo",
+            "descripcion"	=> "salinas")
+
+        );
+
+        
+
+        $e = array(
+            "cantidad"	=> "asd",
+            "unidad"	=> "ss",
+            "descripcion"	=> "ee");
+            
+        array_push($_SESSION['items'], $e); 
+        */
+
+
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
 		if($post && $post['submit']){
-
-            $this->query('SELECT * FROM solicitudescompra WHERE SR = "'. $post['sr'].'"');
-            $row = $this->single();
-
-            if($row == null){
-
-                $date = new DateTime("now", new DateTimeZone('America/Montevideo') );
-                $fecha = $date->format('Y-m-d H:i:s');
+            if($post['submit'] == "Confirmar"){ 
+                $this->query('SELECT * FROM solicitudescompra WHERE SR = "'. $post['sr'].'"');
+                $row = $this->single();
 
 
-               // $fecha = date('Y-m-d h:i:sa');
+                
 
-                $this->query('INSERT INTO solicitudescompra(`SR`, `planificado`, `gastos_inversiones`, `grupoAS`, `artServ`, `detalle`, `cantidad`, `unidad`, `estado`, `oficinaSolicitante`, `fechaHora`, `costoAprox`, `referente`, `contactoReferente`, `observaciones`, `procedimiento`) 
-                VALUES(:sr, :planificado, :gastos_inversiones, :grupoAS, :artServ, :detalle, :cantidad, :unidad, :estado, :oficinaSolicitante, :fechaHora, :costoAprox, :referente, :contactoReferente, :observaciones, :procedimiento)');
-                $this->bind(':sr', $post['sr']);
-				$this->bind(':planificado', $post['planificado']);
-                $this->bind(':gastos_inversiones', $post['gastos_inversiones']);
-				$this->bind(':grupoAS', $post['grupoAS']);
-				$this->bind(':artServ', $post['grupoAS']);
-				$this->bind(':detalle', $post['detalle']);
-				$this->bind(':cantidad', $post['cantidad']);
-                $this->bind(':unidad', $post['unidad']);
-				$this->bind(':estado', 'Pendiente');
-				$this->bind(':oficinaSolicitante', 1);
-				$this->bind(':fechaHora', $fecha);
-				$this->bind(':costoAprox', $post['costo']);
-				$this->bind(':referente', $post['referente']);
-				$this->bind(':contactoReferente', $post['contactoReferente']);
-                $this->bind(':observaciones', $post['observaciones']);
-				$this->bind(':procedimiento', $post['procedimiento']);
+                if($row == null){
 
-                $this->execute();
-
-                header('Location: '.ROOT_URL.'solicitudes/listaSolicitudes');
-		
+                    $date = new DateTime("now", new DateTimeZone('America/Montevideo') );
+                    $fecha = $date->format('Y-m-d H:i:s');
 
 
+                // $fecha = date('Y-m-d h:i:sa');
 
-            }else{
-                echo "Ya existe solicitud sr";
+                    if($_SESSION['items'] != NULL){
+
+
+                        $this->query('INSERT INTO solicitudescompra(`SR`, `planificado`, `gastos_inversiones`, `grupoAS`, `artServ`, `detalle`, `estado`, `oficinaSolicitante`, `fechaHora`, `costoAprox`, `referente`, `contactoReferente`, `observaciones`, `procedimiento`) 
+                        VALUES(:sr, :planificado, :gastos_inversiones, :grupoAS, :artServ, :detalle, :estado, :oficinaSolicitante, :fechaHora, :costoAprox, :referente, :contactoReferente, :observaciones, :procedimiento)');
+                        $this->bind(':sr', $post['sr']);
+                        $this->bind(':planificado', $post['planificado']);
+                        $this->bind(':gastos_inversiones', $post['gastos_inversiones']);
+                        $this->bind(':grupoAS', $post['grupoAS']);
+                        $this->bind(':artServ', $post['grupoAS']);
+                        $this->bind(':detalle', $post['detalle']);
+                        $this->bind(':estado', 'Pendiente');
+                        $this->bind(':oficinaSolicitante', 1);
+                        $this->bind(':fechaHora', $fecha);
+                        $this->bind(':costoAprox', $post['costo']);
+                        $this->bind(':referente', $post['referente']);
+                        $this->bind(':contactoReferente', $post['contactoReferente']);
+                        $this->bind(':observaciones', $post['observaciones']);
+                        $this->bind(':procedimiento', $post['procedimiento']);
+
+                        $this->execute();
+
+                        $this->query('SELECT * FROM solicitudescompra where id = (select max(id) from solicitudescompra)');
+                        $soli = $this->single(); 
+
+                        foreach ($_SESSION['items'] as $item) :
+                            $this->query('INSERT INTO item(cantidad, unidad, descripcion, idSolicitud) VALUES("'. $item['cantidad'] .'", "'. $item['unidad'] .'", "'. $item['descripcion'] .'", "'. $soli['id'] .'")');
+                            $this->execute();
+                        endforeach;
+
+                        header('Location: '.ROOT_URL.'solicitudes/listaSolicitudes');
+                    }
+            
+
+
+
+                }else{
+                    echo "Ya existe solicitud sr";
+                }
             }
-        }
 
-        $this->query('SELECT * FROM oficinas');
-        $row = $this->resultSet();
-        return $row;
+           
+
+
+            if($post['submit'] == "+"){ 
+
+                $_SESSION['solicitud']['sr'] = $post['sr'];
+                $_SESSION['solicitud']['planificado'] = $post['planificado'];
+                $_SESSION['solicitud']['gastos_inversiones'] = $post['gastos_inversiones'];
+                $_SESSION['solicitud']['grupoAS'] = $post['grupoAS'];
+                $_SESSION['solicitud']['artServ'] = $post['artServ'];
+                $_SESSION['solicitud']['detalle'] = $post['detalle'];
+                $_SESSION['solicitud']['oficinaSolicitante'] = $post['oficinaSolicitante'];
+                $_SESSION['solicitud']['costo'] = $post['costo'];
+                $_SESSION['solicitud']['referente'] = $post['referente'];
+                $_SESSION['solicitud']['contactoReferente'] = $post['contactoReferente'];
+                $_SESSION['solicitud']['observaciones'] = $post['observaciones'];
+                $_SESSION['solicitud']['procedimiento'] = $post['procedimiento'];
+
+                
+
+                
+
+
+                        
+                $e = array(
+                    "cantidad"	=> $post['cant'],
+                    "unidad"	=> $post['uni'],
+                    "descripcion"	=> $post['desc']);
+                    
+                array_push($_SESSION['items'], $e); 
+
+            /*
+
+                $item = array(
+                    "cantidad" => $post['cant'],
+                    "unidad" => $post['uni'],
+                    "descripcion" => $post['desc']
+
+                );
+
+                array_push($_SESSION['items'], $e);
+
+
+ */
+
+ 
+                 
+             }
+
+            }
+
+           
+            $this->query('SELECT * FROM oficinas');
+            $row = $this->resultSet();
+            return $row;
+
+
     }
 
     public function subirArchivos(){
@@ -326,7 +423,21 @@ if (isset($_POST['submit'])) {
    
 
  
-
+    public function limpiarMemoria(){
+        
+        unset($_SESSION['solicitud']['sr']);
+        unset($_SESSION['solicitud']['planificado']);
+        unset($_SESSION['solicitud']['gastos_inversiones']);
+        unset($_SESSION['solicitud']['grupoAS']);
+        unset($_SESSION['solicitud']['artServ']);
+        unset($_SESSION['solicitud']['detalle']);
+        unset($_SESSION['solicitud']['oficinaSolicitante']);
+        unset($_SESSION['solicitud']['costo']);
+        unset($_SESSION['solicitud']['referente']);
+        unset($_SESSION['solicitud']['contactoReferente']);
+        unset($_SESSION['solicitud']['observaciones']);
+        unset($_SESSION['solicitud']['procedimiento']);
+}
  
         
 
