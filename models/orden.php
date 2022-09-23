@@ -13,16 +13,18 @@ class OrdenModel extends Model{
             $fechaini=null; 
             $fechafin=null;
             $esservicio = 'no';
+            $numeroAmpliacion = null;
             
             if($post['siservicio'] == 'si'){
                 $fechaini = $post['inicio'];
                 $fechafin = $post['fin'];
                 $esservicio = 'si';
-                print_r($post);
             }
-    ////aqui se agrega la orden
+            if(isset($post['numeroAmpliacion'])){
+                $numeroAmpliacion = $post['numeroAmpliacion'];
+            }
 
-            $this->query('INSERT INTO   ordenes (numero, anio, moneda, montoReal, procedimiento, plazoEntrega, formaPago, servicio, fechaInicio, fechaFin, idProveedor,idSolicitud) VALUES (:numero, :anio, :moneda, :montoReal, :procedimiento, :plazoEntrega, :formaPago, :servicio, :fechaInicio, :fechaFin, :idProveedor, :idSolicitud)');
+            $this->query('INSERT INTO   ordenes (numero, anio, moneda, montoReal, procedimiento, plazoEntrega, formaPago,numeroAmpliacion ,servicio, fechaInicio, fechaFin, idProveedor,idSolicitud) VALUES (:numero, :anio, :moneda, :montoReal, :procedimiento, :plazoEntrega, :formaPago,:numeroAmpliacion, :servicio, :fechaInicio, :fechaFin, :idProveedor, :idSolicitud)');
             $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
             $this->bind(':numero', $post['numero']);
             $this->bind(':anio', $post['anio']);
@@ -31,6 +33,7 @@ class OrdenModel extends Model{
             $this->bind(':procedimiento', $post['procedimiento']);
             $this->bind(':formaPago', $post['formaPago']);
             $this->bind(':plazoEntrega', $post['plazoEntrega']);
+            $this->bind(':numeroAmpliacion', $post['numeroAmpliacion']);
             $this->bind(':servicio', $esservicio);
             $this->bind(':fechaInicio', $fechaini);
             $this->bind(':fechaFin', $fechafin);
@@ -45,18 +48,18 @@ class OrdenModel extends Model{
             $this->bind(':anio', $post['anio']);
             $this->execute();
             $idOrden = $this->single();
-            print_r($idOrden);
-            print_r($_SESSION['solicitudActual']['id']);
 
 
-            for($i=0; $i<sizeof($post['pdf']); $i++){
-                $this->query('INSERT INTO archivosordenes (`idSolicitud`,`idOrden`, `nombre`, `pdf`) VALUES(:idSolicitud, :idOrden, :nombre, :pdf)');
-                $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
-                $this->bind(':idOrden', $idOrden['id']);
-                $this->bind(':nombre', $post['pdfnombre'][$i]);
-                $this->bind(':pdf', $post['pdf'][$i]);
-
-                $this->execute();
+            if(isset($post['pdf'])){
+                for($i=0; $i<sizeof($post['pdf']); $i++){
+                    $this->query('INSERT INTO archivosordenes (`idSolicitud`,`idOrden`, `nombre`, `pdf`) VALUES(:idSolicitud, :idOrden, :nombre, :pdf)');
+                    $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+                    $this->bind(':idOrden', $idOrden['id']);
+                    $this->bind(':nombre', $post['pdfnombre'][$i]);
+                    $this->bind(':pdf', $post['pdf'][$i]);
+    
+                    $this->execute();
+                }
             }
 
         header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
@@ -142,7 +145,7 @@ class OrdenModel extends Model{
         $esservicio = 'no';
         $proveedor = $post['idProveedor'];
         
-        if($post['siservicio'] == 'si'){
+        if(isset($post['inicio']) && isset($post['fin']) && $post['inicio'] != '' && $post['fin'] != ''){
             $fechaini = $post['inicio'];
             $fechafin = $post['fin'];
             $esservicio = $post;

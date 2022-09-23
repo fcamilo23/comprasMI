@@ -22,23 +22,21 @@ function seleccionaProveedor(id, empresa){
 
 
     }
-    let servicio1 = 1;
+   
 
     function servicio(){
-        var esServicio = document.getElementById("esServicio").value;
+        var s = document.getElementById("esServicio").checked;
 
-        if(servicio1 == 1){
+        if(s == true){
             document.getElementById("inicio").readOnly = false;
             document.getElementById("fin").readOnly = false;
-            servicio1 = 0;
-            document.getElementById("esServicio").value = "si";
+            document.getElementById("siservicio").value = "si";
 
         }
         else{
             document.getElementById("inicio").readOnly = true;
             document.getElementById("fin").readOnly = true;
-            servicio1 = 1;
-            document.getElementById("esServicio").value = "no";
+            document.getElementById("siservicio").value = "no";
             
         }
     }
@@ -115,10 +113,10 @@ function readAsBase64() {
                             <label for="oc" class="form-label"></label>
                             <div class="input-group mb-3 center2">
                                 <p class="m-3">Numero</p>
-                                <input id="numero" name="numero" min="0" type="number" class="m-2 miniinput2 form-control">
+                                <input id="numero" name="numero" min="0" max="9999999"type="number" class="m-2 miniinput2 form-control" required>
                                 <div id=ocError" class="invalid-feedback"></div>
                                 <p class="m-3" style="margin-left: 200px;" >              Año: </p>
-                                <input id="anio" name="anio" type="number" min="1" class="m-2 miniinput2 form-control" >
+                                <input id="anio" name="anio" type="number" min="2010" max="2060" class="m-2 miniinput2 form-control" value="<?php echo date('Y') ?>" required>
                                 <div id=ocError" class="invalid-feedback"></div>
                             </div>
                             <br>
@@ -133,7 +131,7 @@ function readAsBase64() {
                                         <option value="€ (Euro)">€ (Euro)</option>
                                     </select>
                                <p class="m-3">          Monto:</p>
-                                <input id="montoReal" name="montoReal" type="number" class="m-2 miniinput2 form-control" >
+                                <input id="montoReal" name="montoReal" type="number" min="0"class="m-2 miniinput2 form-control" required>
                                 <div id=montoError" class="invalid-feedback"></div>
                             </div>
                             <br>
@@ -163,7 +161,7 @@ function readAsBase64() {
 
                             <div class="input-group mb-3" style="">
                             <label for="plazoEntrega" class="m-2 form-label" >Fecha Entrega</label>
-                                <input id="plazoEntrega" name="plazoEntrega" type="date" class="form-control" style="max-width: 15rem">
+                                <input id="plazoEntrega" name="plazoEntrega" type="date" class="form-control" style="max-width: 15rem" required>
                                 <div id="plazoEntregaError" class="invalid-feedback"></div>
                             </div>
 
@@ -172,7 +170,7 @@ function readAsBase64() {
                             <label for="numeroAmplicacion" style="margin-top: 40px"></label>
                             <div class="input-group mb-3">
                             <p class="m-2">Nº Ampliación </p>
-                                <input id="numeroAmplicacion" style="max-width: 15rem" name="numeroAmplicacion" type="text" class="form-control">
+                                <input id="numeroAmplicacion" style="max-width: 15rem" name="numeroAmpliacion" type="text" class="form-control">
                             </div>
                             <br>
 

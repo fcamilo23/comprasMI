@@ -12,17 +12,17 @@
                             <label for="oc" class="form-label">OC</label>
                             <div class="input-group mb-3">
                                 <p class="m-2">Numero   </p>
-                                <input id="numero" name="numero" type="text" class="m-2 miniinput form-control" value=" <?php  echo $viewmodel["orden"]["numero"] ?>" readonly> 
+                                <input id="numero" name="numero" min="0" max="9999999" type="number" class="m-2 miniinput form-control" value=" <?php  echo $viewmodel["orden"]["numero"] ?>" readonly required>  
                                 <p class="m-2">Año:</p>
-                                <input id="anio" name="anio" type="text" class="m-2 miniinput form-control"  value=" <?php  echo $viewmodel["orden"]["anio"] ?>" readonly>
+                                <input id="anio" name="anio" type="text" class="m-2 miniinput form-control"  min="2010" max="2060" value=" <?php  echo $viewmodel["orden"]["anio"] ?>" readonly required>
                             </div>
                             <br>
                             
                             <div class="input-group mb-3">
                                 <p class="m-2">Moneda</p>
-                                <input name="moneda"  id="moneda" style="max-width: 15rem" class="m-2 form-control"  value="<?php  echo $viewmodel["orden"]["moneda"] ?>">
+                                <input name="moneda"  id="moneda" style="max-width: 15rem" class="m-2 form-control"  value="<?php  echo $viewmodel["orden"]["moneda"] ?>" >
                                <p class="m-2"> Monto:</p>
-                                <input id="montoReal" name="montoReal" type="text" class="m-2 miniinput2 form-control"  value="<?php  echo $viewmodel["orden"]["montoReal"] ?>">
+                                <input id="montoReal" name="montoReal" type="text" class="m-2 miniinput2 form-control"  value="<?php  echo $viewmodel["orden"]["montoReal"] ?>" required>
                                 <div id=montoError" class="invalid-feedback"></div>
                             </div>
                             <br>
@@ -43,7 +43,7 @@
                             <br>
                             <div class="input-group mb-3">
                             <label for="plazoEntrega" class="m-2 form-label">Fecha Entrega</label>
-                                <input id="plazoEntrega" name="plazoEntrega" type="date" class="miniinput2 form-control" value="<?php  echo$viewmodel["orden"]["plazoEntrega"] ?>" >
+                                <input id="plazoEntrega" name="plazoEntrega" type="date" class="miniinput2 form-control" value="<?php  echo$viewmodel["orden"]["plazoEntrega"] ?>" required>
                             </div>
                             <br>
                             <label for="formaPago" class="form-label">Forma de Pago:</label>
