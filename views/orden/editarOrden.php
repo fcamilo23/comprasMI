@@ -1,3 +1,11 @@
+<script>
+    $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
+</script>
+
+
+<body>
 <a href="<?php echo ROOT_URL; ?>orden/verOrden"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
 
 <div class="container mt-3 mb-3">
@@ -115,6 +123,28 @@
     
                                 <button type="submit" class="float-right btn btn-primary ">GUARDAR</button>
                             </div>
+                            
+                            <!--MODAL -->
+                            <div class="modal" tabindex="-1" role="dialog" id="modalconfirmar">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Modal body text goes here.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <!--MODAL -->
                         </form>
                 </div>
             </div>
@@ -236,6 +266,8 @@
             }
 
         <?php } ?>
+
+        
     }
 
     

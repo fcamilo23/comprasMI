@@ -135,7 +135,7 @@ function readAsBase64() {
                             </div>
                             <div id="montoRealError" class="center2"style="color:red" ></div>
 
-                            <br>
+
 
                             <label for="procedimiento" style="margin-top: 50px" class="form-label">Tipo de Procedimiento</label>
                             <div class="input-group mb-3">
@@ -157,6 +157,7 @@ function readAsBase64() {
                             <div class="input-group mb-3">
                                 <textarea id="formaPago" name="formaPago" class="form-control"></textarea>
                              </div>
+                             
                             <br>
 
                             <div class="input-group mb-3" style="">
@@ -166,14 +167,11 @@ function readAsBase64() {
                             <div id="plazoEntregaError" style="color:red" class="center2"></div>
 
 
-
                             <label for="numeroAmplicacion" style="margin-top: 40px"></label>
                             <div class="input-group mb-3">
                             <p class="m-2">Nº Ampliación </p>
                                 <input id="numeroAmplicacion" style="max-width: 15rem" name="numeroAmpliacion" type="text" class="form-control">
                             </div>
-                            <br>
-
                             <div class="form-check form-check-inline">
                                 <input class="m-2 form-check-input" onclick="servicio()" type="checkbox" id="esServicio">
                                 <label class="m-2 form-check-label" for="inlineCheckbox1">Es Servicio</label>
@@ -220,22 +218,19 @@ function readAsBase64() {
                                             <?php echo $item['rut'] ?>
                                         </td>
                                         <td>
-
                                            <input type="button" value="✔️" class="btn btn-light" id="este" onclick="seleccionaProveedor(<?php echo $item['id']?>,' <?php echo $item['empresa']?>')" >
                                         </td>
                                     </tr> <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
-                            <br>
-                            <hr>
-                           
+                          
                             <hr>
                             
-                                <h1 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h1>
+                                <h3 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h3>
                                 <div class="card-body">
                                 <div class="mb-3">
-                                    <label for="formFile" class="form-label">Default file input example</label>
+                                    <label for="formFile" class="form-label">Subir PDF (*No es obligatorio, puede hacerlo mas adelante)</label>
                                     <input class="form-control" id="loadFile" accept="application/pdf" type="file" onchange="readAsBase64()"  width="190px" height="50px"/>
                                 </div>
 
@@ -249,6 +244,26 @@ function readAsBase64() {
     
                                 <button type="submit" class="float-right btn btn-primary ">GUARDAR</button>
                             </div>
+
+                             <!--MODAL -->
+                            <div class="modal" tabindex="-1" role="dialog" id="modalconfirmar">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">CREAR ORDEN:</h5>
+
+                                    </div>
+                                    <div class="modal-body" id="mensajeOrden">
+                                        <p><b>¿Quiere crear Orden?<b></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">CONFIRMAR</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarModel()">CANCELAR</button>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <!--MODAL -->
                         </form>
                 </div>
             </div>
@@ -316,13 +331,15 @@ function readAsBase64() {
     }
     //evitar mandar formulario si idProveedor esta vacio
     function validarFormulario(event){
+
         var idProveedor = document.getElementById("idProveedor").value;
-        
+        //por si no selecciona proveedor
         if(idProveedor.length < 1){
             alert("Debe seleccionar un proveedor");
             event.preventDefault();
+            return;
         }
-
+        //por si ingresa fechas que sean coerente
         var siservicio = document.getElementById("inicio").value;
         var fin = document.getElementById("fin").value;
         var inicio = document.getElementById("inicio").value;
@@ -330,9 +347,25 @@ function readAsBase64() {
             if(fin <= inicio){
                 alert("La fecha de inicio debe ser menor a la fecha de fin");
             event.preventDefault();
+            return;
             }
         }
-        event.preventDefault();
+        //aqui muestra el modal
+        if(document.getElementById("modalconfirmar").style.display != "block"){
+            var pdf = document.getElementsByTagName("pdf[]");
+            ///muestra mensaje si no selecciona pdf
+            if(pdf != null){
+                    document.getElementById("mensajeOrden").innerHTML = "<div class='p-3 mb-2 bg-warning text-dark'>No tiene ordenes subidas</div><p><b>¿Quiere crear Orden?<b></p>";
+            }else{
+                document.getElementById("mensajeOrden").innerHTML = "<p><b>¿Quiere crear Orden?<b></p>";
+            }
+            event.preventDefault();
+            document.getElementById("modalconfirmar").style.display = "block"; 
+        }
+    }
+
+    function cerrarModel(){
+        document.getElementById("modalconfirmar").style.display = "none";
     }
 
     
