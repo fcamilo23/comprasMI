@@ -1,3 +1,28 @@
+<script>
+
+    mensajes();
+    function mensajes(){
+        <?php if($_SESSION['mensaje']['tipo'] != '' ) { ?>
+
+                Swal.fire({
+                position: 'top-center',
+                icon: '<?php echo $_SESSION['mensaje']['tipo']; ?>',
+                title: '<?php echo $_SESSION['mensaje']['contenido']; ?>',
+                showConfirmButton: false,
+                timer: 1500
+                });
+        <?php 
+            $_SESSION['mensaje']['tipo'] = '';
+            $_SESSION['mensaje']['contenido'] = '';
+            } ?>
+        } 
+
+</script>
+
+<body onload="mensajes()">
+
+
+
 <a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
 <a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaNovedad"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaNovedad.jpg" width="218px" height="48px" ></button></a>
 <a href="<?php echo ROOT_PATH; ?>orden/nuevaOrden"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOrden.jpg" width="190px" height="50px" ></button></a>
@@ -279,3 +304,4 @@
         }?>
 	</div>
 </div>
+</body>

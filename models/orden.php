@@ -8,7 +8,10 @@ class OrdenModel extends Model{
     }
 
     public function agregarOrden(){
+        try{
 
+
+            
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $fechaini=null; 
             $fechafin=null;
@@ -61,9 +64,16 @@ class OrdenModel extends Model{
                     $this->execute();
                 }
             }
-
-        header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
-        return;
+            $_SESSION['mensaje']['tipo'] = 'success';
+            $_SESSION['mensaje']['contenido'] = 'Orden agregada correctamente';
+            header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+            return;
+        }catch(PDOException $e){
+            $_SESSION['mensaje']['tipo'] = 'error';
+            $_SESSION['mensaje']['contenido'] = 'Error al agregar la orden ...Prueba de nuevo mas tarde';
+            header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+            return;      
+        }
     }
     ///ver orden
     public function verOrden(){

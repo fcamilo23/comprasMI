@@ -8,22 +8,6 @@
     } );
 } );
 
-function seleccionaProveedor(id, empresa){
-
-    document.getElementById("main-container").style.display = "none";
-    // guardar datos en el formulario
-    document.getElementById("idProveedor").value = id;
-   /* var input = document.createElement("input");
-    input.type = "hidden";
-    input.name = "idProveedor";
-    input.value = id;
-    document.getElementById("formOrden").appendChild(input);
-*/
-    document.getElementById("proveedorNombre").innerHTML = empresa ;
-
-
-    }
-   
 
     function servicio(){
         var s = document.getElementById("esServicio").checked;
@@ -218,7 +202,7 @@ function readAsBase64() {
                                             <?php echo $item['rut'] ?>
                                         </td>
                                         <td>
-                                           <input type="button" value="✔️" class="btn btn-light" id="este" onclick="seleccionaProveedor(<?php echo $item['id']?>,' <?php echo $item['empresa']?>')" >
+                                           <input type="button" value="✔️" class="btn btn-light" id="este" onclick="confirmarProveedor(<?php echo $item['id']?>, '<?php echo $item['empresa']?>', '<?php echo $item['rut'] ?>', '<?php echo $item['razon_social'] ?>')" >
                                         </td>
                                     </tr> <?php endforeach; ?>
                                     </tbody>
@@ -244,6 +228,24 @@ function readAsBase64() {
     
                                 <button type="submit" class="float-right btn btn-primary ">GUARDAR</button>
                             </div>
+                            <!--MODAL PROVEEDOR -->
+                            <div class="modal" tabindex="-1" role="dialog" id="confirmarProveedor">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">SELECCIÓN PROVEEDOR:</h5>
+
+                                    </div>
+                                    <div class="modal-body" id="mensajeProveedor">
+                                        
+                                    </div>
+                                    <div class="modal-footer" id="botonesConfirmarProveedor">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarModel()">CANCELAR</button>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <!--MODAL -->
 
                              <!--MODAL -->
                             <div class="modal" tabindex="-1" role="dialog" id="modalconfirmar">
@@ -273,17 +275,11 @@ function readAsBase64() {
 </body>
 <script>
 
-
     document.getElementById("numero").addEventListener("blur", errorNumero);
     document.getElementById("anio").addEventListener("blur", errorNumero);
-
     document.getElementById("montoReal").addEventListener("blur", errorMonto);
-
     document.getElementById("plazoEntrega").addEventListener("blur", errorPlazoEntrega);
 
-
-
-    
     function errorNumero(){
         var numero = document.getElementById("numero").value;
         var anio = document.getElementById("anio").value;
@@ -331,7 +327,7 @@ function readAsBase64() {
     }
     //evitar mandar formulario si idProveedor esta vacio
     function validarFormulario(event){
-
+        
         var idProveedor = document.getElementById("idProveedor").value;
         //por si no selecciona proveedor
         if(idProveedor.length < 1){
@@ -364,10 +360,47 @@ function readAsBase64() {
         }
     }
 
-    function cerrarModel(){
-        document.getElementById("modalconfirmar").style.display = "none";
+    //MODAL DE PROVEEEDOR
+    function confirmarProveedor (id, empresa, razon, rut) {
+    ///insertar en mensajeconfirmacion
+    if(document.getElementById("confirmarProveedor").style.display != "block"){
+        document.getElementById("mensajeProveedor").innerHTML = "<h4>Confirma el proveedor</h4>"+empresa+"<br><b>Razon Social: </b>"+razon+"<br><b> Rut: </b>"+rut;
+        //que desea eliminar el proveedor " + empresa + "<br> R.U.T " + rut + "<br> Razon Social " + razon + "?";
+        ///crear boton de confirmacion en botonesConfirmarProveedor
+        document.getElementById("botonesConfirmarProveedor").innerHTML = "<input class='btn btn-primary' type='button' onclick='seleccionProveedor("+id+",`"+empresa+"`,`"+razon+"`,`"+rut+"`)' value='CONFIRMAR'> <input type='button' class='btn btn-secondary' onclick=cerrarModel() value='CANCELAR'>";
+        document.getElementById("confirmarProveedor").style.display = "block";
+        /*
+                var boton = document.createElement("button");
+        boton.setAttribute("class", "btn btn-primary");
+        boton.setAttribute("onclick", "seleccionProveedor(" + id +", '" + empresa + "', '" + razon + "', '" + rut + "')");
+        boton.innerHTML = "Confirmar";
+        document.getElementById("confirmarProveedor").
+        */
     }
 
-    
+}
 
+function seleccionProveedor(id,empresa,razon_social,rut){
+
+    document.getElementById("confirmarProveedor").style.display = "none";
+    document.getElementById("main-container").style.display = "none";
+    // guardar datos en el formulario
+    document.getElementById("idProveedor").value = id;
+   /* var input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "idProveedor";
+    input.value = id;
+    document.getElementById("formOrden").appendChild(input);
+? */
+    document.getElementById("proveedorNombre").innerHTML = empresa ;
+
+console.log("ACA")
+    }
+   
+
+
+    function cerrarModel(){
+        document.getElementById("confirmarProveedor").style.display = "none";
+        document.getElementById("modalconfirmar").style.display = "none";
+    }
 </script>
