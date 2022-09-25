@@ -1,3 +1,26 @@
+<script>
+
+mensajes();
+
+function mensajes(){
+    <?php if($_SESSION['mensaje']['tipo'] != '' ) { ?>
+
+            Swal.fire({
+            position: 'top-center',
+            icon: '<?php echo $_SESSION['mensaje']['tipo']; ?>',
+            title: '<?php echo $_SESSION['mensaje']['contenido']; ?>',
+            showConfirmButton: false,
+            timer: 1500
+            });
+    <?php 
+        $_SESSION['mensaje']['tipo'] = '';
+        $_SESSION['mensaje']['contenido'] = '';
+        } ?>
+    } 
+</script>
+
+
+<body onload="mensajes()">
 <a href="<?php echo ROOT_URL; ?>solicitudes/verSolicitud"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
 
 <div class="container mt-5 mb-5">
@@ -128,6 +151,7 @@
         </div>
     </div>
 </div>
+</body>
 <script>
     let cant = 0;
 function readAsBase64() {

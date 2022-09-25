@@ -84,7 +84,7 @@
                             <h4 id="proveedorNombre">PROVEEDOR: <?php echo $viewmodel["orden"]["nombreEmpresa"] ?></h4>
                             
                             <div>
-                                <input type="button" class="btn btn-success" id="editor" onclick ="accion()" value="CAMBIAR PROVEEDOR">
+                                <input type="button" class="btn btn-success" id="editor" onclick ="mostrarProveedores()" value="CAMBIAR PROVEEDOR">
                             </div>
 
                             <hr>
@@ -124,22 +124,39 @@
                                 <button type="submit" class="float-right btn btn-primary ">GUARDAR</button>
                             </div>
                             
-                            <!--MODAL -->
-                            <div class="modal" tabindex="-1" role="dialog" id="modalconfirmar">
-                                <div class="modal-dialog" role="document">
+                            <!--MODAL PROVEEDOR -->
+                            <div class="modal" tabindex="-1" role="dialog" id="confirmarProveedor">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Modal title</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                        </button>
+                                        <h5 class="modal-title">SELECCIÓN PROVEEDOR:</h5>
+
                                     </div>
-                                    <div class="modal-body">
-                                        <p>Modal body text goes here.</p>
+                                    <div class="modal-body" id="mensajeProveedor">
+                                        
+                                    </div>
+                                    <div class="modal-footer" id="botonesConfirmarProveedor">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarModel()">CANCELAR</button>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <!--MODAL -->
+
+                             <!--MODAL -->
+                            <div class="modal" tabindex="-1" role="dialog" id="modalconfirmar">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">MODIFICAR ORDEN:</h5>
+
+                                    </div>
+                                    <div class="modal-body" id="mensajeOrden">
+                                        <p><b>¿Quiere crear Orden?<b></p>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">CONFIRMAR</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarModel()">CANCELAR</button>
                                     </div>
                                     </div>
                                 </div>
@@ -152,8 +169,9 @@
     </div>
 </div>
 
+ 
 <script>
-        $(document).ready(function() {
+            $(document).ready(function() {
     $('#proveedores').DataTable( {
         dom: 'Bfrtip',
         buttons: [
@@ -162,70 +180,8 @@
     } );
 } );
 
-    function seleccionaProveedor(id, empresa){
-
-        document.getElementById("main-container").style.display = "none";
-        ///agregar en idProveedor
-        document.getElementById("idProveedor").value = id;
-/*
-        var input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "editadoIdProveedor";
-        input.value = id;
-*/
-        document.getElementById("formOrden").appendChild(input);
-    
-        document.getElementById("proveedorNombre").innerHTML = "PROVEDOR: "+empresa+"";
-    }
-       
-        
-
-
-    function accion(){
-        document.getElementById("main-container").style.display = "block";
-        document.getElementById("editor").style.display = "none";
-    }
-
-
-
-
-
-
-
-</script>
-<script>
-
-
-    document.getElementById("numero").addEventListener("blur", errorNumero);
-    document.getElementById("anio").addEventListener("blur", errorNumero);
-
     document.getElementById("montoReal").addEventListener("blur", errorMonto);
-
     document.getElementById("plazoEntrega").addEventListener("blur", errorPlazoEntrega);
-
-
-
-    
-    function errorNumero(){
-        var numero = document.getElementById("numero").value;
-        var anio = document.getElementById("anio").value;
-
-        if(numero.length < 1 || anio.length < 1){
-            if(numero.length < 1 && anio.length < 1){
-                document.getElementById("numeroAnioError").innerHTML = "              El numero de orden y año es obligatorio ❌";
-            }else {
-                if(numero.length < 1){
-                    document.getElementById("numeroAnioError").innerHTML = "              El numero de orden es obligatorio ❌";
-                }else{
-                    document.getElementById("numeroAnioError").innerHTML = "              El campo año es obligatorio entre 2010 y 2050 ❌ ";
-                }
-            }
-        }
-        else{
-            document.getElementById("numeroAnioError").innerHTML = "";
-        }
- 
-    }
 
 
     function errorMonto(){
@@ -253,25 +209,72 @@
     }
     //evitar mandar formulario si idProveedor esta vacio
     function validarFormulario(event){
-        <?php if($viewmodel["orden"]["servicio"] == "si"){ ?>
-            var siservicio = document.getElementById("inicio").value;
-            var fin = document.getElementById("fin").value;
-            var inicio = document.getElementById("inicio").value;
-            
-            if( fin != '' && inicio != 1){
-                    if(fin <= inicio){
-                        alert("La fecha de inicio debe ser menor a la fecha de fin");
-                    event.preventDefault();
-                 }
+        let mensaje ="";
+       /* var idProveedor = document.getElementById("idProveedor").value;
+        //por si no selecciona proveedor
+        if(idProveedor.length < 1){
+            mensaje = "<hr><h4>Debera seleccionar un proveedor </h4><hr>";
+            event.preventDefault();
+
+        }*/
+        //por si ingresa fechas que sean coerente
+        var fin = document.getElementById("fin").value;
+        var inicio = document.getElementById("inicio").value;
+        if('<?php echo $viewmodel['orden']['servicio'] ?>' == 'si' && fin.length > 1 && inicio.length > 1){
+            if(fin <= inicio){
+                mensaje = "<hr><h4>La fecha de inicio debe ser menor a la fecha de fin </h4><hr>"+mensaje;
+                event.preventDefault();
             }
-
-        <?php } ?>
-
+        }
+        if( mensaje.length > 1){
+             
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: mensaje,
+                
+            
+                });
+            return;
+        }
         
+        //aqui muestra el modal
+        if(document.getElementById("modalconfirmar").style.display != "block"){
+            ///muestra mensaje si no selecciona pdf
+            document.getElementById("mensajeOrden").innerHTML = "<p><b>¿Quiere crear Orden?<b></p>";
+            event.preventDefault();
+            document.getElementById("modalconfirmar").style.display = "block"; 
+        }
     }
 
-    
+    //MODAL DE PROVEEEDOR
+    function confirmarProveedor (id, empresa, razon, rut) {
+        if(document.getElementById("confirmarProveedor").style.display != "block"){
+            document.getElementById("mensajeProveedor").innerHTML = "<h4>Confirma el proveedor</h4>"+empresa+"<br><b>Razon Social: </b>"+razon+"<br><b> Rut: </b>"+rut;
+            document.getElementById("botonesConfirmarProveedor").innerHTML = "<input class='btn btn-primary' type='button' onclick='seleccionProveedor("+id+",`"+empresa+"`,`"+razon+"`,`"+rut+"`)' value='CONFIRMAR'> <input type='button' class='btn btn-secondary' onclick=cerrarModel() value='CANCELAR'>";
+            document.getElementById("confirmarProveedor").style.display = "block";
+        }
 
+    }
+
+    function seleccionProveedor(id,empresa,razon_social,rut){
+
+        document.getElementById("confirmarProveedor").style.display = "none";
+        document.getElementById("main-container").style.display = "none";
+        document.getElementById("idProveedor").value = id;
+        document.getElementById("proveedorNombre").innerHTML = empresa ;
+    }
+   
+
+
+    function cerrarModel(){
+        document.getElementById("confirmarProveedor").style.display = "none";
+        document.getElementById("modalconfirmar").style.display = "none";
+    }
+
+    function mostrarProveedores(){
+        document.getElementById("main-container").style.display = "block";
+    }
 </script>
 
 

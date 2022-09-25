@@ -226,7 +226,7 @@ function readAsBase64() {
                             <div >           
                                 <a class="ml-2" href="<?php echo ROOT_PATH; ?>solicitudes/verSolicitud"><button type="button"  class="btn btn-secondary ml-3">CANCELAR</button></a>
     
-                                <button type="submit" class="float-right btn btn-primary ">GUARDAR</button>
+                                <input type="submit" class="float-right btn btn-primary " value="GUARDAR">
                             </div>
                             <!--MODAL PROVEEDOR -->
                             <div class="modal" tabindex="-1" role="dialog" id="confirmarProveedor">
@@ -327,34 +327,41 @@ function readAsBase64() {
     }
     //evitar mandar formulario si idProveedor esta vacio
     function validarFormulario(event){
-        
+        let mensaje ="";
         var idProveedor = document.getElementById("idProveedor").value;
         //por si no selecciona proveedor
         if(idProveedor.length < 1){
-            alert("Debe seleccionar un proveedor");
+            
+            mensaje = "<hr><h4>Debe seleccionar un proveedor </h4><hr>";
             event.preventDefault();
-            return;
+
         }
         //por si ingresa fechas que sean coerente
-        var siservicio = document.getElementById("inicio").value;
+        var siservicio = document.getElementById("siservicio").value;
         var fin = document.getElementById("fin").value;
         var inicio = document.getElementById("inicio").value;
-        if(siservicio == 'si' || fin.length > 1 && inicio.length > 1){
+        if(siservicio == 'si' && fin.length > 1 && inicio.length > 1){
             if(fin <= inicio){
-                alert("La fecha de inicio debe ser menor a la fecha de fin");
-            event.preventDefault();
-            return;
+                mensaje = "<hr><h4>La fecha de inicio debe ser menor a la fecha de fin </h4><hr>"+mensaje;
+                event.preventDefault();
             }
         }
+        if( mensaje.length > 1){
+             
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: mensaje,
+                
+            
+                });
+        return;
+        }
+        
         //aqui muestra el modal
         if(document.getElementById("modalconfirmar").style.display != "block"){
-            var pdf = document.getElementsByTagName("pdf[]");
-            ///muestra mensaje si no selecciona pdf
-            if(pdf != null){
-                    document.getElementById("mensajeOrden").innerHTML = "<div class='p-3 mb-2 bg-warning text-dark'>No tiene ordenes subidas</div><p><b>¿Quiere crear Orden?<b></p>";
-            }else{
-                document.getElementById("mensajeOrden").innerHTML = "<p><b>¿Quiere crear Orden?<b></p>";
-            }
+
+            document.getElementById("mensajeOrden").innerHTML = "<p><b>¿Quiere crear Orden?<b></p>";
             event.preventDefault();
             document.getElementById("modalconfirmar").style.display = "block"; 
         }
@@ -362,39 +369,20 @@ function readAsBase64() {
 
     //MODAL DE PROVEEEDOR
     function confirmarProveedor (id, empresa, razon, rut) {
-    ///insertar en mensajeconfirmacion
-    if(document.getElementById("confirmarProveedor").style.display != "block"){
-        document.getElementById("mensajeProveedor").innerHTML = "<h4>Confirma el proveedor</h4>"+empresa+"<br><b>Razon Social: </b>"+razon+"<br><b> Rut: </b>"+rut;
-        //que desea eliminar el proveedor " + empresa + "<br> R.U.T " + rut + "<br> Razon Social " + razon + "?";
-        ///crear boton de confirmacion en botonesConfirmarProveedor
-        document.getElementById("botonesConfirmarProveedor").innerHTML = "<input class='btn btn-primary' type='button' onclick='seleccionProveedor("+id+",`"+empresa+"`,`"+razon+"`,`"+rut+"`)' value='CONFIRMAR'> <input type='button' class='btn btn-secondary' onclick=cerrarModel() value='CANCELAR'>";
-        document.getElementById("confirmarProveedor").style.display = "block";
-        /*
-                var boton = document.createElement("button");
-        boton.setAttribute("class", "btn btn-primary");
-        boton.setAttribute("onclick", "seleccionProveedor(" + id +", '" + empresa + "', '" + razon + "', '" + rut + "')");
-        boton.innerHTML = "Confirmar";
-        document.getElementById("confirmarProveedor").
-        */
+        if(document.getElementById("confirmarProveedor").style.display != "block"){
+            document.getElementById("mensajeProveedor").innerHTML = "<h4>Confirma el proveedor</h4>"+empresa+"<br><b>Razon Social: </b>"+razon+"<br><b> Rut: </b>"+rut;
+            document.getElementById("botonesConfirmarProveedor").innerHTML = "<input class='btn btn-primary' type='button' onclick='seleccionProveedor("+id+",`"+empresa+"`,`"+razon+"`,`"+rut+"`)' value='CONFIRMAR'> <input type='button' class='btn btn-secondary' onclick=cerrarModel() value='CANCELAR'>";
+            document.getElementById("confirmarProveedor").style.display = "block";
+        }
+
     }
 
-}
+    function seleccionProveedor(id,empresa,razon_social,rut){
 
-function seleccionProveedor(id,empresa,razon_social,rut){
-
-    document.getElementById("confirmarProveedor").style.display = "none";
-    document.getElementById("main-container").style.display = "none";
-    // guardar datos en el formulario
-    document.getElementById("idProveedor").value = id;
-   /* var input = document.createElement("input");
-    input.type = "hidden";
-    input.name = "idProveedor";
-    input.value = id;
-    document.getElementById("formOrden").appendChild(input);
-? */
-    document.getElementById("proveedorNombre").innerHTML = empresa ;
-
-console.log("ACA")
+        document.getElementById("confirmarProveedor").style.display = "none";
+        document.getElementById("main-container").style.display = "none";
+        document.getElementById("idProveedor").value = id;
+        document.getElementById("proveedorNombre").innerHTML = empresa ;
     }
    
 
