@@ -82,14 +82,10 @@
         <input type="number" name="cantidad" min="1" value="<?php echo $_SESSION['solicitudActual']['cantidad'] ?>" class="form-control" style="margin-top: 0px;" required placeholder="Ingrese la cantidad" disabled>
 -->
 
-        <label style="margin-top: 20px; color: rgb(130, 130, 130)">Cantidad | Unidad</label>
-        <div class="input-group">
-            <input style="width: 18%; border-right: 3px solid grey" value="<?php echo $_SESSION['solicitudActual']['cantidad'] ?>" type="number" name="cantidad" min="1"  class="form-control" style="margin-top: 0px;" required disabled placeholder="Cantidad">
-            <input style="width: 80%; border-left: 3px solid grey" value="<?php echo $_SESSION['solicitudActual']['unidad'] ?>" type="text" name="unidad" class="form-control" style="margin-top: 0px;" required disabled placeholder="Ingrese la unidad">
-        </div>
+        
 
 
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
         <input type="number" name="costo" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['costoAprox'] ?>" required placeholder="Ingrese el costo estimado de la compra" disabled>
         
         
@@ -111,6 +107,38 @@
 
        
     </div>
+
+    <h3 style="margin-top: 150px">Items</h3>
+                        <table style="background: #b4bacc">
+                            <thead style="background: #172033">
+                                <tr>
+                                    <th style="width: 7%">Cantidad</th>
+                                    <th style="width: 30%">Unidad</th>
+                                    <th>Descripcion</th>
+
+                                </tr>
+                            </thead>
+                                    
+                                    <?php if($_SESSION['items'] != NULL){ 
+                                        
+                                    foreach($_SESSION['items'] as $item) : ?>
+                                    <tr class="tclass">
+                                        <td><input  class="form-control" type="text" readonly value="<?php echo $item['cantidad'] ?>"></td>
+                                        <td><input class="form-control" type="text" readonly value="<?php echo $item['unidad'] ?>"></td>
+                                        <td><textarea class="form-control" rows="1" readonly type="text"><?php echo $item['descripcion'] ?></textarea></td>
+
+                                        
+                                        
+
+                                    </tr>
+
+                                    <?php endforeach; } ?>
+                                    
+
+                            <tbody>
+
+                            </tbody>
+                        </table>
 
     <div class="col-12 center" style="text-align: center; margin-top: 60px">
         <a href="<?php echo ROOT_URL; ?>solicitudes/editarSolicitud"><input class="btn btn-primary" value="Editar Solicitud" style="width: 150px;"/> </a>

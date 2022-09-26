@@ -1,10 +1,11 @@
+
 <a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
 <div class="row col-12 center" style="background: white; width: 70%; padding: 40px; border: 1px solid rgba(220, 220, 220); border-bottom: none; border-radius: 5px; margin-top: 3%" >
     <h1 class="center " style="text-align: center; color: #001d5a">Nueva Solicitud</h1>
 </div>
 <div class="row col-12 center" style="background: white; width: 70%; padding: 40px; border: 1px solid rgba(220, 220, 220); border-radius: 5px; border-top: none; " >
     <div class="col-lg-6 center" >
-        <form id="nuevaSolicitud" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
+        <form id="nuevaSolicitud" name="nuevaSolicitud" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">SR</label>
         <input type="text" value="<?php if(isset($_SESSION['solicitud']['sr'])) {  echo $_SESSION['solicitud']['sr']; }?>"  name="sr" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el SR" required >
 
@@ -101,8 +102,8 @@
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
         <input type="number" name="costo" value="<?php if(isset($_SESSION['solicitud']['costo'])) {  echo $_SESSION['solicitud']['costo']; }?>" class="form-control" style="margin-top: 0px;" required placeholder="Ingrese el costo estimado de la compra"> 
 
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Grupos Art/Serv</label>
-        <select name="grupoAS" class="form-control">
+        <label  id="pp" style="margin-top: 40px; color: rgb(130, 130, 130)">Grupos Art/Serv</label>
+        <select name="grupoAS" id="grupoAS" onchange="arts(this);" class="form-control">
                 <option value="0" selected>Seleccione una opción</option>
 				<option <?php if(isset($_SESSION['solicitud']['grupoAS'])){if($_SESSION['solicitud']['grupoAS'] == "Artículos y Accesorios de Informática"){?> selected <?php }} ?> value="Artículos y Accesorios de Informática" >Artículos y Accesorios de Informática</option>
                 <option <?php if(isset($_SESSION['solicitud']['grupoAS'])){if($_SESSION['solicitud']['grupoAS'] == "Teléfono y Similares"){?> selected <?php }} ?> value="Teléfono y Similares" >Teléfono y Similares</option>
@@ -116,16 +117,20 @@
 
 			</select> 
 
+
         <label  style="margin-top: 45px; color: rgb(130, 130, 130)">Art/Serv</label>
-        <input name="artServ" class="form-control" placeholder="Ingrese un artículo o servicio">
+        <select name="artServ" id="artServ" onchange="cambiarinput(value);" class="form-control" >
+
+        </select>
+        <input type="text" style="display:none"  name="inputas" value="<?php if(isset($_SESSION['solicitud']['inputas'])){ echo $_SESSION['solicitud']['inputas']; } ?>"  id="inputas">
         
        
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Detalle</label>
-        <textarea class="form-control" name="detalle" cols="40" rows="4" style="margin-top: 0px;" placeholder="Ingrese un detalle aquí (opcional)"><?php if(isset($_SESSION['solicitud']['detalle'])) {  echo $_SESSION['solicitud']['detalle']; }?></textarea>
+        <textarea class="form-control" name="detalle" cols="40" rows="5" style="margin-top: 0px;" placeholder="Ingrese un detalle aquí (opcional)"><?php if(isset($_SESSION['solicitud']['detalle'])) {  echo $_SESSION['solicitud']['detalle']; }?></textarea>
 
-        <label  style="margin-top: 10px; color: rgb(130, 130, 130)">Observaciones</label>
-        <textarea class="form-control" name="observaciones" cols="40" rows="4" style="margin-top: 0px;" placeholder="Ingrese observaciones aquí (opcional)"><?php if(isset($_SESSION['solicitud']['observaciones'])) {  echo $_SESSION['solicitud']['observaciones']; }?></textarea>
+        <label  style="margin-top: 50px; color: rgb(130, 130, 130)">Observaciones</label>
+        <textarea class="form-control" name="observaciones" cols="40" rows="5" style="margin-top: 0px;" placeholder="Ingrese observaciones aquí (opcional)"><?php if(isset($_SESSION['solicitud']['observaciones'])) {  echo $_SESSION['solicitud']['observaciones']; }?></textarea>
 
     </div>
 
@@ -184,9 +189,9 @@
 
 
 
-                        <h3 style="margin-top: 150px">Agregar ítems</h3>
-                        <table>
-                            <thead>
+                        <h3 style="margin-top: 150px">Items</h3>
+                        <table style="background: #b4bacc">
+                            <thead style="background: #172033">
                                 <tr>
                                     <th style="width: 7%">Cantidad</th>
                                     <th style="width: 30%">Unidad</th>
@@ -239,7 +244,6 @@
 
 <script>
 
-
 $(document).ready(function(){
     $('#add').attr('disabled',true);
     $('#cant, #uni').keyup(function(){
@@ -252,10 +256,163 @@ $(document).ready(function(){
 
 
 
+$(document).ready(function(){
+    const s = document.querySelector("#grupoAS");
+    const i = document.querySelector("#artServ");
+
+    cargarSelect(s);
+
+    if(s.value != '0'){
+        
+    }
+
+});
 
 
 
 
+
+
+function limpiarSelect(){
+    /*
+    select = document.getElementById('artServ');    
+    for (let i = select.options.length; i >= 0; i--) {
+        $select.remove(i);
+    }*/
+    $("#artServ").empty();
+
+}
+
+function cambiarinput(valor){
+    inp = document.getElementById('inputas');    
+    inp.value = valor;
+
+}
+
+
+function addoption(opcion){
+    inp = document.getElementById('inputas');    
+    select = document.getElementById('artServ');    
+    var opt = document.createElement('option');
+    opt.value = opcion;
+    opt.innerHTML = opcion;
+
+    if(inp.value == opcion){
+        opt.selected = true;
+    }
+
+   
+    select.appendChild(opt); 
+
+
+
+
+}
+
+
+function cargarSelect(gas){
+
+    if(gas.value == 'Artículos y Accesorios de Informática'){
+        limpiarSelect();
+        addoption('Insumos de Informática (toners, cintas, teclados)');
+        addoption('Insumos de Comunicaciones (baterías, antenas, cables, etc)');
+    }
+
+    if(gas.value == 'Teléfono y Similares'){
+        limpiarSelect();
+        addoption('Productos y servicios de ANTEL (Tablets, celulares, líneas fijas y móviles, enlaces)');
+
+    }
+
+    if(gas.value == 'Arrendamiento de Equipos Computación (Cámara de Video Vigilancia)'){
+        limpiarSelect();
+       addoption('Arrendamiento de equipos computación (impresoras, cámaras, etc)'); 
+    }
+
+    if(gas.value == 'Arrendamiento Dispositivos Electrónicos (Tobilleras)'){
+        limpiarSelect();
+        addoption('Arrendamiento de dispositivos (tobilleras, espirómetros)');
+    }
+
+    if(gas.value == 'Servicios informáticos'){
+        limpiarSelect();
+        addoption('Mantenimiento de Software correctivo/evolutivo');
+        addoption('Licencias de Software suscripción anual');
+        addoption('Soporte Técnico a Plataformas de Software');
+        addoption('Soporte Técnico a Plataformas de Hardware');
+    }
+
+    if(gas.value == 'Equipos de Informática'){
+        limpiarSelect();
+        addoption('Adquisición equipos Informáticos');
+    }
+
+    if(gas.value == 'Equipos de Comunicaciones'){
+        limpiarSelect();
+        addoption('Adquisición equipos Comunicaciones');
+    }
+
+    if(gas.value == 'Programas de Computación'){
+        limpiarSelect();
+        addoption('Proyectos de Desarrollo de Software a Medida');
+        addoption('Licencias de Software perpetuas');
+    }
+
+}
+
+function arts(gas) {
+
+
+    
+    if(gas.value == 'Artículos y Accesorios de Informática'){
+        limpiarSelect();
+        addoption('Insumos de Informática (toners, cintas, teclados)');
+        addoption('Insumos de Comunicaciones (baterías, antenas, cables, etc)');
+    }
+
+    if(gas.value == 'Teléfono y Similares'){
+        limpiarSelect();
+        addoption('Productos y servicios de ANTEL (Tablets, celulares, líneas fijas y móviles, enlaces)');
+
+    }
+
+    if(gas.value == 'Arrendamiento de Equipos Computación (Cámara de Video Vigilancia)'){
+        limpiarSelect();
+       addoption('Arrendamiento de equipos computación (impresoras, cámaras, etc)'); 
+    }
+
+    if(gas.value == 'Arrendamiento Dispositivos Electrónicos (Tobilleras)'){
+        limpiarSelect();
+        addoption('Arrendamiento de dispositivos (tobilleras, espirómetros)');
+    }
+
+    if(gas.value == 'Servicios informáticos'){
+        limpiarSelect();
+        addoption('Mantenimiento de Software correctivo/evolutivo');
+        addoption('Licencias de Software suscripción anual');
+        addoption('Soporte Técnico a Plataformas de Software');
+        addoption('Soporte Técnico a Plataformas de Hardware');
+    }
+
+    if(gas.value == 'Equipos de Informática'){
+        limpiarSelect();
+        addoption('Adquisición equipos Informáticos');
+    }
+
+    if(gas.value == 'Equipos de Comunicaciones'){
+        limpiarSelect();
+        addoption('Adquisición equipos Comunicaciones');
+    }
+
+    if(gas.value == 'Programas de Computación'){
+        limpiarSelect();
+        addoption('Proyectos de Desarrollo de Software a Medida');
+        addoption('Licencias de Software perpetuas');
+    }
+    
+
+    
+}
 
 
 

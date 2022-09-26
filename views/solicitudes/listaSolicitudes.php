@@ -173,9 +173,10 @@
 
         abrirModal.addEventListener("click",()=>{
 
-            abrirModal.classList.add("mystyle");
+                abrirModal.classList.add("mystyle");
 
-               modal.show();
+                modal.show();
+
             
         })
         cerrarModal.addEventListener("click",()=>{

@@ -277,6 +277,11 @@ table{
 	text-align: left;
 	border-collapse: collapse;
 	width: 100%;
+
+}
+
+.tclass{
+    background-color: #ddd;
 }
 
 th, td{

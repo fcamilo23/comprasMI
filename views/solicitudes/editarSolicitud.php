@@ -9,7 +9,7 @@
 
 
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Número SR</label>
-        <input type="number" id="sr" name="sr" class="form-control" value="<?php echo $_SESSION['solicitudActual']['SR']; ?>" style="margin-top: 0px;" placeholder="Ingrese el número SR"  readonly >
+        <input type="text" id="sr" name="sr" class="form-control" value="<?php echo $_SESSION['solicitudActual']['SR']; ?>" style="margin-top: 0px;" placeholder="Ingrese el número SR"  readonly >
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Gastos e Inversiones</label>
         <select name="gastos_inversiones" class="form-control"  >
@@ -84,11 +84,7 @@
         <!--<label  style="margin-top: 20px; color: rgb(130, 130, 130)">Cantidad</label>
         <input type="number" name="cantidad" min="1" value="<?php echo $_SESSION['solicitudActual']['cantidad'] ?>" class="form-control" style="margin-top: 0px;" required placeholder="Ingrese la cantidad" >
         -->
-        <label style="margin-top: 20px; color: rgb(130, 130, 130)">Cantidad | Unidad</label>
-        <div class="input-group">
-            <input style="width: 18%; border-right: 3px solid grey" value="<?php echo $_SESSION['solicitudActual']['cantidad'] ?>" type="number" name="cantidad" min="1"  class="form-control" style="margin-top: 0px;" required  placeholder="Cantidad">
-            <input style="width: 80%; border-left: 3px solid grey" value="<?php echo $_SESSION['solicitudActual']['unidad'] ?>" type="text" name="unidad" class="form-control" style="margin-top: 0px;" required  placeholder="Ingrese la unidad">
-        </div>
+        
 
 
 
@@ -120,10 +116,58 @@
 
        
     </div>
-
     <div class="col-12 center" style="text-align: center; margin-top: 60px">
         <input type="submit" id="submit" name="submit" class="btn btn-primary" value="Guardar Cambios" style="width: 150px;"/> 
     </div>
+
+    <h3 style="margin-top: 100px">Items</h3>
+                        <table style="background: #b4bacc">
+                            <thead style="background: #172033">
+                                <tr>
+                                    <th style="width: 7%">Cantidad</th>
+                                    <th style="width: 30%">Unidad</th>
+                                    <th>Descripcion</th>
+                                    <th style="width: 3%"></th>
+
+                                </tr>
+                            </thead>
+                                    <tr class="tclass">
+                                        <td><input class="form-control" name="cant" id="cant" type="text"></td>
+                                        <td><input class="form-control" name="uni" id="uni" type="text"></td>
+                                        <td><textarea class="form-control" name="desc" id="desc" rows="1" type="text"></textarea></td>
+                                        <td><input type="submit" id="add" name="submit"  class="btn btn-primary" value="+"></input></td>
+
+                                        
+                                        
+
+                                    </tr>
+
+
+                                    <?php if($_SESSION['items'] != NULL){ 
+                                        
+                                    foreach($_SESSION['items'] as $item) : ?>
+                                    <tr class="tclass">
+                                    <form id="editarSoli" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
+                                        <input style="display: none" class="form-control" type="text" name="id1" readonly value="<?php echo $item['id'] ?>">
+                                        <td><input  class="form-control" type="text" name="cant1" readonly value="<?php echo $item['cantidad'] ?>"></td>
+                                        <td><input class="form-control" type="text" name="uni1" readonly value="<?php echo $item['unidad'] ?>"></td>
+                                        <td><textarea class="form-control" rows="1" name="desc1" readonly type="text"><?php echo $item['descripcion'] ?></textarea></td>
+                                        <td><input style="color: white" type="submit" id="delete" name="submit" class="btn btnEliminar" value="×"></input></td>
+                                    </form>
+                                        
+                                        
+
+                                    </tr>
+
+                                    <?php endforeach; } ?>
+                                    
+
+                            <tbody>
+
+                            </tbody>
+                        </table>
+
+  
 
 </div>
 

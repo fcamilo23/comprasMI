@@ -39,7 +39,6 @@
 <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js" crossorigin="anonymous"></script>
 
 
-<script src="<?php echo ROOT_PATH; ?>assets/alertas.js?v=<?php echo time(); ?>" crossorigin="anonymous"></script>
 
 
 

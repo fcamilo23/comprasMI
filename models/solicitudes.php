@@ -147,6 +147,9 @@ if (isset($_POST['submit'])) {
 
         $this->query('SELECT *, p.empresa as proveedor, o.id as idOrden FROM ordenes o JOIN proveedores p ON o.idProveedor = p.id WHERE o.idSolicitud="'.$_SESSION['solicitudActual']['id'].'"');
         $_SESSION['ordenes'] = $this->resultSet();
+
+        $this->query('SELECT * FROM item WHERE idSolicitud="'.$_SESSION['solicitudActual']['id'].'"');
+        $_SESSION['items'] = $this->resultSet();
         
         return;
         
@@ -184,18 +187,16 @@ if (isset($_POST['submit'])) {
 
 		if($post && $post['submit']){
 
-            
+            if($post['submit'] == "Guardar Cambios"){
 
 
-                $this->query('UPDATE solicitudescompra SET SR = :sr, planificado = :planificado, gastos_inversiones = :gastos_inversiones, grupoAS=:grupoAS, artServ=:artServ, detalle=:detalle, cantidad=:cantidad, unidad=:unidad, estado=:estado, oficinaSolicitante=:oficinaSolicitante, costoAprox=:costoAprox, referente=:referente, contactoReferente=:contactoReferente, observaciones=:observaciones, procedimiento=:procedimiento WHERE id=:id'); 
+                $this->query('UPDATE solicitudescompra SET SR = :sr, planificado = :planificado, gastos_inversiones = :gastos_inversiones, grupoAS=:grupoAS, artServ=:artServ, detalle=:detalle, estado=:estado, oficinaSolicitante=:oficinaSolicitante, costoAprox=:costoAprox, referente=:referente, contactoReferente=:contactoReferente, observaciones=:observaciones, procedimiento=:procedimiento WHERE id=:id'); 
                 $this->bind(':sr', $post['sr']);
 				$this->bind(':planificado', $post['planificado']);
                 $this->bind(':gastos_inversiones', $post['gastos_inversiones']);
 				$this->bind(':grupoAS', $post['grupoAS']);
 				$this->bind(':artServ', $post['artServ']);
 				$this->bind(':detalle', $post['detalle']);
-				$this->bind(':cantidad', $post['cantidad']);
-                $this->bind(':unidad', $post['unidad']);
 				$this->bind(':estado', $post['estado']);
 				$this->bind(':oficinaSolicitante', 1);
 				$this->bind(':costoAprox', $post['costo']);
@@ -216,8 +217,6 @@ if (isset($_POST['submit'])) {
                     "grupoAS"	=> $post['grupoAS'],
                     "artServ"	=> $post['artServ'],
                     "detalle"	=> $post['detalle'],
-                    "cantidad"	=> $post['cantidad'],
-                    "unidad"	=> $post['unidad'],
                     "estado"	=> $post['estado'],
                     "oficinaSolicitante"	=> $post['oficinaSolicitante'],
                     "fechaHora"	=> $post['fechaHora'],
@@ -229,7 +228,43 @@ if (isset($_POST['submit'])) {
     
                 );
 
+                $this->query('SELECT * FROM item WHERE idSolicitud="'.$_SESSION['solicitudActual']['id'].'"');
+                $_SESSION['items'] = $this->resultSet();
+
                 header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+            }
+
+            if($post['submit'] == "+"){
+                echo $post['cant'];
+                echo $post['uni'];
+                echo $post['desc'];
+                echo $_SESSION['solicitudActual']['id'];
+                
+                $this->query('INSERT INTO item(cantidad, unidad, descripcion, idSolicitud) VALUES ("'.$post['cant'].'", "'.$post['uni'].'", "'.$post['desc'].'", "'.$_SESSION['solicitudActual']['id'].'")');
+                $this->execute();
+
+                $e = array(
+                    "cantidad"	=> $post['cant'],
+                    "unidad"	=> $post['uni'],
+                    "descripcion"	=> $post['desc']);
+                    
+                array_push($_SESSION['items'], $e); 
+
+                header('Location: '.ROOT_URL.'solicitudes/editarSolicitud#add');
+            }
+
+            if($post['submit'] == "×"){
+                
+                $this->query('DELETE FROM item WHERE id="'.$post['id1'].'"');
+                $this->execute();
+
+                $this->query('SELECT * FROM item');
+                $_SESSION['items'] = $this->resultSet();
+                
+               
+            }
+
+            
 		
 
         }
@@ -322,12 +357,14 @@ if (isset($_POST['submit'])) {
 
 
             if($post['submit'] == "+"){ 
+                
 
                 $_SESSION['solicitud']['sr'] = $post['sr'];
                 $_SESSION['solicitud']['planificado'] = $post['planificado'];
                 $_SESSION['solicitud']['gastos_inversiones'] = $post['gastos_inversiones'];
                 $_SESSION['solicitud']['grupoAS'] = $post['grupoAS'];
                 $_SESSION['solicitud']['artServ'] = $post['artServ'];
+                $_SESSION['solicitud']['inputas'] = $post['inputas'];
                 $_SESSION['solicitud']['detalle'] = $post['detalle'];
                 $_SESSION['solicitud']['oficinaSolicitante'] = $post['oficinaSolicitante'];
                 $_SESSION['solicitud']['costo'] = $post['costo'];
@@ -348,6 +385,9 @@ if (isset($_POST['submit'])) {
                     "descripcion"	=> $post['desc']);
                     
                 array_push($_SESSION['items'], $e); 
+
+                header('Location: '.ROOT_URL.'solicitudes/nuevaSolicitud#add');
+
 
             /*
 
@@ -430,6 +470,7 @@ if (isset($_POST['submit'])) {
         unset($_SESSION['solicitud']['gastos_inversiones']);
         unset($_SESSION['solicitud']['grupoAS']);
         unset($_SESSION['solicitud']['artServ']);
+        unset($_SESSION['solicitud']['inputas']);
         unset($_SESSION['solicitud']['detalle']);
         unset($_SESSION['solicitud']['oficinaSolicitante']);
         unset($_SESSION['solicitud']['costo']);
