@@ -7,6 +7,7 @@ class OrdenModel extends Model{
          return $lstProveedores;
     }
 
+
     public function agregarOrden(){
         try{
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
