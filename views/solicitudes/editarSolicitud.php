@@ -33,7 +33,8 @@
 			</select> 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Grupos Art/Serv</label>
-        <select name="grupoAS" class="form-control" >
+        <!--
+        <select name="grupoAS" class="form-control" readonly >
 				<option <?php if ($_SESSION['solicitudActual']['grupoAS'] == "Artículos y Accesorios de Informática"){?> selected <?php } ?> value="Artículos y Accesorios de Informática" selected>Artículos y Accesorios de Informática</option>
                 <option <?php if ($_SESSION['solicitudActual']['grupoAS'] == "Teléfono y Similares"){?> selected <?php } ?> value="Teléfono y Similares" >Teléfono y Similares</option>
 				<option <?php if ($_SESSION['solicitudActual']['grupoAS'] == "Arrendamiento de Equipos Computación (Cámara de Video Vigilancia)"){?> selected <?php } ?> value="Arrendamiento de Equipos Computación (Cámara de Video Vigilancia)" >Arrendamiento de Equipos Computación (Cámara de Video Vigilancia)</option>
@@ -44,10 +45,13 @@
 				<option <?php if ($_SESSION['solicitudActual']['grupoAS'] == "Programas de Computación"){?> selected <?php } ?> value="Programas de Computación" >Programas de Computación</option>
 
 
-			</select> 
+			</select> -->
+
+        <input type="text" name="grupoAS" class="form-control"  value="<?php echo $_SESSION['solicitudActual']['grupoAS'] ?>" required readonly >
+
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Art/Serv</label>
-        <input type="text" name="artServ" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['artServ'] ?>" required placeholder="Ingrese el artículo/servicio" >
+        <input type="text" name="artServ" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['artServ'] ?>" required readonly placeholder="Ingrese el artículo/servicio" >
 
 
  

@@ -7,7 +7,7 @@
     <div class="col-lg-6 center" >
         <form id="nuevaSolicitud" name="nuevaSolicitud" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">SR</label>
-        <input type="text" value="<?php if(isset($_SESSION['solicitud']['sr'])) {  echo $_SESSION['solicitud']['sr']; }?>"  name="sr" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el SR" required >
+        <input type="text" value="<?php if(isset($_SESSION['solicitud']['sr'])) {  echo $_SESSION['solicitud']['sr']; }?>"  name="sr" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el SR" >
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Gastos e Inversiones</label>
         <select name="gastos_inversiones" class="form-control">
@@ -54,7 +54,7 @@
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Tipo de Procedimiento</label>
         <!-- Todos estos if son para el momento de agregar items, que inevitablemente se recarga la pagina y con estos if conservamos los datos ya ingresados en el formulario -->
         <select name="procedimiento" class="form-control">
-                <option value="0" >Seleccione una opción</option>
+                <option value="Aun no definido" >Aún no definido</option>
 				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "LP - Licitacion Publica"){?> selected <?php }} ?> value="LP - Licitación Pública">LP - Licitación Pública</option>
 				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "LA - Licitación Abreviada"){?> selected <?php }} ?> value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
 				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "CD - Compra Directa"){?> selected <?php }} ?> value="CD - Compra Directa">CD - Compra Directa</option>
@@ -81,10 +81,10 @@
             </select> 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Referente</label>
-        <input type="text" name="referente" value="<?php if(isset($_SESSION['solicitud']['referente'])) {  echo $_SESSION['solicitud']['referente']; }?>" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el nombre de un referente para esta solicitud" required >
+        <input type="text" name="referente" value="<?php if(isset($_SESSION['solicitud']['referente'])) {  echo $_SESSION['solicitud']['referente']; }?>" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el nombre de un referente para esta solicitud"  >
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Contacto Referente</label>
-        <input type="text" name="contactoReferente" value="<?php if(isset($_SESSION['solicitud']['contactoReferente'])) {  echo $_SESSION['solicitud']['contactoReferente']; }?>" class="form-control" style="margin-top: 0px;" placeholder="Ingrese correo del referente" required >
+        <input type="text" name="contactoReferente" value="<?php if(isset($_SESSION['solicitud']['contactoReferente'])) {  echo $_SESSION['solicitud']['contactoReferente']; }?>" class="form-control" style="margin-top: 0px;" placeholder="Ingrese correo del referente"  >
 				
 
 
@@ -100,7 +100,7 @@
         </div>-->
 
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
-        <input type="number" name="costo" value="<?php if(isset($_SESSION['solicitud']['costo'])) {  echo $_SESSION['solicitud']['costo']; }?>" class="form-control" style="margin-top: 0px;" required placeholder="Ingrese el costo estimado de la compra"> 
+        <input type="number" name="costo" min="0"  value="<?php if(isset($_SESSION['solicitud']['costo'])) {  echo $_SESSION['solicitud']['costo']; }?>" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el costo estimado de la compra"> 
 
         <label  id="pp" style="margin-top: 40px; color: rgb(130, 130, 130)">Grupos Art/Serv</label>
         <select name="grupoAS" id="grupoAS" onchange="arts(this);" class="form-control">
@@ -134,9 +134,11 @@
 
     </div>
 
-    
+    <div style="display:none" class="col-12 center" style="text-align: center; margin-top: 100px">
+                                        <input type="submit" id="confirm" name="submit" class="btn btn-primary" value="Confirmar" style="width: 150px;"/>
+    </div>
 
-
+  
 
 <!--
 <form>
@@ -188,7 +190,6 @@
                         -->
 
 
-
                         <h3 style="margin-top: 150px">Items</h3>
                         <table style="background: #b4bacc">
                             <thead style="background: #172033">
@@ -210,23 +211,31 @@
                                         
 
                                     </tr>
+                                    
+                                    
 
+
+                                    
 
                                     <?php if($_SESSION['items'] != NULL){ 
-                                        
+                                    $indx = 0;
                                     foreach($_SESSION['items'] as $item) : ?>
                                     <tr>
+                                    <form id="asd" name="asd" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
+                                        <input style="display:none" type="number" name="index" value="<?php echo $indx; $indx = $indx + 1; ?>">
                                         <td><input  class="form-control" type="text" readonly value="<?php echo $item['cantidad'] ?>"></td>
                                         <td><input class="form-control" type="text" readonly value="<?php echo $item['unidad'] ?>"></td>
                                         <td><textarea class="form-control" rows="1" readonly type="text"><?php echo $item['descripcion'] ?></textarea></td>
-                                        <td><button style="color: white" class="btn btnEliminar">×</button></td>
+                                        <td><input style="color: white" type="submit" id="delete" name="submit"  class="btn btnEliminar" value="×"></input></td>
+                                    </form>
 
-                                        
                                         
 
                                     </tr>
+                                    
 
                                     <?php endforeach; } ?>
+
                                     
 
                             <tbody>
@@ -234,10 +243,17 @@
                             </tbody>
                         </table>
 
+                       
+
+                        </form>
+
+                
+
+        
+
                         <div class="col-12 center" style="text-align: center; margin-top: 100px">
-                            <input type="submit" id="submit" name="submit" class="btn btn-primary" value="Confirmar" style="width: 150px;"/>
+                            <input type="submit" id="submit" name="submit" class="btn btn-primary" value="Confirmar" onclick="document.getElementById('confirm').click()" style="width: 150px;"/>
                         </div>
-        </form>
 
 </div>
 

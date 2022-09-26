@@ -57,7 +57,11 @@ class SolicitudesModel extends Model{
             $consulta = "SELECT * FROM solicitudescompra WHERE ";
 
             if($post['fechaIni'] != "" && $post['fechaFin'] != "" ){
-                $consulta = $consulta . "fechaHora BETWEEN '" . $post['fechaIni'] . "' AND '" . $post['fechaFin'] . "'";
+                if($post['fechaIni'] != $post['fechaFin']){
+                    $consulta = $consulta . "fechaHora BETWEEN '" . $post['fechaIni'] . "' AND '" . $post['fechaFin'] . "'";
+                }else{
+                    $consulta = $consulta . "fechaHora LIKE '" . $post['fechaIni'] . "%'";
+                }
                 if($post['estado'] != '0' || $post['planificado'] != '0'){$consulta .= " AND ";}
             }
 
@@ -258,7 +262,7 @@ if (isset($_POST['submit'])) {
                 $this->query('DELETE FROM item WHERE id="'.$post['id1'].'"');
                 $this->execute();
 
-                $this->query('SELECT * FROM item');
+                $this->query('SELECT * FROM item WHERE idSolicitud="'.$_SESSION['solicitudActual']['id'].'"');
                 $_SESSION['items'] = $this->resultSet();
                 
                
@@ -298,13 +302,32 @@ if (isset($_POST['submit'])) {
 
 		if($post && $post['submit']){
             if($post['submit'] == "Confirmar"){ 
+
+
+                $_SESSION['solicitud']['sr'] = $post['sr'];
+                $_SESSION['solicitud']['planificado'] = $post['planificado'];
+                $_SESSION['solicitud']['gastos_inversiones'] = $post['gastos_inversiones'];
+                $_SESSION['solicitud']['grupoAS'] = $post['grupoAS'];
+                $_SESSION['solicitud']['artServ'] = $post['artServ'];
+                $_SESSION['solicitud']['inputas'] = $post['inputas'];
+                $_SESSION['solicitud']['detalle'] = $post['detalle'];
+                $_SESSION['solicitud']['oficinaSolicitante'] = $post['oficinaSolicitante'];
+                $_SESSION['solicitud']['costo'] = $post['costo'];
+                $_SESSION['solicitud']['referente'] = $post['referente'];
+                $_SESSION['solicitud']['contactoReferente'] = $post['contactoReferente'];
+                $_SESSION['solicitud']['observaciones'] = $post['observaciones'];
+                $_SESSION['solicitud']['procedimiento'] = $post['procedimiento'];
+
+                if($post['gastos_inversiones'] != "0" && $post['planificado'] != "0" && $post['oficinaSolicitante'] != "0" && $post['grupoAS'] != "0" && $post['artServ'] != "" && $post['referente'] != "" && $post['contactoReferente'] != "" && $post['costo'] != ""){
+
+
                 $this->query('SELECT * FROM solicitudescompra WHERE SR = "'. $post['sr'].'"');
                 $row = $this->single();
 
 
                 
 
-                if($row == null){
+                if($row == null || $post['sr'] == ""){
 
                     $date = new DateTime("now", new DateTimeZone('America/Montevideo') );
                     $fecha = $date->format('Y-m-d H:i:s');
@@ -321,10 +344,10 @@ if (isset($_POST['submit'])) {
                         $this->bind(':planificado', $post['planificado']);
                         $this->bind(':gastos_inversiones', $post['gastos_inversiones']);
                         $this->bind(':grupoAS', $post['grupoAS']);
-                        $this->bind(':artServ', $post['grupoAS']);
+                        $this->bind(':artServ', $post['artServ']);
                         $this->bind(':detalle', $post['detalle']);
                         $this->bind(':estado', 'Pendiente');
-                        $this->bind(':oficinaSolicitante', 1);
+                        $this->bind(':oficinaSolicitante', $post['oficinaSolicitante']);
                         $this->bind(':fechaHora', $fecha);
                         $this->bind(':costoAprox', $post['costo']);
                         $this->bind(':referente', $post['referente']);
@@ -333,6 +356,7 @@ if (isset($_POST['submit'])) {
                         $this->bind(':procedimiento', $post['procedimiento']);
 
                         $this->execute();
+                        $this->limpiarMemoria();
 
                         $this->query('SELECT * FROM solicitudescompra where id = (select max(id) from solicitudescompra)');
                         $soli = $this->single(); 
@@ -343,14 +367,19 @@ if (isset($_POST['submit'])) {
                         endforeach;
 
                         header('Location: '.ROOT_URL.'solicitudes/listaSolicitudes');
+                    }else{
+                        echo "Debe agregar al menos un ítem";
                     }
             
 
 
 
                 }else{
-                    echo "Ya existe solicitud sr";
+                    echo "Ya existe una solicitud con el mismo SR ingresado";
                 }
+            }else{
+                echo "Tiene campos sin completar";
+            }
             }
 
            
@@ -405,6 +434,16 @@ if (isset($_POST['submit'])) {
 
  
                  
+             }
+
+             if($post['submit'] == "×"){
+                /*
+                $array = $_SESSION['items'];
+                array_splice($_SESSION['items'], $post['index'], 1, $array); 
+                $_SESSION['items'] = $array;*/
+
+                array_splice($_SESSION['items'], $post['index'], 1); 
+
              }
 
             }
@@ -482,5 +521,4 @@ if (isset($_POST['submit'])) {
  
         
 
-    
 }

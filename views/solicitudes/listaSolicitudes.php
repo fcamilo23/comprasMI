@@ -9,12 +9,12 @@
             ],
             dom: 'lBfrtip',
             "columnDefs": [ {
-                "targets": [5,6,7,8,10,11,12,13,14,15],
+                "targets": [15,14,13,12,11,8,7,6,2,0],
                 "searchable": false,
                 
                 } ,
                 {
-                "targets": [10,11,13,14],
+                "targets": [14,13,11],
                 "visible": false,
                 }
             
@@ -68,9 +68,9 @@
     <label id="cerrarFiltros" style="cursor: pointer; display: inline-block; font-size: 40px; background: none; border: none; float:right">×</label>
     <div class="">
     <label class="center" style="color:grey" for="">Desde</label>
-    <input class="form-control" style="" id="fechaIni" type="date" name="fechaIni" onChange="cambiarFecha(this)">
+    <input class="form-control" style="" id="fechaIni" type="date" name="fechaIni" onchange="cambiarFecha(this)">
     <label style="margin-top: 5px; color:grey;" for="">Hasta</label>
-    <input class="form-control" style="" id="fechaFin" type="date" name="fechaFin"><br>
+    <input class="form-control" style="" id="fechaFin" type="date" disabled name="fechaFin"><br>
 
     
     <label  style="margin-top: 15px; color: rgb(130, 130, 130)">Estado</label>
@@ -115,12 +115,12 @@
 			<thead>
                 
 				<tr>
+                    <th>Id</th>
 					<th>SR</th>
                     <th>Procedimiento</th>
                     <th>Art/Serv</th>
                     <th>Grupo Art/Serv</th>
                     <th>Gastos e Inversiones</th>
-                    <th>Cantidad/Unidad</th>
                     <th>Costo Estimado</th>
                     <th>Planificado</th>
                     <th>Estado</th>
@@ -138,12 +138,12 @@
 			</thead>
             <tbody >
 			<tr><?php foreach($viewmodel as $item) : ?>
+                <td><?php echo $item['id'] ?></td>
                 <td><?php echo $item['SR'] ?></td>
                 <td><?php echo substr($item['procedimiento'],0,3); ?></td>
                 <td><?php echo $item['artServ'] ?></td>
                 <td><?php echo $item['grupoAS']; ?></td>
                 <td><?php echo $item['gastos_inversiones'] ?></td>
-                <td><?php echo $item['cantidad'] . ' ' . $item['unidad'] ?></td>
                 <td>$<?php echo $item['costoAprox'] ?></td>
                 <td><?php echo $item['planificado'] ?></td>
                 <td><?php echo $item['estado'] ?></td>
@@ -191,8 +191,12 @@
 
         function cambiarFecha(ini){
             
-            const fin = document.getElementById("#fechaIni").value;
-            document.getElementById("#fechaFin").setValue(fin);
+            const fin = document.getElementById("fechaIni").value;
+            document.getElementById("fechaFin").value = fin;
+            document.getElementById("fechaFin").min = fin;
+            document.getElementById("fechaFin").disabled = false;
+
+
         }
 
 

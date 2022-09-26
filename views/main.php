@@ -117,10 +117,13 @@
         </div>
         <nav>
 
-            <a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes">Solicitudes</a>
-            <a href="<?php echo ROOT_URL; ?>oficina/listaOficinas">Oficinas</a>
-            <a href="<?php echo ROOT_URL; ?>proveedor/listaProveedores">Proveedores</a>
+            <a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes">Solicitudes de Compra</a>
+            <a href="<?php echo ROOT_URL; ?>orden/listaCompras">Compras Realizadas</a>
+            <a href="<?php echo ROOT_URL; ?>oficina/listaOficinas">Oficinas Solicitantes</a>
             <a href="<?php echo ROOT_URL; ?>users/listaUsuarios">Usuarios</a>
+            <a href="<?php echo ROOT_URL; ?>proveedor/listaProveedores">Proveedores</a>
+
+
 
 
         </nav>

@@ -26,7 +26,7 @@
 
 <div id="main-container" style="width: 100%; overflow: auto; padding: 15px;">
 
-		<table id="example"style="width: 100%">
+		<table id=""style="width: 100%">
         
 
 			<thead>
