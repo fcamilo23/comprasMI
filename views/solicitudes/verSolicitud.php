@@ -200,7 +200,7 @@
                     
                     <td><?php echo $orden['plazoEntrega']; ?></td>
                     <td>
-                        <form  action="<?php echo ROOT_PATH; ?>orden/verOrden" method="POST">
+                        <form  action="<?php echo ROOT_PATH; ?>orden/seleccionarOrden" method="POST">
                             <input type="hidden" name="idOrden" value="<?php echo $orden['idOrden']; ?>">
                             <button style="background: #001d5a; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul">VER</button>
                         </form>

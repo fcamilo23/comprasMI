@@ -38,5 +38,9 @@ class Orden extends Controller{
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->modificarOrden(), true);
     }
+    protected function seleccionarOrden(){
+        $viewmodel = new OrdenModel();
+        $this->returnView($viewmodel->seleccionarOrden(), true);
+    }
 }
 ?>

@@ -89,13 +89,91 @@ function mensajes(){
                             <a href="<?php echo ROOT_URL; ?>orden/editarOrden" class="float-right btn btn-primary">EDITAR ORDEN</a>
                             </div>
                             <hr>
+                            <!-- facturas -->
+                            <div style="margin-top: 100px">
+                            <form action="<?php echo ROOT_PATH; ?>factura/nuevaFactura" method="post" >
+                                <input type="hidden" name="idOrden" value="<?php echo $viewmodel["orden"]["id"] ?>">
+                                <input type="hidden" name="idProveedor" value="<?php echo $viewmodel["orden"]["idProveedor"] ?>">
+                                <input type="hidden" name="numero" value="<?php echo $viewmodel["orden"]["numero"] ?>">
+                                <input type="hidden" name="anio" value="<?php echo $viewmodel["orden"]["anio"] ?>">
+                                <input type="hidden" name="empresa" value="<?php echo $viewmodel["proveedor"]["empresa"] ?>">
+                                <input type="hidden" name="rut" value="<?php echo $viewmodel["proveedor"]["rut"] ?>">
+                                <input type="hidden" name="razon_social" value="<?php echo $viewmodel["proveedor"]["razon_social"] ?>">
+                                <input type="hidden" name="moneda" value="<?php echo $viewmodel["orden"]["moneda"] ?>">
+
+                            <button type="submit" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/anexarFactura.jpg" width="190px" height="50px" ></button>
+                            </form>
+                            <h1 style="color: #001d5a; margin-left: 25px" class="">Facturas</h1>
+
+                            <div id="main-container" style="width: 100%; overflow: auto; padding: 25px;"> <!--  max-height: 800px -->
+                                <?php 
+                                if ($viewmodel["facturas"] != null) {
+                                 
+                                ?>
+                                <table id="pdf"style="width: 100%">
+                                    <thead>
+                                        
+                                        <tr>
+                                            <th>Factura</th>
+                                            <th>Monto</th>
+                                            <th>Fecha</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody >
+                                    <tr><?php foreach($viewmodel["facturas"] as $item) : ?>
+
+                                        <td><?php echo $item['numeroFactura'] ?></td>
+                                        <?php
+                                            $moneda;
+                                            if($orden['monedaFactura'] == "$ (Pesos Uruguayos)"){
+                                                $moneda = '$U';
+                                            }else{
+                                                if($orden['monedaFactura'] == "U.I.(Unidades Indexadas)"){
+                                                    $moneda = "U.I.";
+                                                }else{
+                                                    if($orden['monedaFactura'] == "U.R. (Unidades Reajustables)"){
+                                                        $moneda = "U.R.";
+                                                    }else{
+                                                        if($orden['monedaFactura'] == "€ (Euro)"){
+                                                            $moneda = "€";
+                                                        }else{
+                                                            $moneda = 'U$S';
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                        <td> <?php echo $moneda; ?> <?php echo $orden['montoFactura']; ?> </td>
+                                        <td><?php echo $item['fechaFactura'] ?></td>
+                                        <td>
+                                            <form action="<?php echo ROOT_PATH; ?>orden/eliminarArchivo" method="post">
+                                                <input type="hidden" name="idArchivo" value="<?php echo $item['id'] ?>">
+                                                <input type="submit" name="" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
+                                            </form> 
+                                            <form action="<?php echo ROOT_URL; ?>orden/verArchivo" method="post">
+                                                <input type="hidden" name="idArchivo" value="<?php echo $item['id'] ?>">
+                                                <input type="submit" name="submit" value="Ver" style="background: #001d5a; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul"/>
+                                            </form>
+                                         </td>
+         
+                                       
+                                    </tr> <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                                <?php } else { ?>
+                                    <h3>No hay facturas agregadas</h3>
+                                <?php } ?> 
+                                </div>
+                            </div>
+                            <!-------------->
 
                             <div id="main-container" style="width: 100%; overflow: auto; padding: 25px;"> <!--  max-height: 800px -->
                                 <?php 
                                 if ($viewmodel["archivos"] != null) {
                                  
                                 ?>
-                                <table id="proveedores"style="width: 100%">
+                                <table id="pdf"style="width: 100%">
                                     <thead>
                                         
                                         <tr>

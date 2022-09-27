@@ -4,6 +4,10 @@ class Factura extends Controller{
         $viewmodel = new FacturaModel();
         $this->returnView($viewmodel->nuevaFactura(), true);
 	}
+        protected function agregarFactura(){
+        $viewmodel = new FacturaModel();
+        $this->returnView($viewmodel->agregarFactura(), true);
+        }
 }
 
 ?>
