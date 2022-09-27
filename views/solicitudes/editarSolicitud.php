@@ -9,7 +9,7 @@
 
 
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Número SR</label>
-        <input type="text" id="sr" name="sr" class="form-control" value="<?php echo $_SESSION['solicitudActual']['SR']; ?>" style="margin-top: 0px;" placeholder="Ingrese el número SR"  readonly >
+        <input type="text" id="sr" name="sr" class="form-control" value="<?php echo $_SESSION['solicitudActual']['SR']; ?>" style="margin-top: 0px;" placeholder="Ingrese el SR"  >
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Gastos e Inversiones</label>
         <select name="gastos_inversiones" class="form-control"  >

@@ -210,7 +210,7 @@ if (isset($_POST['submit'])) {
 				$this->bind(':artServ', $post['artServ']);
 				$this->bind(':detalle', $post['detalle']);
 				$this->bind(':estado', $post['estado']);
-				$this->bind(':oficinaSolicitante', 1);
+				$this->bind(':oficinaSolicitante', $post['oficinaSolicitante']);
 				$this->bind(':costoAprox', $post['costo']);
 				$this->bind(':referente', $post['referente']);
 				$this->bind(':contactoReferente', $post['contactoReferente']);
@@ -312,9 +312,13 @@ if (isset($_POST['submit'])) {
                     $this->query('DELETE FROM item WHERE id="'.$post['id1'].'"');
                     $this->execute();
 
+                    
 
                     $this->query('SELECT * FROM item WHERE idSolicitud="'.$_SESSION['solicitudActual']['id'].'"');
                     $_SESSION['items'] = $this->resultSet();
+
+                    header('Location: '.ROOT_URL.'solicitudes/editarSolicitud#alerta');
+
 
                 
                
