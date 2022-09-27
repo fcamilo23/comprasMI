@@ -8,21 +8,23 @@ class OrdenModel extends Model{
     }
 
     public function agregarOrden(){
-
+        try{
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $fechaini=null; 
             $fechafin=null;
             $esservicio = 'no';
+            $numeroAmpliacion = null;
             
             if($post['siservicio'] == 'si'){
                 $fechaini = $post['inicio'];
                 $fechafin = $post['fin'];
                 $esservicio = 'si';
-                print_r($post);
             }
-    ////aqui se agrega la orden
+            if(isset($post['numeroAmpliacion'])){
+                $numeroAmpliacion = $post['numeroAmpliacion'];
+            }
 
-            $this->query('INSERT INTO   ordenes (numero, anio, moneda, montoReal, procedimiento, plazoEntrega, formaPago, servicio, fechaInicio, fechaFin, idProveedor,idSolicitud) VALUES (:numero, :anio, :moneda, :montoReal, :procedimiento, :plazoEntrega, :formaPago, :servicio, :fechaInicio, :fechaFin, :idProveedor, :idSolicitud)');
+            $this->query('INSERT INTO   ordenes (numero, anio, moneda, montoReal, procedimiento, plazoEntrega, formaPago,numeroAmpliacion ,servicio, fechaInicio, fechaFin, idProveedor,idSolicitud) VALUES (:numero, :anio, :moneda, :montoReal, :procedimiento, :plazoEntrega, :formaPago,:numeroAmpliacion, :servicio, :fechaInicio, :fechaFin, :idProveedor, :idSolicitud)');
             $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
             $this->bind(':numero', $post['numero']);
             $this->bind(':anio', $post['anio']);
@@ -31,6 +33,7 @@ class OrdenModel extends Model{
             $this->bind(':procedimiento', $post['procedimiento']);
             $this->bind(':formaPago', $post['formaPago']);
             $this->bind(':plazoEntrega', $post['plazoEntrega']);
+            $this->bind(':numeroAmpliacion', $post['numeroAmpliacion']);
             $this->bind(':servicio', $esservicio);
             $this->bind(':fechaInicio', $fechaini);
             $this->bind(':fechaFin', $fechafin);
@@ -45,22 +48,29 @@ class OrdenModel extends Model{
             $this->bind(':anio', $post['anio']);
             $this->execute();
             $idOrden = $this->single();
-            print_r($idOrden);
-            print_r($_SESSION['solicitudActual']['id']);
 
 
-            for($i=0; $i<sizeof($post['pdf']); $i++){
-                $this->query('INSERT INTO archivosordenes (`idSolicitud`,`idOrden`, `nombre`, `pdf`) VALUES(:idSolicitud, :idOrden, :nombre, :pdf)');
-                $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
-                $this->bind(':idOrden', $idOrden['id']);
-                $this->bind(':nombre', $post['pdfnombre'][$i]);
-                $this->bind(':pdf', $post['pdf'][$i]);
-
-                $this->execute();
+            if(isset($post['pdf'])){
+                for($i=0; $i<sizeof($post['pdf']); $i++){
+                    $this->query('INSERT INTO archivosordenes (`idSolicitud`,`idOrden`, `nombre`, `pdf`) VALUES(:idSolicitud, :idOrden, :nombre, :pdf)');
+                    $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+                    $this->bind(':idOrden', $idOrden['id']);
+                    $this->bind(':nombre', $post['pdfnombre'][$i]);
+                    $this->bind(':pdf', $post['pdf'][$i]);
+    
+                    $this->execute();
+                }
             }
-
-        header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
-        return;
+            $_SESSION['mensaje']['tipo'] = 'success';
+            $_SESSION['mensaje']['contenido'] = 'Orden agregada correctamente';
+            header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+            return;
+        }catch(PDOException $e){
+            $_SESSION['mensaje']['tipo'] = 'error';
+            $_SESSION['mensaje']['contenido'] = 'Error al agregar la orden ...Prueba de nuevo mas tarde';
+            header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+            return;      
+        }
     }
     ///ver orden
     public function verOrden(){
@@ -168,41 +178,46 @@ class OrdenModel extends Model{
     }
     
     public function modificarOrden(){
-        
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $fechaini=null; 
-        $fechafin=null;
-        $esservicio = 'no';
-        $proveedor = $post['idProveedor'];
-        
-        if($post['siservicio'] == 'si'){
-            $fechaini = $post['inicio'];
-            $fechafin = $post['fin'];
-            $esservicio = $post;
-        }
-        
-        if(isset($post['editadoIdProveedor'])){
-            $proveedor = $post['editadoIdProveedor'];
-        }
+        try{
+            $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $fechaini=null; 
+            $fechafin=null;
 
-        $this->query('UPDATE ordenes SET numero = :numero, anio = :anio, moneda = :moneda, montoReal = :montoReal, procedimiento = :procedimiento, plazoEntrega = :plazoEntrega, formaPago = :formaPago, servicio = :servicio, fechaInicio = :fechaInicio, fechaFin = :fechaFin, idProveedor = :idProveedor, numeroAmpliacion = :numeroAmpliacion WHERE id = :id');
-        $this->bind(':id', $_SESSION['ordenActual']);
-        $this->bind(':numero', $post['numero']);
-        $this->bind(':anio', $post['anio']);
-        $this->bind(':moneda', $post['moneda']);
-        $this->bind(':montoReal', $post['montoReal']);
-        $this->bind(':procedimiento', $post['procedimiento']);
-        $this->bind(':formaPago', $post['formaPago']);
-        $this->bind(':plazoEntrega', $post['plazoEntrega']);
-        $this->bind(':servicio', $esservicio);
-        $this->bind(':fechaInicio', $fechaini);
-        $this->bind(':fechaFin', $fechafin);
-        $this->bind(':idProveedor', $proveedor);
-        $this->bind(':numeroAmpliacion', $post['numeroAmpliacion']);
+            $proveedor = $post['idProveedor'];
+            
+            if(isset($post['inicio']) && isset($post['fin']) && $post['inicio'] != '' && $post['fin'] != ''){
+                $fechaini = $post['inicio'];
+                $fechafin = $post['fin'];
+            }
+            
+            if(isset($post['editadoIdProveedor'])){
+                $proveedor = $post['editadoIdProveedor'];
+            }
 
-        $this->execute();
-        header('Location: '.ROOT_URL.'orden/verOrden');
-        return;
+            $this->query('UPDATE ordenes SET moneda = :moneda, montoReal = :montoReal, procedimiento = :procedimiento, plazoEntrega = :plazoEntrega, formaPago = :formaPago, fechaInicio = :fechaInicio, fechaFin = :fechaFin, idProveedor = :idProveedor, numeroAmpliacion = :numeroAmpliacion WHERE id = :id');
+            $this->bind(':id', $_SESSION['ordenActual']);
+            $this->bind(':moneda', $post['moneda']);
+            $this->bind(':montoReal', $post['montoReal']);
+            $this->bind(':procedimiento', $post['procedimiento']);
+            $this->bind(':formaPago', $post['formaPago']);
+            $this->bind(':plazoEntrega', $post['plazoEntrega']);
+
+            $this->bind(':fechaInicio', $fechaini);
+            $this->bind(':fechaFin', $fechafin);
+            $this->bind(':idProveedor', $proveedor);
+            $this->bind(':numeroAmpliacion', $post['numeroAmpliacion']);
+
+            $this->execute();
+            $_SESSION['mensaje']['tipo'] = 'success';
+            $_SESSION['mensaje']['contenido'] = 'Orden modificada correctamente';
+            header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+            return;
+        }catch(PDOException $e){
+            $_SESSION['mensaje']['tipo'] = 'error';
+            $_SESSION['mensaje']['contenido'] = 'Error al modificar la orden ...Prueba de nuevo mas tarde';
+            header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+            return;      
+        }
     }
 
 }

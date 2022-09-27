@@ -8,42 +8,25 @@
     } );
 } );
 
-function seleccionaProveedor(id, empresa){
-
-    document.getElementById("main-container").style.display = "none";
-
-    var input = document.createElement("input");
-    input.type = "hidden";
-    input.name = "idProveedor";
-    input.value = id;
-    document.getElementById("formOrden").appendChild(input);
-
-    document.getElementById("proveedorNombre").innerHTML = empresa ;
-
-
-    }
-    let servicio1 = 1;
 
     function servicio(){
-        var esServicio = document.getElementById("esServicio").value;
+        var s = document.getElementById("esServicio").checked;
 
-        if(servicio1 == 1){
+        if(s == true){
             document.getElementById("inicio").readOnly = false;
             document.getElementById("fin").readOnly = false;
-            servicio1 = 0;
-            document.getElementById("esServicio").value = "si";
+            document.getElementById("siservicio").value = "si";
 
         }
         else{
             document.getElementById("inicio").readOnly = true;
             document.getElementById("fin").readOnly = true;
-            servicio1 = 1;
-            document.getElementById("esServicio").value = "no";
+            document.getElementById("siservicio").value = "no";
             
         }
     }
 
-    ////DE ACA TEMAS DE PDF
+
 
 let cant = 0;
 function readAsBase64() {
@@ -96,11 +79,8 @@ function readAsBase64() {
 
     }
 
-    
-
-
 </script>
-
+</body>
 <div class="container" >
     <div class="row d-flex justify-content-center ">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8" >
@@ -110,18 +90,20 @@ function readAsBase64() {
                 
             <div class="card-body ">
                 
-                    <form id="formOrden" action="<?php echo ROOT_URL; ?>orden/agregarOrden" method ="POST" enctype="multipart/form-data" >
+                    <form id="formOrden" onsubmit="validarFormulario(event)" action="<?php echo ROOT_URL; ?>orden/agregarOrden" method ="POST" enctype="multipart/form-data" >
 
-                            <label for="oc" class="form-label"></label>
+                            <label for="numero" class="form-label"></label>
                             <div class="input-group mb-3 center2">
                                 <p class="m-3">Numero</p>
-                                <input id="numero" name="numero" min="0" type="number" class="m-2 miniinput2 form-control">
-                                <div id=ocError" class="invalid-feedback"></div>
+                                <input id="numero" name="numero" min="1" max="9999999"type="number" class="m-2 miniinput2 form-control " required>
                                 <p class="m-3" style="margin-left: 200px;" >              Año: </p>
-                                <input id="anio" name="anio" type="number" min="1" class="m-2 miniinput2 form-control" >
-                                <div id=ocError" class="invalid-feedback"></div>
+                                <input id="anio" name="anio" type="number" min="2010" max="2060" class="m-2 miniinput2 form-control" value="<?php echo date('Y') ?>" required>
+                                <div id="numeroAnioError" style="color:red" ></div>
                             </div>
-                            <br>
+
+                            
+                            
+                       
                             
                             <div class="input-group mb-3 center2">
                                 <p class="m-3">Moneda</p>
@@ -133,10 +115,11 @@ function readAsBase64() {
                                         <option value="€ (Euro)">€ (Euro)</option>
                                     </select>
                                <p class="m-3">          Monto:</p>
-                                <input id="montoReal" name="montoReal" type="number" class="m-2 miniinput2 form-control" >
-                                <div id=montoError" class="invalid-feedback"></div>
+                                <input id="montoReal" name="montoReal" type="number" min="0"class="m-2 miniinput2 form-control" required>
                             </div>
-                            <br>
+                            <div id="montoRealError" class="center2"style="color:red" ></div>
+
+
 
                             <label for="procedimiento" style="margin-top: 50px" class="form-label">Tipo de Procedimiento</label>
                             <div class="input-group mb-3">
@@ -151,31 +134,28 @@ function readAsBase64() {
                                         <option value="CCH - Caja Chica">CCH - Caja Chica</option>
                                     </select> 
                             </div>
-                            <br>
+
  
                             
                             <label for="formaPago" class="form-label">Forma de Pago:</label>
                             <div class="input-group mb-3">
                                 <textarea id="formaPago" name="formaPago" class="form-control"></textarea>
-                                <div id="telefonoError" class="invalid-feedback"></div>
-                            </div>
+                             </div>
+                             
                             <br>
 
                             <div class="input-group mb-3" style="">
                             <label for="plazoEntrega" class="m-2 form-label" >Fecha Entrega</label>
-                                <input id="plazoEntrega" name="plazoEntrega" type="date" class="form-control" style="max-width: 15rem">
-                                <div id="plazoEntregaError" class="invalid-feedback"></div>
+                                <input id="plazoEntrega" name="plazoEntrega" type="date" class="form-control" style="max-width: 15rem" required>
                             </div>
-
+                            <div id="plazoEntregaError" style="color:red" class="center2"></div>
 
 
                             <label for="numeroAmplicacion" style="margin-top: 40px"></label>
                             <div class="input-group mb-3">
                             <p class="m-2">Nº Ampliación </p>
-                                <input id="numeroAmplicacion" style="max-width: 15rem" name="numeroAmplicacion" type="text" class="form-control">
+                                <input id="numeroAmplicacion" style="max-width: 15rem" name="numeroAmpliacion" type="text" class="form-control">
                             </div>
-                            <br>
-
                             <div class="form-check form-check-inline">
                                 <input class="m-2 form-check-input" onclick="servicio()" type="checkbox" id="esServicio">
                                 <label class="m-2 form-check-label" for="inlineCheckbox1">Es Servicio</label>
@@ -192,6 +172,9 @@ function readAsBase64() {
                                 <input id="fin" name="fin" type="date" class="miniinput2 form-control" readonly>
                             </div>
                             <br>
+                            <!-- aqui se va a guardar proveedor -->
+                            <input id="idProveedor" name="idProveedor" type="hidden" >
+                            <!--  -->
                             <div>
                                 <p><b>PROVEEDOR: </b></p><p id="proveedorNombre" ></p>
                             </div>
@@ -219,22 +202,19 @@ function readAsBase64() {
                                             <?php echo $item['rut'] ?>
                                         </td>
                                         <td>
-
-                                           <input type="button" value="✔️" class="btn btn-light" id="este" onclick="seleccionaProveedor(<?php echo $item['id']?>,' <?php echo $item['empresa']?>')" >
+                                           <input type="button" value="✔️" class="btn btn-light" id="este" onclick="confirmarProveedor(<?php echo $item['id']?>, '<?php echo $item['empresa']?>', '<?php echo $item['rut'] ?>', '<?php echo $item['razon_social'] ?>')" >
                                         </td>
                                     </tr> <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
-                            <br>
-                            <hr>
-                           
+                          
                             <hr>
                             
-                                <h1 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h1>
+                                <h3 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h3>
                                 <div class="card-body">
                                 <div class="mb-3">
-                                    <label for="formFile" class="form-label">Default file input example</label>
+                                    <label for="formFile" class="form-label">Subir PDF (*No es obligatorio, puede hacerlo mas adelante)</label>
                                     <input class="form-control" id="loadFile" accept="application/pdf" type="file" onchange="readAsBase64()"  width="190px" height="50px"/>
                                 </div>
 
@@ -244,13 +224,171 @@ function readAsBase64() {
                                 </table>
                                 <br>
                             <div >           
-                                <a class="ml-2" href="<?php echo ROOT_PATH; ?>solicitudes/verSolicitud"><button type="button" class="btn btn-secondary ml-3">CANCELAR</button></a>
+                                <a class="ml-2" href="<?php echo ROOT_PATH; ?>solicitudes/verSolicitud"><button type="button"  class="btn btn-secondary ml-3">CANCELAR</button></a>
     
-                                <button type="submit" class="float-right btn btn-primary ">GUARDAR</button>
+                                <input type="submit" class="float-right btn btn-primary " value="GUARDAR">
                             </div>
+                            <!--MODAL PROVEEDOR -->
+                            <div class="modal" tabindex="-1" role="dialog" id="confirmarProveedor">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">SELECCIÓN PROVEEDOR:</h5>
+
+                                    </div>
+                                    <div class="modal-body" id="mensajeProveedor">
+                                        
+                                    </div>
+                                    <div class="modal-footer" id="botonesConfirmarProveedor">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarModel()">CANCELAR</button>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <!--MODAL -->
+
+                             <!--MODAL -->
+                            <div class="modal" tabindex="-1" role="dialog" id="modalconfirmar">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">CREAR ORDEN:</h5>
+
+                                    </div>
+                                    <div class="modal-body" id="mensajeOrden">
+                                        <p><b>¿Quiere crear Orden?<b></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">CONFIRMAR</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarModel()">CANCELAR</button>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <!--MODAL -->
                         </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</body>
+<script>
+
+    document.getElementById("numero").addEventListener("blur", errorNumero);
+    document.getElementById("anio").addEventListener("blur", errorNumero);
+    document.getElementById("montoReal").addEventListener("blur", errorMonto);
+    document.getElementById("plazoEntrega").addEventListener("blur", errorPlazoEntrega);
+
+    function errorNumero(){
+        var numero = document.getElementById("numero").value;
+        var anio = document.getElementById("anio").value;
+
+        if(numero.length < 1 || anio.length < 1){
+            if(numero.length < 1 && anio.length < 1){
+                document.getElementById("numeroAnioError").innerHTML = "              El numero de orden y año es obligatorio ❌";
+            }else {
+                if(numero.length < 1){
+                    document.getElementById("numeroAnioError").innerHTML = "              El numero de orden es obligatorio ❌";
+                }else{
+                    document.getElementById("numeroAnioError").innerHTML = "              El campo año es obligatorio entre 2010 y 2050 ❌ ";
+                }
+            }
+        }
+        else{
+            document.getElementById("numeroAnioError").innerHTML = "";
+        }
+ 
+    }
+
+
+    function errorMonto(){
+        var monto = document.getElementById("montoReal").value;
+
+        if(monto.length < 1){
+            document.getElementById("montoRealError").innerHTML = "              El monto es obligatorio ❌";
+        }
+        else{
+            document.getElementById("montoRealError").innerHTML = "";
+        }
+ 
+    }
+
+    function errorPlazoEntrega(){
+        var plazoEntrega = document.getElementById("plazoEntrega").value;
+
+        if(plazoEntrega.length < 1){
+            document.getElementById("plazoEntregaError").innerHTML = "              El plazo de entrega es obligatorio ❌" ;
+        }
+        else{
+            document.getElementById("plazoEntregaError").innerHTML = "";
+        }
+ 
+    }
+    //evitar mandar formulario si idProveedor esta vacio
+    function validarFormulario(event){
+        let mensaje ="";
+        var idProveedor = document.getElementById("idProveedor").value;
+        //por si no selecciona proveedor
+        if(idProveedor.length < 1){
+            
+            mensaje = "<hr><h4>Debe seleccionar un proveedor </h4><hr>";
+            event.preventDefault();
+
+        }
+        //por si ingresa fechas que sean coerente
+        var siservicio = document.getElementById("siservicio").value;
+        var fin = document.getElementById("fin").value;
+        var inicio = document.getElementById("inicio").value;
+        if(siservicio == 'si' && fin.length > 1 && inicio.length > 1){
+            if(fin <= inicio){
+                mensaje = "<hr><h4>La fecha de inicio debe ser menor a la fecha de fin </h4><hr>"+mensaje;
+                event.preventDefault();
+            }
+        }
+        if( mensaje.length > 1){
+             
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: mensaje,
+                
+            
+                });
+        return;
+        }
+        
+        //aqui muestra el modal
+        if(document.getElementById("modalconfirmar").style.display != "block"){
+
+            document.getElementById("mensajeOrden").innerHTML = "<p><b>¿Quiere crear Orden?<b></p>";
+            event.preventDefault();
+            document.getElementById("modalconfirmar").style.display = "block"; 
+        }
+    }
+
+    //MODAL DE PROVEEEDOR
+    function confirmarProveedor (id, empresa, razon, rut) {
+        if(document.getElementById("confirmarProveedor").style.display != "block"){
+            document.getElementById("mensajeProveedor").innerHTML = "<h4>Confirma el proveedor</h4>"+empresa+"<br><b>Razon Social: </b>"+razon+"<br><b> Rut: </b>"+rut;
+            document.getElementById("botonesConfirmarProveedor").innerHTML = "<input class='btn btn-primary' type='button' onclick='seleccionProveedor("+id+",`"+empresa+"`,`"+razon+"`,`"+rut+"`)' value='CONFIRMAR'> <input type='button' class='btn btn-secondary' onclick=cerrarModel() value='CANCELAR'>";
+            document.getElementById("confirmarProveedor").style.display = "block";
+        }
+
+    }
+
+    function seleccionProveedor(id,empresa,razon_social,rut){
+
+        document.getElementById("confirmarProveedor").style.display = "none";
+        document.getElementById("main-container").style.display = "none";
+        document.getElementById("idProveedor").value = id;
+        document.getElementById("proveedorNombre").innerHTML = empresa ;
+    }
+   
+
+
+    function cerrarModel(){
+        document.getElementById("confirmarProveedor").style.display = "none";
+        document.getElementById("modalconfirmar").style.display = "none";
+    }
+</script>
