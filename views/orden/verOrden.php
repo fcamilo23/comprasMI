@@ -10,7 +10,7 @@ function mensajes(){
             icon: '<?php echo $_SESSION['mensaje']['tipo']; ?>',
             title: '<?php echo $_SESSION['mensaje']['contenido']; ?>',
             showConfirmButton: false,
-            timer: 1500
+            timer: 3000
             });
     <?php 
         $_SESSION['mensaje']['tipo'] = '';
@@ -121,21 +121,21 @@ function mensajes(){
                                         </tr>
                                     </thead>
                                     <tbody >
-                                    <tr><?php foreach($viewmodel["facturas"] as $item) : ?>
+                                    <tr><?php foreach($viewmodel["facturas"] as $factura) : ?>
 
-                                        <td><?php echo $item['numeroFactura'] ?></td>
+                                        <td><?php echo $factura['numeroFactura'] ?></td>
                                         <?php
                                             $moneda;
-                                            if($orden['monedaFactura'] == "$ (Pesos Uruguayos)"){
+                                            if($factura['monedaFactura'] == "$ (Pesos Uruguayos)"){
                                                 $moneda = '$U';
                                             }else{
-                                                if($orden['monedaFactura'] == "U.I.(Unidades Indexadas)"){
+                                                if($factura['monedaFactura'] == "U.I.(Unidades Indexadas)"){
                                                     $moneda = "U.I.";
                                                 }else{
-                                                    if($orden['monedaFactura'] == "U.R. (Unidades Reajustables)"){
+                                                    if($factura['monedaFactura'] == "U.R. (Unidades Reajustables)"){
                                                         $moneda = "U.R.";
                                                     }else{
-                                                        if($orden['monedaFactura'] == "€ (Euro)"){
+                                                        if($factura['monedaFactura'] == "€ (Euro)"){
                                                             $moneda = "€";
                                                         }else{
                                                             $moneda = 'U$S';
@@ -143,16 +143,14 @@ function mensajes(){
                                                     }
                                                 }
                                             }
+
                                             ?>
-                                        <td> <?php echo $moneda; ?> <?php echo $orden['montoFactura']; ?> </td>
-                                        <td><?php echo $item['fechaFactura'] ?></td>
+                                        <td> <?php echo $moneda; ?> <?php echo $factura['montoFactura']; ?> </td>
+                                        <td><?php echo $factura['fechaFactura'] ?></td>
                                         <td>
-                                            <form action="<?php echo ROOT_PATH; ?>orden/eliminarArchivo" method="post">
-                                                <input type="hidden" name="idArchivo" value="<?php echo $item['id'] ?>">
-                                                <input type="submit" name="" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
-                                            </form> 
-                                            <form action="<?php echo ROOT_URL; ?>orden/verArchivo" method="post">
-                                                <input type="hidden" name="idArchivo" value="<?php echo $item['id'] ?>">
+
+                                            <form action="<?php echo ROOT_URL; ?>factura/seleccionFactura" method="post">
+                                                <input type="hidden" name="idFactura" value="<?php echo $factura['id'] ?>">
                                                 <input type="submit" name="submit" value="Ver" style="background: #001d5a; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul"/>
                                             </form>
                                          </td>
@@ -167,7 +165,8 @@ function mensajes(){
                                 </div>
                             </div>
                             <!-------------->
-
+                            <hr>
+                            <h1 style="color: #001d5a; margin-left: 25px" class="">Archivos Adjuntos</h1>
                             <div id="main-container" style="width: 100%; overflow: auto; padding: 25px;"> <!--  max-height: 800px -->
                                 <?php 
                                 if ($viewmodel["archivos"] != null) {
@@ -230,6 +229,8 @@ function mensajes(){
     </div>
 </div>
 </body>
+
+
 <script>
     let cant = 0;
 function readAsBase64() {

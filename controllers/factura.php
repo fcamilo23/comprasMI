@@ -8,6 +8,14 @@ class Factura extends Controller{
         $viewmodel = new FacturaModel();
         $this->returnView($viewmodel->agregarFactura(), true);
         }
+        protected function seleccionFactura(){
+        $viewmodel = new FacturaModel();
+        $this->returnView($viewmodel->seleccionFactura(), true);
+        }
+        protected function verFactura(){
+        $viewmodel = new FacturaModel();
+        $this->returnView($viewmodel->verFactura(), true);
+        }
 }
 
 ?>

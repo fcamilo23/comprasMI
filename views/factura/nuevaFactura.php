@@ -28,8 +28,10 @@
                                 <h4 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h4>
                                 <div class="card-body">
                                     <div class="mb-3">
-                                        <label for="formFile" class="form-label">Subir PDF (Obligatorio)</label>
-                                        <input class="form-control" id="loadFileFactura" name="loadFileFactura" accept="application/pdf" type="file" width="190px" height="50px" />
+                                        <label for="formFileFactura" class="form-label">Subir PDF (Obligatorio)</label>
+                                        <input class="form-control" id="loadFileFactura" name="loadFileFactura" onchange="readAsBase64()" accept="application/pdf" type="file" width="190px" height="50px" />
+                                        <input type="hidden" name="pdfFactura" id="pdfFactura" value="">
+                                        <input type ="hidden" name="pdfNombreFactura" id="pdfNombreFactura" value="">
                                     </div>
                                 </div>
                                 <hr>
@@ -156,8 +158,30 @@
         document.getElementById('modalconfirmar').style.display = "none";
     }
 
+    ////CARGAR ARCHIVOS/////
+    function readAsBase64() {
 
+        var files = document.getElementById("loadFileFactura").files;
+        if (files.length > 0) {
 
-
+            var fileToLoad = files[0];
+            var fileReader = new FileReader();
+            // Reading file content when it's loaded
+            fileReader.onload = function(event) {
+                console.log(event.target.result);
+                base64File = event.target.result;
+                console.log(fileToLoad.name);
+                document.getElementById("pdfFactura").value = event.target.result;
+                document.getElementById("pdfNombreFactura").value = fileToLoad.name+"";
+               // base64File = event.target.result;
+                //AGREGAR AL INPUT PDFFACTURA EL ARCHIVO EN BASE64FILE
+               // document.getElementById("pdfFactura").value = base64File;
+                //PONER NOMBRE EN PDFNOMBREFACTURA
+              //  document.getElementById("pdfNombreFactura").value = fileToLoad.name;
+            };
+                        
+            fileReader.readAsDataURL(fileToLoad);
+        }
+}
 
 </script>
