@@ -59,7 +59,7 @@
 </head>
 
 
-<body style="background: #e9e9e9" >
+<body style="background: #e9e9e9" onkeydown="if(event.keyCode==13){event.keyCode=9; return event.keyCode}">
     <nav id="barra" class="nav1">
     
         <?php if(isset($_SESSION['is_logged_in'])) : ?>
@@ -118,7 +118,7 @@
         <nav>
 
             <a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes">Solicitudes de Compra</a>
-            <a href="<?php echo ROOT_URL; ?>orden/listaCompras">Compras Realizadas</a>
+            <a href="<?php echo ROOT_URL; ?>orden/comprasRealizadas">Compras Realizadas</a>
             <a href="<?php echo ROOT_URL; ?>oficina/listaOficinas">Oficinas Solicitantes</a>
             <a href="<?php echo ROOT_URL; ?>users/listaUsuarios">Usuarios</a>
             <a href="<?php echo ROOT_URL; ?>proveedor/listaProveedores">Proveedores</a>

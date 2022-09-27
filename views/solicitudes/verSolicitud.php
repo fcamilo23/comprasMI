@@ -1,13 +1,20 @@
+<?php 
+    $_SESSION['solicitudActual'] = $_SESSION['respaldoSolicitud'];
+?>
 <a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
 <a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaNovedad"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaNovedad.jpg" width="218px" height="48px" ></button></a>
 <a href="<?php echo ROOT_PATH; ?>orden/nuevaOrden"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOrden.jpg" width="190px" height="50px" ></button></a>
 <a href="<?php echo ROOT_PATH; ?>solicitudes/nuevoArchivo"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button></a>
 
+
 <div class="row col-12 center" style="background: white; width: 70%; padding: 40px; border: 1px solid rgba(220, 220, 220); border-radius: 5px; margin-top: 3%;">
+<div style="width: 100%; margin-bottom: 50px;" class="">
+    <h1 style="color: #505050; text-align: center" class="center">Solicitud N° <?php echo $_SESSION['solicitudActual']['id']; ?></h1>
+</div>
     <div class="col-lg-6 center">
         <form id="verSolicitud" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
-        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Número SR</label>
-        <input type="text" id="sr" name="sr" class="form-control" value="<?php echo $_SESSION['solicitudActual']['SR']; ?>" style="margin-top: 0px;" placeholder="Ingrese el número SR" disabled required >
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">SR</label>
+        <input type="text" id="sr" name="sr" class="form-control" value="<?php echo $_SESSION['solicitudActual']['SR']; ?>" style="margin-top: 0px;" placeholder="" disabled >
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Gastos e Inversiones</label>
         <select name="gastos_inversiones" class="form-control" disabled >
@@ -17,19 +24,6 @@
 			</select> 
 
    
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Tipo de Procedimiento</label>
-        <select name="procedimiento" class="form-control" disabled>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "LP - Licitación Pública"){?> selected <?php } ?> value="LP - Licitación Pública" selected>LP - Licitación Pública</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "LA - Licitación Abreviada"){?> selected <?php } ?> value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CD - Compra Directa"){?> selected <?php } ?> value="CD - Compra Directa">CD - Compra Directa</option>
-                <option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CE - Compra por Excepción"){?> selected <?php } ?> value="CE - Compra por Excepción">CE - Compra por Excepción</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CP - Concurso de Precios"){?> selected <?php } ?> value="CP - Concurso de Precios">CP - Concurso de Precios</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "PCE - Procedimientos de Contratación Especiales"){?> selected <?php } ?> value="PCE - Procedimientos de Contratación Especiales">PCE - Procedimientos de Contratación Especiales</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "ARR - Arrendamiento"){?> selected <?php } ?> value="ARR - Arrendamiento">ARR - Arrendamiento</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CCH - Caja Chica"){?> selected <?php } ?> value="CCH - Caja Chica">CCH - Caja Chica</option>
-
-			</select> 
-
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Grupos Art/Serv</label>
         <select name="grupoAS" class="form-control" disabled>
 				<option <?php if ($_SESSION['solicitudActual']['grupoAS'] == "Artículos y Accesorios de Informática"){?> selected <?php } ?> value="Artículos y Accesorios de Informática" selected>Artículos y Accesorios de Informática</option>
@@ -89,6 +83,24 @@
         <input type="number" name="costo" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['costoAprox'] ?>" required placeholder="Ingrese el costo estimado de la compra" disabled>
         
         
+    
+        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Tipo de Procedimiento</label>
+        <select name="procedimiento" class="form-control" disabled>
+                <option value="--- Aun no definido" selected>Aún no definido</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "LP - Licitación Pública"){?> selected <?php } ?> value="LP - Licitación Pública">LP - Licitación Pública</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "LA - Licitación Abreviada"){?> selected <?php } ?> value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CD - Compra Directa"){?> selected <?php } ?> value="CD - Compra Directa">CD - Compra Directa</option>
+                <option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CE - Compra por Excepción"){?> selected <?php } ?> value="CE - Compra por Excepción">CE - Compra por Excepción</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CP - Concurso de Precios"){?> selected <?php } ?> value="CP - Concurso de Precios">CP - Concurso de Precios</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "PCE - Procedimientos de Contratación Especiales"){?> selected <?php } ?> value="PCE - Procedimientos de Contratación Especiales">PCE - Procedimientos de Contratación Especiales</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "ARR - Arrendamiento"){?> selected <?php } ?> value="ARR - Arrendamiento">ARR - Arrendamiento</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CCH - Caja Chica"){?> selected <?php } ?> value="CCH - Caja Chica">CCH - Caja Chica</option>
+
+			</select> 
+
+
+
+
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Planificado</label>
         <select name="planificado" class="form-control" disabled>
 				<option <?php if ($_SESSION['solicitudActual']['planificado'] == "Si"){?> selected <?php } ?> value="Si" selected>Si</option>

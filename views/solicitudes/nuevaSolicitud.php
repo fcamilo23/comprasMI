@@ -1,3 +1,21 @@
+<form id="filtro" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">       
+
+<dialog class="divfiltros center" id="modalconfirmar" style="z-index: 1; animation: createBox .15s; margin-top: 30%;">
+<h2 class="" style="display: inline-block; ">Desea confirmar la nueva solicitud?</h2>
+
+           <label type="submit" name="submit"  class="btn sombraAzul center " style="color:white; float:right; margin-right: 2%; width: 100px; margin-top:40px; background: #001d5a" >Cancelar</label>
+           <input type="submit" id="submit" name="submit" class="btn btn-primary" value="Confirmar" onclick="document.getElementById('confirm').click()" style="color:white; float:right; margin-right: 4%; width: 100px; margin-top:40px; background: #999999"/>
+ 
+</dialog>
+
+
+</form>
+
+
+
+
+
+    
 
 <a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
 <div class="row col-12 center" style="background: white; width: 70%; padding: 40px; border: 1px solid rgba(220, 220, 220); border-bottom: none; border-radius: 5px; margin-top: 3%" >
@@ -7,10 +25,10 @@
     <div class="col-lg-6 center" >
         <form id="nuevaSolicitud" name="nuevaSolicitud" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">SR</label>
-        <input type="text" value="<?php if(isset($_SESSION['solicitud']['sr'])) {  echo $_SESSION['solicitud']['sr']; }?>"  name="sr" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el SR" >
+        <input type="text" value="<?php if(isset($_SESSION['solicitud']['sr'])) {  echo $_SESSION['solicitud']['sr']; }?>"  name="sr" id="sr" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el SR" >
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Gastos e Inversiones</label>
-        <select name="gastos_inversiones" class="form-control">
+        <select name="gastos_inversiones" id="gastos_inversiones" class="form-control">
                 <option value="0" selected>Seleccione una opción</option>
                 <option <?php if(isset($_SESSION['solicitud']['gastos_inversiones'])){if($_SESSION['solicitud']['gastos_inversiones'] == "Bienes de Consumo") { ?> selected <?php }} ?> value="Bienes de Consumo" >Bienes de Consumo</option>
 				<option <?php if(isset($_SESSION['solicitud']['gastos_inversiones'])){if($_SESSION['solicitud']['gastos_inversiones'] == "Servicios No Personales") { ?> selected <?php }} ?> value="Servicios No Personales">Servicios No Personales</option>
@@ -18,7 +36,7 @@
 			</select> 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Planificado</label>
-        <select name="planificado" class="form-control">
+        <select name="planificado" id="planificado" class="form-control">
                 <option value="0" selected>Seleccione una opción</option>
 				<option <?php if(isset($_SESSION['solicitud']['planificado'])){if($_SESSION['solicitud']['planificado'] == "Si") { ?> selected <?php }} ?> value="Si">Si</option>
 				<option <?php if(isset($_SESSION['solicitud']['planificado'])){if($_SESSION['solicitud']['planificado'] == "No") { ?> selected <?php }} ?> value="No">No</option>
@@ -53,8 +71,8 @@
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Tipo de Procedimiento</label>
         <!-- Todos estos if son para el momento de agregar items, que inevitablemente se recarga la pagina y con estos if conservamos los datos ya ingresados en el formulario -->
-        <select name="procedimiento" class="form-control">
-                <option value="Aun no definido" >Aún no definido</option>
+        <select name="procedimiento"  class="form-control">
+                <option value="--- Aun no definido" >Aún no definido</option>
 				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "LP - Licitacion Publica"){?> selected <?php }} ?> value="LP - Licitación Pública">LP - Licitación Pública</option>
 				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "LA - Licitación Abreviada"){?> selected <?php }} ?> value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
 				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "CD - Compra Directa"){?> selected <?php }} ?> value="CD - Compra Directa">CD - Compra Directa</option>
@@ -70,7 +88,7 @@
 
         <label  style="margin-top: 45px; color: rgb(130, 130, 130)">Oficina Solicitante</label>
 
-            <select name="oficinaSolicitante" style="" class="form-control">
+            <select name="oficinaSolicitante" id="oficinaSolicitante" style="" class="form-control">
                 
                 <option value="0" selected>Seleccione una opción</option>
                 <?php
@@ -81,10 +99,10 @@
             </select> 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Referente</label>
-        <input type="text" name="referente" value="<?php if(isset($_SESSION['solicitud']['referente'])) {  echo $_SESSION['solicitud']['referente']; }?>" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el nombre de un referente para esta solicitud"  >
+        <input type="text" name="referente" id="referente" value="<?php if(isset($_SESSION['solicitud']['referente'])) {  echo $_SESSION['solicitud']['referente']; }?>" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el nombre de un referente para esta solicitud"  >
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Contacto Referente</label>
-        <input type="text" name="contactoReferente" value="<?php if(isset($_SESSION['solicitud']['contactoReferente'])) {  echo $_SESSION['solicitud']['contactoReferente']; }?>" class="form-control" style="margin-top: 0px;" placeholder="Ingrese correo del referente"  >
+        <input type="text" name="contactoReferente" id="contactoReferente"  value="<?php if(isset($_SESSION['solicitud']['contactoReferente'])) {  echo $_SESSION['solicitud']['contactoReferente']; }?>" class="form-control" style="margin-top: 0px;" placeholder="Ingrese correo del referente"  >
 				
 
 
@@ -100,7 +118,7 @@
         </div>-->
 
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
-        <input type="number" name="costo" min="0"  value="<?php if(isset($_SESSION['solicitud']['costo'])) {  echo $_SESSION['solicitud']['costo']; }?>" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el costo estimado de la compra"> 
+        <input type="number" name="costo" id="costo" min="0"  value="<?php if(isset($_SESSION['solicitud']['costo'])) {  echo $_SESSION['solicitud']['costo']; }?>" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el costo estimado de la compra" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" > 
 
         <label  id="pp" style="margin-top: 40px; color: rgb(130, 130, 130)">Grupos Art/Serv</label>
         <select name="grupoAS" id="grupoAS" onchange="arts(this);" class="form-control">
@@ -201,7 +219,7 @@
 
                                 </tr>
                             </thead>
-                                    <tr>
+                                    <tr class="tclass">
                                         <td><input class="form-control" name="cant" id="cant" type="text"></td>
                                         <td><input class="form-control" name="uni" id="uni" type="text"></td>
                                         <td><textarea class="form-control" name="desc" id="desc" rows="1" type="text"></textarea></td>
@@ -220,10 +238,10 @@
                                     <?php if($_SESSION['items'] != NULL){ 
                                     $indx = 0;
                                     foreach($_SESSION['items'] as $item) : ?>
-                                    <tr>
+                                    <tr class="tclass">
                                     <form id="asd" name="asd" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
-                                        <input style="display:none" type="number" name="index" value="<?php echo $indx; $indx = $indx + 1; ?>">
-                                        <td><input  class="form-control" type="text" readonly value="<?php echo $item['cantidad'] ?>"></td>
+                                        <input style="display:none" type="number" name="index" id="index" value="<?php echo $indx; $indx = $indx + 1; ?>">
+                                        <td ><input  class="form-control" type="text" readonly value="<?php echo $item['cantidad'] ?>"></td>
                                         <td><input class="form-control" type="text" readonly value="<?php echo $item['unidad'] ?>"></td>
                                         <td><textarea class="form-control" rows="1" readonly type="text"><?php echo $item['descripcion'] ?></textarea></td>
                                         <td><input style="color: white" type="submit" id="delete" name="submit"  class="btn btnEliminar" value="×"></input></td>
@@ -252,11 +270,10 @@
         
 
                         <div class="col-12 center" style="text-align: center; margin-top: 100px">
-                            <input type="submit" id="submit" name="submit" class="btn btn-primary" value="Confirmar" onclick="document.getElementById('confirm').click()" style="width: 150px;"/>
+                            <input type="submit" id="alerta" name="submit" class="btn btn-primary" value="Confirmar" onclick="mostrarConfirmacion()" style="width: 150px;"/>
                         </div>
 
 </div>
-
 
 <script>
 
@@ -281,12 +298,86 @@ $(document).ready(function(){
     if(s.value != '0'){
         
     }
+   
 
 });
 
 
+//DESACTIVAR ENTER PARA ESTOS INPUT
+var input = document.getElementById("sr");
+input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+  }
+});
+var input = document.getElementById("referente");
+input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+  }
+});
+var input = document.getElementById("contactoReferente");
+input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+  }
+});
+var input = document.getElementById("costo");
+input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+  }
+});
 
+//-----------------------------------------------
 
+function mostrarConfirmacion(){
+    const items = document.getElementById("index");
+    const sr = document.getElementById("sr");
+    const g = document.getElementById("gastos_inversiones");
+    const p = document.getElementById("planificado");
+    const o = document.getElementById("oficinaSolicitante");
+    const r = document.getElementById("referente");
+    const cr = document.getElementById("contactoReferente");
+    const c = document.getElementById("costo");
+    const gr = document.getElementById("grupoAS");
+    const a = document.getElementById("artServ");
+
+    if(g.value != "0" && p.value != "0" && o.value != "0" && r.value != "" && cr.value != "" && c.value != "" && gr.value != "0" && a.value != "" && items != null){
+        Swal.fire({
+            title: 'Desea confirmar la solicitud de compra?',
+            text: "",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'No, cancelar!',
+            confirmButtonText: 'Si, confirmar!'
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            
+
+            document.getElementById('confirm').click();
+
+            Swal.fire(
+            'Perfecto!',
+            'Se ha agregado la solicitud',
+            'success'
+            )
+        }
+})
+    }else{
+                Swal.fire(
+                    'Error!',
+                    'Debes completar todos los campos y agregar al menos un ítem para completar la solicitud',
+                    'warning'
+                    )
+    }
+
+   
+
+}
 
 
 function limpiarSelect(){
@@ -327,6 +418,11 @@ function addoption(opcion){
 
 
 function cargarSelect(gas){
+
+    if(gas.value == '0'){
+        limpiarSelect();
+        addoption('');
+    }
 
     if(gas.value == 'Artículos y Accesorios de Informática'){
         limpiarSelect();
@@ -378,7 +474,10 @@ function cargarSelect(gas){
 
 function arts(gas) {
 
-
+    if(gas.value == '0'){
+        limpiarSelect();
+        addoption('');
+    }
     
     if(gas.value == 'Artículos y Accesorios de Informática'){
         limpiarSelect();

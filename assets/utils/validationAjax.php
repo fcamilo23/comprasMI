@@ -11,6 +11,18 @@
 		}
     }
 
+	function isValidatedSR($solicitudesModel, $sr){
+		$solicitudesModel->query('SELECT * FROM solicitudescompra WHERE SR = :sr');
+		$solicitudesModel->bind(':sr', $sr);
+		$row = $solicitudesModel->single();
+		if($row){
+			return false;
+		}
+		else{
+			return true;
+		}
+    }
+
 	function isValidatedEmail($userModel, $email){
 		$userModel->query('SELECT * FROM Usuarios WHERE email = :email');
 		$userModel->bind(':email', $email);

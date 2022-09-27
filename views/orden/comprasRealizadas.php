@@ -1,20 +1,18 @@
-
-
-    <script>
-        
+ <script>
+       
        $(document).ready(function() {
-        $('#solis').DataTable( {
+        $('#compras').DataTable( {
             buttons: [
                 'excel'
             ],
             dom: 'lBfrtip',
             "columnDefs": [ {
-                "targets": [15,14,13,12,11,8,7,6,2,0],
+                "targets": [],
                 "searchable": false,
                 
                 } ,
                 {
-                "targets": [14,13,11],
+                "targets": [],
                 "visible": false,
                 }
             
@@ -25,37 +23,11 @@
     } );
 
 
-/*
-    $(document).ready(function () {
-    // Setup - add a text input to each footer cell
-    $('#solis tfoot th').each(function () {
-        var title = $(this).text();
-        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-    });
- 
-    // DataTable
-    var table = $('#solis').DataTable({
-        initComplete: function () {
-            // Apply the search
-            this.api()
-                .columns()
-                .every(function () {
-                    var that = this;
- 
-                    $('input', this.footer()).on('keyup change clear', function () {
-                        if (that.search() !== this.value) {
-                            that.search(this.value).draw();
-                        }
-                    });
-                });
-        },
-    });
-});*/
 
-    </script>
-
-    
-    <a href="<?php echo ROOT_URL; ?>"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
+</script>
+  
+  
+  <a href="<?php echo ROOT_URL; ?>"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
 
 
 <!--<button type="button" tabindex="0" aria-controls="solis" class="excel sombraVerde"> <img src="<?php echo ROOT_PATH; ?>imagenes/Excel1.jpg" width="150px" height="50px" ></button>-->
@@ -126,55 +98,61 @@
 </form>
 
 
+
 <div id="main-container" style="width: 100%; overflow: auto; padding: 25px; background: #fff"> <!--  max-height: 800px -->
 
-		<table id="solis" style="width: 100%;">
+		<table id="compras" style="width: 100%;">
 
 			<thead>
                 
 				<tr>
                     <th>Id</th>
-					<th>SR</th>
+                    <th>Orden</th>
+                    <th>Moneda</th>
+                    <th>Monto Real</th>
+                    <th>Plazo Entrega</th>
                     <th>Procedimiento</th>
-                    <th>Art/Serv</th>
-                    <th>Grupo Art/Serv</th>
-                    <th>Gastos e Inversiones</th>
-                    <th>Costo Estimado</th>
-                    <th>Planificado</th>
-                    <th>Estado</th>
-                    <th>Oficina Solicitante</th>
-                    <th>Referente</th>
-                    <th>Contacto</th>
-                    <th style="width:90px">Fecha</th>
-                    <th>Detalle</th>
-                    <th>Observaciones</th>
+                    <th>Proveedor</th>
                     <th></th>
+
+
+
 
 
 
 				</tr>
 			</thead>
             <tbody >
+
 			<tr><?php foreach($viewmodel as $item) : ?>
                 <td><?php echo $item['id'] ?></td>
-                <td><?php echo $item['SR'] ?></td>
-                <td><?php echo substr($item['procedimiento'],0,3); ?></td>
-                <td><?php echo $item['artServ'] ?></td>
-                <td><?php echo $item['grupoAS']; ?></td>
-                <td><?php echo $item['gastos_inversiones'] ?></td>
-                <td>$<?php echo $item['costoAprox'] ?></td>
-                <td><?php echo $item['planificado'] ?></td>
-                <td><?php echo $item['estado'] ?></td>
-                <td><?php echo $item['oficinaSolicitante'] ?></td>
-                <td><?php echo $item['referente'] ?></td>
-                <td><?php echo $item['contactoReferente'] ?></td>
-                <td><?php $date = new DateTime($item['fechaHora'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y') ?></td>
-                <td><?php echo $item['detalle'] ?></td>
-                <td><?php echo $item['observaciones'] ?></td>
-                <form id="editar" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">       
-                <td><input type="text" name="numero" style="display: none" value="<?php echo $item['id']; ?>"/>
-                <input type="submit" name="submit" value="Ampliar" style="background: #001d5a; border: none" class="btn btn-primary sombraAzul"/></td>
+                <td><?php echo 'OC ' . $item['numero'] .'-' . $item['anio'] ?></td>
+                <td><?php echo $item['moneda'] ?></td>
+                <td><?php echo $item['montoReal'] ?></td>
+                <td><?php echo $item['plazoEntrega'] ?></td>
+                <td><?php echo $item['procedimiento'] ?></td>
+                <td><?php foreach($_SESSION['proveedores'] as $p) : 
+                if($p['id'] == $item['idProveedor']){ 
+                    echo $p['empresa'];
+                } endforeach;?></td>
+
+
+
+                
+                
+
+                <form id="verOrden" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">       
+
+                <td><input type="text" name="numero" style="display:none" value="<?php echo $item['id']; ?>"/>
+                <input type="submit" name="submit" id="ver" value="Ampliar" style="background: #001d5a; border: none"  class="btn btn-primary sombraAzul"/></td>
                 </form>
+
+
+            
+
+
+            
+
 
 			</tr> <?php endforeach; ?>
             </tbody>
@@ -182,6 +160,8 @@
 
 
 	</div>
+
+
 
     <script>
         const abrirModal = document.querySelector("#abrirFiltros");
@@ -206,6 +186,12 @@
        
         })
 
+
+
+        function verOrden(orden){
+            
+           
+        }
 
         function cambiarFecha(ini){
             

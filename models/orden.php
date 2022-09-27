@@ -65,10 +65,18 @@ class OrdenModel extends Model{
     ///ver orden
     public function verOrden(){
 
+
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if(isset($post['idOrden'])){
             $_SESSION['ordenActual'] = $post['idOrden'];
         }
+
+        if(isset($_SESSION['idOrden'])){
+            $_SESSION['ordenActual'] = $_SESSION['idOrden'];
+            unset($_SESSION['idOrden']);
+        }
+
+
         $this->query('SELECT * FROM ordenes WHERE id = :id');
         $this->bind(':id',  $_SESSION['ordenActual'] );
         $orden = $this->single();
@@ -118,6 +126,31 @@ class OrdenModel extends Model{
         }  
         header('Location: '.ROOT_URL.'orden/verOrden');
     }
+
+    public function comprasRealizadas(){
+
+
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(isset($post) && isset($post['submit'])){
+            if($post['submit'] == 'Ampliar'){
+                $_SESSION['idOrden'] = $post['numero'];
+                header('Location: '.ROOT_URL.'orden/verOrden');
+
+            }
+        }
+
+        $this->query('SELECT * FROM ordenes');
+        $row = $this->resultSet();
+
+        $this->query('SELECT * FROM proveedores');
+        $_SESSION['proveedores'] = $this->resultSet();
+
+
+        return $row;
+    }
+
+
+
     
     public function editarOrden(){
         //traer todos los proveedores

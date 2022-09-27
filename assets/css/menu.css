@@ -432,7 +432,17 @@ tr:hover td{
     visibility: visible;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
+
+
+input{
+    
+}
 .cont-menu{
     width: 100%;
     max-width: 350px;

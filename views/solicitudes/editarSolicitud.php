@@ -21,7 +21,8 @@
    
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Tipo de Procedimiento</label>
         <select name="procedimiento" class="form-control" >
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "LP - Licitación Pública"){?> selected <?php } ?> value="LP - Licitación Pública" selected>LP - Licitación Pública</option>
+                <option value="--- Aun no definido" selected>Aún no definido</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "LP - Licitación Pública"){?> selected <?php } ?> value="LP - Licitación Pública">LP - Licitación Pública</option>
 				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "LA - Licitación Abreviada"){?> selected <?php } ?> value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
 				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CD - Compra Directa"){?> selected <?php } ?> value="CD - Compra Directa">CD - Compra Directa</option>
                 <option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CE - Compra por Excepción"){?> selected <?php } ?> value="CE - Compra por Excepción">CE - Compra por Excepción</option>
@@ -93,7 +94,7 @@
 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
-        <input type="number" name="costo" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['costoAprox'] ?>" required placeholder="Ingrese el costo estimado de la compra" >
+        <input type="number" name="costo" id="costo" class="form-control" style="margin-top: 0px;" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"  value="<?php echo $_SESSION['solicitudActual']['costoAprox'] ?>" required placeholder="Ingrese el costo estimado de la compra" >
         
         
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Planificado</label>
@@ -136,10 +137,11 @@
                                 </tr>
                             </thead>
                                     <tr class="tclass">
-                                        <td><input class="form-control" name="cant" id="cant" type="text"></td>
+                                        <td><input type="number" class="form-control" name="cant" id="cant" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" ></td>
                                         <td><input class="form-control" name="uni" id="uni" type="text"></td>
                                         <td><textarea class="form-control" name="desc" id="desc" rows="1" type="text"></textarea></td>
-                                        <td><input type="submit" id="add" name="submit"  class="btn btn-primary" value="+"></input></td>
+                                        <td><input type="button" id="alerta" class="btn btn-primary" onclick="alertAddItem()" value="+"></input></td>
+                                        <input style="display: none" type="submit" id="add" name="submit"  class="btn btn-primary" value="+"></input>
 
                                         
                                         
@@ -152,11 +154,12 @@
                                     foreach($_SESSION['items'] as $item) : ?>
                                     <tr class="tclass">
                                     <form id="editarSoli" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
-                                        <input style="display: none" class="form-control" type="text" name="id1" readonly value="<?php echo $item['id'] ?>">
+                                        <input style="display:none" class="form-control" type="text" name="id1" readonly value="<?php echo $item['id'] ?>">
                                         <td><input  class="form-control" type="text" name="cant1" readonly value="<?php echo $item['cantidad'] ?>"></td>
                                         <td><input class="form-control" type="text" name="uni1" readonly value="<?php echo $item['unidad'] ?>"></td>
                                         <td><textarea class="form-control" rows="1" name="desc1" readonly type="text"><?php echo $item['descripcion'] ?></textarea></td>
-                                        <td><input style="color: white" type="submit" id="delete" name="submit" class="btn btnEliminar" value="×"></input></td>
+                                        <td><input type="button" style="color: white;" id=""  class="btn btnEliminar" onclick="alertDeleteItem()" value="×" <?php if(count($_SESSION['items']) <= 1){?> disabled <?php } ?>  ></input></td>
+                                        <input style="display:none" type="submit" id="delete" name="submit" class="btn btnEliminar" value="×"></input>
                                     </form>
                                         
                                         
@@ -176,3 +179,163 @@
 </div>
 
 </form>
+
+
+<script>
+    $(document).ready(function(){
+    $('#alerta').attr('disabled',true);
+    $('#cant, #uni').keyup(function(){
+        if($('#cant').val().length !=0 && $('#uni').val().length !=0)
+            $('#alerta').attr('disabled', false);            
+        else
+            $('#alerta').attr('disabled',true);
+    })
+});
+
+
+
+/*
+ const items = document.getElementById("index");
+    const g = document.getElementById("gastos_inversiones");
+    const p = document.getElementById("planificado");
+    const o = document.getElementById("oficinaSolicitante");
+    const r = document.getElementById("referente");
+    const cr = document.getElementById("contactoReferente");
+    const c = document.getElementById("costo");
+    const gr = document.getElementById("grupoAS");
+    const a = document.getElementById("artServ");
+
+    if(g.value != "0" && p.value != "0" && o.value != "0" && r.value != "" && cr.value != "" && c.value != "" && gr.value != "0" && a.value != "" && items != null){
+*/
+function addItem(){
+    document.getElementById('add').click();
+}
+
+function deleteItem(){
+    document.getElementById('delete').click();
+}
+
+
+function alertAddItem(){
+    Swal.fire({
+            title: 'Desea confirmar este ítem?',
+            text: "Se efectuarán los cambios una vez confirme",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'No, cancelar!',
+            confirmButtonText: 'Si, confirmar!'
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: '',
+                showConfirmButton: false,
+                timer: 700
+                })
+
+            const myTimeout = setTimeout(addItem, 700);
+
+        }
+})
+
+
+
+}
+
+//DESACTIVAR ENTER PARA ESTOS INPUT
+var input = document.getElementById("cant");
+input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+  }
+});
+var input = document.getElementById("uni");
+input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+  }
+});
+var input = document.getElementById("desc");
+input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+  }
+});
+
+
+var input = document.getElementById("costo");
+input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+  }
+});
+
+//-----------------------------------------------
+
+//DESACTIVAR ENTER PARA ESTOS INPUT
+$('#verSolicitud').on('keypress', 'input', function(event) {
+		if (event.keyCode == 13) {
+			event.preventDefault();
+			if ('You want enter2tab') {
+				$(this).next('input').focus();
+			} else { // Just disable enter key
+				return false;
+			}
+		} else {
+			return true;
+		}
+	});
+//-----------------------------------------------
+
+//DESACTIVAR ENTER PARA ESTOS INPUT
+$('#editarSoli').on('keypress', 'input', function(event) {
+		if (event.keyCode == 13) {
+			event.preventDefault();
+			if ('You want enter2tab') {
+				$(this).next('input').focus();
+			} else { // Just disable enter key
+				return false;
+			}
+		} else {
+			return true;
+		}
+	});
+//-----------------------------------------------
+
+function alertDeleteItem(){
+    Swal.fire({
+            title: 'Seguro que desea eliminar este ítem?',
+            text: "Se efectuarán los cambios una vez confirme",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'No, cancelar!',
+            confirmButtonText: 'Si, eliminar!'
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            const myTimeout = setTimeout(deleteItem, 700);
+
+
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Perfecto!',
+                text: 'Se ha eliminado el ítem',
+                showConfirmButton: false,
+                timer: 700
+                })
+
+          
+        }
+})
+}
+
+
+</script>
