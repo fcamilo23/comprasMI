@@ -87,7 +87,7 @@ class FacturaModel extends Model{
 		$this->bind(':idFactura', $_SESSION['idFactura']);
 		$archivo = $this->single();
 
-		$this->query('SELECT id as idOrden, numero as numeroOrden, anio as numeroOrden FROM ordenes WHERE id = :idOrden');
+		$this->query('SELECT id as idOrden, numero as numeroOrden, anio as anioOrden FROM ordenes WHERE id = :idOrden');
 		$this->bind(':idOrden', $factura['idOrden']);
 		$orden = $this->single();
 		

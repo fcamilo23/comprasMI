@@ -39,7 +39,6 @@ function mensajes(){
                                 <p class="m-2">Año:</p>
                                 <input id="anio" name="anio" type="text" class="m-2 miniinput form-control"  value=" <?php  echo $viewmodel["orden"]["anio"] ?>" readonly>
                             </div>
-                            <br>
                             
                             <div class="input-group mb-3">
                                 <p class="m-2">Moneda</p>
@@ -48,23 +47,22 @@ function mensajes(){
                                 <input id="montoReal" name="montoReal" type="text" class="m-2 miniinput2 form-control"  value="<?php  echo$viewmodel["orden"]["montoReal"] ?>"readonly>
                                 <div id=montoError" class="invalid-feedback"></div>
                             </div>
-                            <br>
 
                             <label for="procedimiento" class="form-label">Tipo de Procedimiento</label>
                             <div class="input-group mb-3">
                                 <input id="procedimiento" name="procedimiento" class="form-control" value="<?php  echo$viewmodel["orden"]["procedimiento"] ?>" readonly>
                             </div>
-                            <br>
+   
                             <div class="input-group mb-3">
                             <label for="plazoEntrega" class="m-2 form-label">Fecha Entrega</label>
                                 <input id="plazoEntrega" name="plazoEntrega" type="text" class="miniinput2 form-control" value="<?php  echo$viewmodel["orden"]["plazoEntrega"] ?>" readonly>
                             </div>
-                            <br>
+    
                             <label for="formaPago" class="form-label">Forma de Pago:</label>
                             <div class="input-group mb-3">
                                 <textarea id="formaPago" name="formaPago" class="form-control" readonly><?php  echo$viewmodel["orden"]["formaPago"] ?></textarea>
                             </div>
-                            <br>
+    
                             <div class="input-group mb-3">
                             <p class="m-2">Nº Amplición</p>
                                 <input id="numeroAmpliacion" style="max-width: 20rem" name="numeroAmpliacion" type="text" class="form-control"  value="<?php  echo$viewmodel["orden"]["numeroAmpliacion"] ?>" readonly>
@@ -81,14 +79,21 @@ function mensajes(){
                             </div>
                             <br>
                             <?php } ?>
-
                             <div>
-                                <h3>PROVEEDOR: <?php  echo $viewmodel["proveedor"]["empresa"] ?></h3>
+                                <h4><b>PROVEEDOR: </b><?php  echo $viewmodel["proveedor"]["empresa"] ?></h4>
+                                <h4><b>Razon Social: <?php  echo $viewmodel["proveedor"]["razon_social"] ?></h4>
+                                <h4><b>RUT: </b><?php  echo $viewmodel["proveedor"]["rut"] ?></h4>
+
                             </div>
-                            <div class="col-12 center" style="text-align: center; margin-top: 100px">
+                            <div class="col-12 center" style="text-align: center; margin-top: 50px">
                             <a href="<?php echo ROOT_URL; ?>orden/editarOrden" class="float-right btn btn-primary">EDITAR ORDEN</a>
                             </div>
                             <hr>
+                            </div>
+            </div>
+        </div>
+    </div>
+</div>
                             <!-- facturas -->
                             <div style="margin-top: 100px">
                             <form action="<?php echo ROOT_PATH; ?>factura/nuevaFactura" method="post" >
@@ -103,6 +108,7 @@ function mensajes(){
 
                             <button type="submit" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/anexarFactura.jpg" width="190px" height="50px" ></button>
                             </form>
+
                             <h1 style="color: #001d5a; margin-left: 25px" class="">Facturas</h1>
 
                             <div id="main-container" style="width: 100%; overflow: auto; padding: 25px;"> <!--  max-height: 800px -->
@@ -154,6 +160,7 @@ function mensajes(){
                                                 <input type="submit" name="submit" value="Ver" style="background: #001d5a; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul"/>
                                             </form>
                                          </td>
+                                         
          
                                        
                                     </tr> <?php endforeach; ?>
@@ -205,6 +212,11 @@ function mensajes(){
                             </div>
                             <br>
                             <hr>
+<div class="container mt-5 mb-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8">
+            <div class="card">
+                <div class="card-body">
 
                             <h3 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h3>
                                 <div class="card-body">
@@ -220,14 +232,16 @@ function mensajes(){
                                     </table>
                                     <button type="submit" class="float-right btn btn-primary ">SUBIR</button>
                                 </form>
-                                <br>
-                                <hr>
-                        <a href="<?php echo ROOT_URL; ?>solicitudes/verSolicitud"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+                                <br>
+
+                        <a href="<?php echo ROOT_URL; ?>solicitudes/verSolicitud"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
+
+
 </body>
 
 
