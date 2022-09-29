@@ -113,6 +113,39 @@ class FacturaModel extends Model{
 		return $viewmodel;
 	}
 
-	
+	public function eliminarFactura(){
+		try{
+			$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+			if(isset($post['idFactura'])){
+				$_SESSION ['idFactura'] = $post ['idFactura'];
+			}
 
+			$this->query('DELETE FROM archivosfacturas WHERE idFactura = :idFactura');
+			$this->bind(':idFactura', $_SESSION['idFactura']);
+			$this->execute();
+
+			$this->query('DELETE FROM facturas WHERE id = :idFactura');
+			$this->bind(':idFactura', $_SESSION['idFactura']);
+			$this->execute();
+
+			$_SESSION['mensaje']['tipo'] = 'success';
+			$_SESSION['mensaje']['contenido'] = 'Factura eliminada correctamente';
+			header('Location: '.ROOT_URL.'orden/verOrden');
+			return;
+		}catch(PDOException $e){
+			$_SESSION['mensaje']['tipo'] = 'error';
+			$_SESSION['mensaje']['contenido'] = 'Error al eliminar factura';
+			header('Location: '.ROOT_URL.'orden/verOrden');
+			return;
+		}
+	}
+	
+	public function verArchivo(){
+		
+		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+			$this->query('SELECT * FROM archivosfacturas WHERE id = :idArchivo');
+			$this->bind(':idArchivo', $post['idArchivo']);
+			$viewmodel = $this->single();
+			return $viewmodel;
+	}
 }

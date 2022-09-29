@@ -154,6 +154,10 @@ function mensajes(){
                                         <td> <?php echo $moneda; ?> <?php echo $factura['montoFactura']; ?> </td>
                                         <td><?php echo $factura['fechaFactura'] ?></td>
                                         <td>
+                                        <form id="eliminarFactura<?php echo $factura['id'] ?>" action="<?php echo ROOT_PATH; ?>factura/eliminarFactura" method="post">
+                                            <input type="hidden" name="id" value="<?php echo $factura['id'] ?>">
+                                            <input type="button" name="" onclick="cartelEliminarFactura(<?php echo $factura['id'] ?>)" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
+                                        </form>
 
                                             <form action="<?php echo ROOT_URL; ?>factura/seleccionFactura" method="post">
                                                 <input type="hidden" name="idFactura" value="<?php echo $factura['id'] ?>">
@@ -192,9 +196,9 @@ function mensajes(){
 
                                         <td><?php echo $item['nombre'] ?></td>
                                         <td>
-                                            <form action="<?php echo ROOT_PATH; ?>orden/eliminarArchivo" method="post">
+                                            <form id="eliminarArchivo<?php echo $item['id'] ?>" action="<?php echo ROOT_PATH; ?>orden/eliminarArchivo" method="post">
                                                 <input type="hidden" name="idArchivo" value="<?php echo $item['id'] ?>">
-                                                <input type="submit" name="" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
+                                                <input type="button" name="" onclick="cartelEliminarArchivo(<?php echo $item['id'] ?>)" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
                                             </form> 
                                             <form action="<?php echo ROOT_URL; ?>orden/verArchivo" method="post">
                                                 <input type="hidden" name="idArchivo" value="<?php echo $item['id'] ?>">
@@ -248,7 +252,6 @@ function mensajes(){
 <script>
     let cant = 0;
 function readAsBase64() {
-
     var files = document.getElementById("loadFile").files;
     if (files.length > 0) {
 
@@ -286,7 +289,80 @@ function readAsBase64() {
         
         fileReader.readAsDataURL(fileToLoad);
     }
+    
 }
+    function cartelEliminarFactura(id){
+        const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+        title: 'Borrar factura?',
+        text: "Seguro que quieres borrar esta factura!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, borrar!',
+        cancelButtonText: 'No, borrar!',
+        reverseButtons: true
+        }).then((result) => {
+        if (result.isConfirmed) {
+            //enviar formulario
+
+            document.getElementById('eliminarFactura'+id).submit();
+
+        } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire(
+            'Cancelado',
+            'No se elimino la factura ',
+            'error'
+            )
+        }
+        });
+
+    }
+
+    function cartelEliminarArchivo(id){
+        
+        const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+        title: 'Borrar archvivo?',
+        text: "Seguro que quieres borrar este archivo!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, borrar!',
+        cancelButtonText: 'No, borrar!',
+        reverseButtons: true
+        }).then((result) => {
+        if (result.isConfirmed) {
+            //enviar formulario
+              document.getElementById('eliminarArchivo'+id).submit();
+            eliminar($id);
+        } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire(
+            'Cancelado',
+            'No se elimino el archivo ',
+            'error'
+            )
+        }
+        });
+    }
  
     function eliminar(id){
         var input = document.getElementById(id+"pdf");

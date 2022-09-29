@@ -84,10 +84,7 @@ class OrdenModel extends Model{
     ///ver orden
     public function verOrden(){
 
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        if(isset($post['idOrden'])){
-            $_SESSION['ordenActual'] = $post['idOrden'];
-        }
+
         $this->query('SELECT * FROM ordenes WHERE id = :id');
         $this->bind(':id',  $_SESSION['ordenActual'] );
         $orden = $this->single();
@@ -124,26 +121,45 @@ class OrdenModel extends Model{
     }
 
     public function eliminarArchivo(){
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $this->query('DELETE FROM archivosordenes WHERE id = :id');
-        $this->bind(':id', $post['idArchivo']);
-        $this->execute();
-        header('Location: '.ROOT_URL.'orden/verOrden');
-        return;
+        try{
+            $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $this->query('DELETE FROM archivosordenes WHERE id = :id');
+            $this->bind(':id', $post['idArchivo']);
+            $this->execute();
+            $_SESSION['mensaje']['tipo'] = 'success';
+            $_SESSION['mensaje']['contenido'] = 'Archivo eliminado correctamente';
+            header('Location: '.ROOT_URL.'orden/verOrden');
+            return;
+        }catch(PDOException $e){
+            $_SESSION['mensaje']['tipo'] = 'error';
+            $_SESSION['mensaje']['contenido'] = 'Error al eliminar el archivo ...Prueba de nuevo mas tarde';
+            header('Location: '.ROOT_URL.'orden/verOrden');
+            return;      
+        }
     }
 
     public function subirArchivos (){
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        for($i=0; $i<sizeof($post['pdf']); $i++){
-            $this->query('INSERT INTO archivosordenes (`idSolicitud`,`idOrden`, `nombre`, `pdf`) VALUES(:idSolicitud, :idOrden, :nombre, :pdf)');
-            $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
-            $this->bind(':idOrden', $_SESSION['ordenActual']);
-            $this->bind(':nombre', $post['pdfnombre'][$i]);
-            $this->bind(':pdf', $post['pdf'][$i]);
+        try{
+            $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            for($i=0; $i<sizeof($post['pdf']); $i++){
+                $this->query('INSERT INTO archivosordenes (`idSolicitud`,`idOrden`, `nombre`, `pdf`) VALUES(:idSolicitud, :idOrden, :nombre, :pdf)');
+                $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+                $this->bind(':idOrden', $_SESSION['ordenActual']);
+                $this->bind(':nombre', $post['pdfnombre'][$i]);
+                $this->bind(':pdf', $post['pdf'][$i]);
 
-            $this->execute();
-        }  
-        header('Location: '.ROOT_URL.'orden/verOrden');
+                $this->execute();
+            }  
+            $_SESSION['mensaje']['tipo'] = 'success';
+            $_SESSION['mensaje']['contenido'] = 'Archivo/s agregado/s correctamente';
+            header('Location: '.ROOT_URL.'orden/verOrden');
+        }catch(PDOException $e){
+            $_SESSION['mensaje']['tipo'] = 'error';
+            $_SESSION['mensaje']['contenido'] = 'Error al agregar el archivo?s ...Prueba de nuevo mas tarde';
+            header('Location: '.ROOT_URL.'orden/verOrden');
+                 
+        }
+        return; 
     }
     
     public function editarOrden(){
@@ -194,12 +210,12 @@ class OrdenModel extends Model{
             $this->execute();
             $_SESSION['mensaje']['tipo'] = 'success';
             $_SESSION['mensaje']['contenido'] = 'Orden modificada correctamente';
-            header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+            header('Location: '.ROOT_URL.'orden/verOrden');
             return;
         }catch(PDOException $e){
             $_SESSION['mensaje']['tipo'] = 'error';
             $_SESSION['mensaje']['contenido'] = 'Error al modificar la orden ...Prueba de nuevo mas tarde';
-            header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+            header('Location: '.ROOT_URL.'orden/verOrden');
             return;      
         }
     }

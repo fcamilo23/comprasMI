@@ -16,6 +16,14 @@ class Factura extends Controller{
         $viewmodel = new FacturaModel();
         $this->returnView($viewmodel->verFactura(), true);
         }
+        protected function eliminarFactura(){
+        $viewmodel = new FacturaModel();
+        $this->returnView($viewmodel->eliminarFactura(), true);
+        }
+        protected function verArchivo(){
+        $viewmodel = new FacturaModel();
+        $this->returnView($viewmodel->verArchivo(), true);     
+        }
 }
 
 ?>

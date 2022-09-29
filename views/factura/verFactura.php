@@ -10,9 +10,11 @@
 
                 <div class="card-body ">
                     <div class="card">
-                        <div class="card-body "> 
-                            <input type="button" value="VER ARCHIVO" class="btn btn-primary azul sombraAzul1" style="margin-right: 30px; float: right; margin-bottom: 30px"/>
-                            
+                        <div class="card-body ">
+                        <form action="<?php echo ROOT_URL; ?>factura/verArchivo" method="post">
+                            <input type="hidden" id="idArchivo" name="idArchivo" value="<?php echo $viewmodel['archivosFacuturas']['idArchivo']; ?>">
+                            <input type="submit" value="VER ARCHIVO" class="btn btn-primary azul sombraAzul1" style="margin-right: 30px; float: right; margin-bottom: 30px"/>
+                        </form>
                                 <h5><b>OC: </b> <?php echo $viewmodel['orden']['numeroOrden']?> - <?php echo $viewmodel['orden']['anioOrden'] ?> </h5> 
                                 <h3><b>Factura: </b> <?php echo $viewmodel['numeroFactura']?></h3>
                                 <h5><b>Fecha: </b> <?php echo $viewmodel['fechaFactura']?></h5>

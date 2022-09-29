@@ -17,7 +17,7 @@
                 <div class="card-body">
                 <form onsubmit="validarFormulario(event)" action="<?php echo ROOT_URL; ?>orden/modificarOrden" method ="POST" enctype="multipart/form-data" id="formOrden">
                              <!-- aqui se va a guardar proveedor -->
-                             <input type="hidden" name="idProveedor" value="<?php  echo $viewmodel["orden"]["idProveedor"] ?>" />
+                             <input type="hidden" id="idProveedor" name="idProveedor" value="<?php  echo $viewmodel["orden"]["idProveedor"] ?>" />
                             <!--  -->
                             <label for="oc" class="form-label">OC</label>
                             <div class="input-group mb-3">
@@ -55,7 +55,7 @@
                             <br>
                             <div class="input-group mb-3">
                             <label for="plazoEntrega" class="m-2 form-label">Fecha Entrega</label>
-                                <input id="plazoEntrega" name="plazoEntrega" type="date" class="miniinput2 form-control" value="<?php  echo$viewmodel["orden"]["plazoEntrega"] ?>" required>
+                                <input id="plazoEntrega" min='2010-01-01' max='2050-01-01' name="plazoEntrega" type="date" class="miniinput2 form-control" value="<?php  echo$viewmodel["orden"]["plazoEntrega"] ?>" required>
                             </div>
                             <br>
                             <label for="formaPago" class="form-label">Forma de Pago:</label>
@@ -110,7 +110,7 @@
                                         </td>
                                         <td>
 
-                                           <input type="button" value="✔️" class="btn btn-light" id="este" onclick="seleccionaProveedor(<?php echo $item['id']?>,' <?php echo $item['empresa']?>')" >
+                                           <input type="button" value="✔️" class="btn btn-light" id="este" onclick="confirmarProveedor(<?php echo $item['id']?>,' <?php echo $item['empresa']?>',' <?php echo $item['razon_social']?>',' <?php echo $item['rut']?>')" >
                                         </td>
                                     </tr> <?php endforeach; ?>
                                     </tbody>
@@ -136,6 +136,7 @@
                                         
                                     </div>
                                     <div class="modal-footer" id="botonesConfirmarProveedor">
+                                    <input type="button" value="✔️" class="btn btn-light" id="este" onclick="confirmarProveedor(<?php echo $item['id']?>,' <?php echo $item['empresa']?>',' <?php echo $item['razon_social']?>',' <?php echo $item['rut']?>')" >
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarModel()">CANCELAR</button>
                                     </div>
                                     </div>
@@ -152,7 +153,7 @@
 
                                     </div>
                                     <div class="modal-body" id="mensajeOrden">
-                                        <p><b>¿Quiere crear Orden?<b></p>
+                                        <p><b>¿Editar Orden?<b></p>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary">CONFIRMAR</button>
@@ -210,23 +211,17 @@
     //evitar mandar formulario si idProveedor esta vacio
     function validarFormulario(event){
         let mensaje ="";
-       /* var idProveedor = document.getElementById("idProveedor").value;
-        //por si no selecciona proveedor
-        if(idProveedor.length < 1){
-            mensaje = "<hr><h4>Debera seleccionar un proveedor </h4><hr>";
-            event.preventDefault();
 
-        }*/
-        //por si ingresa fechas que sean coerente
-        var fin = document.getElementById("fin").value;
-        var inicio = document.getElementById("inicio").value;
-        if('<?php echo $viewmodel['orden']['servicio'] ?>' == 'si' && fin.length > 1 && inicio.length > 1){
+
+        if('<?php echo $viewmodel['orden']['servicio'] ?>' == 'si'){
+            var fin = document.getElementById("fin").value;
+            var inicio = document.getElementById("inicio").value;
             if(fin <= inicio){
                 mensaje = "<hr><h4>La fecha de inicio debe ser menor a la fecha de fin </h4><hr>"+mensaje;
                 event.preventDefault();
             }
         }
-        if( mensaje.length > 1){
+        if( mensaje != ""){
              
                 Swal.fire({
                 icon: 'error',
@@ -235,15 +230,16 @@
                 
             
                 });
-            return;
+                event.preventDefault();
+                return;
+            
         }
         
-        //aqui muestra el modal
         if(document.getElementById("modalconfirmar").style.display != "block"){
             ///muestra mensaje si no selecciona pdf
             document.getElementById("mensajeOrden").innerHTML = "<p><b>¿Quiere crear Orden?<b></p>";
-            event.preventDefault();
             document.getElementById("modalconfirmar").style.display = "block"; 
+            event.preventDefault();
         }
     }
 
@@ -262,7 +258,9 @@
         document.getElementById("confirmarProveedor").style.display = "none";
         document.getElementById("main-container").style.display = "none";
         document.getElementById("idProveedor").value = id;
-        document.getElementById("proveedorNombre").innerHTML = empresa ;
+        document.getElementById("proveedorNombre").innerHTML ="PROVEEDOR: "+empresa ;
+        console.log(empresa);
+        console.log(id);
     }
    
 
