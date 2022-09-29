@@ -80,7 +80,7 @@ function readAsBase64() {
     }
 
 </script>
-</body>
+<body>
 <div class="container" >
     <div class="row d-flex justify-content-center ">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8" >
