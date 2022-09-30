@@ -98,8 +98,8 @@ function readAsBase64() {
                                 <input id="numero" name="numero" min="1" max="9999999"type="number" class="m-2 miniinput2 form-control " required>
                                 <p class="m-3" style="margin-left: 200px;" >              Año: </p>
                                 <input id="anio" name="anio" type="number" min="2010" max="2060" class="m-2 miniinput2 form-control" value="<?php echo date('Y') ?>" required>
-                                <div id="numeroAnioError" style="color:red" ></div>
                             </div>
+                            <div id="numeroAnioError"  style="color:red; min-height:100%" ></div>
 
                             
                             
@@ -275,32 +275,11 @@ function readAsBase64() {
 </body>
 <script>
 
-    document.getElementById("numero").addEventListener("blur", errorNumero);
-    document.getElementById("anio").addEventListener("blur", errorNumero);
     document.getElementById("montoReal").addEventListener("blur", errorMonto);
     document.getElementById("plazoEntrega").addEventListener("blur", errorPlazoEntrega);
 
-    function errorNumero(){
-        var numero = document.getElementById("numero").value;
-        var anio = document.getElementById("anio").value;
-
-        if(numero.length < 1 || anio.length < 1){
-            if(numero.length < 1 && anio.length < 1){
-                document.getElementById("numeroAnioError").innerHTML = "              El numero de orden y año es obligatorio ❌";
-            }else {
-                if(numero.length < 1){
-                    document.getElementById("numeroAnioError").innerHTML = "              El numero de orden es obligatorio ❌";
-                }else{
-                    document.getElementById("numeroAnioError").innerHTML = "              El campo año es obligatorio entre 2010 y 2050 ❌ ";
-                }
-            }
-        }
-        else{
-            document.getElementById("numeroAnioError").innerHTML = "";
-        }
- 
-    }
-
+    document.getElementById("numero").addEventListener("blur", comprobarNumero);
+    document.getElementById("anio").addEventListener("blur", comprobarNumero);
 
     function errorMonto(){
         var monto = document.getElementById("montoReal").value;
@@ -346,6 +325,16 @@ function readAsBase64() {
                 event.preventDefault();
             }
         }
+        comprobarNumero();
+        //controlar si div numeroAnioError tiene algun mensaje de error
+        var numeroAnioError = document.getElementById("numeroAnioError").innerHTML;
+        if(numeroAnioError.length > 1){
+            //mostrar el mensaje de error igual al de numeroAnioError
+            mensaje = "<hr><h4>Ya existe esa orden</h4><hr>"+mensaje;
+            event.preventDefault();
+        }
+
+        
         if( mensaje.length > 1){
              
                 Swal.fire({
@@ -360,7 +349,6 @@ function readAsBase64() {
         
         //aqui muestra el modal
         if(document.getElementById("modalconfirmar").style.display != "block"){
-
             document.getElementById("mensajeOrden").innerHTML = "<p><b>¿Quiere crear Orden?<b></p>";
             event.preventDefault();
             document.getElementById("modalconfirmar").style.display = "block"; 
@@ -390,5 +378,35 @@ function readAsBase64() {
     function cerrarModel(){
         document.getElementById("confirmarProveedor").style.display = "none";
         document.getElementById("modalconfirmar").style.display = "none";
+    }
+
+    function comprobarNumero(){
+        var numero = document.getElementById("numero").value;
+        var anio = document.getElementById("anio").value;
+        let retorno;
+        var parametros = {
+            "numero" : numero,
+            "anio" : anio,
+        };
+        $.ajax({
+            data: parametros,
+            url: 'isValidatedNumero',
+            type: "post",
+            success: retorno = function(response){
+                //aqui si se devuelve no es porque no hay problema
+                if(response.includes("true")){
+                    
+                    document.getElementById("numeroAnioError").innerHTML = "";
+                    return true;
+                }else{
+                    document.getElementById("numeroAnioError").innerHTML = response;
+                    return false;
+                    
+                }
+            }
+        });
+        return retorno;
+
+
     }
 </script>

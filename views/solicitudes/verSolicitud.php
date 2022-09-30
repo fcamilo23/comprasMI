@@ -1,4 +1,25 @@
+<script>
+
+    mensajes();
+    function mensajes(){
+        <?php if($_SESSION['mensaje']['tipo'] != '' ) { ?>
+
+                Swal.fire({
+                position: 'top-center',
+                icon: '<?php echo $_SESSION['mensaje']['tipo']; ?>',
+                title: '<?php echo $_SESSION['mensaje']['contenido']; ?>',
+                showConfirmButton: false,
+                timer: 2000
+                });
+        <?php 
+            $_SESSION['mensaje']['tipo'] = '';
+            $_SESSION['mensaje']['contenido'] = '';
+            } ?>
+        } 
+
+</script>
 <?php 
+
     $_SESSION['solicitudActual'] = $_SESSION['respaldoSolicitud'];
 ?>
 <a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>

@@ -170,6 +170,51 @@ ALTER TABLE `usuarios`
 ALTER TABLE `solicitudescompra`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
+  -- FACTURAS --------------------------------------------------------------------------------------------------------------
+CREATE TABLE `facturas` (
+  `id` int(11) NOT NULL,
+  `idOrden` int(11) NOT NULL,
+  `idProveedor` int(11) NOT NULL,
+  `fechaFactura` date NOT NULL,
+  `monedaFactura` varchar(40) NOT NULL,
+  `conceptoFactura` text DEFAULT NULL,
+  `numeroFactura` varchar(60) NOT NULL,
+  `montoFactura` int(11) NOT NULL
+);
+ALTER TABLE `facturas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `facturasIdOrden_ibfk` (`idOrden`),
+  ADD KEY `facturasIdProveedor_ibfk` (`idProveedor`);
+
+ALTER TABLE `facturas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `facturas`
+  ADD CONSTRAINT `facturasIdOrden_ibfk` FOREIGN KEY (`idOrden`) REFERENCES `ordenes` (`id`),
+  ADD CONSTRAINT `facturasIdProveedor_ibfk` FOREIGN KEY (`idProveedor`) REFERENCES `proveedores` (`id`);
+
+
+--ARCHIVOSFACTURAS------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE `archivosfacturas` (
+  `id` int(11) NOT NULL,
+  `idFactura` int(11) NOT NULL,
+  `nombre` text NOT NULL,
+  `pdf` longblob NOT NULL
+);
+
+ALTER TABLE `archivosfacturas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `archivosfacturasFacturas_ibfk` (`idFactura`);
+
+ALTER TABLE `archivosfacturas`
+  ADD CONSTRAINT `archivosfacturasFacturas_ibfk` FOREIGN KEY (`idFactura`) REFERENCES `facturas` (`id`);
+
+
+
+
+
+
 
 
 

@@ -75,37 +75,40 @@ class OrdenModel extends Model{
     ///ver orden
     public function verOrden(){
 
-
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        if(isset($post['idOrden'])){
-            $_SESSION['ordenActual'] = $post['idOrden'];
-        }
-
-        if(isset($_SESSION['idOrden'])){
-            $_SESSION['ordenActual'] = $_SESSION['idOrden'];
-            unset($_SESSION['idOrden']);
-        }
-
-
         $this->query('SELECT * FROM ordenes WHERE id = :id');
         $this->bind(':id',  $_SESSION['ordenActual'] );
         $orden = $this->single();
+        
         $this->query('SELECT id, nombre FROM archivosordenes WHERE idOrden = :idOrden');
         $this->bind(':idOrden',  $_SESSION['ordenActual'] );
         $archivos = $this->resultSet();
+        
         $this->query('SELECT * FROM proveedores WHERE id = :id');
         $this->bind(':id', $orden['idProveedor']);
         $proveedor = $this->single();
         
+        $this->query('SELECT * FROM facturas WHERE idOrden = :idOrden');
+        $this->bind(':idOrden',  $_SESSION['ordenActual'] );
+        $facturas = $this->resultSet();
+
+        
         $viewmodel = array(
             'orden' => $orden,
             'archivos' => $archivos,
-            'proveedor' => $proveedor
+            'proveedor' => $proveedor,
+            'facturas' => $facturas
         );
         return $viewmodel;
 
     }
-
+    public function seleccionarOrden(){
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(isset($post['idOrden'])){
+            $_SESSION['ordenActual'] = $post['idOrden'];
+        }
+        header('Location: '.ROOT_URL.'orden/verOrden');
+        return;
+    }
     public function verArchivo(){
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $this->query('SELECT * FROM archivosordenes WHERE id = :id');
@@ -158,6 +161,48 @@ class OrdenModel extends Model{
 
         return $row;
     }
+
+/*
+ public function seleccionarOrden(){
+            $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            if(isset($post['idOrden'])){
+                $_SESSION['ordenActual'] = $post['idOrden'];
+            }
+            header('Location: '.ROOT_URL.'orden/verOrden');
+            return;
+    }
+    ///ver orden
+    public function verOrden(){
+
+
+        $this->query('SELECT * FROM ordenes WHERE id = :id');
+        $this->bind(':id',  $_SESSION['ordenActual'] );
+        $orden = $this->single();
+        
+        $this->query('SELECT id, nombre FROM archivosordenes WHERE idOrden = :idOrden');
+        $this->bind(':idOrden',  $_SESSION['ordenActual'] );
+        $archivos = $this->resultSet();
+        
+        $this->query('SELECT * FROM proveedores WHERE id = :id');
+        $this->bind(':id', $orden['idProveedor']);
+        $proveedor = $this->single();
+        
+        $this->query('SELECT * FROM facturas WHERE idOrden = :idOrden');
+        $this->bind(':idOrden',  $_SESSION['ordenActual'] );
+        $facturas = $this->resultSet();
+
+        
+        $viewmodel = array(
+            'orden' => $orden,
+            'archivos' => $archivos,
+            'proveedor' => $proveedor,
+            'facturas' => $facturas
+        );
+        return $viewmodel;
+
+    }
+
+*/
 
 
 

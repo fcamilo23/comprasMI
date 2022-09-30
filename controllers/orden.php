@@ -42,5 +42,28 @@ class Orden extends Controller{
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->seleccionarOrden(), true);
     }
+    
+    protected  function isValidatedNumero(){
+        include './assets/utils/validationAjax.php';
+        if($_POST["numero"] == "" || $_POST["anio"] == ""){
+            if($_POST["numero"] == "" && $_POST["anio"] == ""){
+                echo "              El numero de orden y año es obligatorio ❌";
+            }else{
+                if($_POST["numero"] == ""){
+                    echo "              El numero de orden es obligatorio ❌";
+                }else{
+                    echo "              El año es obligatorio ❌";
+                }
+            }
+        }else{
+                if(!isValidatedNumero(new OrdenModel(), $_POST["numero"], $_POST["anio"])){
+                    echo "              La orden ya existe ❌"; 
+                }
+                else{
+                    echo "true";
+                }
+        }
+   
+    }
 }
 ?>

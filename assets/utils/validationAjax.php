@@ -34,4 +34,18 @@
 			return true;
 		}
     }
+	
+	function isValidatedNumero($userModel, $numero,$anio){
+		$userModel->query('SELECT * FROM Ordenes WHERE numero = :numero AND anio = :anio');
+		$userModel->bind(':numero', $numero);
+		$userModel->bind(':anio', $anio);
+		$row = $userModel->single();
+		if($row){
+			return false;
+		}else{
+			return true;
+		}
+    }
+
+
 ?>
