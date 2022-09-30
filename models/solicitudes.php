@@ -402,7 +402,7 @@ if (isset($_POST['submit'])) {
                                 $this->execute();
                             endforeach;
 
-                            
+
                             $this->limpiarMemoria();
                             $_SESSION['alertaSolicitud'] = '1';
                         }
@@ -415,17 +415,18 @@ if (isset($_POST['submit'])) {
 
                         header('Location: '.ROOT_URL.'solicitudes/listaSolicitudes');
                     }else{
-                        echo "Debe agregar al menos un ítem";
+                        Messages::setMsg('Debe agregar al menos un item', 'error');                    
                     }
             
 
 
 
                 }else{
-                    echo "Ya existe una solicitud con el mismo SR ingresado";
+                    Messages::setMsg('Ya existe una solicitud con el SR ingresado', 'error');
+
                 }
             }else{
-                echo "Tiene campos sin completar";
+                Messages::setMsg('Hay campos sin completar', 'error');
             }
             }
 
@@ -519,6 +520,9 @@ if (isset($_POST['submit'])) {
     }
 
     public function subirArchivos(){
+        $this->query('SELECT count(*) FROM archivossolicitudes WHERE idSolicitud = "'. $_SESSION['solicitudActual']['id'] .'"');
+        $cantidadAntes = $this->single();
+
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         for($i=0; $i<sizeof($post['pdf']); $i++){
             $this->query('INSERT INTO archivosSolicitudes(`idSolicitud`, `nombre`, `pdf`) VALUES(:idSolicitud, :nombre, :pdf)');
@@ -528,6 +532,17 @@ if (isset($_POST['submit'])) {
             $this->execute();
             
         }
+
+        $this->query('SELECT count(*) FROM archivossolicitudes WHERE idSolicitud = "'. $_SESSION['solicitudActual']['id'] .'"');
+        $cantidadDespues = $this->single();
+
+        if($cantidadDespues['count(*)'] > $cantidadAntes['count(*)']){
+            $_SESSION['alertAddFile'] = '1';
+        }else{
+            $_SESSION['alertAddFile'] = '0';
+        }
+        
+        
         header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
 
 
@@ -561,7 +576,8 @@ if (isset($_POST['submit'])) {
         $this->query('DELETE FROM archivosSolicitudes WHERE id = :id');
         $this->bind(':id', $post['id']);
         $this->execute();
-        header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+        $_SESSION['alertDeleteFile'] = "1";
+        header('Location: '.ROOT_URL.'solicitudes/verSolicitud#files');
     }
 
    

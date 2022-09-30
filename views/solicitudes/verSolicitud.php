@@ -1,6 +1,71 @@
 <?php 
     $_SESSION['solicitudActual'] = $_SESSION['respaldoSolicitud'];
 ?>
+
+<?php
+    if(isset($_SESSION['alertDeleteFile'])){ ?>
+
+           <script>
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Archivo eliminado!',
+                    timer: 1500,
+                    showConfirmButton: false
+                })
+                
+            </script> 
+            <?php
+            unset($_SESSION['alertDeleteFile']);
+
+        }
+
+
+
+
+        if(isset($_SESSION['alertAddFile'])){ 
+            
+            if($_SESSION['alertAddFile'] == '1'){ ?>
+
+            <script>
+                 Swal.fire({
+                     position: 'center',
+                     icon: 'success',
+                     title: 'Archivo subido!',
+                     timer: 1500,
+                     showConfirmButton: false
+                 })
+                 
+             </script> 
+             
+             <?php
+             }else{
+                ?>
+                <script>
+                 Swal.fire({
+                     position: 'center',
+                     icon: 'error',
+                     title: 'Ha ocurrido un error!',
+                     text: 'Puede que el archivo que intenta subir sea demasiado grande',
+                     timer: 3000,
+                     showConfirmButton: false
+                 })
+                 
+             </script> 
+
+                <?php
+             }  
+
+             unset($_SESSION['alertAddFile']);
+ 
+         }
+
+    
+    
+
+?>
+ <!---->
+
 <a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
 <a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaNovedad"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaNovedad.jpg" width="218px" height="48px" ></button></a>
 <a href="<?php echo ROOT_PATH; ?>orden/nuevaOrden"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOrden.jpg" width="190px" height="50px" ></button></a>
@@ -281,7 +346,7 @@
     <a  href="<?php echo ROOT_PATH; ?>solicitudes/nuevoArchivo"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button></a>
 
     <h1  class="" style="color: #001d5a; margin-left: 25px">Archivos</h1>
-		<table id="solis" style="width: 100%; margin-top: 30px;">
+		<table id="files" name="files" style="width: 100%; margin-top: 30px;">
 			<thead>
 				<tr>
 					<th>Nombre</th>
@@ -298,10 +363,14 @@
                     <form action="<?php echo ROOT_PATH; ?>solicitudes/eliminarArchivo" method="post">
                             <input type="hidden" name="id" value="<?php echo $item['id'] ?>">
                             
-                            <input type="submit" name="" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
+                            <input type="submit" name="" id="deleteFile" value="✖" style="display: none; float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
+                            <input type="button"  value="✖" style="float:right; margin-right: 4%; border: none; color:white;" onclick="deleteFileAlert()" class="btn btnEliminar sombraRoja"/>
+
+
                     </form>  
                     <form action="<?php echo ROOT_PATH; ?>solicitudes/verArchivo" method="post">
                         <input type="hidden" name="id" value="<?php echo $item['id'] ?>">
+                        <input type="hidden" name="indice" name="indice" value="">
                         
                        <input type="submit" name="submit" value="Ver" style="background: #001d5a; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul"/>
 
@@ -319,3 +388,36 @@
         }?>
 	</div>
 </div>
+
+
+<script>
+function deleteFileAlert(){
+            
+            const eliminar = document.getElementById("deleteFile");
+            
+            Swal.fire({
+                title: 'Estás seguro?',
+                text: "No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, confirmar!',
+                cancelButtonText: 'No, cancelar!'
+
+                }).then((result) => {
+                if (result.isConfirmed) {
+
+                    
+                    eliminar.click();
+                    
+
+
+                }
+                })
+
+        }
+
+
+
+</script>
