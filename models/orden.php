@@ -161,6 +161,20 @@ class OrdenModel extends Model{
 
 
 
+    public function contratosAVencer (){
+
+        
+
+        $this->query('SELECT * FROM `ordenes` WHERE servicio = "Si" and fechaFin >= (select curdate()) ORDER BY `ordenes`.`fechaFin` ASC');
+        $row = $this->resultSet();
+
+       
+        $this->query('SELECT * FROM `ordenes` WHERE servicio = "Si" and fechaFin < (select curdate()) ORDER BY `ordenes`.`fechaFin` ASC');
+        $_SESSION['vencidos'] = $this->resultSet();
+
+        return $row;
+    }
+
     
     public function editarOrden(){
         //traer todos los proveedores

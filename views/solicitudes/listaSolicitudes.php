@@ -132,7 +132,7 @@
 
 			<thead>
                 
-				<tr>
+				<tr >
                     <th>Id</th>
 					<th>SR</th>
                     <th>Procedimiento</th>
@@ -155,7 +155,7 @@
 				</tr>
 			</thead>
             <tbody >
-			<tr><?php foreach($viewmodel as $item) : ?>
+			<tr ><?php foreach($viewmodel as $item) : ?>
                 <td><?php echo $item['id'] ?></td>
                 <td><?php echo $item['SR'] ?></td>
                 <td><?php echo substr($item['procedimiento'],0,3); ?></td>

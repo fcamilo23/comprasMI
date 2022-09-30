@@ -501,6 +501,8 @@ if (isset($_POST['submit'])) {
            
             $this->query('SELECT * FROM oficinas');
             $row = $this->resultSet();
+            $this->query('SELECT * FROM oficinasolicitante');
+            $row['comprobarSR'] = $this->resultSet();
             return $row;
 
 
@@ -529,6 +531,9 @@ if (isset($_POST['submit'])) {
         $row['pdflegible'] = $pdf;
         return $row;
     }
+
+
+  
 
     public function verArchivo(){
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
