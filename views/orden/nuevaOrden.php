@@ -1,3 +1,6 @@
+<?php if($_SESSION['solicitudActual']['SR'] != "") {?>
+
+
 <script>
     $(document).ready(function() {
     $('#proveedores').DataTable( {
@@ -181,7 +184,7 @@ function readAsBase64() {
 
 
                             <hr>
-                            <div id="main-container" style="width: 100%; overflow: auto; padding: 25px;"> <!--  max-height: 800px -->
+                            <div id="main-container" style="width: 100%; overflow: auto; padding: 25px; max-height: 500px"> <!--  max-height: 800px -->
 
                                 <table id="proveedores"style="width: 100%">
                                     <thead>
@@ -392,3 +395,26 @@ function readAsBase64() {
         document.getElementById("modalconfirmar").style.display = "none";
     }
 </script>
+<?php } else{ ?>
+
+
+<script>
+    Swal.fire({
+        title: 'Acceso denegado!',
+        text: "La solicitud de compra debe tener un SR para poder agregarle una orden de compra",
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ok'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            window.location="<?php echo ROOT_URL; ?>solicitudes/verSolicitud";
+        }
+        })
+
+</script>
+
+
+
+<?php }?>

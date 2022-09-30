@@ -42,5 +42,9 @@ class Orden extends Controller{
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->seleccionarOrden(), true);
     }
+    protected function comprasRealizadas(){
+        $viewmodel = new OrdenModel();
+        $this->returnView($viewmodel->comprasRealizadas(), true);
+    }
 }
 ?>
