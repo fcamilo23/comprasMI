@@ -54,6 +54,24 @@
 
     </script>
 
+
+<?php 
+    if(isset($_SESSION['alertaSolicitud'])){ ?>
+    <script>
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Perfecto! Se ha registrado la nueva solicitud',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    </script>
+
+    <?php
+    unset($_SESSION['alertaSolicitud']);
+
+    }
+?>
     
     <a href="<?php echo ROOT_URL; ?>"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
 

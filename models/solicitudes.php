@@ -393,15 +393,25 @@ if (isset($_POST['submit'])) {
                         $this->bind(':procedimiento', $post['procedimiento']);
 
                         $this->execute();
-                        $this->limpiarMemoria();
 
                         $this->query('SELECT * FROM solicitudescompra where id = (select max(id) from solicitudescompra)');
                         $soli = $this->single(); 
+                        if($soli['fechaHora'] == $fecha){ //$soli es el ultimo registro de la tabla, que se supone es la solicitud recien creada. Comparando la fechaHora me aseguro que asi sea
+                            foreach ($_SESSION['items'] as $item) :
+                                $this->query('INSERT INTO item(cantidad, unidad, descripcion, idSolicitud) VALUES("'. $item['cantidad'] .'", "'. $item['unidad'] .'", "'. $item['descripcion'] .'", "'. $soli['id'] .'")');
+                                $this->execute();
+                            endforeach;
 
-                        foreach ($_SESSION['items'] as $item) :
-                            $this->query('INSERT INTO item(cantidad, unidad, descripcion, idSolicitud) VALUES("'. $item['cantidad'] .'", "'. $item['unidad'] .'", "'. $item['descripcion'] .'", "'. $soli['id'] .'")');
-                            $this->execute();
-                        endforeach;
+                            
+                            $this->limpiarMemoria();
+                            $_SESSION['alertaSolicitud'] = '1';
+                        }
+
+                        
+
+                        
+                        
+
 
                         header('Location: '.ROOT_URL.'solicitudes/listaSolicitudes');
                     }else{

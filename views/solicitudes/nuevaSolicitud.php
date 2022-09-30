@@ -370,12 +370,8 @@ function mostrarConfirmacion(){
             
 
             document.getElementById('confirm').click();
+            
 
-            Swal.fire(
-            'Perfecto!',
-            'Se ha agregado la solicitud',
-            'success'
-            )
         }
 })
     }else{
