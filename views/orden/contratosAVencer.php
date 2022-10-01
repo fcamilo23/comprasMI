@@ -1,7 +1,35 @@
 <script>
        
        $(document).ready(function() {
-        $('#compras, #vencidos').DataTable( {
+        $('#compras').DataTable( {
+            buttons: [
+                'excel'
+            ],order: [],
+            dom: 'lBfrtip',
+            "columnDefs": [ {
+                "targets": [],
+                "searchable": false,
+                
+                } ,
+                
+                {
+                "targets": [],
+                "visible": false,
+                } ,
+                {
+                "targets": [0,1,2,3,4,5,6,7,8,9],
+                "orderable": false,
+                }
+            
+               ]
+            
+
+        } );
+    } );
+
+
+    $(document).ready(function() {
+        $('#vencidos').DataTable( {
             buttons: [
                 'excel'
             ],order: [],
@@ -26,6 +54,7 @@
 
         } );
     } );
+
 
 
 
@@ -58,6 +87,7 @@
                     <th >Proveedor</th>
                     <th >Fecha Inicio</th>
                     <th >Fecha Fin</th>
+                    <th >Tiempo Restante</th>
                     <th ></th>
 
 
@@ -97,7 +127,27 @@
                 } endforeach;?></td>
                 <td><?php if($item['fechaInicio'] == ""){echo 'N/A';}else{ $date = new DateTime($item['fechaInicio'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y'); }?></td>
                 <td><?php if($item['fechaFin'] == ""){echo 'N/A';}else{ $date = new DateTime($item['fechaFin'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y'); }?></td>
-
+                <td><strong>
+                <?php
+                    $now = time(); // or your date as well
+                    $your_date = strtotime($item['fechaFin']);
+                    $datediff = $your_date - $now;
+            
+                    $res = round($datediff / (60 * 60 * 24));
+                    if($res >= 364){
+                        $res = $res / 365;
+                        $año = intval($res);
+                        if($año == 0){$año = 1;}
+                        echo '(';
+                        echo $año;
+                        echo ' años)';
+                    }else{
+                        echo '(';
+                        echo $res + 1 ;
+                        echo ' días)';
+                    }
+                ?>
+                </strong></td>
 
 
                 

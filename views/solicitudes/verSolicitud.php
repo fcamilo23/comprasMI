@@ -3,6 +3,42 @@
 ?>
 
 <?php
+
+
+        if(isset($_SESSION['alertEditarSoli'])){
+            ?> <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Perfecto!',
+                text: 'Se han efectuado los cambios',
+                showConfirmButton: false,
+                timer: 700
+                })
+                </script> <?php
+                unset($_SESSION['alertEditarSoli']);
+        }
+
+        if(isset($_SESSION['alertAddNovedad'])){ ?>
+
+            <script>
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Se ha agregado la novedad!',
+                    timer: 1500,
+                    showConfirmButton: false
+                })
+                
+            </script> 
+            <?php
+            unset($_SESSION['alertAddNovedad']);
+
+        }
+
+
+
+
     if(isset($_SESSION['alertDeleteFile'])){ ?>
 
            <script>
@@ -46,10 +82,12 @@
                      position: 'center',
                      icon: 'error',
                      title: 'Ha ocurrido un error!',
-                     text: 'Puede que el archivo que intenta subir sea demasiado grande',
-                     timer: 3000,
-                     showConfirmButton: false
+                     text: 'No ha sido posible subir este archivo ',
+                     showConfirmButton: true
                  })
+
+
+                
                  
              </script> 
 

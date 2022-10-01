@@ -118,19 +118,30 @@
 		</select> 
 
         <label  style="margin-top: 15px; color: rgb(130, 130, 130)">Procedimiento</label>
-        <select style ="" name="planificado" class="form-control" >
-            <option value="0" >Ninguno</option>
-            <option value="Si" >Si</option>
-            <option value="No" >No</option>
+            <select name="procedimiento"  class="form-control">
+                <option value="0" >Ninguno</option>
+                <option value="--- Aun no definido" >Aún no definido</option>
+				<option value="LP - Licitación Pública">LP - Licitación Pública</option>
+				<option value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
+				<option value="CD - Compra Directa">CD - Compra Directa</option>
+                <option value="CE - Compra por Excepción">CE - Compra por Excepción</option>
+				<option value="CP - Concurso de Precios">CP - Concurso de Precios</option>
+				<option value="PCE - Procedimientos de Contratación Especiales">PCE - Procedimientos de Contratación Especiales</option>
+				<option value="ARR - Arrendamiento">ARR - Arrendamiento</option>
+				<option value="CCH - Caja Chica">CCH - Caja Chica</option>
+
+			</select> 
             
 
 		</select> 
 
         <label  style="margin-top: 15px; color: rgb(130, 130, 130)">Gastos e Inversiones</label>
-        <select style ="" name="planificado" class="form-control" >
+        <select style ="" name="gastos_inversiones" class="form-control" >
             <option value="0" >Ninguno</option>
-            <option value="Si" >Si</option>
-            <option value="No" >No</option>
+            <option value="Bienes de Consumo" >Bienes de Consumo</option>
+            <option value="Servicios No Personales" >Servicios No Personales</option>
+            <option value="Bienes de Uso" >Bienes de Uso</option>
+
             
 
 		</select> 
@@ -138,7 +149,7 @@
 
         </div>
 
-        <input type="submit" name="submit"  class="btn sombraAzul center " style="color:white; float:right; margin-right: 2%; width: 100px; margin-top:40px; background: #001d5a" value="Filtrar">/>
+        <input type="submit" name="submit"  class="btn sombraAzul center " style="color:white; float:right; margin-right: 2%; width: 100px; margin-top:40px; background: #001d5a" value="Filtrar"/>
         <button  class="btn sombra center " style="color:white; float:right; margin-right: 4%; width: 100px; margin-top:40px; background: #999999">Limpiar </button>
 </dialog>
 </form>

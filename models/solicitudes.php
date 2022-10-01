@@ -65,18 +65,33 @@ class SolicitudesModel extends Model{
                 }else{
                     $consulta = $consulta . "fechaHora LIKE '" . $post['fechaIni'] . "%'";
                 }
-                if($post['estado'] != '0' || $post['planificado'] != '0'){$consulta .= " AND ";}
+                if($post['estado'] != '0' || $post['planificado'] != '0' || $post['procedimiento'] != '0' || $post['gastos_inversiones'] != '0'){$consulta .= " AND ";}
             }
 
             if($post['estado'] != '0'){
                 $consulta = $consulta . "estado = '" . $post['estado'] . "'";
-                if($post['planificado'] != '0'){$consulta .= " AND ";}
+                if($post['planificado'] != '0' || $post['procedimiento'] != '0' || $post['gastos_inversiones'] != '0' ){$consulta .= " AND ";}
             }
 
             if($post['planificado'] != '0'){
                 $consulta = $consulta . "planificado = '" . $post['planificado'] . "'";
+                if($post['procedimiento'] != '0' || $post['gastos_inversiones'] != '0' ){$consulta .= " AND ";}
+
+            }
+
+            if($post['procedimiento'] != '0'){
+                $consulta = $consulta . "procedimiento = '" . $post['procedimiento'] . "'";
+                if($post['gastos_inversiones'] != '0' ){$consulta .= " AND ";}
+
+            }
+
+            if($post['gastos_inversiones'] != '0'){
+                $consulta = $consulta . "gastos_inversiones = '" . $post['gastos_inversiones'] . "'";
+
             }
             //echo $consulta;
+
+            if($consulta == "SELECT * FROM solicitudescompra WHERE "){$consulta = "SELECT * FROM solicitudescompra";}
             $this->query($consulta);
             $lstSolicitudes = $this->resultSet();
             
@@ -146,6 +161,7 @@ if (isset($_POST['submit'])) {
 
     public function verSolicitud(){
 
+        
 
 
         $this->query('SELECT * FROM item WHERE idSolicitud="'.$_SESSION['solicitudActual']['id'].'"');
@@ -177,6 +193,8 @@ if (isset($_POST['submit'])) {
             $fecha = $date->format('Y-m-d H:i:s');
             $this->query('INSERT INTO novedades(idSolicitud, texto, fecha) VALUES("'. $_SESSION['solicitudActual']['id'] .'","'. $post['texto'] .'", "'. $fecha. '")');
             $this->execute();
+
+            $_SESSION['alertAddNovedad'] = '1';
             //agregarCartel
             header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
 
@@ -219,6 +237,7 @@ if (isset($_POST['submit'])) {
                 $this->bind(':id', $post['id']);
 
                 $this->execute();
+                $_SESSION['alertEditarSoli'] = '1';
 
                 $_SESSION['solicitudActual'] = array(
                     "id"	=> $post['id'],

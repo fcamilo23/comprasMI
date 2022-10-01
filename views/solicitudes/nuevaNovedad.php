@@ -14,7 +14,7 @@
     <form id="registerUser" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
 
 		<div class="form-group">
-    		<textarea id="texto" type="text" rows="7" name="texto" placeholder="Ingrese la novedad..." class="form-control"></textarea>
+    		<textarea id="texto" type="text" rows="7" name="texto" placeholder="Ingrese la novedad..." required class="form-control"></textarea>
 		</div>
 
 			

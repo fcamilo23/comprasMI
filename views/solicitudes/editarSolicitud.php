@@ -8,7 +8,7 @@
 
 
 
-        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Número SR</label>
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">SR</label>
         <input type="text" id="sr" name="sr" class="form-control" value="<?php echo $_SESSION['solicitudActual']['SR']; ?>" style="margin-top: 0px;" placeholder="Ingrese el SR"  >
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Gastos e Inversiones</label>
@@ -19,19 +19,6 @@
 			</select> 
 
    
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Tipo de Procedimiento</label>
-        <select name="procedimiento" class="form-control" >
-                <option value="--- Aun no definido" selected>Aún no definido</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "LP - Licitación Pública"){?> selected <?php } ?> value="LP - Licitación Pública">LP - Licitación Pública</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "LA - Licitación Abreviada"){?> selected <?php } ?> value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CD - Compra Directa"){?> selected <?php } ?> value="CD - Compra Directa">CD - Compra Directa</option>
-                <option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CE - Compra por Excepción"){?> selected <?php } ?> value="CE - Compra por Excepción">CE - Compra por Excepción</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CP - Concurso de Precios"){?> selected <?php } ?> value="CP - Concurso de Precios">CP - Concurso de Precios</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "PCE - Procedimientos de Contratación Especiales"){?> selected <?php } ?> value="PCE - Procedimientos de Contratación Especiales">PCE - Procedimientos de Contratación Especiales</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "ARR - Arrendamiento"){?> selected <?php } ?> value="ARR - Arrendamiento">ARR - Arrendamiento</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CCH - Caja Chica"){?> selected <?php } ?> value="CCH - Caja Chica">CCH - Caja Chica</option>
-
-			</select> 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Grupos Art/Serv</label>
         <!--
@@ -73,10 +60,10 @@
 
 		</select> 
 
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Referente de Compra</label>
+        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Referente de Compra *</label>
         <input type="text" name="referente" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['referente'] ?>" required placeholder="Ingrese el referente" >
         
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Contacto Referente</label>
+        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Contacto Referente *</label>
         <input type="text" name="contactoReferente" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['contactoReferente'] ?>" required placeholder="Ingrese el correo del referente" >
         
         <label  style="margin-top: 40px; color: rgb(130, 130, 130); font-size:20px">Fecha de Emisión: <?php echo $_SESSION['solicitudActual']['fechaHora'] ?></label>
@@ -93,9 +80,25 @@
 
 
 
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Costo Estimado ($U) *</label>
         <input type="number" name="costo" id="costo" class="form-control" style="margin-top: 0px;" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"  value="<?php echo $_SESSION['solicitudActual']['costoAprox'] ?>" required placeholder="Ingrese el costo estimado de la compra" >
         
+
+        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Tipo de Procedimiento</label>
+        <select name="procedimiento" class="form-control" >
+                <option value="--- Aun no definido" selected>Aún no definido</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "LP - Licitación Pública"){?> selected <?php } ?> value="LP - Licitación Pública">LP - Licitación Pública</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "LA - Licitación Abreviada"){?> selected <?php } ?> value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CD - Compra Directa"){?> selected <?php } ?> value="CD - Compra Directa">CD - Compra Directa</option>
+                <option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CE - Compra por Excepción"){?> selected <?php } ?> value="CE - Compra por Excepción">CE - Compra por Excepción</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CP - Concurso de Precios"){?> selected <?php } ?> value="CP - Concurso de Precios">CP - Concurso de Precios</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "PCE - Procedimientos de Contratación Especiales"){?> selected <?php } ?> value="PCE - Procedimientos de Contratación Especiales">PCE - Procedimientos de Contratación Especiales</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "ARR - Arrendamiento"){?> selected <?php } ?> value="ARR - Arrendamiento">ARR - Arrendamiento</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CCH - Caja Chica"){?> selected <?php } ?> value="CCH - Caja Chica">CCH - Caja Chica</option>
+
+			</select> 
+
+
         
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Planificado</label>
         <select name="planificado" class="form-control">
@@ -107,7 +110,6 @@
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Oficina Solicitante</label>
         <select name="oficinaSolicitante" style="" class="form-control">
                 
-                <option value="0" selected>Seleccione una opción</option>
                 <?php foreach($viewmodel as $item) : ?>
                 <option <?php $ofi = $item['unidad'] . ' ' . $item['ue']; if($_SESSION['solicitudActual']['oficinaSolicitante'] == $ofi){ ?> selected <?php } ?>value="<?php echo $ofi ?>" ><?php echo $ofi ?></option>
                 <?php endforeach; ?>
@@ -122,7 +124,9 @@
        
     </div>
     <div class="col-12 center" style="text-align: center; margin-top: 60px">
-        <input type="submit" id="submit" name="submit" class="btn btn-primary" value="Guardar Cambios" style="width: 150px;"/> 
+        <input type="submit" id="guardar" name="submit" class="btn btn-primary" value="Guardar Cambios" style="display: none; width: 150px;"/> 
+        <input type="button" id="alertCambios" name="submit" class="btn btn-primary" value="Guardar Cambios" style="width: 150px;" onclick="alertAddCambios()" /> 
+
     </div>
 
     <h3 style="margin-top: 100px">Items</h3>
@@ -336,6 +340,31 @@ function alertDeleteItem(){
         }
 })
 }
+
+
+function alertAddCambios(){
+    Swal.fire({
+            title: 'Seguro que desea guardar la edición?',
+            text: "Se efectuarán los cambios una vez confirme",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'No, cancelar!',
+            confirmButtonText: 'Si, confirmar!'
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            document.getElementById("guardar").click();
+
+
+            
+
+          
+        }
+})
+}
+
 
 
 </script>
