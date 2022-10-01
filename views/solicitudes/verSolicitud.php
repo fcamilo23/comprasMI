@@ -159,10 +159,6 @@
                                         <td><input  class="form-control" type="text" readonly value="<?php echo $item['cantidad'] ?>"></td>
                                         <td><input class="form-control" type="text" readonly value="<?php echo $item['unidad'] ?>"></td>
                                         <td><textarea class="form-control" rows="1" readonly type="text"><?php echo $item['descripcion'] ?></textarea></td>
-
-                                        
-                                        
-
                                     </tr>
 
                                     <?php endforeach; } ?>
@@ -200,6 +196,7 @@
                     <th>Monto Real ($U)</th>
                     <th>Plazo de Entrega</th>
                     <th></th>
+                    <th></th>
 
 
 
@@ -235,11 +232,18 @@
                     <td> <?php echo $moneda; ?> <?php echo $orden['montoReal']; ?> </td>
                     
                     <td><?php echo $orden['plazoEntrega']; ?></td>
+
                     <td>
                         <form  action="<?php echo ROOT_PATH; ?>orden/seleccionarOrden" method="POST">
                             <input type="hidden" name="idOrden" value="<?php echo $orden['idOrden']; ?>">
                             <button style="background: #001d5a; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul">VER</button>
                         </form>
+                    </td>
+                    <td>
+                        <form id="eliminarOrden<?php echo $orden['idOrden']; ?>" action="<?php echo ROOT_PATH; ?>orden/eliminarOrden" method="POST">
+                            <input type="hidden" name="idOrden" value="<?php echo $orden['idOrden']; ?>">
+                        </form>
+                        <input type="button" value="✖" onclick="cartelEliminarOrden(<?php echo $orden['idOrden']; ?>)" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
                     </td>
                     </tr>
                 <?php endforeach; ?>
@@ -340,3 +344,42 @@
         }?>
 	</div>
 </div>
+<script>
+function cartelEliminarOrden(id){
+        const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+        title: 'Borrar Orden?',
+        text: "Seguro que quieres borrar esta orden, tambien se eliminan las facturas y archivos!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, borrar!',
+        cancelButtonText: 'No, borrar!',
+        reverseButtons: true
+        }).then((result) => {
+        if (result.isConfirmed) {
+            //enviar formulario
+
+            document.getElementById('eliminarOrden'+id).submit();
+
+        } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire(
+            'Cancelado',
+            'No se elimino la orden ',
+            'error'
+            )
+        }
+        });
+
+    }
+</script>
+

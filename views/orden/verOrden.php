@@ -21,7 +21,10 @@ function mensajes(){
 
 
 <body onload="mensajes()">
+
 <a href="<?php echo ROOT_URL; ?>solicitudes/verSolicitud"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
+
+<button onclick="document.anexarFactura.submit()" type="submit" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/anexarFactura.jpg" width="190px" height="50px" ></button>
 
 <div class="container mt-5 mb-5">
     <div class="row d-flex justify-content-center">
@@ -96,7 +99,7 @@ function mensajes(){
 </div>
                             <!-- facturas -->
                             <div style="margin-top: 100px">
-                            <form action="<?php echo ROOT_PATH; ?>factura/nuevaFactura" method="post" >
+                            <form id="anexarFactura"vaction="<?php echo ROOT_PATH; ?>factura/nuevaFactura" method="post" >
                                 <input type="hidden" name="idOrden" value="<?php echo $viewmodel["orden"]["id"] ?>">
                                 <input type="hidden" name="idProveedor" value="<?php echo $viewmodel["orden"]["idProveedor"] ?>">
                                 <input type="hidden" name="numero" value="<?php echo $viewmodel["orden"]["numero"] ?>">
