@@ -120,12 +120,21 @@ class OrdenModel extends Model{
     }
 
     public function eliminarArchivo(){
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $this->query('DELETE FROM archivosordenes WHERE id = :id');
-        $this->bind(':id', $post['idArchivo']);
-        $this->execute();
-        header('Location: '.ROOT_URL.'orden/verOrden');
-        return;
+        try{
+            $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $this->query('DELETE FROM archivosordenes WHERE id = :id');
+            $this->bind(':id', $post['idArchivo']);
+            $this->execute();
+            $_SESSION['mensaje']['tipo'] = 'success';
+            $_SESSION['mensaje']['contenido'] = 'Archivo eliminado correctamente';
+            header('Location: '.ROOT_URL.'orden/verOrden');
+            return;	
+        }catch(PDOException $e){
+            $_SESSION['mensaje']['tipo'] = 'error';
+            $_SESSION['mensaje']['contenido'] = 'Error al eliminar el archivo ...Prueba de nuevo mas tarde';
+            header('Location: '.ROOT_URL.'orden/verOrden');
+            return;      
+        }
     }
 
     public function subirArchivos (){
@@ -223,7 +232,6 @@ class OrdenModel extends Model{
     }
 
     public function eliminarOrden(){
-        $mensajito = "aca";
         try{
          
             // eliminar facturas, archivosfacturas, archivosOrdenes y ordenes
@@ -238,32 +246,26 @@ class OrdenModel extends Model{
                 $this->bind(':idFactura', $factura['id']);
                 $this->execute();
             }
-            $mensajito="aca2";
             //eliminar facturas
             $this->query('DELETE FROM facturas WHERE idOrden = :idOrden');
             $this->bind(':idOrden', $post['idOrden']);
             $this->execute();
-            $mensajito="aca3";
             //eliminar archivosOrdenes
             $this->query('DELETE FROM archivosordenes WHERE idOrden = :idOrden');
             $this->bind(':idOrden', $post['idOrden']);
             $this->execute();
-            $mensajito="aca4";
-            
+    
             //eliminar orden
             $this->query('DELETE FROM ordenes WHERE id = :idOrden');
             $this->bind(':idOrden', $post['idOrden']);
             $this->execute();
             $_SESSION['ordenActual'] = null;
-            $mensajito="aca5";
             $_SESSION['mensaje']['tipo'] = 'success';
-            $_SESSION['mensaje']['contenido'] = 'Orden eliminada correctamente'.$mensajito;
+            $_SESSION['mensaje']['contenido'] = 'Orden eliminada correctamente';
             header('Location: '.ROOT_URL.'solicitudes/versolicitud');
         }catch(PDOException $e){
-            $mensajito=$mensajito.$e->getMessage();
-            print_r($e);
             $_SESSION['mensaje']['tipo'] = 'error';
-            $_SESSION['mensaje']['contenido'] = 'Error al eliminar la orden ...Prueba de nuevo mas tarde '.$mensajito;
+            $_SESSION['mensaje']['contenido'] = 'Error al eliminar la orden ...Prueba de nuevo mas tarde ';
             header('Location: '.ROOT_URL.'solicitudes/versolicitud');
         }
     }

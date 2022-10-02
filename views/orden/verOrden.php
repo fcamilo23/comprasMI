@@ -24,7 +24,6 @@ function mensajes(){
 
 <a href="<?php echo ROOT_URL; ?>solicitudes/verSolicitud"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
 
-<button onclick="document.anexarFactura.submit()" type="submit" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/anexarFactura.jpg" width="190px" height="50px" ></button>
 
 <div class="container mt-5 mb-5">
     <div class="row d-flex justify-content-center">
@@ -99,7 +98,7 @@ function mensajes(){
 </div>
                             <!-- facturas -->
                             <div style="margin-top: 100px">
-                            <form id="anexarFactura"vaction="<?php echo ROOT_PATH; ?>factura/nuevaFactura" method="post" >
+                            <form id="anexarFactura" action="<?php echo ROOT_PATH; ?>factura/nuevaFactura" method="post" >
                                 <input type="hidden" name="idOrden" value="<?php echo $viewmodel["orden"]["id"] ?>">
                                 <input type="hidden" name="idProveedor" value="<?php echo $viewmodel["orden"]["idProveedor"] ?>">
                                 <input type="hidden" name="numero" value="<?php echo $viewmodel["orden"]["numero"] ?>">
@@ -201,8 +200,9 @@ function mensajes(){
                                         <td>
                                             <form id="eliminarArchivo<?php echo $item['id'] ?>" action="<?php echo ROOT_PATH; ?>orden/eliminarArchivo" method="post">
                                                 <input type="hidden" name="idArchivo" value="<?php echo $item['id'] ?>">
-                                                <input type="button" name="" onclick="cartelEliminarArchivo(<?php echo $item['id'] ?>)" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
                                             </form> 
+                                            <input type="button" name="" onclick="cartelEliminarArchivo(<?php echo $item['id'] ?>)" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
+
                                             <form action="<?php echo ROOT_URL; ?>orden/verArchivo" method="post">
                                                 <input type="hidden" name="idArchivo" value="<?php echo $item['id'] ?>">
                                                 <input type="submit" name="submit" value="Ver" style="background: #001d5a; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul"/>
@@ -355,7 +355,6 @@ function readAsBase64() {
               document.getElementById('eliminarArchivo'+id).submit();
             eliminar($id);
         } else if (
-            /* Read more about handling dismissals below */
             result.dismiss === Swal.DismissReason.cancel
         ) {
             swalWithBootstrapButtons.fire(

@@ -97,7 +97,7 @@
                                     </div>
                                 </div>
                                 <!--MODAL -->
-                                <input type="button" value="CANCELAR" class="btn btn-secondary"  href="<?php echo ROOT_URL; ?>orden/verOrden">
+                                <a href="<?php echo ROOT_URL; ?>orden/verOrden" ><input type="button" value="CANCELAR" class="btn btn-secondary"  ></a>
                                 <input type="submit" class="btn btn-primary" value="AGREGAR FACTURA"  onclick="abrirModal()" style="margin-top: 20px; margin-bottom: 20px">
 
                             </form>
