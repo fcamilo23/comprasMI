@@ -294,16 +294,24 @@ thead{
 	color: white;
 }
 
-tr:nth-child(even){
+
+
+tr:not(.semaforoRojo, .semaforoVerde, .semaforoAmarillo):nth-child(even){
 	background-color: #ddd;
 }
 
-tr:hover td{
+
+
+
+tr:not(.semaforoRojo, .semaforoVerde, .semaforoAmarillo):hover td{
 	background-color: #b4bacc;
 	color: black;
     transition: all .3s;
 
 }
+
+
+
 
 .yo1{
     background-color:#345aac;
@@ -442,6 +450,39 @@ input::-webkit-inner-spin-button {
 
 input{
     
+}
+
+
+.semaforoRojo{
+    background: rgb(255, 206, 206);
+    border-bottom: 1px solid grey;
+}
+.semaforoRojo:hover{
+    background: rgb(247, 114, 114);
+    transition: all .2s;
+
+}
+
+.semaforoAmarillo{
+    background: rgb(249, 255, 192);
+    border-bottom: 1px solid grey;
+
+}
+.semaforoAmarillo:hover{
+    background: rgb(255, 242, 59);
+    transition: all .2s;
+
+}
+
+.semaforoVerde{
+    background: rgb(220, 255, 189);
+    border-bottom: 1px solid grey;
+
+}
+.semaforoVerde:hover{
+    background: rgb(164, 255, 136);
+    transition: all .2s;
+
 }
 .cont-menu{
     width: 100%;

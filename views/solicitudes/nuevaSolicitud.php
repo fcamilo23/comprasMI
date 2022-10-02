@@ -4,7 +4,7 @@
 <h2 class="" style="display: inline-block; ">Desea confirmar la nueva solicitud?</h2>
 
            <label type="submit" name="submit"  class="btn sombraAzul center " style="color:white; float:right; margin-right: 2%; width: 100px; margin-top:40px; background: #001d5a" >Cancelar</label>
-           <input type="submit" id="submit" name="submit" class="btn btn-primary" value="Confirmar" onclick="document.getElementById('confirm').click()" style="color:white; float:right; margin-right: 4%; width: 100px; margin-top:40px; background: #999999"/>
+           <input type="submit" id="submit" name="submit" class="btn btn-primary" value="Confirmar" onclick="const myTimeout = setTimeout(document.getElementById('confirm').click(), 1500"; style="color:white; float:right; margin-right: 4%; width: 100px; margin-top:40px; background: #999999"/>
  
 </dialog>
 
@@ -25,7 +25,7 @@
     <div class="col-lg-6 center" >
         <form id="nuevaSolicitud" name="nuevaSolicitud" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">SR</label>
-        <input type="text" value="<?php if(isset($_SESSION['solicitud']['sr'])) {  echo $_SESSION['solicitud']['sr']; }?>"  name="sr" id="sr" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el SR" >
+        <input type="text" value="<?php if(isset($_SESSION['solicitud']['sr'])) {  echo $_SESSION['solicitud']['sr']; }?>"  name="sr" id="sr" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el SR (opcional)" >
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Gastos e Inversiones</label>
         <select name="gastos_inversiones" id="gastos_inversiones" class="form-control">
@@ -220,7 +220,7 @@
                                 </tr>
                             </thead>
                                     <tr class="tclass">
-                                        <td><input class="form-control" name="cant" id="cant" type="text"></td>
+                                        <td><input class="form-control" name="cant" id="cant" type="number" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"></td>
                                         <td><input class="form-control" name="uni" id="uni" type="text"></td>
                                         <td><textarea class="form-control" name="desc" id="desc" rows="1" type="text"></textarea></td>
                                         <td><input type="submit" id="add" name="submit"  class="btn btn-primary" value="+"></input></td>
@@ -328,6 +328,17 @@ input.addEventListener("keypress", function(event) {
     event.preventDefault();
   }
 });
+var input = document.getElementById("cant");
+input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+  }
+});var input = document.getElementById("uni");
+input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+  }
+});
 
 //-----------------------------------------------
 
@@ -359,12 +370,8 @@ function mostrarConfirmacion(){
             
 
             document.getElementById('confirm').click();
+            
 
-            Swal.fire(
-            'Perfecto!',
-            'Se ha agregado la solicitud',
-            'success'
-            )
         }
 })
     }else{

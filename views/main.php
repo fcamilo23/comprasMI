@@ -37,7 +37,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js" crossorigin="anonymous"></script>
 <script src="<?php echo ROOT_PATH; ?>assets/css/buttons.html5.min.js?v=<?php echo time(); ?>" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js" crossorigin="anonymous"></script>
-<script src="<?php echo ROOT_PATH; ?>assets/css/css/package.json"></script>
+<!--<script src="<?php echo ROOT_PATH; ?>assets/css/css/package.json"></script>-->
 
 
 
@@ -112,7 +112,7 @@
         </label>
         
 <input type="checkbox" id="check">
-<div id="menux1" class="container-menu">
+<div id="menux1" class="container-menu" >
     <div id="menux" class="cont-menu">
         <div style="">
             <label for="check"><h1 style="float: right; margin-right:10px; color: grey; font-size: 40px; cursor:pointer;">×</h1></p><br><br>
@@ -122,6 +122,7 @@
 
             <a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes">Solicitudes de Compra</a>
             <a href="<?php echo ROOT_URL; ?>orden/comprasRealizadas">Compras Realizadas</a>
+            <a href="<?php echo ROOT_URL; ?>orden/contratosAVencer">Vencimientos</a>
             <a href="<?php echo ROOT_URL; ?>oficina/listaOficinas">Oficinas Solicitantes</a>
             <a href="<?php echo ROOT_URL; ?>users/listaUsuarios">Usuarios</a>
             <a href="<?php echo ROOT_URL; ?>proveedor/listaProveedores">Proveedores</a>

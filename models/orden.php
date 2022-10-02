@@ -2,7 +2,7 @@
 class OrdenModel extends Model{
     public function nuevaOrden(){
         //obtener los proovedores
-        $this->query('SELECT id, empresa, razon_social, rut FROM proveedores ORDER BY empresa');
+        $this->query('SELECT id, empresa, razon_social, rut FROM proveedores');
         $lstProveedores = $this->resultSet();
          return $lstProveedores;
     }
@@ -72,35 +72,8 @@ class OrdenModel extends Model{
             return;      
         }
     }
-    ///ver orden
-    public function verOrden(){
+   
 
-        $this->query('SELECT * FROM ordenes WHERE id = :id');
-        $this->bind(':id',  $_SESSION['ordenActual'] );
-        $orden = $this->single();
-        
-        $this->query('SELECT id, nombre FROM archivosordenes WHERE idOrden = :idOrden');
-        $this->bind(':idOrden',  $_SESSION['ordenActual'] );
-        $archivos = $this->resultSet();
-        
-        $this->query('SELECT * FROM proveedores WHERE id = :id');
-        $this->bind(':id', $orden['idProveedor']);
-        $proveedor = $this->single();
-        
-        $this->query('SELECT * FROM facturas WHERE idOrden = :idOrden');
-        $this->bind(':idOrden',  $_SESSION['ordenActual'] );
-        $facturas = $this->resultSet();
-
-        
-        $viewmodel = array(
-            'orden' => $orden,
-            'archivos' => $archivos,
-            'proveedor' => $proveedor,
-            'facturas' => $facturas
-        );
-        return $viewmodel;
-
-    }
 
     public function seleccionarOrden(){
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -109,7 +82,44 @@ class OrdenModel extends Model{
         }
         header('Location: '.ROOT_URL.'orden/verOrden');
         return;
+}
+///ver orden
+public function verOrden(){
+    //este if es para detectar si abro una orden desde la vista de "compras realizadas", no deberia afectar el resto
+    if(isset($_SESSION['idOrden'])){
+        $_SESSION['ordenActual'] = $_SESSION['idOrden'];
+        unset($_SESSION['idOrden']);
     }
+    //----------------------------------
+    
+
+
+    $this->query('SELECT * FROM ordenes WHERE id = :id');
+    $this->bind(':id',  $_SESSION['ordenActual'] );
+    $orden = $this->single();
+    
+    $this->query('SELECT id, nombre FROM archivosordenes WHERE idOrden = :idOrden');
+    $this->bind(':idOrden',  $_SESSION['ordenActual'] );
+    $archivos = $this->resultSet();
+    
+    $this->query('SELECT * FROM proveedores WHERE id = :id');
+    $this->bind(':id', $orden['idProveedor']);
+    $proveedor = $this->single();
+    
+    $this->query('SELECT * FROM facturas WHERE idOrden = :idOrden');
+    $this->bind(':idOrden',  $_SESSION['ordenActual'] );
+    $facturas = $this->resultSet();
+
+    
+    $viewmodel = array(
+        'orden' => $orden,
+        'archivos' => $archivos,
+        'proveedor' => $proveedor,
+        'facturas' => $facturas
+    );
+    return $viewmodel;
+
+}
 
     public function verArchivo(){
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -120,21 +130,12 @@ class OrdenModel extends Model{
     }
 
     public function eliminarArchivo(){
-        try{
-            $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $this->query('DELETE FROM archivosordenes WHERE id = :id');
-            $this->bind(':id', $post['idArchivo']);
-            $this->execute();
-            $_SESSION['mensaje']['tipo'] = 'success';
-            $_SESSION['mensaje']['contenido'] = 'Archivo eliminado correctamente';
-            header('Location: '.ROOT_URL.'orden/verOrden');
-            return;	
-        }catch(PDOException $e){
-            $_SESSION['mensaje']['tipo'] = 'error';
-            $_SESSION['mensaje']['contenido'] = 'Error al eliminar el archivo ...Prueba de nuevo mas tarde';
-            header('Location: '.ROOT_URL.'orden/verOrden');
-            return;      
-        }
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $this->query('DELETE FROM archivosordenes WHERE id = :id');
+        $this->bind(':id', $post['idArchivo']);
+        $this->execute();
+        header('Location: '.ROOT_URL.'orden/verOrden');
+        return;
     }
 
     public function subirArchivos (){
@@ -173,6 +174,37 @@ class OrdenModel extends Model{
         return $row;
     }
 
+
+
+    public function contratosAVencer (){
+
+
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(isset($post) && isset($post['submit'])){
+            if($post['submit'] == 'Ampliar'){
+                $_SESSION['idOrden'] = $post['numero'];
+                
+
+            }
+            header('Location: '.ROOT_URL.'orden/verOrden');
+        }
+
+        
+        $this->query('SELECT * FROM proveedores');
+        $_SESSION['proveedores'] = $this->resultSet();
+        
+       
+        $this->query('SELECT * FROM `ordenes` WHERE servicio = "Si" and fechaFin < (select curdate()) ORDER BY `ordenes`.`fechaFin` ASC');
+        $_SESSION['vencidos'] = $this->resultSet();
+
+
+        $this->query('SELECT * FROM `ordenes` WHERE servicio = "Si" and fechaFin >= (select curdate()) ORDER BY `ordenes`.`fechaFin` ASC');
+        $row = $this->resultSet();
+
+        return $row;
+    }
+
+    
     public function editarOrden(){
         //traer todos los proveedores
         $this->query('SELECT * FROM proveedores');
@@ -228,45 +260,6 @@ class OrdenModel extends Model{
             $_SESSION['mensaje']['contenido'] = 'Error al modificar la orden ...Prueba de nuevo mas tarde';
             header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
             return;      
-        }
-    }
-
-    public function eliminarOrden(){
-        try{
-         
-            // eliminar facturas, archivosfacturas, archivosOrdenes y ordenes
-            $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            //select de todas las facturas
-            $this->query('SELECT * FROM facturas WHERE idOrden = :idOrden');
-            $this->bind(':idOrden', $post['idOrden']);
-            $facturas = $this->resultSet();
-            //eliminar archivosfacturas
-            foreach($facturas as $factura){
-                $this->query('DELETE FROM archivosfacturas WHERE idFactura = :idFactura');
-                $this->bind(':idFactura', $factura['id']);
-                $this->execute();
-            }
-            //eliminar facturas
-            $this->query('DELETE FROM facturas WHERE idOrden = :idOrden');
-            $this->bind(':idOrden', $post['idOrden']);
-            $this->execute();
-            //eliminar archivosOrdenes
-            $this->query('DELETE FROM archivosordenes WHERE idOrden = :idOrden');
-            $this->bind(':idOrden', $post['idOrden']);
-            $this->execute();
-    
-            //eliminar orden
-            $this->query('DELETE FROM ordenes WHERE id = :idOrden');
-            $this->bind(':idOrden', $post['idOrden']);
-            $this->execute();
-            $_SESSION['ordenActual'] = null;
-            $_SESSION['mensaje']['tipo'] = 'success';
-            $_SESSION['mensaje']['contenido'] = 'Orden eliminada correctamente';
-            header('Location: '.ROOT_URL.'solicitudes/versolicitud');
-        }catch(PDOException $e){
-            $_SESSION['mensaje']['tipo'] = 'error';
-            $_SESSION['mensaje']['contenido'] = 'Error al eliminar la orden ...Prueba de nuevo mas tarde ';
-            header('Location: '.ROOT_URL.'solicitudes/versolicitud');
         }
     }
 

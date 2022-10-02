@@ -44,47 +44,31 @@
     <label style="margin-top: 5px; color:grey;" for="">Hasta</label>
     <input class="form-control" style="" id="fechaFin" type="date" disabled name="fechaFin"><br>
 
-    
-    <label  style="margin-top: 15px; color: rgb(130, 130, 130)">Estado</label>
-        <select style ="" name="estado" class="form-control" >
-            <option value="0" >Ninguno</option>
-
-            <option value="Pendiente" >Pendiente</option>
-            <option value="Solicitada" >Solicitada</option>
-            <option value="Publicada" >Publicada</option>
-            <option value="Informe Técnico" >Informe Técnico</option>
-            <option value="Adjudicada" >Adjudicada</option>
-            <option value="Entregada Parcial" >Entregada Parcial</option>
-            <option value="Entregada Total" >Entregada Total</option>
-            <option value="Facturada" >Facturada</option>
-            <option value="Cancelada" >Cancelada</option>
-            <option value="En Espera" >En Espera</option>
-
-		</select> 
-
-        <label  style="margin-top: 15px; color: rgb(130, 130, 130)">Planificado</label>
-        <select style ="" name="planificado" class="form-control" >
-            <option value="0" >Ninguno</option>
-            <option value="Si" >Si</option>
-            <option value="No" >No</option>
-            
-
-		</select> 
 
         <label  style="margin-top: 15px; color: rgb(130, 130, 130)">Procedimiento</label>
-        <select style ="" name="planificado" class="form-control" >
-            <option value="0" >Ninguno</option>
-            <option value="Si" >Si</option>
-            <option value="No" >No</option>
+            <select name="procedimiento"  class="form-control">
+                <option value="0" >Ninguno</option>
+                <option value="--- Aun no definido" >Aún no definido</option>
+				<option value="LP - Licitación Pública">LP - Licitación Pública</option>
+				<option value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
+				<option value="CD - Compra Directa">CD - Compra Directa</option>
+                <option value="CE - Compra por Excepción">CE - Compra por Excepción</option>
+				<option value="CP - Concurso de Precios">CP - Concurso de Precios</option>
+				<option value="PCE - Procedimientos de Contratación Especiales">PCE - Procedimientos de Contratación Especiales</option>
+				<option value="ARR - Arrendamiento">ARR - Arrendamiento</option>
+				<option value="CCH - Caja Chica">CCH - Caja Chica</option>
+
+			</select> 
             
 
 		</select> 
 
-        <label  style="margin-top: 15px; color: rgb(130, 130, 130)">Gastos e Inversiones</label>
-        <select style ="" name="planificado" class="form-control" >
+        <label  style="margin-top: 15px; color: rgb(130, 130, 130)">Articulos o Servicios</label>
+        <select style ="" name="servicio" class="form-control" >
             <option value="0" >Ninguno</option>
-            <option value="Si" >Si</option>
-            <option value="No" >No</option>
+            <option value="Si" >Servicios</option>
+            <option value="No" >Artículos</option>
+
             
 
 		</select> 
@@ -92,7 +76,7 @@
 
         </div>
 
-        <input type="submit" name="submit"  class="btn sombraAzul center " style="color:white; float:right; margin-right: 2%; width: 100px; margin-top:40px; background: #001d5a" value="Filtrar">/>
+        <input type="submit" name="submit"  class="btn sombraAzul center " style="color:white; float:right; margin-right: 2%; width: 100px; margin-top:40px; background: #001d5a" value="Filtrar"/>
         <button  class="btn sombra center " style="color:white; float:right; margin-right: 4%; width: 100px; margin-top:40px; background: #999999">Limpiar </button>
 </dialog>
 </form>
@@ -110,6 +94,7 @@
                     <th>Orden</th>
                     <th>Moneda</th>
                     <th>Monto Real</th>
+                    <th>Artículo o Servicio</th>
                     <th>Plazo Entrega</th>
                     <th>Procedimiento</th>
                     <th>Proveedor</th>
@@ -129,6 +114,7 @@
                 <td><?php echo 'OC ' . $item['numero'] .'-' . $item['anio'] ?></td>
                 <td><?php echo $item['moneda'] ?></td>
                 <td><?php echo $item['montoReal'] ?></td>
+                <td><?php if($item['servicio'] == 'Si'){echo 'Servicio';}else{echo 'Artículo';} ?></td>
                 <td><?php echo $item['plazoEntrega'] ?></td>
                 <td><?php echo $item['procedimiento'] ?></td>
                 <td><?php foreach($_SESSION['proveedores'] as $p) : 

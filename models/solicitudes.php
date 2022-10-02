@@ -65,18 +65,33 @@ class SolicitudesModel extends Model{
                 }else{
                     $consulta = $consulta . "fechaHora LIKE '" . $post['fechaIni'] . "%'";
                 }
-                if($post['estado'] != '0' || $post['planificado'] != '0'){$consulta .= " AND ";}
+                if($post['estado'] != '0' || $post['planificado'] != '0' || $post['procedimiento'] != '0' || $post['gastos_inversiones'] != '0'){$consulta .= " AND ";}
             }
 
             if($post['estado'] != '0'){
                 $consulta = $consulta . "estado = '" . $post['estado'] . "'";
-                if($post['planificado'] != '0'){$consulta .= " AND ";}
+                if($post['planificado'] != '0' || $post['procedimiento'] != '0' || $post['gastos_inversiones'] != '0' ){$consulta .= " AND ";}
             }
 
             if($post['planificado'] != '0'){
                 $consulta = $consulta . "planificado = '" . $post['planificado'] . "'";
+                if($post['procedimiento'] != '0' || $post['gastos_inversiones'] != '0' ){$consulta .= " AND ";}
+
+            }
+
+            if($post['procedimiento'] != '0'){
+                $consulta = $consulta . "procedimiento = '" . $post['procedimiento'] . "'";
+                if($post['gastos_inversiones'] != '0' ){$consulta .= " AND ";}
+
+            }
+
+            if($post['gastos_inversiones'] != '0'){
+                $consulta = $consulta . "gastos_inversiones = '" . $post['gastos_inversiones'] . "'";
+
             }
             //echo $consulta;
+
+            if($consulta == "SELECT * FROM solicitudescompra WHERE "){$consulta = "SELECT * FROM solicitudescompra";}
             $this->query($consulta);
             $lstSolicitudes = $this->resultSet();
             
@@ -146,6 +161,7 @@ if (isset($_POST['submit'])) {
 
     public function verSolicitud(){
 
+        
 
 
         $this->query('SELECT * FROM item WHERE idSolicitud="'.$_SESSION['solicitudActual']['id'].'"');
@@ -177,6 +193,8 @@ if (isset($_POST['submit'])) {
             $fecha = $date->format('Y-m-d H:i:s');
             $this->query('INSERT INTO novedades(idSolicitud, texto, fecha) VALUES("'. $_SESSION['solicitudActual']['id'] .'","'. $post['texto'] .'", "'. $fecha. '")');
             $this->execute();
+
+            $_SESSION['alertAddNovedad'] = '1';
             //agregarCartel
             header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
 
@@ -219,6 +237,7 @@ if (isset($_POST['submit'])) {
                 $this->bind(':id', $post['id']);
 
                 $this->execute();
+                $_SESSION['alertEditarSoli'] = '1';
 
                 $_SESSION['solicitudActual'] = array(
                     "id"	=> $post['id'],
@@ -393,29 +412,40 @@ if (isset($_POST['submit'])) {
                         $this->bind(':procedimiento', $post['procedimiento']);
 
                         $this->execute();
-                        $this->limpiarMemoria();
 
                         $this->query('SELECT * FROM solicitudescompra where id = (select max(id) from solicitudescompra)');
                         $soli = $this->single(); 
+                        if($soli['fechaHora'] == $fecha){ //$soli es el ultimo registro de la tabla, que se supone es la solicitud recien creada. Comparando la fechaHora me aseguro que asi sea
+                            foreach ($_SESSION['items'] as $item) :
+                                $this->query('INSERT INTO item(cantidad, unidad, descripcion, idSolicitud) VALUES("'. $item['cantidad'] .'", "'. $item['unidad'] .'", "'. $item['descripcion'] .'", "'. $soli['id'] .'")');
+                                $this->execute();
+                            endforeach;
 
-                        foreach ($_SESSION['items'] as $item) :
-                            $this->query('INSERT INTO item(cantidad, unidad, descripcion, idSolicitud) VALUES("'. $item['cantidad'] .'", "'. $item['unidad'] .'", "'. $item['descripcion'] .'", "'. $soli['id'] .'")');
-                            $this->execute();
-                        endforeach;
+
+                            $this->limpiarMemoria();
+                            $_SESSION['alertaSolicitud'] = '1';
+                        }
+
+                        
+
+                        
+                        
+
 
                         header('Location: '.ROOT_URL.'solicitudes/listaSolicitudes');
                     }else{
-                        echo "Debe agregar al menos un ítem";
+                        Messages::setMsg('Debe agregar al menos un item', 'error');                    
                     }
             
 
 
 
                 }else{
-                    echo "Ya existe una solicitud con el mismo SR ingresado";
+                    Messages::setMsg('Ya existe una solicitud con el SR ingresado', 'error');
+
                 }
             }else{
-                echo "Tiene campos sin completar";
+                Messages::setMsg('Hay campos sin completar', 'error');
             }
             }
 
@@ -501,12 +531,17 @@ if (isset($_POST['submit'])) {
            
             $this->query('SELECT * FROM oficinas');
             $row = $this->resultSet();
+            $this->query('SELECT * FROM oficinasolicitante');
+            $row['comprobarSR'] = $this->resultSet();
             return $row;
 
 
     }
 
     public function subirArchivos(){
+        $this->query('SELECT count(*) FROM archivossolicitudes WHERE idSolicitud = "'. $_SESSION['solicitudActual']['id'] .'"');
+        $cantidadAntes = $this->single();
+
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         for($i=0; $i<sizeof($post['pdf']); $i++){
             $this->query('INSERT INTO archivosSolicitudes(`idSolicitud`, `nombre`, `pdf`) VALUES(:idSolicitud, :nombre, :pdf)');
@@ -516,6 +551,17 @@ if (isset($_POST['submit'])) {
             $this->execute();
             
         }
+
+        $this->query('SELECT count(*) FROM archivossolicitudes WHERE idSolicitud = "'. $_SESSION['solicitudActual']['id'] .'"');
+        $cantidadDespues = $this->single();
+
+        if($cantidadDespues['count(*)'] > $cantidadAntes['count(*)']){
+            $_SESSION['alertAddFile'] = '1';
+        }else{
+            $_SESSION['alertAddFile'] = '0';
+        }
+        
+        
         header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
 
 
@@ -529,6 +575,9 @@ if (isset($_POST['submit'])) {
         $row['pdflegible'] = $pdf;
         return $row;
     }
+
+
+  
 
     public function verArchivo(){
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -546,7 +595,8 @@ if (isset($_POST['submit'])) {
         $this->query('DELETE FROM archivosSolicitudes WHERE id = :id');
         $this->bind(':id', $post['id']);
         $this->execute();
-        header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+        $_SESSION['alertDeleteFile'] = "1";
+        header('Location: '.ROOT_URL.'solicitudes/verSolicitud#files');
     }
 
    
