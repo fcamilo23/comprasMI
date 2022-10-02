@@ -45,8 +45,7 @@ class Orden extends Controller{
     protected function eliminarOrden(){
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->eliminarOrden(), true);
-    }
-    
+    }  
     
     protected  function isValidatedNumero(){
         include './assets/utils/validationAjax.php';
@@ -70,5 +69,16 @@ class Orden extends Controller{
         }
    
     }
+=======
+    protected function comprasRealizadas(){
+        $viewmodel = new OrdenModel();
+        $this->returnView($viewmodel->comprasRealizadas(), true);
+    }
+
+    protected function contratosAVencer(){
+		$viewmodel = new OrdenModel();
+		$this->returnView($viewmodel->contratosAVencer(), true);
+	}
+
 }
 ?>

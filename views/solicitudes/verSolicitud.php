@@ -344,6 +344,7 @@
         }?>
 	</div>
 </div>
+
 <script>
 function cartelEliminarOrden(id){
         const swalWithBootstrapButtons = Swal.mixin({
@@ -383,3 +384,37 @@ function cartelEliminarOrden(id){
     }
 </script>
 
+=======
+
+
+<script>
+function deleteFileAlert(){
+            
+            const eliminar = document.getElementById("deleteFile");
+            
+            Swal.fire({
+                title: 'Estás seguro?',
+                text: "No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, confirmar!',
+                cancelButtonText: 'No, cancelar!'
+
+                }).then((result) => {
+                if (result.isConfirmed) {
+
+                    
+                    eliminar.click();
+                    
+
+
+                }
+                })
+
+        }
+
+
+
+</script>
