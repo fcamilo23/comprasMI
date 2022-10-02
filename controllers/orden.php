@@ -69,7 +69,7 @@ class Orden extends Controller{
         }
    
     }
-=======
+
     protected function comprasRealizadas(){
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->comprasRealizadas(), true);
