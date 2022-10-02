@@ -2,7 +2,7 @@
 class OrdenModel extends Model{
     public function nuevaOrden(){
         //obtener los proovedores
-        $this->query('SELECT id, empresa, razon_social, rut FROM proveedores');
+        $this->query('SELECT id, empresa, razon_social, rut FROM proveedores ORDER BY empresa');
         $lstProveedores = $this->resultSet();
          return $lstProveedores;
     }

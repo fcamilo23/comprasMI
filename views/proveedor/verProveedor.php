@@ -1,3 +1,23 @@
+<script>
+
+mensajes();
+
+function mensajes(){
+    <?php if($_SESSION['mensaje']['tipo'] != '' ) { ?>
+
+            Swal.fire({
+            position: 'top-center',
+            icon: '<?php echo $_SESSION['mensaje']['tipo']; ?>',
+            title: '<?php echo $_SESSION['mensaje']['contenido']; ?>',
+            showConfirmButton: false,
+            timer: 3000
+            });
+    <?php 
+        $_SESSION['mensaje']['tipo'] = '';
+        $_SESSION['mensaje']['contenido'] = '';
+        } ?>
+    } 
+</script>
 <body>
 <a href="<?php echo ROOT_URL; ?>proveedor/listaProveedores"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
 <div class="container mt-5 mb-5">
@@ -11,28 +31,26 @@
                     if(isset($viewmodel["id"]) && $viewmodel["id"] != '') {
                      
                     ?>
-                     <form  id="editarProveedor" action="<?php echo ROOT_PATH; ?>proveedor/verProveedor" method="POST">
+
                         <h5><b>NOMBRE EMPRESA: </b></h5>
-                        <input id="empresa" name="empresa" type="text" value="<?php echo $viewmodel["empresa"] ?>" class="editar form-control editar" >
+                        <input id="empresa" name="empresa" type="text" value="<?php echo $viewmodel["empresa"] ?>" class="editar form-control editar" readonly>
                         <div id="empresaError"></div>
+                        <br>
                         <h5><b>RAZON SOCIAL: </b></h5>
-                        <input id="razon_social" name="razon_social" type="text" value="<?php echo $viewmodel["razon_social"] ?>" class="editar form-control" >
+                        <input id="razon_social" name="razon_social" type="text" value="<?php echo $viewmodel["razon_social"] ?>" class="editar form-control" readonly>
                         <br>
                         <h5><b>R.U.T.: </b></h5>
-                        <input id="rut" name="rut" type="text" value="<?php echo $viewmodel["rut"] ?>" class="editar form-control" >
+                        <input id="rut" name="rut" type="text" value="<?php echo $viewmodel["rut"] ?>" class="editar form-control" readonly>
                         <br>
                         <h5><b>TELEFONO: </b></h5>
-                        <input id="telefono" name="telefono" type="text" value="<?php echo $viewmodel["telefono"] ?>" class="editar form-control" >
+                        <input id="telefono" name="telefono" type="text" value="<?php echo $viewmodel["telefono"] ?>" class="editar form-control" readonly>
                         <br>
                         <h5><b>CORREO: </b></h5>
-                        <input id="email" name="email" type="text" value="<?php echo $viewmodel["email"] ?>" class="editar form-control" >
+                        <input id="email" name="email" type="text" value="<?php echo $viewmodel["email"] ?>" class="editar form-control" readonly>
                         <br>
-                        
-                        <input type="hidden" id="id" name="id" value="<?php echo $viewmodel["id"] ?>">
-                        <input type="hidden" id="accion" name="accion" value="editarProveedor">
-                        <button class="btn btn-success" type="submit">EDITAR</button>
 
-                    </form>
+                        <a href= "<?php echo ROOT_PATH; ?>proveedor/editarProveedor"><input type="button" class="btn btn-success" id="editar" name="editar" value="EDITAR"></a>
+                        <hr>
                     <div id="main-container" style="width: 100%; overflow: auto; padding: 15px;">
 
                         <table style="width: 100%">
@@ -51,34 +69,33 @@
                             <tr>
                             <?php foreach($viewmodel['referentes'] as $ref) : ?>
                             <tr>
-                                <form  action="<?php echo ROOT_PATH; ?>proveedor/verProveedor" method="POST">
-                                    <td><input type="text" class="form-control" id="ereferente" name="ereferente" value="<?php echo $ref['nombre'] ?>"></td>
+                                <form  id="editarReferente<?php echo $ref["id"] ?>" action="<?php echo ROOT_PATH; ?>proveedor/editarReferente" method="POST">
+                                    <td><input type="text" class="form-control" id="ereferente<?php echo $ref["id"] ?>" name="ereferente" value="<?php echo $ref['nombre'] ?>"></td>
                                     <td><input type="text" class="form-control" id="etelefono" name="etelefono" value="<?php echo $ref['telefono'] ?>"></td>
                                     <td><input type="text" class="form-control" id="ecorreo" name="ecorreo" value="<?php echo $ref['email'] ?>"></td>
                                     <input type="hidden" name="id" id="id" value="<?php echo $viewmodel["id"] ?>">
                                     <input type="hidden" name="idReferente" id="idReferente" value="<?php echo $ref["id"] ?>">
                                     <input type="hidden" name="accion" id="accion" value="ediproveedor">
-                                    <td><button type="submit" class="btn btn-success"> ></button></td>
+                                    <td><input type="button" onclick="cartelModificarReferente(<?php echo $ref['id'] ?>);" class="btn btn-success" value=">"></td>
                                 </form>
                             </tr>
                                 <?php endforeach; ?>
-                                <form id="nform" action="<?php echo ROOT_PATH; ?>proveedor/verProveedor" method="POST">
-                                    <td><input type="text" class="form-control" id="nreferente" name="nreferente"></td>
-                                    <div id="nreferenteError"></div>
+                                <form id="nuevoReferente" action="<?php echo ROOT_PATH; ?>proveedor/agregarReferente" method="POST">
+                                    <td><input type="text" class="form-control" id="nreferente" name="nreferente">
+                                        <span style="position : static; width:100%; color:red" id="nreferenteError"></span>
+                                    </td>
+
                                     <td><input type="text" class="form-control" id="ncorreo" name="ncorreo"></td>
                                     <td><input type="text" class="form-control" id="ntelefono" name="ntelefono"></td>
                                     <td>
                                     
                                     <input type="hidden" name="id" id="id" value="<?php echo $viewmodel["id"] ?>">
-                                    <input type="hidden" name="accion" id="accion" value="newreferente">
-                                    <button type="submit" id="nuevo-ref" class = "btn btn-primary">+</button>
+                                    <input type="button" onclick="cartelAgregarReferente();" id="nuevo-ref" class = "btn btn-primary" value="+">
                                 </form>
                                 </td>
 
                             </tr> 
                             <tbody >
-
-
                 </div>
             </div>
         </div>
@@ -91,16 +108,15 @@
 ?>
 
 <script type="text/javascript">
-    document.getElementById("empresa").addEventListener("keyup", empresa_vacio);
-    document.getElementById("empresa").addEventListener("blur", empresa_vacio);
 
+    document.getElementById("nreferente").addEventListener("keyup", nreferente_vacio);
+    document.getElementById("nreferente").addEventListener("blur", nreferente_vacio);
 
-    
     function nreferente_vacio(){
         var nreferente = document.getElementById("nreferente").value;
         if(nreferente == null || nreferente.length == 0 || /^\s+$/.test(nreferente)){
             document.getElementById("nreferente").style.border = "1px solid red";
-            document.getElementById("nreferenteError").innerHTML = "El Rederente esta vacio";
+            document.getElementById("nreferenteError").innerHTML = "El referente es obligatorio";
             return false;
         }else{
             document.getElementById("nreferente").style.border = "1px solid green";
@@ -108,37 +124,81 @@
             return true;
         }
     }
-    ///no permitir enviar formulario id nform si hay errores en el campo nreferente o ncorreo o ntelefono
-    document.getElementById("nform").addEventListener("submit", function(event){
-        if(nreferente_vacio() == false){
-            event.preventDefault();
-        }
-    });
 
-
-
-
-    function empresa_vacio(){
+  
+function cartelModificarReferente(idReferente){
+    var nombre = document.getElementById('ereferente'+idReferente).value;
+    if(nombre == ""){
+        Swal.fire({
+         icon: 'error',
+         title: 'Nombre de la empresa vacio',
         
-        var nombre = document.getElementById('empresa');
-        
-        if(nombre.value == ""){
-            nombre.classList.add("is-invalid");
-            nombre.classList.remove("is-valid");
-            document.getElementById("empresaError").innerHTML = "El nombre de la empresa es obligatorio";
-        }
-        else{
-            nombre.classList.add("is-valid");
-            nombre.classList.remove("is-invalid");
-            document.getElementById("empresaError").innerHTML = "";
-        }
-}
-//no permitir enviar formulario si empresa esta vacio
-document.getElementById("editarProveedor").addEventListener("submit", function(event){
-    if(empresa_vacio() == false){
-        event.preventDefault();
+        });
+        return;
     }
-});
+    else{
+        Swal.fire({
+        title: 'Confirma el agregar referente?',
+        text: "",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'No, cancelar!',
+        confirmButtonText: 'Si, confirmar!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                //enviar formulario
+                document.getElementById("editarReferente"+idReferente).submit();
+            }else{
+                //crear mensaje de cancelado
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Cancelado',
+                    text: 'Aun no se agrega referente',
+                });
+            }
+        }
+        );
+    }
+}
+function cartelAgregarReferente(){
+    var nombre = document.getElementById('nreferente');
+    if(nreferente_vacio() == false){
+
+        Swal.fire({
+         icon: 'error',
+         title: 'Nombre de la empresa vacio',
+        
+        });
+        return;
+    }
+    else{
+        Swal.fire({
+        title: 'Confirma el agregar referente?',
+        text: "",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'No, cancelar!',
+        confirmButtonText: 'Si, confirmar!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                //enviar formulario
+                document.getElementById("nuevoReferente").submit();
+            }else{
+                //crear mensaje de cancelado
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Cancelado',
+                    text: 'Aun no se agrega referente',
+                });
+            }
+        }
+        );
+    }
+}
 
 </script>
 </body>

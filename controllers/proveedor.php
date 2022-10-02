@@ -14,28 +14,26 @@ class Proveedor extends Controller{
     protected function nuevoProveedor(){
         $this->returnView(null, true);
     }
+    protected function seleccionarProveedor(){
+        $viewmodel = new ProveedorModel();
+        $this->returnView($viewmodel->seleccionarProveedor(), true);
+    }   
 
     protected function verProveedor (){
-        $viewmodel = new ProveedorModel();
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        if(isset($post['accion']) && $post['accion'] != ''){
-            if($post['accion']=='newreferente'){
-            $viewmodel->agregarReferente();
-            
-            }else{
-                if($post['accion']=='ediproveedor'){
-                    $viewmodel->editarReferente();
-                }else{
-                    if($post['accion']=='editarProveedor'){
-                        $viewmodel->editarProveedor();
-                    }
-                }
-            }
-        }
         $viewmodel = new ProveedorModel();
         $this->returnView($viewmodel->verProveedor(), true);
     }
 
+    protected function editarProveedor(){
+        $viewmodel = new ProveedorModel();
+        $this->returnView($viewmodel->editarProveedor(), true);
+    }
+
+    protected function realizarEditadoProveedor(){
+        $viewmodel = new ProveedorModel();
+        $viewmodel->realizarEditadoProveedor();
+    }
+    
     protected function agregarReferente(){
         $viewmodel = new ProveedorModel();
         $viewmodel->agregarReferente();
@@ -45,6 +43,8 @@ class Proveedor extends Controller{
         $viewmodel = new ProveedorModel();
         $viewmodel->editarReferente();
     }
+
+
 
 
 

@@ -329,7 +329,7 @@
                         <input type="hidden" name="id" value="<?php echo $item['id'] ?>">
                         
                        <input type="submit" name="submit" value="Ver" style="background: #001d5a; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul"/>
-
+                        
                     </form>   
                                          
                     

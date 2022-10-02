@@ -13,7 +13,7 @@
 
 <script>
     $(document).ready(function() {
-    $('#example').DataTable( {
+    $('#listaProveedores').DataTable( {
         dom: 'Bfrtip',
         buttons: [
            
@@ -26,7 +26,7 @@
 
 <div id="main-container" style="width: 100%; overflow: auto; padding: 15px;">
 
-		<table id=""style="width: 100%">
+		<table id="listaProveedores"style="width: 100%">
         
 
 			<thead>
@@ -49,9 +49,9 @@
                 <td><?php echo $item['telefono'] ?></td>
                 <td><?php echo $item['email'] ?></td>
                 <td>
-                    <form action="<?php echo ROOT_PATH; ?>proveedor/verProveedor" method="POST">
+                    <form action="<?php echo ROOT_PATH; ?>proveedor/seleccionarProveedor" method="POST">
                         <input type="hidden" name="id" id="id" value="<?php echo $item['id']?>">
-                        <button type="submit" class = "btn btn-success">Ampliar</button>
+                        <input type="submit" name="submit" class = "btn btn-success" value="Ampliar">
                     </form>
                 </td>
 
