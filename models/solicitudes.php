@@ -319,6 +319,7 @@ if (isset($_POST['submit'])) {
             if($post['submit'] == "×"){
 
                 //echo $post['id1'];
+                /*
                 $_SESSION['solicitudActual'] = array(
                     "id"	=> $post['id'],
                     "SR"	=> $post['sr'],
@@ -337,7 +338,7 @@ if (isset($_POST['submit'])) {
                     "procedimiento"	=> $post['procedimiento'],
     
                 );
-
+*/
 
                     $this->query('DELETE FROM item WHERE id="'.$post['id1'].'"');
                     $this->execute();

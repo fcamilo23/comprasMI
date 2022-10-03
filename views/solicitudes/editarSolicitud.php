@@ -159,22 +159,21 @@
                                         
                                     foreach($_SESSION['items'] as $item) : ?>
                                     <tr class="tclass">
-                                    <form id="editarSoli" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
                                         <td>
-                                        <input style="display: none" class="form-control" type="text" name="id1" readonly value="<?php echo $item['id'] ?>">
+                                        <!--<input style="display:none" class="form-control" type="text" name="id1" readonly value="<?php echo $item['id'] ?>">-->
     
                                         <input  class="form-control" type="text" name="cant1" readonly value="<?php echo $item['cantidad'] ?>"></td>
                                         <td><input class="form-control" type="text" name="uni1" readonly value="<?php echo $item['unidad'] ?>"></td>
                                         <td><textarea class="form-control" rows="1" name="desc1" readonly type="text"><?php echo $item['descripcion'] ?></textarea></td>
-                                        <td><input type="button" style="color: white;" id=""  class="btn btnEliminar" onclick="alertDeleteItem()" value="×" <?php if(count($_SESSION['items']) <= 1){?> disabled <?php } ?>  ></input>
-                                        <input style="display: none" type="submit" id="delete" name="submit" class="btn btnEliminar" value="×"></input></td>
+                                        <td><input type="button" style="color: white;" id=""  class="btn btnEliminar" onclick="alertDeleteItem(<?php echo $item['id']; ?>)" value="×" <?php if(count($_SESSION['items']) <= 1){?> disabled <?php } ?>  ></input>
+                                        <input style="display:none" type="submit" id="delete" name="submit" class="btn btnEliminar" value="×"  <?php if(count($_SESSION['items']) <= 1){?> disabled <?php } ?>></input></td>
                                     
                                         
                                         
-                                        </form>
                                     </tr>
 
                                     <?php endforeach; } ?>
+                                    <input style="display:none" id="id1" name="id1" type="text" value="">
                                     
                                     
 
@@ -316,8 +315,10 @@ $('#editarSoli').on('keypress', 'input', function(event) {
 	});
 //-----------------------------------------------
 
-function alertDeleteItem(){
-    Swal.fire({
+function alertDeleteItem(id){
+    //e.preventDefault();
+
+     Swal.fire({
             title: 'Seguro que desea eliminar este ítem?',
             text: "Se efectuarán los cambios una vez confirme",
             icon: 'warning',
@@ -329,8 +330,13 @@ function alertDeleteItem(){
             }).then((result) => {
         if (result.isConfirmed) {
 
-            const myTimeout = setTimeout(deleteItem, 700);
+            document.getElementById('id1').value = id;
+            document.getElementById('delete').click();
 
+            //alert(id);
+            //document.getElementById('editarSoli').submit();
+
+            //form.submit();
 
             Swal.fire({
                 position: 'center',
@@ -342,9 +348,13 @@ function alertDeleteItem(){
                 })
 
           
+        }else{
+            return false;
         }
 })
 }
+
+
 
 
 function alertAddCambios(){
