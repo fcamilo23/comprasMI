@@ -19,9 +19,110 @@
 
 </script>
 <?php 
-
     $_SESSION['solicitudActual'] = $_SESSION['respaldoSolicitud'];
 ?>
+
+<?php
+
+
+        if(isset($_SESSION['alertEditarSoli'])){
+            ?> <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Perfecto!',
+                text: 'Se han efectuado los cambios',
+                showConfirmButton: false,
+                timer: 700
+                })
+                </script> <?php
+                unset($_SESSION['alertEditarSoli']);
+        }
+
+        if(isset($_SESSION['alertAddNovedad'])){ ?>
+
+            <script>
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Se ha agregado la novedad!',
+                    timer: 1500,
+                    showConfirmButton: false
+                })
+                
+            </script> 
+            <?php
+            unset($_SESSION['alertAddNovedad']);
+
+        }
+
+
+
+
+    if(isset($_SESSION['alertDeleteFile'])){ ?>
+
+           <script>
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Archivo eliminado!',
+                    timer: 1500,
+                    showConfirmButton: false
+                })
+                
+            </script> 
+            <?php
+            unset($_SESSION['alertDeleteFile']);
+
+        }
+
+
+
+
+        if(isset($_SESSION['alertAddFile'])){ 
+            
+            if($_SESSION['alertAddFile'] == '1'){ ?>
+
+            <script>
+                 Swal.fire({
+                     position: 'center',
+                     icon: 'success',
+                     title: 'Archivo subido!',
+                     timer: 1500,
+                     showConfirmButton: false
+                 })
+                 
+             </script> 
+             
+             <?php
+             }else{
+                ?>
+                <script>
+                 Swal.fire({
+                     position: 'center',
+                     icon: 'error',
+                     title: 'Ha ocurrido un error!',
+                     text: 'No ha sido posible subir este archivo ',
+                     showConfirmButton: true
+                 })
+
+
+                
+                 
+             </script> 
+
+                <?php
+             }  
+
+             unset($_SESSION['alertAddFile']);
+ 
+         }
+
+    
+    
+
+?>
+ <!---->
 <a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
 <a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaNovedad"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaNovedad.jpg" width="218px" height="48px" ></button></a>
 <a href="<?php echo ROOT_PATH; ?>orden/nuevaOrden"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOrden.jpg" width="190px" height="50px" ></button></a>
