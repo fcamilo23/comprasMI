@@ -194,7 +194,10 @@ if (isset($_POST['submit'])) {
             $this->query('INSERT INTO novedades(idSolicitud, texto, fecha) VALUES("'. $_SESSION['solicitudActual']['id'] .'","'. $post['texto'] .'", "'. $fecha. '")');
             $this->execute();
 
-            $_SESSION['alertAddNovedad'] = '1';
+            //$_SESSION['alertAddNovedad'] = '1';
+            $_SESSION['mensaje']['tipo'] = 'success';
+            $_SESSION['mensaje']['contenido'] = 'Perfecto! Se ha agregado la novedad';
+
             //agregarCartel
             header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
 
@@ -219,7 +222,10 @@ if (isset($_POST['submit'])) {
 
             if($post['submit'] == "Guardar Cambios"){
 
+                $this->query('SELECT * FROM solicitudescompra WHERE sr = "'. $post['sr'] .'" AND sr <> "'.$post['srActual'].'"');
+                $sr = $this->single();
 
+                if($sr == null){
                 $this->query('UPDATE solicitudescompra SET SR = :sr, planificado = :planificado, gastos_inversiones = :gastos_inversiones, grupoAS=:grupoAS, artServ=:artServ, detalle=:detalle, estado=:estado, oficinaSolicitante=:oficinaSolicitante, costoAprox=:costoAprox, referente=:referente, contactoReferente=:contactoReferente, observaciones=:observaciones, procedimiento=:procedimiento WHERE id=:id'); 
                 $this->bind(':sr', $post['sr']);
 				$this->bind(':planificado', $post['planificado']);
@@ -237,7 +243,9 @@ if (isset($_POST['submit'])) {
                 $this->bind(':id', $post['id']);
 
                 $this->execute();
-                $_SESSION['alertEditarSoli'] = '1';
+                //$_SESSION['alertEditarSoli'] = '1';
+                $_SESSION['mensaje']['tipo'] = 'success';
+                $_SESSION['mensaje']['contenido'] = 'Perfecto! Se han efectuado los cambios';
 
                 $_SESSION['solicitudActual'] = array(
                     "id"	=> $post['id'],
@@ -264,6 +272,9 @@ if (isset($_POST['submit'])) {
                 $_SESSION['items'] = $this->resultSet();
 
                 header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+            }else{
+                Messages::setMsg('Ya existe una solicitud con el SR ingresado', 'error');
+            }
 
             }
 
@@ -330,13 +341,14 @@ if (isset($_POST['submit'])) {
 
                     $this->query('DELETE FROM item WHERE id="'.$post['id1'].'"');
                     $this->execute();
+                   // echo $post['id1'];
 
                     
 
                     $this->query('SELECT * FROM item WHERE idSolicitud="'.$_SESSION['solicitudActual']['id'].'"');
                     $_SESSION['items'] = $this->resultSet();
 
-                    header('Location: '.ROOT_URL.'solicitudes/editarSolicitud#alerta');
+                    //header('Location: '.ROOT_URL.'solicitudes/editarSolicitud#alerta');
 
 
                 
@@ -424,6 +436,7 @@ if (isset($_POST['submit'])) {
 
                             $this->limpiarMemoria();
                             $_SESSION['alertaSolicitud'] = '1';
+                            
                         }
 
                         

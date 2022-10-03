@@ -10,6 +10,8 @@
 
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">SR</label>
         <input type="text" id="sr" name="sr" class="form-control" value="<?php echo $_SESSION['solicitudActual']['SR']; ?>" style="margin-top: 0px;" placeholder="Ingrese el SR"  >
+        <input type="text" id="srActual" name="srActual" class="form-control" value="<?php echo $_SESSION['solicitudActual']['SR']; ?>" style="display:none" placeholder="Ingrese el SR"  >
+
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Gastos e Inversiones</label>
         <select name="gastos_inversiones" class="form-control"  >
@@ -152,25 +154,28 @@
 
                                     </tr>
 
-
+                                    
                                     <?php if($_SESSION['items'] != NULL){ 
                                         
                                     foreach($_SESSION['items'] as $item) : ?>
                                     <tr class="tclass">
                                     <form id="editarSoli" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
-                                        <input style="display:none" class="form-control" type="text" name="id1" readonly value="<?php echo $item['id'] ?>">
-                                        <td><input  class="form-control" type="text" name="cant1" readonly value="<?php echo $item['cantidad'] ?>"></td>
+                                        <td>
+                                        <input style="display: none" class="form-control" type="text" name="id1" readonly value="<?php echo $item['id'] ?>">
+    
+                                        <input  class="form-control" type="text" name="cant1" readonly value="<?php echo $item['cantidad'] ?>"></td>
                                         <td><input class="form-control" type="text" name="uni1" readonly value="<?php echo $item['unidad'] ?>"></td>
                                         <td><textarea class="form-control" rows="1" name="desc1" readonly type="text"><?php echo $item['descripcion'] ?></textarea></td>
-                                        <td><input type="button" style="color: white;" id=""  class="btn btnEliminar" onclick="alertDeleteItem()" value="×" <?php if(count($_SESSION['items']) <= 1){?> disabled <?php } ?>  ></input></td>
-                                        <input style="display:none" type="submit" id="delete" name="submit" class="btn btnEliminar" value="×"></input>
-                                    </form>
+                                        <td><input type="button" style="color: white;" id=""  class="btn btnEliminar" onclick="alertDeleteItem()" value="×" <?php if(count($_SESSION['items']) <= 1){?> disabled <?php } ?>  ></input>
+                                        <input style="display: none" type="submit" id="delete" name="submit" class="btn btnEliminar" value="×"></input></td>
+                                    
                                         
                                         
-
+                                        </form>
                                     </tr>
 
                                     <?php endforeach; } ?>
+                                    
                                     
 
                             <tbody>

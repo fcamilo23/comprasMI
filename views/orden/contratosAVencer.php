@@ -173,15 +173,15 @@
         <div style="margin-top: 30px">
             <div style="display: inline-block; margin-right:50px">
                 <h2 style="margin-left: 15px; color: green; display: inline-block">■</h2>
-                <h4 style="display: inline-block; color: grey">   Vence en más de 3 meses</h4>
+                <h4 style="display: inline-block; color: grey">   Vence en más de 90 días</h4>
             </div>
             <div style="display: inline-block;  margin-right:50px">
                 <h2 style="margin-left: 15px; color: yellow; display: inline-block">■</h2>
-                <h4 style="display: inline-block; color: grey">   Vence en menos de 3 meses</h4>
+                <h4 style="display: inline-block; color: grey">   Vence en menos de 90 días</h4>
             </div>
             <div style="display: inline-block;">
                 <h2 style="margin-left: 15px; color: red; display: inline-block">■</h2>
-                <h4 style="display: inline-block; color: grey">   Vence en menos de 1 mes</h4>
+                <h4 style="display: inline-block; color: grey">   Vence en menos de 30 días</h4>
             </div>
         </div>
 	</div>

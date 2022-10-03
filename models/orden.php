@@ -154,6 +154,12 @@ public function verOrden(){
 
     public function comprasRealizadas(){
 
+        $this->query('SELECT * FROM ordenes');
+        $row = $this->resultSet();
+
+        $this->query('SELECT * FROM proveedores');
+        $_SESSION['proveedores'] = $this->resultSet();
+
 
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if(isset($post) && isset($post['submit'])){
@@ -162,13 +168,69 @@ public function verOrden(){
                 header('Location: '.ROOT_URL.'orden/verOrden');
 
             }
+
+
+            if($_POST['submit'] == 'Filtrar'){
+
+                $consulta = "SELECT * FROM ordenes WHERE ";
+    
+               /* if($post['fechaIni'] != "" && $post['fechaFin'] != "" ){
+                    if($post['fechaIni'] != $post['fechaFin']){
+                        $consulta = $consulta . "fechaHora BETWEEN '" . $post['fechaIni'] . "' AND '" . $post['fechaFin'] . "'";
+                    }else{
+                        $consulta = $consulta . "fechaHora LIKE '" . $post['fechaIni'] . "%'";
+                    }
+                    if($post['estado'] != '0' || $post['planificado'] != '0' || $post['procedimiento'] != '0' || $post['gastos_inversiones'] != '0'){$consulta .= " AND ";}
+                }
+    */
+               
+    
+                if($post['procedimiento'] != '0'){
+                    $consulta = $consulta . "procedimiento = '" . $post['procedimiento'] . "'";
+                    if($post['servicio'] != '0' ){$consulta .= " AND ";}
+    
+                }
+    
+                if($post['servicio'] != '0'){
+                    $consulta = $consulta . "servicio = '" . $post['servicio'] . "'";
+
+
+                    if($post['fechaIni'] != "" && $post['fechaFin'] != "" ){
+
+                        if($post['fechaIni'] == $post['fechaFin']){
+                            $consulta = $consulta . " AND fechaInicio LIKE '" . $post['fechaIni'] . "%'";
+                        }else{
+                            $consulta = $consulta . " AND fechaInicio BETWEEN '" . $post['fechaIni'] . "' AND '" . $post['fechaFin'] . "'";
+                        
+                        }
+
+
+                        if($post['fechaIni1'] != "" && $post['fechaFin1'] != ""){
+                            if($post['fechaIni1'] == $post['fechaFin1']){
+                                $consulta = $consulta . " AND fechaFin LIKE '" . $post['fechaIni1'] . "%'";
+                            }else{
+                                $consulta = $consulta . " AND fechaFin BETWEEN '" . $post['fechaIni1'] . "' AND '" . $post['fechaFin1'] . "'";
+                            }
+                           
+                        }
+                    }
+    
+                }
+                //echo $consulta;
+    
+               
+                if($consulta == "SELECT * FROM ordenes WHERE "){$consulta = "SELECT * FROM ordenes";}
+                $this->query($consulta);
+                $row = $this->resultSet();
+            }
+
+           
+            
         }
 
-        $this->query('SELECT * FROM ordenes');
-        $row = $this->resultSet();
+        
 
-        $this->query('SELECT * FROM proveedores');
-        $_SESSION['proveedores'] = $this->resultSet();
+        
 
 
         return $row;
