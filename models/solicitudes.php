@@ -386,8 +386,10 @@ if (isset($_POST['submit'])) {
                 $_SESSION['solicitud']['contactoReferente'] = $post['contactoReferente'];
                 $_SESSION['solicitud']['observaciones'] = $post['observaciones'];
                 $_SESSION['solicitud']['procedimiento'] = $post['procedimiento'];
+                $_SESSION['solicitud']['numProcedimiento'] = $post['numProcedimiento'];
+                $_SESSION['solicitud']['anioProcedimiento'] = $post['anioProcedimiento'];
 
-                if($post['gastos_inversiones'] != "0" && $post['planificado'] != "0" && $post['oficinaSolicitante'] != "0" && $post['grupoAS'] != "0" && $post['artServ'] != "" && $post['referente'] != "" && $post['contactoReferente'] != "" && $post['costo'] != ""){
+                if($post['gastos_inversiones'] != "0" && $post['planificado'] != "0" && $post['oficinaSolicitante'] != "0" && $post['grupoAS'] != "0" && $post['artServ'] != "" && $post['detalle'] != ""){
 
 
                 $this->query('SELECT * FROM solicitudescompra WHERE SR = "'. $post['sr'].'"');
@@ -407,8 +409,8 @@ if (isset($_POST['submit'])) {
                     if($_SESSION['items'] != NULL){
 
 
-                        $this->query('INSERT INTO solicitudescompra(`SR`, `planificado`, `gastos_inversiones`, `grupoAS`, `artServ`, `detalle`, `estado`, `oficinaSolicitante`, `fechaHora`, `costoAprox`, `referente`, `contactoReferente`, `observaciones`, `procedimiento`) 
-                        VALUES(:sr, :planificado, :gastos_inversiones, :grupoAS, :artServ, :detalle, :estado, :oficinaSolicitante, :fechaHora, :costoAprox, :referente, :contactoReferente, :observaciones, :procedimiento)');
+                        $this->query('INSERT INTO solicitudescompra(`SR`, `planificado`, `gastos_inversiones`, `grupoAS`, `artServ`, `detalle`, `estado`, `oficinaSolicitante`, `fechaHora`, `costoAprox`, `referente`, `contactoReferente`, `observaciones`, `procedimiento`, `numProc`, `anioProc`) 
+                        VALUES(:sr, :planificado, :gastos_inversiones, :grupoAS, :artServ, :detalle, :estado, :oficinaSolicitante, :fechaHora, :costoAprox, :referente, :contactoReferente, :observaciones, :procedimiento, :numProc, :anioProc)');
                         $this->bind(':sr', $post['sr']);
                         $this->bind(':planificado', $post['planificado']);
                         $this->bind(':gastos_inversiones', $post['gastos_inversiones']);
@@ -423,6 +425,9 @@ if (isset($_POST['submit'])) {
                         $this->bind(':contactoReferente', $post['contactoReferente']);
                         $this->bind(':observaciones', $post['observaciones']);
                         $this->bind(':procedimiento', $post['procedimiento']);
+                        $this->bind(':numProc', $post['numProcedimiento']);
+                        $this->bind(':anioProc', $post['anioProcedimiento']);
+
 
                         $this->execute();
 
@@ -482,6 +487,9 @@ if (isset($_POST['submit'])) {
                 $_SESSION['solicitud']['contactoReferente'] = $post['contactoReferente'];
                 $_SESSION['solicitud']['observaciones'] = $post['observaciones'];
                 $_SESSION['solicitud']['procedimiento'] = $post['procedimiento'];
+                $_SESSION['solicitud']['numProcedimiento'] = $post['numProcedimiento'];
+                $_SESSION['solicitud']['anioProcedimiento'] = $post['anioProcedimiento'];
+
 
                 
 
@@ -518,6 +526,7 @@ if (isset($_POST['submit'])) {
              }
 
              if($post['submit'] == "×"){
+                /*
                 $_SESSION['solicitud']['sr'] = $post['sr'];
                 $_SESSION['solicitud']['planificado'] = $post['planificado'];
                 $_SESSION['solicitud']['gastos_inversiones'] = $post['gastos_inversiones'];
@@ -531,6 +540,9 @@ if (isset($_POST['submit'])) {
                 $_SESSION['solicitud']['contactoReferente'] = $post['contactoReferente'];
                 $_SESSION['solicitud']['observaciones'] = $post['observaciones'];
                 $_SESSION['solicitud']['procedimiento'] = $post['procedimiento'];
+                $_SESSION['solicitud']['numProcedimiento'] = $post['numProcedimiento'];
+                $_SESSION['solicitud']['anioProcedimiento'] = $post['anioProcedimiento']; */
+
                 /*
                 $array = $_SESSION['items'];
                 array_splice($_SESSION['items'], $post['index'], 1, $array); 
@@ -545,8 +557,8 @@ if (isset($_POST['submit'])) {
            
             $this->query('SELECT * FROM oficinas');
             $row = $this->resultSet();
-            $this->query('SELECT * FROM oficinasolicitante');
-            $row['comprobarSR'] = $this->resultSet();
+            //$this->query('SELECT * FROM oficinasolicitante');
+            //$row['comprobarSR'] = $this->resultSet();
             return $row;
 
 

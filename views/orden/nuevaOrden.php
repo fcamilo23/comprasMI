@@ -418,7 +418,7 @@ function readAsBase64() {
 
 <script>
     Swal.fire({
-        title: 'Acceso denegado!',
+        title: '',
         text: "La solicitud de compra debe tener un SR para poder agregarle una orden de compra",
         icon: 'warning',
         showCancelButton: false,

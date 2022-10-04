@@ -24,12 +24,14 @@
 <div class="row col-12 center" style="background: white; width: 70%; padding: 40px; border: 1px solid rgba(220, 220, 220); border-radius: 5px; border-top: none; " >
     <div class="col-lg-6 center" >
         <form id="nuevaSolicitud" name="nuevaSolicitud" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
+        
+    <div style=" padding: 20 40;">
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">SR</label>
-        <input type="text" value="<?php if(isset($_SESSION['solicitud']['sr'])) {  echo $_SESSION['solicitud']['sr']; }?>"  name="sr" id="sr" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el SR (opcional)" >
+        <input type="text" value="<?php if(isset($_SESSION['solicitud']['sr'])) {  echo $_SESSION['solicitud']['sr']; }?>"  name="sr" id="sr" class="form-control" style="margin-top: 0px;"  >
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Gastos e Inversiones</label>
         <select name="gastos_inversiones" id="gastos_inversiones" class="form-control">
-                <option value="0" selected>Seleccione una opción</option>
+                <option value="0" selected>-</option>
                 <option <?php if(isset($_SESSION['solicitud']['gastos_inversiones'])){if($_SESSION['solicitud']['gastos_inversiones'] == "Bienes de Consumo") { ?> selected <?php }} ?> value="Bienes de Consumo" >Bienes de Consumo</option>
 				<option <?php if(isset($_SESSION['solicitud']['gastos_inversiones'])){if($_SESSION['solicitud']['gastos_inversiones'] == "Servicios No Personales") { ?> selected <?php }} ?> value="Servicios No Personales">Servicios No Personales</option>
 				<option <?php if(isset($_SESSION['solicitud']['gastos_inversiones'])){if($_SESSION['solicitud']['gastos_inversiones'] == "Bienes de Uso") { ?> selected <?php }} ?> value="Bienes de Uso">Bienes de Uso</option>
@@ -37,11 +39,14 @@
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Planificado</label>
         <select name="planificado" id="planificado" class="form-control">
-                <option value="0" selected>Seleccione una opción</option>
 				<option <?php if(isset($_SESSION['solicitud']['planificado'])){if($_SESSION['solicitud']['planificado'] == "Si") { ?> selected <?php }} ?> value="Si">Si</option>
 				<option <?php if(isset($_SESSION['solicitud']['planificado'])){if($_SESSION['solicitud']['planificado'] == "No") { ?> selected <?php }} ?> value="No">No</option>
 			</select> 
 
+        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
+        <input type="number" name="costo" id="costo" min="0"  value="<?php if(isset($_SESSION['solicitud']['costo'])) {  echo $_SESSION['solicitud']['costo']; }?>" class="form-control" style="margin-top: 0px;" placeholder="" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" > 
+    
+    </div>
         <!-- Por si hay que poner el procedimiento con numero y año como dijo Saul: Procedimiento|Numero|Año ---------------------------------------------------- 
         <label style="margin-top: 20px; color: rgb(130, 130, 130)">Procedimiento | Número | Año</label>
         <div class="input-group">
@@ -69,28 +74,15 @@
 
 
 
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Tipo de Procedimiento</label>
-        <!-- Todos estos if son para el momento de agregar items, que inevitablemente se recarga la pagina y con estos if conservamos los datos ya ingresados en el formulario -->
-        <select name="procedimiento"  class="form-control">
-                <option value="--- Aun no definido" >Aún no definido</option>
-				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "LP - Licitacion Publica"){?> selected <?php }} ?> value="LP - Licitación Pública">LP - Licitación Pública</option>
-				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "LA - Licitación Abreviada"){?> selected <?php }} ?> value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
-				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "CD - Compra Directa"){?> selected <?php }} ?> value="CD - Compra Directa">CD - Compra Directa</option>
-                <option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "CE - Compra por Excepción"){?> selected <?php }} ?> value="CE - Compra por Excepción">CE - Compra por Excepción</option>
-				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "CP - Concurso de Precios"){?> selected <?php }} ?> value="CP - Concurso de Precios">CP - Concurso de Precios</option>
-				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "PCE - Procedimientos de Contratación Especiales"){?> selected <?php }} ?> value="PCE - Procedimientos de Contratación Especiales">PCE - Procedimientos de Contratación Especiales</option>
-				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "ARR - Arrendamiento"){?> selected <?php }} ?> value="ARR - Arrendamiento">ARR - Arrendamiento</option>
-				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "CCH - Caja Chica"){?> selected <?php }} ?> value="CCH - Caja Chica">CCH - Caja Chica</option>
-
-			</select> 
+        
 
        
-
-        <label  style="margin-top: 45px; color: rgb(130, 130, 130)">Oficina Solicitante</label>
+    <div style="border-top: 1px solid rgb(200,200,200); padding: 40px; margin-top: 30px; padding-top: 40px">
+        <label  style=" color: rgb(130, 130, 130)">Oficina Solicitante</label>
 
             <select name="oficinaSolicitante" id="oficinaSolicitante" style="" class="form-control">
                 
-                <option value="0" selected>Seleccione una opción</option>
+                <option value="0" selected>-</option>
                 <?php
                 foreach($viewmodel as $item) : $oficina = $item['unidad'] . ' ' . $item['ue'];
                 ?>
@@ -98,13 +90,17 @@
                 <?php endforeach; ?>
             </select> 
 
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Referente</label>
-        <input type="text" name="referente" id="referente" value="<?php if(isset($_SESSION['solicitud']['referente'])) {  echo $_SESSION['solicitud']['referente']; }?>" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el nombre de un referente para esta solicitud"  >
+        <label  style="margin-top: 30px; color: rgb(130, 130, 130)">UO</label>
+        <input type="text" name="UO" id="UO" value="<?php if(isset($_SESSION['solicitud']['UO'])) {  echo $_SESSION['solicitud']['UO']; }?>" class="form-control" style="margin-top: 0px;"   >
 
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Contacto Referente</label>
-        <input type="text" name="contactoReferente" id="contactoReferente"  value="<?php if(isset($_SESSION['solicitud']['contactoReferente'])) {  echo $_SESSION['solicitud']['contactoReferente']; }?>" class="form-control" style="margin-top: 0px;" placeholder="Ingrese correo del referente"  >
+
+        <label  style="margin-top: 30px; color: rgb(130, 130, 130)">Referente</label>
+        <input type="text" name="referente" id="referente" value="<?php if(isset($_SESSION['solicitud']['referente'])) {  echo $_SESSION['solicitud']['referente']; }?>" class="form-control" style="margin-top: 0px;"   >
+
+        <label  style="margin-top: 30px; color: rgb(130, 130, 130)">Contacto Referente</label>
+        <input type="text" name="contactoReferente" id="contactoReferente"  value="<?php if(isset($_SESSION['solicitud']['contactoReferente'])) {  echo $_SESSION['solicitud']['contactoReferente']; }?>" class="form-control" style="margin-top: 0px;"   >
 				
-
+        </div>
 
 
     </div>
@@ -117,12 +113,11 @@
         <input style="width: 80%; border-left: 3px solid grey"type="text" name="unidad" class="form-control" style="margin-top: 0px;" required placeholder="Ingrese la unidad">
         </div>-->
 
-        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
-        <input type="number" name="costo" id="costo" min="0"  value="<?php if(isset($_SESSION['solicitud']['costo'])) {  echo $_SESSION['solicitud']['costo']; }?>" class="form-control" style="margin-top: 0px;" placeholder="Ingrese el costo estimado de la compra" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" > 
-
-        <label  id="pp" style="margin-top: 40px; color: rgb(130, 130, 130)">Grupos Art/Serv</label>
+        
+    <div style="padding: 20 40;">
+        <label  id="pp" style="margin-top: 20px; color: rgb(130, 130, 130)">Grupos Art/Serv</label>
         <select name="grupoAS" id="grupoAS" onchange="arts(this);" class="form-control">
-                <option value="0" selected>Seleccione una opción</option>
+                <option value="0" selected>-</option>
 				<option <?php if(isset($_SESSION['solicitud']['grupoAS'])){if($_SESSION['solicitud']['grupoAS'] == "Artículos y Accesorios de Informática"){?> selected <?php }} ?> value="Artículos y Accesorios de Informática" >Artículos y Accesorios de Informática</option>
                 <option <?php if(isset($_SESSION['solicitud']['grupoAS'])){if($_SESSION['solicitud']['grupoAS'] == "Teléfono y Similares"){?> selected <?php }} ?> value="Teléfono y Similares" >Teléfono y Similares</option>
 				<option <?php if(isset($_SESSION['solicitud']['grupoAS'])){if($_SESSION['solicitud']['grupoAS'] == "Arrendamiento de Equipos Computación (Cámara de Video Vigilancia)"){?> selected <?php }} ?> value="Arrendamiento de Equipos Computación (Cámara de Video Vigilancia)" >Arrendamiento de Equipos Computación (Cámara de Video Vigilancia)</option>
@@ -141,18 +136,45 @@
 
         </select>
         <input type="text" style="display:none"  name="inputas" value="<?php if(isset($_SESSION['solicitud']['inputas'])){ echo $_SESSION['solicitud']['inputas']; } ?>"  id="inputas">
-        
-       
+        </div>
+
+        <div style="border-top: 1px solid rgb(200,200,200); border-bottom: 1px solid rgb(200,200,200); padding: 50 40; margin-top: 20px">
+         <!--<label  style=" color: rgb(130, 130, 130); display: block">Tipo de Procedimiento                     Número           Año </label>-->
+         <label  style=" color: rgb(130, 130, 130); display: block">Tipo de Procedimiento                     Número           Año </label>
+
+        <!-- Todos estos if son para el momento de agregar items, que inevitablemente se recarga la pagina y con estos if conservamos los datos ya ingresados en el formulario -->
+        <select name="procedimiento" id="procedimiento"  class="form-control" style="width: 50%; display: inline-block" onchange="habilitarProcedimiento(this)">
+                <option value="--- Aun no definido" >Aún no definido</option>
+				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "LP - Licitacion Publica"){?> selected <?php }} ?> value="LP - Licitación Pública">LP - Licitación Pública</option>
+				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "LA - Licitación Abreviada"){?> selected <?php }} ?> value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
+				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "CD - Compra Directa"){?> selected <?php }} ?> value="CD - Compra Directa">CD - Compra Directa</option>
+                <option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "CE - Compra por Excepción"){?> selected <?php }} ?> value="CE - Compra por Excepción">CE - Compra por Excepción</option>
+				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "CP - Concurso de Precios"){?> selected <?php }} ?> value="CP - Concurso de Precios">CP - Concurso de Precios</option>
+				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "PCE - Procedimientos de Contratación Especiales"){?> selected <?php }} ?> value="PCE - Procedimientos de Contratación Especiales">PCE - Procedimientos de Contratación Especiales</option>
+				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "ARR - Arrendamiento"){?> selected <?php }} ?> value="ARR - Arrendamiento">ARR - Arrendamiento</option>
+				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "CCH - Caja Chica"){?> selected <?php }} ?> value="CCH - Caja Chica">CCH - Caja Chica</option>
+
+			</select> 
+            <input type="number" name="numProcedimiento" id="numProcedimiento" value="<?php if(isset($_SESSION['solicitud']['numProcedimiento'])) {  echo $_SESSION['solicitud']['numProcedimiento']; }?>" class="form-control" style="margin-top: 0px; width: 20%; display: inline-block" disabled  onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
+            <input type="number" name="anioProcedimiento" id="anioProcedimiento" value="<?php if(isset($_SESSION['solicitud']['anioProcedimiento'])) {  echo $_SESSION['solicitud']['anioProcedimiento']; }?>" class="form-control" style="margin-top: 0px; width: 28%; display: inline-block" disabled  onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
+    </div>
+
+    <div style="padding: 20 40;">
+
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Detalle</label>
-        <textarea class="form-control" name="detalle" cols="40" rows="5" style="margin-top: 0px;" placeholder="Ingrese un detalle aquí (opcional)"><?php if(isset($_SESSION['solicitud']['detalle'])) {  echo $_SESSION['solicitud']['detalle']; }?></textarea>
+        <textarea class="form-control" name="detalle" id="detalle" cols="40" rows="5" style="margin-top: 0px;" placeholder=""><?php if(isset($_SESSION['solicitud']['detalle'])) {  echo $_SESSION['solicitud']['detalle']; }?></textarea>
 
         <label  style="margin-top: 50px; color: rgb(130, 130, 130)">Observaciones</label>
-        <textarea class="form-control" name="observaciones" cols="40" rows="5" style="margin-top: 0px;" placeholder="Ingrese observaciones aquí (opcional)"><?php if(isset($_SESSION['solicitud']['observaciones'])) {  echo $_SESSION['solicitud']['observaciones']; }?></textarea>
+        <textarea class="form-control" name="observaciones" cols="40" rows="5" style="margin-top: 0px;" placeholder=""><?php if(isset($_SESSION['solicitud']['observaciones'])) {  echo $_SESSION['solicitud']['observaciones']; }?></textarea>
+    </div>
+    </div>
+
+    <div class="col-12" style="margin-top: 0px; border-top: 1px solid rgb(200,200,200)">
 
     </div>
 
-    <div style="display:none" class="col-12 center" style="text-align: center; margin-top: 100px">
+    <div style="display:none" class="col-12 center" style="text-align: center; ">
                                         <input type="submit" id="confirm" name="submit" class="btn btn-primary" value="Confirmar" style="width: 150px;"/>
     </div>
 
@@ -208,7 +230,7 @@
                         -->
 
 
-                        <h3 style="margin-top: 150px">Items</h3>
+                        <h3 style="margin-top: 100px">Items</h3>
                         <table style="background: #b4bacc">
                             <thead style="background: #172033">
                                 <tr>
@@ -341,6 +363,28 @@ input.addEventListener("keypress", function(event) {
 });
 
 //-----------------------------------------------
+$(document).ready(function(){
+    const p = document.querySelector("#procedimiento");
+
+    if(p.value != '--- Aun no definido'){
+        document.getElementById('numProcedimiento').disabled = false;
+        document.getElementById('anioProcedimiento').disabled = false;
+    }
+   
+
+});
+function habilitarProcedimiento(p){
+    if(p.value != '--- Aun no definido'){
+        document.getElementById('numProcedimiento').disabled = false;
+        document.getElementById('anioProcedimiento').disabled = false;
+    }else{
+        document.getElementById('numProcedimiento').value = "";
+        document.getElementById('anioProcedimiento').value = "";
+        document.getElementById('numProcedimiento').disabled = true;
+        document.getElementById('anioProcedimiento').disabled = true;
+    }
+}
+
 
 function mostrarConfirmacion(){
     const items = document.getElementById("index");
@@ -348,13 +392,11 @@ function mostrarConfirmacion(){
     const g = document.getElementById("gastos_inversiones");
     const p = document.getElementById("planificado");
     const o = document.getElementById("oficinaSolicitante");
-    const r = document.getElementById("referente");
-    const cr = document.getElementById("contactoReferente");
-    const c = document.getElementById("costo");
+    const d = document.getElementById("detalle");
     const gr = document.getElementById("grupoAS");
     const a = document.getElementById("artServ");
 
-    if(g.value != "0" && p.value != "0" && o.value != "0" && r.value != "" && cr.value != "" && c.value != "" && gr.value != "0" && a.value != "" && items != null){
+    if(g.value != "0" && p.value != "0" && o.value != "0" && d.value != "" && gr.value != "0" && a.value != "" && items != null){
         Swal.fire({
             title: 'Desea confirmar la solicitud de compra?',
             text: "",

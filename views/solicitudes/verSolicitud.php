@@ -183,10 +183,10 @@
 		</select> 
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Referente de Compra</label>
-        <input type="text" name="costo" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['referente'] ?>" required placeholder="Ingrese el referente" disabled>
+        <input type="text" name="costo" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['referente'] ?>" required placeholder="" disabled>
         
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Contacto Referente</label>
-        <input type="text" name="costo" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['contactoReferente'] ?>" required placeholder="Ingrese el correo del referente" disabled>
+        <input type="text" name="costo" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['contactoReferente'] ?>" required placeholder="" disabled>
         
 
         <label  style="margin-top: 40px; color: rgb(130, 130, 130); font-size:20px">Fecha de Emisión: <?php echo $_SESSION['solicitudActual']['fechaHora'] ?></label>
@@ -202,7 +202,7 @@
 
 
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
-        <input type="number" name="costo" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['costoAprox'] ?>" required placeholder="Ingrese el costo estimado de la compra" disabled>
+        <input type="number" name="costo" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['costoAprox'] ?>" required placeholder="0" disabled>
         
         
     
@@ -234,10 +234,10 @@
         <input type="text" name="oficinaSolicitante" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['oficinaSolicitante'] ?>" disabled>
 
         <label  style="margin-top: 30px; color: rgb(130, 130, 130)">Detalle</label>
-        <textarea class="form-control" name="detalle" cols="40" rows="5" style="margin-top: 0px;" placeholder="No hay detalles" disabled><?php echo $_SESSION['solicitudActual']['detalle'] ?></textarea>
+        <textarea class="form-control" name="detalle" cols="40" rows="5" style="margin-top: 0px;" placeholder="" disabled><?php echo $_SESSION['solicitudActual']['detalle'] ?></textarea>
 
         <label  style="margin-top: 30px; color: rgb(130, 130, 130)">Observaciones</label>
-        <textarea class="form-control" name="observaciones" cols="40" rows="5" style="margin-top: 0px;" value="" placeholder="No hay observaciones" disabled><?php echo $_SESSION['solicitudActual']['observaciones'] ?></textarea>
+        <textarea class="form-control" name="observaciones" cols="40" rows="5" style="margin-top: 0px;" value="" placeholder="" disabled><?php echo $_SESSION['solicitudActual']['observaciones'] ?></textarea>
 
        
     </div>
