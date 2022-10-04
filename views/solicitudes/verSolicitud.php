@@ -208,15 +208,15 @@
     
         <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Tipo de Procedimiento</label>
         <select name="procedimiento" class="form-control" disabled>
-                <option value="--- Aun no definido" selected>Aún no definido</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "LP - Licitación Pública"){?> selected <?php } ?> value="LP - Licitación Pública">LP - Licitación Pública</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "LA - Licitación Abreviada"){?> selected <?php } ?> value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CD - Compra Directa"){?> selected <?php } ?> value="CD - Compra Directa">CD - Compra Directa</option>
-                <option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CE - Compra por Excepción"){?> selected <?php } ?> value="CE - Compra por Excepción">CE - Compra por Excepción</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CP - Concurso de Precios"){?> selected <?php } ?> value="CP - Concurso de Precios">CP - Concurso de Precios</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "PCE - Procedimientos de Contratación Especiales"){?> selected <?php } ?> value="PCE - Procedimientos de Contratación Especiales">PCE - Procedimientos de Contratación Especiales</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "ARR - Arrendamiento"){?> selected <?php } ?> value="ARR - Arrendamiento">ARR - Arrendamiento</option>
-				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CCH - Caja Chica"){?> selected <?php } ?> value="CCH - Caja Chica">CCH - Caja Chica</option>
+                <option value="---" selected>Aún no definido</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "LP"){?> selected <?php } ?> value="LP">LP - Licitación Pública</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "LA"){?> selected <?php } ?> value="LA">LA - Licitación Abreviada</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CD"){?> selected <?php } ?> value="CD">CD - Compra Directa</option>
+                <option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CE"){?> selected <?php } ?> value="CE">CE - Compra por Excepción</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CP"){?> selected <?php } ?> value="CP">CP - Concurso de Precios</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "PCE"){?> selected <?php } ?> value="PCE">PCE - Procedimientos de Contratación Especiales</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "ARR"){?> selected <?php } ?> value="ARR">ARR - Arrendamiento</option>
+				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CCH"){?> selected <?php } ?> value="CCH">CCH - Caja Chica</option>
 
 			</select> 
 

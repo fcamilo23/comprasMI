@@ -120,15 +120,15 @@
         <label  style="margin-top: 15px; color: rgb(130, 130, 130)">Procedimiento</label>
             <select name="procedimiento"  class="form-control">
                 <option value="0" >Ninguno</option>
-                <option value="--- Aun no definido" >Aún no definido</option>
-				<option value="LP - Licitación Pública">LP - Licitación Pública</option>
-				<option value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
-				<option value="CD - Compra Directa">CD - Compra Directa</option>
-                <option value="CE - Compra por Excepción">CE - Compra por Excepción</option>
-				<option value="CP - Concurso de Precios">CP - Concurso de Precios</option>
-				<option value="PCE - Procedimientos de Contratación Especiales">PCE - Procedimientos de Contratación Especiales</option>
-				<option value="ARR - Arrendamiento">ARR - Arrendamiento</option>
-				<option value="CCH - Caja Chica">CCH - Caja Chica</option>
+                <option value="---" >Aún no definido</option>
+				<option value="LP">LP - Licitación Pública</option>
+				<option value="LA">LA - Licitación Abreviada</option>
+				<option value="CD">CD - Compra Directa</option>
+                <option value="CE">CE - Compra por Excepción</option>
+				<option value="CP">CP - Concurso de Precios</option>
+				<option value="PCE">PCE - Procedimientos de Contratación Especiales</option>
+				<option value="ARR">ARR - Arrendamiento</option>
+				<option value="CCH">CCH - Caja Chica</option>
 
 			</select> 
             
@@ -187,7 +187,7 @@
 			<tr ><?php foreach($viewmodel as $item) : ?>
                 <td><?php echo $item['id'] ?></td>
                 <td><?php echo $item['SR'] ?></td>
-                <td><?php echo substr($item['procedimiento'],0,3); ?></td>
+                <td><?php if($item['numProc'] != "0" && $item['anioProc'] != "0"){echo $item['procedimiento'] . " ". $item['numProc'] . "/" . $item['anioProc'];}else{ echo "---";} ?></td>
                 <td><?php echo $item['artServ'] ?></td>
                 <td><?php echo $item['grupoAS']; ?></td>
                 <td><?php echo $item['gastos_inversiones'] ?></td>

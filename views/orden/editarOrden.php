@@ -42,14 +42,14 @@
                             <label for="procedimiento" class="form-label">Tipo de Procedimiento</label>
                             <div class="input-group mb-3">
                                 <select id="procedimiento" name="procedimiento" class="form-control">
-                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "LP - Licitación Pública") { ?> selected <?php } ?> value="LP - Licitación Pública">LP - Licitación Pública</option>
-                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "LA - Licitación Abreviada") { ?> selected <?php } ?> value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
-                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "CD - Compra Directa") { ?> selected <?php } ?> value="CD - Compra Directa">CD - Compra Directa</option>
-                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "CE - Compra por Excepción") { ?> selected <?php } ?> value="CE - Compra por Excepción">CE - Compra por Excepción</option>
-                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "CP - Concurso de Precios") { ?> selected <?php } ?> value="CP - Concurso de Precios">CP - Concurso de Precios</option>
-                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "PCE - Procedimientos de Contratación Especiales") { ?> selected <?php } ?> value="PCE - Procedimientos de Contratación Especiales">PCE - Procedimientos de Contratación Especiales</option>
-                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "ARR - Arrendamiento") { ?> selected <?php } ?> value="ARR - Arrendamiento">ARR - Arrendamiento</option>
-                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "CCH - Caja Chica") { ?> selected <?php } ?> value="CCH - Caja Chica">CCH - Caja Chica</option>
+                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "LP") { ?> selected <?php } ?> value="LP">LP - Licitación Pública</option>
+                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "LA") { ?> selected <?php } ?> value="LA">LA - Licitación Abreviada</option>
+                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "CD") { ?> selected <?php } ?> value="CD">CD - Compra Directa</option>
+                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "CE") { ?> selected <?php } ?> value="CE">CE - Compra por Excepción</option>
+                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "CP") { ?> selected <?php } ?> value="CP">CP - Concurso de Precios</option>
+                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "PCE") { ?> selected <?php } ?> value="PCE">PCE - Procedimientos de Contratación Especiales</option>
+                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "ARR") { ?> selected <?php } ?> value="ARR">ARR - Arrendamiento</option>
+                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "CCH") { ?> selected <?php } ?> value="CCH">CCH - Caja Chica</option>
                                     </select> 
                             </div>
                             <br>

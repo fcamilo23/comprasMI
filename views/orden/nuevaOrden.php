@@ -127,14 +127,14 @@ function readAsBase64() {
                             <label for="procedimiento" style="margin-top: 50px" class="form-label">Tipo de Procedimiento</label>
                             <div class="input-group mb-3">
                                 <select id="procedimiento" name="procedimiento" class="form-control">
-                                        <option value="LP - Licitación Pública" selected>LP - Licitación Pública</option>
-                                        <option value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
-                                        <option value="CD - Compra Directa">CD - Compra Directa</option>
-                                        <option value="CE - Compra por Excepción">CE - Compra por Excepción</option>
-                                        <option value="CP - Concurso de Precios">CP - Concurso de Precios</option>
-                                        <option value="PCE - Procedimientos de Contratación Especiales">PCE - Procedimientos de Contratación Especiales</option>
-                                        <option value="ARR - Arrendamiento">ARR - Arrendamiento</option>
-                                        <option value="CCH - Caja Chica">CCH - Caja Chica</option>
+                                        <option value="LP" selected>LP - Licitación Pública</option>
+                                        <option value="LA">LA - Licitación Abreviada</option>
+                                        <option value="CD">CD - Compra Directa</option>
+                                        <option value="CE">CE - Compra por Excepción</option>
+                                        <option value="CP">CP - Concurso de Precios</option>
+                                        <option value="PCE">PCE - Procedimientos de Contratación Especiales</option>
+                                        <option value="ARR">ARR - Arrendamiento</option>
+                                        <option value="CCH">CCH - Caja Chica</option>
                                     </select> 
                             </div>
 

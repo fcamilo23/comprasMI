@@ -46,15 +46,15 @@
         <label  style="margin-top: 15px; color: rgb(130, 130, 130)">Procedimiento</label>
             <select name="procedimiento"  class="form-control">
                 <option value="0" >Ninguno</option>
-                <option value="--- Aun no definido" >Aún no definido</option>
-				<option value="LP - Licitación Pública">LP - Licitación Pública</option>
-				<option value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
-				<option value="CD - Compra Directa">CD - Compra Directa</option>
-                <option value="CE - Compra por Excepción">CE - Compra por Excepción</option>
-				<option value="CP - Concurso de Precios">CP - Concurso de Precios</option>
-				<option value="PCE - Procedimientos de Contratación Especiales">PCE - Procedimientos de Contratación Especiales</option>
-				<option value="ARR - Arrendamiento">ARR - Arrendamiento</option>
-				<option value="CCH - Caja Chica">CCH - Caja Chica</option>
+                <option value="---" >Aún no definido</option>
+				<option value="LP">LP - Licitación Pública</option>
+				<option value="LA">LA - Licitación Abreviada</option>
+				<option value="CD">CD - Compra Directa</option>
+                <option value="CE">CE - Compra por Excepción</option>
+				<option value="CP">CP - Concurso de Precios</option>
+				<option value="PCE">PCE - Procedimientos de Contratación Especiales</option>
+				<option value="ARR">ARR - Arrendamiento</option>
+				<option value="CCH">CCH - Caja Chica</option>
 
 			</select> 
             

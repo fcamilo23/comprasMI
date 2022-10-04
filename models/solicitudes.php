@@ -643,6 +643,9 @@ if (isset($_POST['submit'])) {
         unset($_SESSION['solicitud']['contactoReferente']);
         unset($_SESSION['solicitud']['observaciones']);
         unset($_SESSION['solicitud']['procedimiento']);
+        unset($_SESSION['solicitud']['numProcedimiento']);
+        unset($_SESSION['solicitud']['anioProcedimiento']);
+
 }
  
         

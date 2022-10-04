@@ -144,15 +144,15 @@
 
         <!-- Todos estos if son para el momento de agregar items, que inevitablemente se recarga la pagina y con estos if conservamos los datos ya ingresados en el formulario -->
         <select name="procedimiento" id="procedimiento"  class="form-control" style="width: 50%; display: inline-block" onchange="habilitarProcedimiento(this)">
-                <option value="--- Aun no definido" >Aún no definido</option>
-				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "LP - Licitacion Publica"){?> selected <?php }} ?> value="LP - Licitación Pública">LP - Licitación Pública</option>
-				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "LA - Licitación Abreviada"){?> selected <?php }} ?> value="LA - Licitación Abreviada">LA - Licitación Abreviada</option>
-				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "CD - Compra Directa"){?> selected <?php }} ?> value="CD - Compra Directa">CD - Compra Directa</option>
-                <option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "CE - Compra por Excepción"){?> selected <?php }} ?> value="CE - Compra por Excepción">CE - Compra por Excepción</option>
-				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "CP - Concurso de Precios"){?> selected <?php }} ?> value="CP - Concurso de Precios">CP - Concurso de Precios</option>
-				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "PCE - Procedimientos de Contratación Especiales"){?> selected <?php }} ?> value="PCE - Procedimientos de Contratación Especiales">PCE - Procedimientos de Contratación Especiales</option>
-				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "ARR - Arrendamiento"){?> selected <?php }} ?> value="ARR - Arrendamiento">ARR - Arrendamiento</option>
-				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "CCH - Caja Chica"){?> selected <?php }} ?> value="CCH - Caja Chica">CCH - Caja Chica</option>
+                <option value="---" >Aún no definido</option>
+				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "LP"){?> selected <?php }} ?> value="LP">LP - Licitación Pública</option>
+				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "LA"){?> selected <?php }} ?> value="LA">LA - Licitación Abreviada</option>
+				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "CD"){?> selected <?php }} ?> value="CD">CD - Compra Directa</option>
+                <option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "CE"){?> selected <?php }} ?> value="CE">CE - Compra por Excepción</option>
+				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "CP"){?> selected <?php }} ?> value="CP">CP - Concurso de Precios</option>
+				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "PCE"){?> selected <?php }} ?> value="PCE">PCE - Procedimientos de Contratación Especiales</option>
+				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "ARR"){?> selected <?php }} ?> value="ARR">ARR - Arrendamiento</option>
+				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "CCH"){?> selected <?php }} ?> value="CCH">CCH - Caja Chica</option>
 
 			</select> 
             <input type="number" name="numProcedimiento" id="numProcedimiento" value="<?php if(isset($_SESSION['solicitud']['numProcedimiento'])) {  echo $_SESSION['solicitud']['numProcedimiento']; }?>" class="form-control" style="margin-top: 0px; width: 20%; display: inline-block" disabled  onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
