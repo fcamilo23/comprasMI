@@ -671,13 +671,40 @@ section{
     border-radius: 5px;
     text-align: center;
 }
+
+
+.borderrightr{
+    border-right: 3px solid rgb(220,220,220);
+}
+
+.borderleftr{
+    border-left: 3px solid rgb(220,220,220);
+}
 @media (max-width: 550px){
     
    
 }
+
+@media (max-width: 1848px){
+
+    .borderrightr{
+        border-right: none;
+    }
+    
+    .borderleftr{
+        border-left: none;
+    }
+}
+
 @media (max-width: 1350px){
 
-
+    .borderright{
+        border-right: none;
+    }
+    
+    .borderright{
+        border-left: none;
+    }
     .center2{
         width: 500px;
         margin-left: -3%;

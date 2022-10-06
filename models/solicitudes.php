@@ -41,12 +41,16 @@ class SolicitudesModel extends Model{
                 "unidad"	=> $row['unidad'],
                 "estado"	=> $row['estado'],
                 "oficinaSolicitante"	=> $row['oficinaSolicitante'],
+                "uo"	=> $row['UO'],
                 "fechaHora"	=> $row['fechaHora'],
                 "costoAprox"	=> $row['costoAprox'],
                 "referente"	=> $row['referente'],
                 "contactoReferente"	=> $row['contactoReferente'],
                 "observaciones"	=> $row['observaciones'],
                 "procedimiento"	=> $row['procedimiento'],
+                "numProcedimiento"	=> $row['numProc'],
+                "anioProcedimiento"	=> $row['anioProc'],
+
 
             );
             $_SESSION['respaldoSolicitud'] = $_SESSION['solicitudActual'];
@@ -226,7 +230,7 @@ if (isset($_POST['submit'])) {
                 $sr = $this->single();
 
                 if($sr == null){
-                $this->query('UPDATE solicitudescompra SET SR = :sr, planificado = :planificado, gastos_inversiones = :gastos_inversiones, grupoAS=:grupoAS, artServ=:artServ, detalle=:detalle, estado=:estado, oficinaSolicitante=:oficinaSolicitante, costoAprox=:costoAprox, referente=:referente, contactoReferente=:contactoReferente, observaciones=:observaciones, procedimiento=:procedimiento WHERE id=:id'); 
+                $this->query('UPDATE solicitudescompra SET SR = :sr, planificado = :planificado, gastos_inversiones = :gastos_inversiones, grupoAS=:grupoAS, artServ=:artServ, detalle=:detalle, estado=:estado, oficinaSolicitante=:oficinaSolicitante, UO=:uo, costoAprox=:costoAprox, referente=:referente, contactoReferente=:contactoReferente, observaciones=:observaciones, procedimiento=:procedimiento, numProc=:numProcedimiento, anioProc=:anioProcedimiento WHERE id=:id'); 
                 $this->bind(':sr', $post['sr']);
 				$this->bind(':planificado', $post['planificado']);
                 $this->bind(':gastos_inversiones', $post['gastos_inversiones']);
@@ -235,11 +239,14 @@ if (isset($_POST['submit'])) {
 				$this->bind(':detalle', $post['detalle']);
 				$this->bind(':estado', $post['estado']);
 				$this->bind(':oficinaSolicitante', $post['oficinaSolicitante']);
+                $this->bind(':uo', $post['UO']);
 				$this->bind(':costoAprox', $post['costo']);
 				$this->bind(':referente', $post['referente']);
 				$this->bind(':contactoReferente', $post['contactoReferente']);
                 $this->bind(':observaciones', $post['observaciones']);
 				$this->bind(':procedimiento', $post['procedimiento']);
+                $this->bind(':numProcedimiento', $post['numProcedimiento']);
+				$this->bind(':anioProcedimiento', $post['anioProcedimiento']);
                 $this->bind(':id', $post['id']);
 
                 $this->execute();
@@ -257,12 +264,16 @@ if (isset($_POST['submit'])) {
                     "detalle"	=> $post['detalle'],
                     "estado"	=> $post['estado'],
                     "oficinaSolicitante"	=> $post['oficinaSolicitante'],
+                    "uo"	=> $post['UO'],
                     "fechaHora"	=> $post['fechaHora'],
                     "costoAprox"	=> $post['costo'],
                     "referente"	=> $post['referente'],
                     "contactoReferente"	=> $post['contactoReferente'],
                     "observaciones"	=> $post['observaciones'],
                     "procedimiento"	=> $post['procedimiento'],
+                    "numProcedimiento"	=> $post['numProcedimiento'],
+                    "anioProcedimiento"	=> $post['anioProcedimiento'],
+
     
                 );
 
@@ -289,12 +300,16 @@ if (isset($_POST['submit'])) {
                     "detalle"	=> $post['detalle'],
                     "estado"	=> $post['estado'],
                     "oficinaSolicitante"	=> $post['oficinaSolicitante'],
+                    "uo"	=> $post['UO'],
                     "fechaHora"	=> $post['fechaHora'],
                     "costoAprox"	=> $post['costo'],
                     "referente"	=> $post['referente'],
                     "contactoReferente"	=> $post['contactoReferente'],
                     "observaciones"	=> $post['observaciones'],
                     "procedimiento"	=> $post['procedimiento'],
+                    "numProcedimiento"	=> $post['numProcedimiento'],
+                    "anioProcedimiento"	=> $post['anioProcedimiento'],
+
     
                 );
 
@@ -313,7 +328,7 @@ if (isset($_POST['submit'])) {
                     
                 array_push($_SESSION['items'], $e); 
 
-                header('Location: '.ROOT_URL.'solicitudes/editarSolicitud#alerta');
+                header('Location: '.ROOT_URL.'solicitudes/editarSolicitud#add');
             }
 
             if($post['submit'] == "×"){
@@ -349,7 +364,7 @@ if (isset($_POST['submit'])) {
                     $this->query('SELECT * FROM item WHERE idSolicitud="'.$_SESSION['solicitudActual']['id'].'"');
                     $_SESSION['items'] = $this->resultSet();
 
-                    //header('Location: '.ROOT_URL.'solicitudes/editarSolicitud#alerta');
+                    header('Location: '.ROOT_URL.'solicitudes/editarSolicitud#add');
 
 
                 
@@ -381,6 +396,7 @@ if (isset($_POST['submit'])) {
                 $_SESSION['solicitud']['inputas'] = $post['inputas'];
                 $_SESSION['solicitud']['detalle'] = $post['detalle'];
                 $_SESSION['solicitud']['oficinaSolicitante'] = $post['oficinaSolicitante'];
+                $_SESSION['solicitud']['uo'] = $post['uo'];
                 $_SESSION['solicitud']['costo'] = $post['costo'];
                 $_SESSION['solicitud']['referente'] = $post['referente'];
                 $_SESSION['solicitud']['contactoReferente'] = $post['contactoReferente'];
@@ -409,8 +425,8 @@ if (isset($_POST['submit'])) {
                     if($_SESSION['items'] != NULL){
 
 
-                        $this->query('INSERT INTO solicitudescompra(`SR`, `planificado`, `gastos_inversiones`, `grupoAS`, `artServ`, `detalle`, `estado`, `oficinaSolicitante`, `fechaHora`, `costoAprox`, `referente`, `contactoReferente`, `observaciones`, `procedimiento`, `numProc`, `anioProc`) 
-                        VALUES(:sr, :planificado, :gastos_inversiones, :grupoAS, :artServ, :detalle, :estado, :oficinaSolicitante, :fechaHora, :costoAprox, :referente, :contactoReferente, :observaciones, :procedimiento, :numProc, :anioProc)');
+                        $this->query('INSERT INTO solicitudescompra(`SR`, `planificado`, `gastos_inversiones`, `grupoAS`, `artServ`, `detalle`, `estado`, `oficinaSolicitante`, `UO`, `fechaHora`, `costoAprox`, `referente`, `contactoReferente`, `observaciones`, `procedimiento`, `numProc`, `anioProc`) 
+                        VALUES(:sr, :planificado, :gastos_inversiones, :grupoAS, :artServ, :detalle, :estado, :oficinaSolicitante, :uo, :fechaHora, :costoAprox, :referente, :contactoReferente, :observaciones, :procedimiento, :numProc, :anioProc)');
                         $this->bind(':sr', $post['sr']);
                         $this->bind(':planificado', $post['planificado']);
                         $this->bind(':gastos_inversiones', $post['gastos_inversiones']);
@@ -419,6 +435,7 @@ if (isset($_POST['submit'])) {
                         $this->bind(':detalle', $post['detalle']);
                         $this->bind(':estado', 'Pendiente');
                         $this->bind(':oficinaSolicitante', $post['oficinaSolicitante']);
+                        $this->bind(':uo', $post['uo']);
                         $this->bind(':fechaHora', $fecha);
                         $this->bind(':costoAprox', $post['costo']);
                         $this->bind(':referente', $post['referente']);
@@ -482,6 +499,7 @@ if (isset($_POST['submit'])) {
                 $_SESSION['solicitud']['inputas'] = $post['inputas'];
                 $_SESSION['solicitud']['detalle'] = $post['detalle'];
                 $_SESSION['solicitud']['oficinaSolicitante'] = $post['oficinaSolicitante'];
+                $_SESSION['solicitud']['uo'] = $post['uo'];
                 $_SESSION['solicitud']['costo'] = $post['costo'];
                 $_SESSION['solicitud']['referente'] = $post['referente'];
                 $_SESSION['solicitud']['contactoReferente'] = $post['contactoReferente'];
@@ -638,6 +656,7 @@ if (isset($_POST['submit'])) {
         unset($_SESSION['solicitud']['inputas']);
         unset($_SESSION['solicitud']['detalle']);
         unset($_SESSION['solicitud']['oficinaSolicitante']);
+        unset($_SESSION['solicitud']['uo']);
         unset($_SESSION['solicitud']['costo']);
         unset($_SESSION['solicitud']['referente']);
         unset($_SESSION['solicitud']['contactoReferente']);

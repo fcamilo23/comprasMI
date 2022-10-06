@@ -6,72 +6,75 @@
 
         <input type="number" id="id" name="id" class="form-control" value="<?php echo $_SESSION['solicitudActual']['id']; ?>" style="margin-top: 0px; display:none" placeholder=""   >
 
+        
 
+
+        <div style="padding: 20 40; background: rgb(239,239,239); border-radius: 5px; margin-top: 30px">
 
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">SR</label>
         <input type="text" id="sr" name="sr" class="form-control" value="<?php echo $_SESSION['solicitudActual']['SR']; ?>" style="margin-top: 0px;" placeholder=""  >
         <input type="text" id="srActual" name="srActual" class="form-control" value="<?php echo $_SESSION['solicitudActual']['SR']; ?>" style="display:none" placeholder=""  >
 
 
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Gastos e Inversiones</label>
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Gastos e Inversiones</label>
         <select name="gastos_inversiones" class="form-control"  >
 				<option <?php if ($_SESSION['solicitudActual']['gastos_inversiones'] == "Bienes de Consumo"){?> selected <?php } ?> value="Bienes de Consumo">Bienes de Consumo</option>
 				<option <?php if ($_SESSION['solicitudActual']['gastos_inversiones'] == "Servicios No Personales"){?> selected <?php } ?> value="Servicios No Personales">Servicios No Personales</option>
 				<option <?php if ($_SESSION['solicitudActual']['gastos_inversiones'] == "Bienes de Uso"){?> selected <?php } ?> value="Bienes de Uso">Bienes de Uso</option>
 			</select> 
 
-   
-
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Grupos Art/Serv</label>
-        <!--
-        <select name="grupoAS" class="form-control" readonly >
-				<option <?php if ($_SESSION['solicitudActual']['grupoAS'] == "Artículos y Accesorios de Informática"){?> selected <?php } ?> value="Artículos y Accesorios de Informática" selected>Artículos y Accesorios de Informática</option>
-                <option <?php if ($_SESSION['solicitudActual']['grupoAS'] == "Teléfono y Similares"){?> selected <?php } ?> value="Teléfono y Similares" >Teléfono y Similares</option>
-				<option <?php if ($_SESSION['solicitudActual']['grupoAS'] == "Arrendamiento de Equipos Computación (Cámara de Video Vigilancia)"){?> selected <?php } ?> value="Arrendamiento de Equipos Computación (Cámara de Video Vigilancia)" >Arrendamiento de Equipos Computación (Cámara de Video Vigilancia)</option>
-				<option <?php if ($_SESSION['solicitudActual']['grupoAS'] == "Arrendamiento Dispositivos Electrónicos (Tobilleras)"){?> selected <?php } ?> value="Arrendamiento Dispositivos Electrónicos (Tobilleras)" >Arrendamiento Dispositivos Electrónicos (Tobilleras)</option>
-				<option <?php if ($_SESSION['solicitudActual']['grupoAS'] == "Servicios informáticos"){?> selected <?php } ?> value="Servicios informáticos" >Servicios informáticos</option>
-				<option <?php if ($_SESSION['solicitudActual']['grupoAS'] == "Equipos de Informática"){?> selected <?php } ?> value="Equipos de Informática" >Equipos de Informática</option>
-				<option <?php if ($_SESSION['solicitudActual']['grupoAS'] == "Equipos de Comunicaciones"){?> selected <?php } ?> value="Equipos de Comunicaciones" >Equipos de Comunicaciones</option>
-				<option <?php if ($_SESSION['solicitudActual']['grupoAS'] == "Programas de Computación"){?> selected <?php } ?> value="Programas de Computación" >Programas de Computación</option>
+            <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Planificado</label>
+            <select name="planificado" class="form-control">
+				<option <?php if ($_SESSION['solicitudActual']['planificado'] == "Si"){?> selected <?php } ?> value="Si" selected>Si</option>
+				<option <?php if ($_SESSION['solicitudActual']['planificado'] == "No"){?> selected <?php } ?> value="No">No</option>
+			</select> 
 
 
-			</select> -->
-
-        <input type="text" name="grupoAS" class="form-control"  value="<?php echo $_SESSION['solicitudActual']['grupoAS'] ?>" required readonly >
-
-
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Art/Serv</label>
-        <input type="text" name="artServ" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['artServ'] ?>" required readonly placeholder="Ingrese el artículo/servicio" >
+            <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Costo Estimado ($U) *</label>
+            <input type="number" name="costo" id="costo" class="form-control" style="margin-top: 0px;" placeholder="0" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"  value="<?php echo $_SESSION['solicitudActual']['costoAprox'] ?>"   >
+        </div>
 
 
- 
+
+    <div style="padding: 20 40; background: rgb(239,239,239); border-radius: 5px; margin-top: 30px">
 
 
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Estado</label>
-        <select name="estado" class="form-control" >
-            <option <?php if ($_SESSION['solicitudActual']['estado'] == "Pendiente"){?> selected <?php } ?> value="Pendiente" >Pendiente</option>
-            <option <?php if ($_SESSION['solicitudActual']['estado'] == "Solicitada"){?> selected <?php } ?> value="Solicitada" >Solicitada</option>
-            <option <?php if ($_SESSION['solicitudActual']['estado'] == "Publicada"){?> selected <?php } ?> value="Publicada" >Publicada</option>
-            <option <?php if ($_SESSION['solicitudActual']['estado'] == "Informe Técnico"){?> selected <?php } ?> value="Informe Técnico" >Informe Técnico</option>
-            <option <?php if ($_SESSION['solicitudActual']['estado'] == "Adjudicada"){?> selected <?php } ?> value="Adjudicada" >Adjudicada</option>
-            <option <?php if ($_SESSION['solicitudActual']['estado'] == "Entregada Parcial"){?> selected <?php } ?> value="Entregada Parcial" >Entregada Parcial</option>
-            <option <?php if ($_SESSION['solicitudActual']['estado'] == "Entregada Total"){?> selected <?php } ?> value="Entregada Total" >Entregada Total</option>
-            <option <?php if ($_SESSION['solicitudActual']['estado'] == "Facturada"){?> selected <?php } ?> value="Facturada" >Facturada</option>
-            <option <?php if ($_SESSION['solicitudActual']['estado'] == "Cancelada"){?> selected <?php } ?> value="Cancelada" >Cancelada</option>
-            <option <?php if ($_SESSION['solicitudActual']['estado'] == "En Espera"){?> selected <?php } ?> value="En Espera" >En Espera</option>
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Oficina Solicitante</label>
+        <select name="oficinaSolicitante" style="" class="form-control">
+            
+            <?php foreach($viewmodel as $item) : ?>
+            <option <?php $ofi = $item['unidad'] . ' ' . $item['ue']; if($_SESSION['solicitudActual']['oficinaSolicitante'] == $ofi){ ?> selected <?php } ?>value="<?php echo $ofi ?>" ><?php echo $ofi ?></option>
+            <?php endforeach; ?>
+        </select> 
 
-		</select> 
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">UO</label>
+        <input type="text" name="UO" id="UO" value="<?php echo $_SESSION['solicitudActual']['uo'] ?>" class="form-control" style="margin-top: 0px;"   >
 
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Referente de Compra *</label>
+
+
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Referente de Compra *</label>
         <input type="text" name="referente" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['referente'] ?>"  >
         
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Contacto Referente *</label>
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Contacto Referente *</label>
         <input type="text" name="contactoReferente" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['contactoReferente'] ?>"  >
-        
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130); font-size:20px">Fecha de Emisión: <?php echo $_SESSION['solicitudActual']['fechaHora'] ?></label>
-        <input type="text" name="fechaHora" class="form-control" style="margin-top: 0px; display:none" value="<?php echo $_SESSION['solicitudActual']['fechaHora'] ?>"  >
+
+
+        </div>
+
+
+
+
+        <div style="padding: 31 40; background: rgb(239,239,239); border-radius: 5px; margin-top: 30px">
+
+            <label style="margin-top: 0px; color: rgb(130, 130, 130); font-size:20px; ">Fecha de Emisión: <?php echo $_SESSION['solicitudActual']['fechaHora'] ?></label>
+            <input type="text" name="fechaHora" class="form-control" style="margin-top: 0px; display:none" value="<?php echo $_SESSION['solicitudActual']['fechaHora'] ?>"  >
+        </div>
         
 
+
+       
+       
+        
 
     </div>
     <div class="col-lg-6 center">
@@ -79,14 +82,19 @@
         <input type="number" name="cantidad" min="1" value="<?php echo $_SESSION['solicitudActual']['cantidad'] ?>" class="form-control" style="margin-top: 0px;" required placeholder="Ingrese la cantidad" >
         -->
         
+        <div style="padding: 20 40; background: rgb(239,239,239); border-radius: 5px; margin-top: 30px">
 
+            <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Grupos Art/Serv</label>
+            <input type="text" name="grupoAS" class="form-control"  value="<?php echo $_SESSION['solicitudActual']['grupoAS'] ?>" required readonly >
 
+            <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Art/Serv</label>
+            <input type="text" name="artServ" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['artServ'] ?>" required readonly placeholder="Ingrese el artículo/servicio" >
+        </div>
+ 
 
-        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Costo Estimado ($U) *</label>
-        <input type="number" name="costo" id="costo" class="form-control" style="margin-top: 0px;" placeholder="0" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"  value="<?php echo $_SESSION['solicitudActual']['costoAprox'] ?>"   >
-        
+        <!--<div style="padding: 20 40; background: rgb(239,239,239); border-radius: 5px; margin-top: 30px">
 
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Tipo de Procedimiento</label>
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Tipo de Procedimiento</label>
         <select name="procedimiento" class="form-control" >
                 <option value="---" selected>Aún no definido</option>
 				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "LP"){?> selected <?php } ?> value="LP">LP - Licitación Pública</option>
@@ -99,37 +107,96 @@
 				<option <?php if ($_SESSION['solicitudActual']['procedimiento'] == "CCH"){?> selected <?php } ?> value="CCH">CCH - Caja Chica</option>
 
 			</select> 
+        </div>-->
+
+        <div style="padding: 35 40; margin-top: 20px;  background: rgb(239,239,239); border-radius: 5px">
+         <label  style=" color: rgb(130, 130, 130); display: block">Tipo de Procedimiento                     Número           Año </label>
+
+        <!-- Todos estos if son para el momento de agregar items, que inevitablemente se recarga la pagina y con estos if conservamos los datos ya ingresados en el formulario -->
+        <select name="procedimiento" id="procedimiento"  class="form-control" style="width: 50%; display: inline-block" onchange="habilitarProcedimiento(this)">
+                <option value="---" >Aún no definido</option>
+				<option <?php if(isset($_SESSION['solicitudActual']['procedimiento'])){if($_SESSION['solicitudActual']['procedimiento'] == "LP"){?> selected <?php }} ?> value="LP">LP - Licitación Pública</option>
+				<option <?php if(isset($_SESSION['solicitudActual']['procedimiento'])){if($_SESSION['solicitudActual']['procedimiento'] == "LA"){?> selected <?php }} ?> value="LA">LA - Licitación Abreviada</option>
+				<option <?php if(isset($_SESSION['solicitudActual']['procedimiento'])){if($_SESSION['solicitudActual']['procedimiento'] == "CD"){?> selected <?php }} ?> value="CD">CD - Compra Directa</option>
+                <option <?php if(isset($_SESSION['solicitudActual']['procedimiento'])){if($_SESSION['solicitudActual']['procedimiento'] == "CE"){?> selected <?php }} ?> value="CE">CE - Compra por Excepción</option>
+				<option <?php if(isset($_SESSION['solicitudActual']['procedimiento'])){if($_SESSION['solicitudActual']['procedimiento'] == "CP"){?> selected <?php }} ?> value="CP">CP - Concurso de Precios</option>
+				<option <?php if(isset($_SESSION['solicitudActual']['procedimiento'])){if($_SESSION['solicitudActual']['procedimiento'] == "PCE"){?> selected <?php }} ?> value="PCE">PCE - Procedimientos de Contratación Especiales</option>
+				<option <?php if(isset($_SESSION['solicitudActual']['procedimiento'])){if($_SESSION['solicitudActual']['procedimiento'] == "ARR"){?> selected <?php }} ?> value="ARR">ARR - Arrendamiento</option>
+				<option <?php if(isset($_SESSION['solicitudActual']['procedimiento'])){if($_SESSION['solicitudActual']['procedimiento'] == "CCH"){?> selected <?php }} ?> value="CCH">CCH - Caja Chica</option>
+
+			</select> 
+           
+
+            <input type="number" name="numProcedimiento" id="numProcedimiento" value="<?php if(isset($_SESSION['solicitudActual']['numProcedimiento'])) {  echo $_SESSION['solicitudActual']['numProcedimiento']; }?>"   class="form-control" style="margin-top: 0px; width: 20%; display: inline-block"   onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
+            <input type="number" name="anioProcedimiento" id="anioProcedimiento" value="<?php if(isset($_SESSION['solicitudActual']['anioProcedimiento'])) {  echo $_SESSION['solicitudActual']['anioProcedimiento']; }?>"  class="form-control" style="margin-top: 0px; width: 28%; display: inline-block"   onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
+        </div>
+
 
 
         
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Planificado</label>
-        <select name="planificado" class="form-control">
-				<option <?php if ($_SESSION['solicitudActual']['planificado'] == "Si"){?> selected <?php } ?> value="Si" selected>Si</option>
-				<option <?php if ($_SESSION['solicitudActual']['planificado'] == "No"){?> selected <?php } ?> value="No">No</option>
-			</select> 
-
-
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Oficina Solicitante</label>
-        <select name="oficinaSolicitante" style="" class="form-control">
-                
-                <?php foreach($viewmodel as $item) : ?>
-                <option <?php $ofi = $item['unidad'] . ' ' . $item['ue']; if($_SESSION['solicitudActual']['oficinaSolicitante'] == $ofi){ ?> selected <?php } ?>value="<?php echo $ofi ?>" ><?php echo $ofi ?></option>
-                <?php endforeach; ?>
-            </select> 
-
-        <label  style="margin-top: 30px; color: rgb(130, 130, 130)">Detalle</label>
-        <textarea class="form-control" name="detalle" cols="40" rows="5" style="margin-top: 0px;" placeholder="Ingrese un detalle aquí" required><?php echo $_SESSION['solicitudActual']['detalle'] ?> </textarea>
-
-        <label  style="margin-top: 30px; color: rgb(130, 130, 130)">Observaciones</label>
-        <textarea class="form-control" name="observaciones" cols="40" rows="5" style="margin-top: 0px;" value="" placeholder="Ingrese observaciones aquí" ><?php echo $_SESSION['solicitudActual']['observaciones'] ?></textarea>
-
        
+        <div style="padding: 20 40; background: rgb(239,239,239); border-radius: 5px; margin-top: 30px">
+
+            <label  style="margin-top: 5px; color: rgb(130, 130, 130)">Detalle</label>
+            <textarea class="form-control" name="detalle" cols="40" rows="5" style="margin-top: 0px;" placeholder="Ingrese un detalle aquí" required><?php echo $_SESSION['solicitudActual']['detalle'] ?> </textarea>
+
+            <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Observaciones</label>
+            <textarea class="form-control" name="observaciones" cols="40" rows="5" style="margin-top: 0px;" value="" placeholder="Ingrese observaciones aquí" ><?php echo $_SESSION['solicitudActual']['observaciones'] ?></textarea>
+        </div>
+
+        <div style="padding: 15 40; background: rgb(239,239,239); border-radius: 5px; margin-top: 30px">
+
+            <label  style="margin-top: 0px; color: rgb(130, 130, 130)">Estado</label>
+            <select name="estado" class="form-control" style="" >
+                <option <?php if ($_SESSION['solicitudActual']['estado'] == "Pendiente"){?> selected <?php } ?> value="Pendiente" >Pendiente</option>
+                <option <?php if ($_SESSION['solicitudActual']['estado'] == "Solicitada"){?> selected <?php } ?> value="Solicitada" >Solicitada</option>
+                <option <?php if ($_SESSION['solicitudActual']['estado'] == "Publicada"){?> selected <?php } ?> value="Publicada" >Publicada</option>
+                <option <?php if ($_SESSION['solicitudActual']['estado'] == "Informe Técnico"){?> selected <?php } ?> value="Informe Técnico" >Informe Técnico</option>
+                <option <?php if ($_SESSION['solicitudActual']['estado'] == "Adjudicada"){?> selected <?php } ?> value="Adjudicada" >Adjudicada</option>
+                <option <?php if ($_SESSION['solicitudActual']['estado'] == "Entregada Parcial"){?> selected <?php } ?> value="Entregada Parcial" >Entregada Parcial</option>
+                <option <?php if ($_SESSION['solicitudActual']['estado'] == "Entregada Total"){?> selected <?php } ?> value="Entregada Total" >Entregada Total</option>
+                <option <?php if ($_SESSION['solicitudActual']['estado'] == "Facturada"){?> selected <?php } ?> value="Facturada" >Facturada</option>
+                <option <?php if ($_SESSION['solicitudActual']['estado'] == "Cancelada"){?> selected <?php } ?> value="Cancelada" >Cancelada</option>
+                <option <?php if ($_SESSION['solicitudActual']['estado'] == "En Espera"){?> selected <?php } ?> value="En Espera" >En Espera</option>
+
+            </select> 
+            </div>
+        
     </div>
     <div class="col-12 center" style="text-align: center; margin-top: 60px">
         <input type="submit" id="guardar" name="submit" class="btn btn-primary" value="Guardar Cambios" style="display: none; width: 150px;"/> 
         <input type="button" id="alertCambios" name="submit" class="btn btn-primary" value="Guardar Cambios" style="width: 150px;" onclick="alertAddCambios()" /> 
 
     </div>
+
+
+
+    
+<?php 
+    if(!isset($_SESSION['solicitudActual']['procedimiento'])){
+        ?>
+                <script>
+                    document.getElementById('numProcedimiento').readOnly = true;
+                    document.getElementById('anioProcedimiento').readOnly = true;
+
+                </script>
+            <?php
+    }else{
+        if($_SESSION['solicitudActual']['procedimiento'] == '---'){
+            ?>
+                <script>
+                    document.getElementById('numProcedimiento').readOnly = true;
+                    document.getElementById('anioProcedimiento').readOnly = true;
+
+                </script>
+            <?php
+
+        }
+    }
+      
+
+?>
+
 
     <h3 style="margin-top: 100px">Items</h3>
                         <table style="background: #b4bacc">
@@ -314,6 +381,45 @@ $('#editarSoli').on('keypress', 'input', function(event) {
 		}
 	});
 //-----------------------------------------------
+
+
+
+
+$(document).ready(function(){
+   // const p = document.querySelector("#procedimiento");
+    if(p.value == '---'){
+        
+        document.getElementById('numProcedimiento').disabled = true;
+        $('#numProcedimiento').prop('readOnly', true);
+        $('#anioProcedimiento').prop('readOnly', true);
+    }
+   
+
+});
+
+function habilitarProcedimiento(p){
+    if(p.value != '---'){
+        $('#numProcedimiento').prop('readonly', false);
+        $('#anioProcedimiento').prop('readonly', false);
+        //document.getElementById('boolnum').value = "1";
+        //document.getElementById('boolanio').value = "1";
+
+    }else{
+        //document.getElementById('numProcedimiento').value = "";
+        //document.getElementById('anioProcedimiento').value = "";
+        $('#numProcedimiento').prop('readonly', true);
+        $('#anioProcedimiento').prop('readonly', true);
+        //document.getElementById('boolnum').value = "";
+        //document.getElementById('boolanio').value = "";
+    }
+}
+
+
+
+
+
+
+
 
 function alertDeleteItem(id){
     //e.preventDefault();

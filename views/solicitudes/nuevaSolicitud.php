@@ -1,3 +1,6 @@
+
+
+
 <form id="filtro" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">       
 
 <dialog class="divfiltros center" id="modalconfirmar" style="z-index: 1; animation: createBox .15s; margin-top: 30%;">
@@ -22,29 +25,30 @@
     <h1 class="center " style="text-align: center; color: #001d5a">Nueva Solicitud</h1>
 </div>
 <div class="row col-12 center" style="background: white; width: 70%; padding: 40px; border: 1px solid rgba(220, 220, 220); border-radius: 5px; border-top: none; " >
-    <div class="col-lg-6 center" >
+    <div class="col-lg-6 center borderright">
         <form id="nuevaSolicitud" name="nuevaSolicitud" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
         
-    <div style=" padding: 20 40;">
+    <div style=" padding: 20 40; background: rgb(239,239,239); border-radius: 5px">
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">SR</label>
         <input type="text" value="<?php if(isset($_SESSION['solicitud']['sr'])) {  echo $_SESSION['solicitud']['sr']; }?>"  name="sr" id="sr" class="form-control" style="margin-top: 0px;"  >
 
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Gastos e Inversiones</label>
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Gastos e Inversiones</label>
+        <label  style=" color: red">*</label>
         <select name="gastos_inversiones" id="gastos_inversiones" class="form-control">
-                <option value="0" selected>-</option>
                 <option <?php if(isset($_SESSION['solicitud']['gastos_inversiones'])){if($_SESSION['solicitud']['gastos_inversiones'] == "Bienes de Consumo") { ?> selected <?php }} ?> value="Bienes de Consumo" >Bienes de Consumo</option>
 				<option <?php if(isset($_SESSION['solicitud']['gastos_inversiones'])){if($_SESSION['solicitud']['gastos_inversiones'] == "Servicios No Personales") { ?> selected <?php }} ?> value="Servicios No Personales">Servicios No Personales</option>
 				<option <?php if(isset($_SESSION['solicitud']['gastos_inversiones'])){if($_SESSION['solicitud']['gastos_inversiones'] == "Bienes de Uso") { ?> selected <?php }} ?> value="Bienes de Uso">Bienes de Uso</option>
 			</select> 
 
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Planificado</label>
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Planificado</label>
+        <label  style=" color: red">*</label>
         <select name="planificado" id="planificado" class="form-control">
 				<option <?php if(isset($_SESSION['solicitud']['planificado'])){if($_SESSION['solicitud']['planificado'] == "Si") { ?> selected <?php }} ?> value="Si">Si</option>
 				<option <?php if(isset($_SESSION['solicitud']['planificado'])){if($_SESSION['solicitud']['planificado'] == "No") { ?> selected <?php }} ?> value="No">No</option>
 			</select> 
 
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
-        <input type="number" name="costo" id="costo" min="0"  value="<?php if(isset($_SESSION['solicitud']['costo'])) {  echo $_SESSION['solicitud']['costo']; }?>" class="form-control" style="margin-top: 0px;" placeholder="" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" > 
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
+        <input type="number" name="costo" id="costo" min="0"  value="<?php if(isset($_SESSION['solicitud']['costo'])) {  echo $_SESSION['solicitud']['costo']; }?>" class="form-control" style="margin-top: 0px; margin-bottom: 40px;" placeholder="" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" > 
     
     </div>
         <!-- Por si hay que poner el procedimiento con numero y año como dijo Saul: Procedimiento|Numero|Año ---------------------------------------------------- 
@@ -77,12 +81,13 @@
         
 
        
-    <div style="border-top: 1px solid rgb(200,200,200); padding: 40px; margin-top: 30px; padding-top: 40px">
+    <div style="padding: 40px; margin-top: 30px; padding-top: 40px; background: rgb(239,239,239); border-radius: 5px">
         <label  style=" color: rgb(130, 130, 130)">Oficina Solicitante</label>
+        <label  style=" color: red">*</label>
+
 
             <select name="oficinaSolicitante" id="oficinaSolicitante" style="" class="form-control">
                 
-                <option value="0" selected>-</option>
                 <?php
                 foreach($viewmodel as $item) : $oficina = $item['unidad'] . ' ' . $item['ue'];
                 ?>
@@ -90,21 +95,21 @@
                 <?php endforeach; ?>
             </select> 
 
-        <label  style="margin-top: 30px; color: rgb(130, 130, 130)">UO</label>
-        <input type="text" name="UO" id="UO" value="<?php if(isset($_SESSION['solicitud']['UO'])) {  echo $_SESSION['solicitud']['UO']; }?>" class="form-control" style="margin-top: 0px;"   >
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">UO</label>
+        <input type="text" name="uo" id="UO" value="<?php if(isset($_SESSION['solicitud']['uo'])) {  echo $_SESSION['solicitud']['uo']; }?>" class="form-control" style="margin-top: 0px;"   >
 
 
-        <label  style="margin-top: 30px; color: rgb(130, 130, 130)">Referente</label>
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Referente</label>
         <input type="text" name="referente" id="referente" value="<?php if(isset($_SESSION['solicitud']['referente'])) {  echo $_SESSION['solicitud']['referente']; }?>" class="form-control" style="margin-top: 0px;"   >
 
-        <label  style="margin-top: 30px; color: rgb(130, 130, 130)">Contacto Referente</label>
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Contacto Referente</label>
         <input type="text" name="contactoReferente" id="contactoReferente"  value="<?php if(isset($_SESSION['solicitud']['contactoReferente'])) {  echo $_SESSION['solicitud']['contactoReferente']; }?>" class="form-control" style="margin-top: 0px;"   >
 				
         </div>
 
 
-    </div>
-    <div class="col-lg-6 center">
+    </div> 
+    <div class="col-lg-6 center borderleft">
         <!--
         <label style="margin-top: 20px; color: rgb(130, 130, 130)">Cantidad | Unidad</label>
         <div class="input-group">
@@ -114,8 +119,9 @@
         </div>-->
 
         
-    <div style="padding: 20 40;">
+    <div style="padding: 20 40;  background: rgb(239,239,239); border-radius: 5px">
         <label  id="pp" style="margin-top: 20px; color: rgb(130, 130, 130)">Grupos Art/Serv</label>
+        <label  style=" color: red">*</label>
         <select name="grupoAS" id="grupoAS" onchange="arts(this);" class="form-control">
                 <option value="0" selected>-</option>
 				<option <?php if(isset($_SESSION['solicitud']['grupoAS'])){if($_SESSION['solicitud']['grupoAS'] == "Artículos y Accesorios de Informática"){?> selected <?php }} ?> value="Artículos y Accesorios de Informática" >Artículos y Accesorios de Informática</option>
@@ -131,14 +137,15 @@
 			</select> 
 
 
-        <label  style="margin-top: 45px; color: rgb(130, 130, 130)">Art/Serv</label>
-        <select name="artServ" id="artServ" onchange="cambiarinput(value);" class="form-control" >
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Art/Serv</label>
+        <label  style=" color: red">*</label>
+        <select name="artServ" id="artServ" style=" margin-bottom: 30px;" onchange="cambiarinput(value);" class="form-control" >
 
         </select>
         <input type="text" style="display:none"  name="inputas" value="<?php if(isset($_SESSION['solicitud']['inputas'])){ echo $_SESSION['solicitud']['inputas']; } ?>"  id="inputas">
         </div>
 
-        <div style="border-top: 1px solid rgb(200,200,200); border-bottom: 1px solid rgb(200,200,200); padding: 50 40; margin-top: 20px">
+        <div style="padding: 45 40; margin-top: 20px;  background: rgb(239,239,239); border-radius: 5px">
          <!--<label  style=" color: rgb(130, 130, 130); display: block">Tipo de Procedimiento                     Número           Año </label>-->
          <label  style=" color: rgb(130, 130, 130); display: block">Tipo de Procedimiento                     Número           Año </label>
 
@@ -155,22 +162,25 @@
 				<option <?php if(isset($_SESSION['solicitud']['procedimiento'])){if($_SESSION['solicitud']['procedimiento'] == "CCH"){?> selected <?php }} ?> value="CCH">CCH - Caja Chica</option>
 
 			</select> 
-            <input type="number" name="numProcedimiento" id="numProcedimiento" value="<?php if(isset($_SESSION['solicitud']['numProcedimiento'])) {  echo $_SESSION['solicitud']['numProcedimiento']; }?>" class="form-control" style="margin-top: 0px; width: 20%; display: inline-block" disabled  onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
-            <input type="number" name="anioProcedimiento" id="anioProcedimiento" value="<?php if(isset($_SESSION['solicitud']['anioProcedimiento'])) {  echo $_SESSION['solicitud']['anioProcedimiento']; }?>" class="form-control" style="margin-top: 0px; width: 28%; display: inline-block" disabled  onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
+           
+
+            <input type="number" name="numProcedimiento" id="numProcedimiento" value="<?php if(isset($_SESSION['solicitud']['numProcedimiento'])) {  echo $_SESSION['solicitud']['numProcedimiento']; }?>"   class="form-control" style="margin-top: 0px; width: 20%; display: inline-block"   onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
+            <input type="number" name="anioProcedimiento" id="anioProcedimiento" value="<?php if(isset($_SESSION['solicitud']['anioProcedimiento'])) {  echo $_SESSION['solicitud']['anioProcedimiento']; }?>"  class="form-control" style="margin-top: 0px; width: 28%; display: inline-block"   onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
     </div>
 
-    <div style="padding: 20 40;">
+    <div style="padding: 20 40; background: rgb(239,239,239); border-radius: 5px; margin-top: 30px">
 
 
-        <label  style="margin-top: 40px; color: rgb(130, 130, 130)">Detalle</label>
+        <label  style="margin-top: 15px; color: rgb(130, 130, 130)">Detalle</label>
+        <label  style=" color: red">*</label>
         <textarea class="form-control" name="detalle" id="detalle" cols="40" rows="5" style="margin-top: 0px;" placeholder=""><?php if(isset($_SESSION['solicitud']['detalle'])) {  echo $_SESSION['solicitud']['detalle']; }?></textarea>
 
-        <label  style="margin-top: 50px; color: rgb(130, 130, 130)">Observaciones</label>
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Observaciones</label>
         <textarea class="form-control" name="observaciones" cols="40" rows="5" style="margin-top: 0px;" placeholder=""><?php if(isset($_SESSION['solicitud']['observaciones'])) {  echo $_SESSION['solicitud']['observaciones']; }?></textarea>
     </div>
     </div>
 
-    <div class="col-12" style="margin-top: 0px; border-top: 1px solid rgb(200,200,200)">
+    <div class="col-12" style="margin-top: 50px; border-top: 2px solid rgb(200,200,200);">
 
     </div>
 
@@ -178,6 +188,32 @@
                                         <input type="submit" id="confirm" name="submit" class="btn btn-primary" value="Confirmar" style="width: 150px;"/>
     </div>
 
+
+    
+<?php 
+    if(!isset($_SESSION['solicitud']['procedimiento'])){
+        ?>
+                <script>
+                    document.getElementById('numProcedimiento').readOnly = true;
+                    document.getElementById('anioProcedimiento').readOnly = true;
+
+                </script>
+            <?php
+    }else{
+        if($_SESSION['solicitud']['procedimiento'] == '---'){
+            ?>
+                <script>
+                    document.getElementById('numProcedimiento').readOnly = true;
+                    document.getElementById('anioProcedimiento').readOnly = true;
+
+                </script>
+            <?php
+
+        }
+    }
+      
+
+?>
   
 
 <!--
@@ -230,7 +266,8 @@
                         -->
 
 
-                        <h3 style="margin-top: 100px">Items</h3>
+                        <h3 style="margin-top: 70px;display: inline-block">Items</h3>
+
                         <table style="background: #b4bacc">
                             <thead style="background: #172033">
                                 <tr>
@@ -364,24 +401,31 @@ input.addEventListener("keypress", function(event) {
 
 //-----------------------------------------------
 $(document).ready(function(){
-    const p = document.querySelector("#procedimiento");
-
-    if(p.value != '--- Aun no definido'){
-        document.getElementById('numProcedimiento').disabled = false;
-        document.getElementById('anioProcedimiento').disabled = false;
+   // const p = document.querySelector("#procedimiento");
+    if(p.value == '---'){
+        
+        document.getElementById('numProcedimiento').disabled = true;
+        $('#numProcedimiento').prop('readOnly', true);
+        $('#anioProcedimiento').prop('readOnly', true);
     }
    
 
 });
+
 function habilitarProcedimiento(p){
-    if(p.value != '--- Aun no definido'){
-        document.getElementById('numProcedimiento').disabled = false;
-        document.getElementById('anioProcedimiento').disabled = false;
+    if(p.value != '---'){
+        $('#numProcedimiento').prop('readonly', false);
+        $('#anioProcedimiento').prop('readonly', false);
+        document.getElementById('boolnum').value = "1";
+        document.getElementById('boolanio').value = "1";
+
     }else{
         document.getElementById('numProcedimiento').value = "";
         document.getElementById('anioProcedimiento').value = "";
-        document.getElementById('numProcedimiento').disabled = true;
-        document.getElementById('anioProcedimiento').disabled = true;
+        $('#numProcedimiento').prop('readonly', true);
+        $('#anioProcedimiento').prop('readonly', true);
+        document.getElementById('boolnum').value = "";
+        document.getElementById('boolanio').value = "";
     }
 }
 
