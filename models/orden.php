@@ -139,17 +139,39 @@ public function verOrden(){
     }
 
     public function subirArchivos (){
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        for($i=0; $i<sizeof($post['pdf']); $i++){
-            $this->query('INSERT INTO archivosordenes (`idSolicitud`,`idOrden`, `nombre`, `pdf`) VALUES(:idSolicitud, :idOrden, :nombre, :pdf)');
-            $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
-            $this->bind(':idOrden', $_SESSION['ordenActual']);
-            $this->bind(':nombre', $post['pdfnombre'][$i]);
-            $this->bind(':pdf', $post['pdf'][$i]);
 
-            $this->execute();
-        }  
-        header('Location: '.ROOT_URL.'orden/verOrden');
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(isset($post['pdf'])){
+            $mensajeError="";
+            for($i=0; $i<sizeof($post['pdf']); $i++){
+                try{
+                $this->query('INSERT INTO archivosordenes (`idSolicitud`,`idOrden`, `nombre`, `pdf`) VALUES(:idSolicitud, :idOrden, :nombre, :pdf)');
+                $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+                $this->bind(':idOrden', $_SESSION['ordenActual']);
+                $this->bind(':nombre', $post['pdfnombre'][$i]);
+                $this->bind(':pdf', $post['pdf'][$i]);
+
+                $this->execute();
+                }catch(PDOException $e){
+                    $mensajeError = $mensajeError."Error al subir el archivo ".$post['pdfnombre'][$i].". ";
+                }
+            }
+            if($mensajeError==""){
+                $_SESSION['mensaje']['tipo'] = 'success';
+                $_SESSION['mensaje']['contenido'] = 'Archivos subidos correctamente';
+                header('Location: '.ROOT_URL.'orden/verOrden#archivos');
+                return;
+            }else{
+                $_SESSION['mensaje']['tipo'] = 'error';
+                $_SESSION['mensaje']['contenido'] = $mensajeError;
+                header('Location: '.ROOT_URL.'orden/verOrden#archivos');
+                return;
+            }
+        }else{
+            $_SESSION['mensaje']['tipo'] = 'error';
+            $_SESSION['mensaje']['contenido'] = 'No tenia ningun archivo en la lista';
+            header('Location: '.ROOT_URL.'orden/verOrden#archivos');
+        }
     }
 
     public function comprasRealizadas(){

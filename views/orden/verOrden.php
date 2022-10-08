@@ -22,6 +22,26 @@ function mensajes(){
 
 <body onload="mensajes()">
 
+<!---MODAL---->
+<form id="formArchivo" action="<?php echo ROOT_PATH; ?>orden/subirArchivos" method='post'>
+
+    <dialog class="divfiltros center " id="modalSubirArchivo" style="margin-top:50px; z-index: 1; animation: createBox .15s">
+ 
+            <h3 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h3>
+                <div class="card-body">
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Seleccione archivo</label>
+                    <input class="form-control" id="loadFile" accept="application/pdf" type="file" onchange="readAsBase64()"  width="190px" height="50px"/>
+                </div>
+                <hr>
+                    <table style="max-width: 500px" id="guardado">
+                    </table>
+                    <button type="submit" class="float-right btn btn-primary ">SUBIR</button>
+                    <input id="cerrarFiltros2" onclick ="cerrarModal()" type="button" class="float-right btn btn-secondary " value="CERRAR">
+    </dialog> 
+</form> 
+<!---MODAL FIN---->
+
 <a href="<?php echo ROOT_URL; ?>solicitudes/verSolicitud"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
 
 
@@ -180,7 +200,9 @@ function mensajes(){
                             <!-------------->
                             <hr>
                             <h1 style="color: #001d5a; margin-left: 25px" class="">Archivos Adjuntos</h1>
-                            <div id="main-container" style="width: 100%; overflow: auto; padding: 25px;"> <!--  max-height: 800px -->
+                            <button type="button" id="btnmodal" class="excel sombraAzul1" onclick="abrirModal()"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button>
+
+                            <div id="contenedor-archivos" style="width: 100%; overflow: auto; padding: 25px;"> <!--  max-height: 800px -->
                                 <?php 
                                 if ($viewmodel["archivos"] != null) {
                                  
@@ -219,34 +241,10 @@ function mensajes(){
                             </div>
                             <br>
                             <hr>
-<div class="container mt-5 mb-5">
-    <div class="row d-flex justify-content-center">
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8">
-            <div class="card">
-                <div class="card-body">
-
-                            <h3 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h3>
-                                <div class="card-body">
-                                <div class="mb-3">
-                                    <label for="formFile" class="form-label">Default file input example</label>
-                                    <input class="form-control" id="loadFile" accept="application/pdf" type="file" onchange="readAsBase64()"  width="190px" height="50px"/>
-                                </div>
-
-                                <hr>
-                                <form id="formArchivo" action="<?php echo ROOT_PATH; ?>orden/subirArchivos" method='post'>
-                                    <table style="max-width: 500px" id="guardado">
-                                
-                                    </table>
-                                    <button type="submit" class="float-right btn btn-primary ">SUBIR</button>
-                                </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-                                <br>
 
                         <a href="<?php echo ROOT_URL; ?>solicitudes/verSolicitud"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
+                        <hr>
+
 
 
 </body>
@@ -286,7 +284,7 @@ function readAsBase64() {
             var cell2 = row.insertCell(1);
             cell1.innerHTML = fileToLoad.name;
             cell2.innerHTML = '<button type="button" id="'+cant+'"class="btn btn-danger" onclick="eliminar('+cant+')">Eliminar</button>';   
-            cant++;
+            document.getElementById("loadFile").value = "";
     
         };
         
@@ -373,8 +371,30 @@ function readAsBase64() {
         inputName.parentNode.removeChild(inputName);
         var table = document.getElementById("guardado");
         table.rows[id].style.display = "none";
-
     }
+    ///modal de subir archivos
+    const modal = document.querySelector("#modalSubirArchivo");
+
+    btn.addEventListener("click", function() {
+        modal.showModal();
+    });
+    function abrirModal(){
+        modal.showModal();
+    }
+
+    function cerrarModal(){
+        for (let index = 0; index < cant; index++) {
+            if(document.getElementById(index+"pdf")){
+                eliminar(index);
+            }
+        }
+        modal.close();
+    }
+
+
+
+
+
 
 </script>
 
