@@ -12,25 +12,6 @@
 } );
 
 
-    function servicio(){
-        var s = document.getElementById("esServicio").checked;
-
-        if(s == true){
-            document.getElementById("inicio").readOnly = false;
-            document.getElementById("fin").readOnly = false;
-            document.getElementById("siservicio").value = "si";
-
-        }
-        else{
-            document.getElementById("inicio").readOnly = true;
-            document.getElementById("fin").readOnly = true;
-            document.getElementById("siservicio").value = "no";
-            
-        }
-    }
-
-
-
 let cant = 0;
 function readAsBase64() {
 
@@ -102,7 +83,7 @@ function readAsBase64() {
                                 <p class="m-3" style="margin-left: 200px;" >              Año: </p>
                                 <input id="anio" name="anio" type="number" min="2010" max="2060" class="m-2 miniinput2 form-control" value="<?php echo date('Y') ?>" required>
                             </div>
-                            <div id="numeroAnioError"  style="color:red; min-height:100%" ></div>
+                            <div id="numeroAnioError"  style="color:red; min-height:100%; position: static;" ></div>
 
                             
                             
@@ -120,7 +101,7 @@ function readAsBase64() {
                                <p class="m-3">          Monto:</p>
                                 <input id="montoReal" name="montoReal" type="number" min="0"class="m-2 miniinput2 form-control" required>
                             </div>
-                            <div id="montoRealError" class="center2"style="color:red" ></div>
+                            <div id="montoRealError" class="center2"style="color:red position: static;" ></div>
 
 
 
@@ -159,21 +140,14 @@ function readAsBase64() {
                             <p class="m-2">Nº Ampliación </p>
                                 <input id="numeroAmplicacion" style="max-width: 15rem" name="numeroAmpliacion" type="text" class="form-control">
                             </div>
-                            <div class="form-check form-check-inline">
-                                <input class="m-2 form-check-input" onclick="servicio()" type="checkbox" id="esServicio">
-                                <label class="m-2 form-check-label" for="inlineCheckbox1">Es Servicio</label>
-                                <input id="siservicio" name="siservicio" type="hidden" value="no">
-                            </div>    
 
+                            <h4>Servicio: </h4>
+                        
                             <hr>
-
-                            <div class="input-group mb-3">
-                                <label for="entrega" class="m-2 form-label">Inicio Servicio</label>
-                                <input id="inicio" name="inicio" type="date" class="miniinput2 form-control" readonly>
-                                <div id="inicioError" class="invalid-feedback"></div>
-                                <label for="fin" class="m-2 form-label">            Fin Servicio</label> 
-                                <input id="fin" name="fin" type="date" class="miniinput2 form-control" readonly>
+                            <div id="Servicios">
+                                <input type="button" class="btn btn-primary  mb-3" onclick="abrirModelNuevoServicio()" value="+ Agregar Servicio"/>
                             </div>
+
                             <br>
                             <!-- aqui se va a guardar proveedor -->
                             <input id="idProveedor" name="idProveedor" type="hidden" >
@@ -231,6 +205,7 @@ function readAsBase64() {
     
                                 <input type="submit" class="float-right btn btn-primary " value="GUARDAR">
                             </div>
+                            
                             <!--MODAL PROVEEDOR -->
                             <div class="modal" tabindex="-1" role="dialog" id="confirmarProveedor">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -270,6 +245,51 @@ function readAsBase64() {
                                 </div>
                                 <!--MODAL -->
                         </form>
+                        <!--MODAL Servicio -->
+                        <dialog class="divfiltros center " id="modalNuevoServicio" style="margin-top:50px; z-index: 1; animation: createBox .15s">
+                                
+                                    <div class="card-body ">
+                                        <label for="nuevoNombreServico" class="form-label">Nombre</label>
+                                                <div class="input-group mb-1 ">
+                                                <input id="nuevoNombreServico" name="nuevoNombreServico" type="text" class="m-2 form-control " >
+                                                <input type="button"  class="btn btn-light" value="*">
+                                                <span id="nuevoNombreServicoError" class="center2" style="color:red; height:100%; " ></span>
+                                        </div>
+    
+                                        <label for="formaPago" class="form-label">Observacion:</label>
+                                            <div class="input-group mb-3">
+                                            <textarea id="nuevoObservacionServicio" name="nuevoObservacionServicio" class="form-control"></textarea>
+                                        </div>
+
+                                        <div class="input-group mb-1">
+                                            <label for="nuevoPrecioServicio" class="m-2 form-label">Precio: </label>
+                                            <input class="miniinput2 form-control" id="nuevoPrecioServicio" name="nuevoPrecioServicio" type="number" min="1" class="m-2 form-control">
+                                            <label for="nuevoPrecioServicio" class="m-2 form-label">   Tipo de servicio: </label>
+                                            <select class="miniinput2 form-control" id="nuevoTipoServicio" name="nuevoTipoServicio" class="m-2 form-control">
+                                                <option value="General" selected>General</option>
+                                                <option value="Licencia">Licencia</option>
+                                            </select>
+                                        </div>
+                                        <span id="precioError" class="center2"style="color:red; position: static;" ></span>
+                                        <br>
+                                        
+                                        <div class="input-group mb-1">
+                                            <label for="entrega" class="m-2 form-label">Inicio: </label>
+                                            <input id="nuevoInicioServicio" name="nuevoInicioServicio" type="date" class="miniinput2 form-control">
+                                            <div id="inicioError" class="invalid-feedback"></div>
+                                            <label for="fin" class="m-2 form-label">   Finaliza:</label> 
+                                            <input id="nuevoFinServicio" name="nuevoFinServicio" type="date" class="miniinput2 form-control">
+                                        </div>
+                                        <span id="fechasError" class="center2"style="color:red; position: static;" ></span>
+
+                                    </div>
+
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarModel()">CANCELAR</button>
+                                            <button type="button" class="btn btn-primary" onclick="crearServicio()">GUARDAR</button>
+                              
+                                <br>
+                            </dialog>
+                            <!--Fin Modal Servicio -->
                 </div>
             </div>
         </div>
@@ -277,6 +297,98 @@ function readAsBase64() {
 </div>
 </body>
 <script>
+    cantServicios=0;
+        function crearServicio(){
+        ///comprobar inputs nombreServico
+        var nombreServico = document.getElementById("nuevoNombreServico").value;
+        var precio = document.getElementById("nuevoPrecioServicio").value;
+        var inicio = document.getElementById("nuevoInicioServicio").value;
+        var fin = document.getElementById("nuevoFinServicio").value;
+        document.getElementById("nuevoNombreServicoError").innerHTML = "";
+        document.getElementById("precioError").innerHTML = "";
+        document.getElementById("inicioError").innerHTML = "";
+        document.getElementById("fechasError").innerHTML = "";
+        var error=false;
+        
+        if(nombreServico == ""){
+            document.getElementById("nuevoNombreServicoError").innerHTML = "El nombre no puede estar vacio";
+            document.getElementById("nuevoNombreServico").focus();
+            error=true;
+        }
+            
+        if(precio == ""){
+            document.getElementById("precioError").innerHTML = "El precio no puede estar vacio";
+            document.getElementById("nuevoPrecioServicio").focus();
+            error=true;
+        }
+
+        if(inicio > fin){
+            document.getElementById("fechasError").innerHTML = "El inicio no puede ser mayor al fin";
+            document.getElementById("nuevoInicioServicio").focus();
+            error=true;
+        }
+        if(fin == ""){
+            document.getElementById("fechasError").innerHTML = "La fecha de fin no puede estar vacia";
+            document.getElementById("nuevoInicioServicio").focus();
+            error=true;
+        }
+        if(inicio == ""){
+            document.getElementById("fechasError").innerHTML = "La fecha de inicio no puede estar vacia";
+            document.getElementById("nuevoFinServicio").focus();
+            error=true;
+        }
+        if(error==false){
+            cerrarModel();
+
+                //ingresar codigo html en el div Servicios
+                var div = document.getElementById("Servicios");
+                var html = `<div id="cardServicio`+cantServicios+`" class="card" >
+                                <div class="card-body">
+                                    <div class="float-right text-end" >
+                                        <input type="button" class="btn btn-danger" onclick="quitarServicio(`+cantServicios+`)" value="x">
+                                    </div>
+                                    <input type="hidden" name="nombreServicio[]" value="`+nombreServico+`">
+                                    <input type="hidden" name="precioServicio[]" value="`+precio+`">
+                                    <input type="hidden" name="inicioServicio[]" value="`+inicio+`">
+                                    <input type="hidden" name="finServicio[]" value="`+fin+`">
+                                    <input type="hidden" name="observacionServicio[]" value="`+document.getElementById("nuevoObservacionServicio").value+`">
+                                    <input type="hidden" name="tiposervicio[]" value="`+document.getElementById("nuevoTipoServicio").value+`">
+                                    <b><h4 class="card-title mb-2">`+nombreServico+`</h4></b>
+                                    <h5 class=" mb-2"><b>Costo:</b>`+precio+`</h5>
+                                    <p class="card-text">Del `+inicio+` al`+fin+`</p>
+                                </div>
+                            </div>
+                            <br>`;
+                div.innerHTML += html;
+                cantServicios++;
+        }
+
+    }
+
+    function quitarServicio(id){
+
+        Swal.fire({
+            title: '¿Quitar el servicio?',
+            text: "¡El servicio no se guardara!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Sí, quitar!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                //eliminar el servicio
+                var div = document.getElementById("cardServicio"+id);
+                div.remove();
+                Swal.fire(
+                    '¡Eliminado!',
+                    'El servicio ha sido quitado.',
+                    'success'
+                )
+            }
+        });
+    }
+
 
     document.getElementById("montoReal").addEventListener("blur", errorMonto);
     document.getElementById("plazoEntrega").addEventListener("blur", errorPlazoEntrega);
@@ -313,21 +425,10 @@ function readAsBase64() {
         var idProveedor = document.getElementById("idProveedor").value;
         //por si no selecciona proveedor
         if(idProveedor.length < 1){
-            
             mensaje = "<hr><h4>Debe seleccionar un proveedor </h4><hr>";
             event.preventDefault();
+        }
 
-        }
-        //por si ingresa fechas que sean coerente
-        var siservicio = document.getElementById("siservicio").value;
-        var fin = document.getElementById("fin").value;
-        var inicio = document.getElementById("inicio").value;
-        if(siservicio == 'si' && fin.length > 1 && inicio.length > 1){
-            if(fin <= inicio){
-                mensaje = "<hr><h4>La fecha de inicio debe ser menor a la fecha de fin </h4><hr>"+mensaje;
-                event.preventDefault();
-            }
-        }
         comprobarNumero();
         //controlar si div numeroAnioError tiene algun mensaje de error
         var numeroAnioError = document.getElementById("numeroAnioError").innerHTML;
@@ -342,9 +443,7 @@ function readAsBase64() {
              
                 Swal.fire({
                 icon: 'error',
-                title: 'Oops...',
                 html: mensaje,
-                
             
                 });
         return;
@@ -352,6 +451,7 @@ function readAsBase64() {
         
         //aqui muestra el modal
         if(document.getElementById("modalconfirmar").style.display != "block"){
+            event.preventDefault();
             document.getElementById("mensajeOrden").innerHTML = "<p><b>¿Quiere crear Orden?<b></p>";
             event.preventDefault();
             document.getElementById("modalconfirmar").style.display = "block"; 
@@ -375,10 +475,21 @@ function readAsBase64() {
         document.getElementById("idProveedor").value = id;
         document.getElementById("proveedorNombre").innerHTML = empresa ;
     }
-   
+    function abrirModelNuevoServicio(){
+        ///SI MONTO REAL TIENE VALOR OBTENERLO(recordar cambiar)
+        var montoReal = document.getElementById("montoReal").value;
+        if(montoReal.length > 0){
+            document.getElementById("nuevoPrecioServicio").value = montoReal;
+        }
+            document.getElementById("modalNuevoServicio").showModal();
+    }
 
 
+
+    
     function cerrarModel(){
+        //cerrar modal de servicio
+        document.getElementById("modalNuevoServicio").close();
         document.getElementById("confirmarProveedor").style.display = "none";
         document.getElementById("modalconfirmar").style.display = "none";
     }

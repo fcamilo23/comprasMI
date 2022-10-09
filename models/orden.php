@@ -8,35 +8,21 @@ class OrdenModel extends Model{
     }
 
     public function agregarOrden(){
+        $error="";
         try{
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $fechaini=null; 
-            $fechafin=null;
-            $esservicio = 'no';
-            $numeroAmpliacion = null;
             
-            if($post['siservicio'] == 'si'){
-                $fechaini = $post['inicio'];
-                $fechafin = $post['fin'];
-                $esservicio = 'si';
-            }
-            if(isset($post['numeroAmpliacion'])){
-                $numeroAmpliacion = $post['numeroAmpliacion'];
-            }
 
-            $this->query('INSERT INTO   ordenes (numero, anio, moneda, montoReal, procedimiento, plazoEntrega, formaPago,numeroAmpliacion ,servicio, fechaInicio, fechaFin, idProveedor,idSolicitud) VALUES (:numero, :anio, :moneda, :montoReal, :procedimiento, :plazoEntrega, :formaPago,:numeroAmpliacion, :servicio, :fechaInicio, :fechaFin, :idProveedor, :idSolicitud)');
+            $this->query('INSERT INTO   ordenes (numero, anio, moneda, montoReal, plazoEntrega, formaPago,numeroAmpliacion, idProveedor,idSolicitud) VALUES (:numero, :anio, :moneda, :montoReal, :plazoEntrega, :formaPago,:numeroAmpliacion, :idProveedor, :idSolicitud)');
             $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
             $this->bind(':numero', $post['numero']);
             $this->bind(':anio', $post['anio']);
             $this->bind(':moneda', $post['moneda']);
             $this->bind(':montoReal', $post['montoReal']);
-            $this->bind(':procedimiento', $post['procedimiento']);
+            //$this->bind(':procedimiento', $post['procedimiento']);
             $this->bind(':formaPago', $post['formaPago']);
             $this->bind(':plazoEntrega', $post['plazoEntrega']);
             $this->bind(':numeroAmpliacion', $post['numeroAmpliacion']);
-            $this->bind(':servicio', $esservicio);
-            $this->bind(':fechaInicio', $fechaini);
-            $this->bind(':fechaFin', $fechafin);
             $this->bind(':idProveedor', $post['idProveedor']);
             $this->execute();
 
@@ -61,13 +47,30 @@ class OrdenModel extends Model{
                     $this->execute();
                 }
             }
+            print_r($post['nombreServicio']);
+            if(isset($post['nombreServicio'])){
+
+                for($i=0; $i<sizeof($post['nombreServicio']); $i++){
+
+                    $this->query('INSERT INTO servicios (`idOrden`, `nombreServicio`, `observacionServicio`, `precioServicio`, `inicioServicio	`,`finServicio`,`tipoServicio` ) VALUES(:idOrden, :nombreServicio, :observacionServicio, :precioServicio, :inicioServicio, :finServicio, :tipoServicio)');
+                    $this->bind(':idOrden', $idOrden['id']);
+                    $this->bind(':nombreServicio', $post['nombreServicio'][$i]);
+                    $this->bind(':observacionServicio', $post['observacionServicio'][$i]);
+                    $this->bind(':precioServicio', $post['precioServicio'][$i]);
+                    $this->bind(':inicioServicio', $post['inicioServicio'][$i]);
+                    $this->bind(':finServicio', $post['finServicio'][$i]);
+                    $this->bind(':tipoServicio', $post['tiposervicio'][$i]);
+                    $this->execute();
+                }
+            }
+
             $_SESSION['mensaje']['tipo'] = 'success';
             $_SESSION['mensaje']['contenido'] = 'Orden agregada correctamente';
             header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
             return;
         }catch(PDOException $e){
             $_SESSION['mensaje']['tipo'] = 'error';
-            $_SESSION['mensaje']['contenido'] = 'Error al agregar la orden ...Prueba de nuevo mas tarde';
+            $_SESSION['mensaje']['contenido'] = 'Error al agregar la orden ...Prueba de nuevo mas tarde.'.$e->getMessage().'';
             header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
             return;      
         }
@@ -307,8 +310,6 @@ public function verOrden(){
     public function modificarOrden(){
         try{
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $fechaini=null; 
-            $fechafin=null;
 
             $proveedor = $post['idProveedor'];
             
@@ -321,11 +322,10 @@ public function verOrden(){
                 $proveedor = $post['editadoIdProveedor'];
             }
 
-            $this->query('UPDATE ordenes SET moneda = :moneda, montoReal = :montoReal, procedimiento = :procedimiento, plazoEntrega = :plazoEntrega, formaPago = :formaPago, fechaInicio = :fechaInicio, fechaFin = :fechaFin, idProveedor = :idProveedor, numeroAmpliacion = :numeroAmpliacion WHERE id = :id');
+            $this->query('UPDATE ordenes SET moneda = :moneda, montoReal = :montoReal, plazoEntrega = :plazoEntrega, formaPago = :formaPago, fechaInicio = :fechaInicio, fechaFin = :fechaFin, idProveedor = :idProveedor, numeroAmpliacion = :numeroAmpliacion WHERE id = :id');
             $this->bind(':id', $_SESSION['ordenActual']);
             $this->bind(':moneda', $post['moneda']);
             $this->bind(':montoReal', $post['montoReal']);
-            $this->bind(':procedimiento', $post['procedimiento']);
             $this->bind(':formaPago', $post['formaPago']);
             $this->bind(':plazoEntrega', $post['plazoEntrega']);
 
@@ -344,6 +344,45 @@ public function verOrden(){
             $_SESSION['mensaje']['contenido'] = 'Error al modificar la orden ...Prueba de nuevo mas tarde';
             header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
             return;      
+        }
+    }
+
+    public function eliminarOrden(){
+        try{
+         
+            // eliminar facturas, archivosfacturas, archivosOrdenes y ordenes
+            $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            //select de todas las facturas
+            $this->query('SELECT * FROM facturas WHERE idOrden = :idOrden');
+            $this->bind(':idOrden', $post['idOrden']);
+            $facturas = $this->resultSet();
+            //eliminar archivosfacturas
+            foreach($facturas as $factura){
+                $this->query('DELETE FROM archivosfacturas WHERE idFactura = :idFactura');
+                $this->bind(':idFactura', $factura['id']);
+                $this->execute();
+            }
+            //eliminar facturas
+            $this->query('DELETE FROM facturas WHERE idOrden = :idOrden');
+            $this->bind(':idOrden', $post['idOrden']);
+            $this->execute();
+            //eliminar archivosOrdenes
+            $this->query('DELETE FROM archivosordenes WHERE idOrden = :idOrden');
+            $this->bind(':idOrden', $post['idOrden']);
+            $this->execute();
+    
+            //eliminar orden
+            $this->query('DELETE FROM ordenes WHERE id = :idOrden');
+            $this->bind(':idOrden', $post['idOrden']);
+            $this->execute();
+            $_SESSION['ordenActual'] = null;
+            $_SESSION['mensaje']['tipo'] = 'success';
+            $_SESSION['mensaje']['contenido'] = 'Orden eliminada correctamente';
+            header('Location: '.ROOT_URL.'solicitudes/versolicitud');
+        }catch(PDOException $e){
+            $_SESSION['mensaje']['tipo'] = 'error';
+            $_SESSION['mensaje']['contenido'] = 'Error al eliminar la orden ...Prueba de nuevo mas tarde ';
+            header('Location: '.ROOT_URL.'solicitudes/versolicitud');
         }
     }
 
