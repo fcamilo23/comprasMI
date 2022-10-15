@@ -38,21 +38,6 @@
                             <div id="montoRealError" class="center2"style="color:red" ></div>
 
                             <br>
-
-                            <label for="procedimiento" class="form-label">Tipo de Procedimiento</label>
-                            <div class="input-group mb-3">
-                                <select id="procedimiento" name="procedimiento" class="form-control">
-                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "LP") { ?> selected <?php } ?> value="LP">LP - Licitación Pública</option>
-                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "LA") { ?> selected <?php } ?> value="LA">LA - Licitación Abreviada</option>
-                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "CD") { ?> selected <?php } ?> value="CD">CD - Compra Directa</option>
-                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "CE") { ?> selected <?php } ?> value="CE">CE - Compra por Excepción</option>
-                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "CP") { ?> selected <?php } ?> value="CP">CP - Concurso de Precios</option>
-                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "PCE") { ?> selected <?php } ?> value="PCE">PCE - Procedimientos de Contratación Especiales</option>
-                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "ARR") { ?> selected <?php } ?> value="ARR">ARR - Arrendamiento</option>
-                                        <option <?php  if ($viewmodel["orden"]["procedimiento"]== "CCH") { ?> selected <?php } ?> value="CCH">CCH - Caja Chica</option>
-                                    </select> 
-                            </div>
-                            <br>
                             <div class="input-group mb-3">
                             <label for="plazoEntrega" class="m-2 form-label">Fecha Entrega</label>
                                 <input id="plazoEntrega" min='2010-01-01' max='2050-01-01' name="plazoEntrega" type="date" class="miniinput2 form-control" value="<?php  echo$viewmodel["orden"]["plazoEntrega"] ?>" required>

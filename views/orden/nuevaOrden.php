@@ -65,22 +65,23 @@ function readAsBase64() {
 
 </script>
 <body>
+<form id="formOrden" onsubmit="validarFormulario(event)" action="<?php echo ROOT_URL; ?>orden/agregarOrden" method ="POST" enctype="multipart/form-data" >
 <div class="container" >
     <div class="row d-flex justify-content-center ">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8" >
             <div class="card">
                 <br>
-            <h2 style="color: #001d5a; text-align: center; margin-bottom: 50px" class="center">Nueva Orden de Compra</h1>
+            <h2 style="color: #001d5a; text-align: center; margin-bottom: 50px" class="center">Nueva Orden de Compra</h2>
                 
             <div class="card-body ">
                 
-                    <form id="formOrden" onsubmit="validarFormulario(event)" action="<?php echo ROOT_URL; ?>orden/agregarOrden" method ="POST" enctype="multipart/form-data" >
+
 
                             <label for="numero" class="form-label"></label>
                             <div class="input-group mb-3 center2">
                                 <p class="m-3">Numero</p>
                                 <input id="numero" name="numero" min="1" max="9999999"type="number" class="m-2 miniinput2 form-control " required>
-                                <p class="m-3" style="margin-left: 200px;" >              Año: </p>
+                                <p class="m-3" style="margin-left: 200px;" >   Año: </p>
                                 <input id="anio" name="anio" type="number" min="2010" max="2060" class="m-2 miniinput2 form-control" value="<?php echo date('Y') ?>" required>
                             </div>
                             <div id="numeroAnioError"  style="color:red; min-height:100%; position: static;" ></div>
@@ -91,43 +92,21 @@ function readAsBase64() {
                             
                             <div class="input-group mb-3 center2">
                                 <p class="m-3">Moneda</p>
-                                <select name="moneda"  id="moneda" class="m-2 miniinput2 form-control">
+                                <select name="moneda"  id="moneda" class="m-2  form-control">
                                         <option value="$ (Pesos Uruguayos)" selected>$U (Pesos Uruguayos)</option>
                                         <option value="U$S (Dolares)">US$ (Dólares)</option>
                                         <option value="U.I.(Unidades Indexadas)">U.I.(Unidades Indexadas)</option>
                                         <option value="U.R. (Unidades Reajustables)">U.R. (Unidades Reajustables)</option>
                                         <option value="€ (Euro)">€ (Euro)</option>
                                     </select>
-                               <p class="m-3">          Monto:</p>
-                                <input id="montoReal" name="montoReal" type="number" min="0"class="m-2 miniinput2 form-control" required>
                             </div>
-                            <div id="montoRealError" class="center2"style="color:red position: static;" ></div>
-
-
-
-                            <label for="procedimiento" style="margin-top: 50px" class="form-label">Tipo de Procedimiento</label>
-                            <div class="input-group mb-3">
-                                <select id="procedimiento" name="procedimiento" class="form-control">
-                                        <option value="LP" selected>LP - Licitación Pública</option>
-                                        <option value="LA">LA - Licitación Abreviada</option>
-                                        <option value="CD">CD - Compra Directa</option>
-                                        <option value="CE">CE - Compra por Excepción</option>
-                                        <option value="CP">CP - Concurso de Precios</option>
-                                        <option value="PCE">PCE - Procedimientos de Contratación Especiales</option>
-                                        <option value="ARR">ARR - Arrendamiento</option>
-                                        <option value="CCH">CCH - Caja Chica</option>
-                                    </select> 
-                            </div>
-
- 
-                            
+                            <!--<div id="montoRealError" class="center2"style="color:red position: static;" ></div>-->
+                        
                             <label for="formaPago" class="form-label">Forma de Pago:</label>
                             <div class="input-group mb-3">
                                 <textarea id="formaPago" name="formaPago" class="form-control"></textarea>
                              </div>
                              
-                            <br>
-
                             <div class="input-group mb-3" style="">
                             <label for="plazoEntrega" class="m-2 form-label" >Fecha Entrega</label>
                                 <input id="plazoEntrega" name="plazoEntrega" type="date" class="form-control" style="max-width: 15rem" required>
@@ -135,25 +114,22 @@ function readAsBase64() {
                             <div id="plazoEntregaError" style="color:red" class="center2"></div>
 
 
-                            <label for="numeroAmplicacion" style="margin-top: 40px"></label>
+                            <label for="numeroAmplicacion" style="margin-top: 10px"></label>
                             <div class="input-group mb-3">
                             <p class="m-2">Nº Ampliación </p>
                                 <input id="numeroAmplicacion" style="max-width: 15rem" name="numeroAmpliacion" type="text" class="form-control">
                             </div>
+                        </div>
+                    </div>
 
-                            <h4>Servicio: </h4>
-                        
-                            <hr>
-                            <div id="Servicios">
-                                <input type="button" class="btn btn-primary  mb-3" onclick="abrirModelNuevoServicio()" value="+ Agregar Servicio"/>
-                            </div>
 
-                            <br>
+                <div class="card" style="margin-top: 10px">    
+                    <div class="card-body ">
                             <!-- aqui se va a guardar proveedor -->
                             <input id="idProveedor" name="idProveedor" type="hidden" >
                             <!--  -->
                             <div>
-                                <p><b>PROVEEDOR: </b></p><p id="proveedorNombre" ></p>
+                                <h4>Proveedor: </h4><p id="proveedorNombre" ></p>
                             </div>
 
 
@@ -171,7 +147,7 @@ function readAsBase64() {
                                         </tr>
                                     </thead>
                                     <tbody >
-                                    <tr><?php foreach($viewmodel as $item) : ?>
+                                    <tr><?php foreach($viewmodel['proveedores'] as $item) : ?>
 
                                         <td><?php echo $item['empresa'] ?></td>
                                         <td><?php echo $item['razon_social'] ?></td>
@@ -185,8 +161,16 @@ function readAsBase64() {
                                     </tbody>
                                 </table>
                             </div>
-                          
-                            <hr>
+
+                        </div>
+                   </div> 
+
+
+
+
+
+                <div class="card" style="margin-top: 10px">    
+                    <div class="card-body ">
                             
                                 <h3 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h3>
                                 <div class="card-body">
@@ -200,11 +184,114 @@ function readAsBase64() {
 
                                 </table>
                                 <br>
+                        </div>
+                   </div>  
+                </div> 
+                
+        </div>
+    </div>
+</div>
+
+
+<hr>       
+<div style="margin-top: 100px">
+<h1 style="color: #001d5a; margin-left: 25px" class="">Listado de Items</h1>
+<div class="d-flex justify-content-center">
+    <input type="submit" onclick="abrirModelNuevoItem()" class="float-right  btn btn-success" value="+ NUEVO ITEM">
+</div>
+
+                                <div id="items-conteiner" style="width: 100%; overflow: auto; padding: 25px; max-height: 500px"> <!--  max-height: 800px -->
+
+                                    <table id="items"style="width: 100%">
+                                        <thead>
+                                            
+                                            <tr>
+                                                <th>Descripción</th>
+                                                <th>Costo</th>
+                                                <th>R.U.T.</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                        <tr><?php foreach($viewmodel as $item) : ?>
+
+                                            <td><?php echo $item['empresa'] ?></td>
+                                            <td><?php echo $item['razon_social'] ?></td>
+                                            <td>
+                                                <?php echo $item['rut'] ?>
+                                            </td>
+                                            <td>
+                                            <input type="button" value="✔️" class="btn btn-light" id="este" onclick="confirmarProveedor(<?php echo $item['id']?>, '<?php echo $item['empresa']?>', '<?php echo $item['rut'] ?>', '<?php echo $item['razon_social'] ?>')" >
+                                            </td>
+                                        </tr> <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                    <div class="col-12 center" style="text-align: center; margin-top: 60px">
+
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        </div>
+                    </div>
+                    <br>
+                    <hr>
+<div class="container" >
+    <div class="row d-flex justify-content-center ">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12" >
+                    <div class="card">                
+                        <div class="card-body ">
                             <div >           
                                 <a class="ml-2" href="<?php echo ROOT_PATH; ?>solicitudes/verSolicitud"><button type="button"  class="btn btn-secondary ml-3">CANCELAR</button></a>
     
                                 <input type="submit" class="float-right btn btn-primary " value="GUARDAR">
                             </div>
+                    </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+</form>
+
+<!--
+<div style="margin-top: 100px">
+<a href="<?php echo ROOT_PATH; ?>orden/nuevaOrden"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOrden.jpg" width="190px" height="50px" ></button></a>
+<h1 style="color: #001d5a; margin-left: 25px" class="">Órdenes de Compra</h1>
+
+<div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
+
+		<table id="solis" style="width: 100%;">
+
+			<thead>
+                
+				<tr>
+					<th>Número</th>
+                    <th>Procedimiento</th>
+                    <th>Proveedor</th>
+                    <th>Monto Real ($U)</th>
+                    <th>Plazo de Entrega</th>
+                    <th></th>
+                    <th></th>
+
+
+
+				</tr>
+			</thead>
+            <tbody >
+            
+
+
+            
+
+            </tbody>
+		</table>
+	</div>
+</div> -->
+
+
                             
                             <!--MODAL PROVEEDOR -->
                             <div class="modal" tabindex="-1" role="dialog" id="confirmarProveedor">
@@ -244,16 +331,29 @@ function readAsBase64() {
                                 </div>
                                 </div>
                                 <!--MODAL -->
-                        </form>
+</form>
+
                         <!--MODAL Servicio -->
-                        <dialog class="divfiltros center " id="modalNuevoServicio" style="margin-top:50px; z-index: 1; animation: createBox .15s">
+                        <dialog class="divfiltros center " id="modalNuevoItem" style="margin-top:50px; z-index: 1; animation: createBox .15s">
                                 
                                     <div class="card-body ">
-                                        <label for="nuevoNombreServico" class="form-label">Nombre</label>
+                                    <label for="nuevoIdItemSolicitud" class="form-label">Item de la solicitud</label>
+                                        <div class="input-group mb-1 ">
+                                            <select name="nuevoIdItemSolicitud" class="m-2 form-control " id="nuevoIdItemSolicitud">
+                                                <option value="-1">Seleccione Item</option>
+                                                <?php foreach($viewmodel['items'] as $item) : ?>
+                                                <option onclick="agregarItem(<?php echo $item['id'] ?>)" value="<?php echo $item['id'] ?>">
+                                                    <?php echo $item['cantidad'].' '.$item['unidad'].' '.$item['descripcion']  ?>
+                                                </option>
+
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                        <label for="descripcionNombreItem" class="form-label">Descripción(si tiene cambios)</label>
                                                 <div class="input-group mb-1 ">
-                                                <input id="nuevoNombreServico" name="nuevoNombreServico" type="text" class="m-2 form-control " >
+                                                <input id="descripcionNombreItem" name="descripcionNombreItem" type="text" class="m-2 form-control " >
                                                 <input type="button"  class="btn btn-light" value="*">
-                                                <span id="nuevoNombreServicoError" class="center2" style="color:red; height:100%; " ></span>
+                                                <span id="descripcionNombreItemError" class="center2" style="color:red; height:100%; " ></span>
                                         </div>
     
                                         <label for="formaPago" class="form-label">Observacion:</label>
@@ -290,29 +390,25 @@ function readAsBase64() {
                                 <br>
                             </dialog>
                             <!--Fin Modal Servicio -->
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 </body>
 <script>
     cantServicios=0;
         function crearServicio(){
         ///comprobar inputs nombreServico
-        var nombreServico = document.getElementById("nuevoNombreServico").value;
+        var nombreServico = document.getElementById("descripcionNombreItem").value;
         var precio = document.getElementById("nuevoPrecioServicio").value;
         var inicio = document.getElementById("nuevoInicioServicio").value;
         var fin = document.getElementById("nuevoFinServicio").value;
-        document.getElementById("nuevoNombreServicoError").innerHTML = "";
+        document.getElementById("descripcionNombreItemError").innerHTML = "";
         document.getElementById("precioError").innerHTML = "";
         document.getElementById("inicioError").innerHTML = "";
         document.getElementById("fechasError").innerHTML = "";
         var error=false;
         
         if(nombreServico == ""){
-            document.getElementById("nuevoNombreServicoError").innerHTML = "El nombre no puede estar vacio";
-            document.getElementById("nuevoNombreServico").focus();
+            document.getElementById("descripcionNombreItemError").innerHTML = "El nombre no puede estar vacio";
+            document.getElementById("descripcionNombreItem").focus();
             error=true;
         }
             
@@ -361,6 +457,13 @@ function readAsBase64() {
                             <br>`;
                 div.innerHTML += html;
                 cantServicios++;
+                   
+                document.getElementById("descripcionNombreItem").value="";
+                document.getElementById("nuevoPrecioServicio").value="";
+                document.getElementById("nuevoInicioServicio").value="";
+                document.getElementById("nuevoFinServicio").value="";
+                document.getElementById("nuevoObservacionServicio").value="";
+                document.getElementById("nuevoTipoServicio").value="General";
         }
 
     }
@@ -390,23 +493,12 @@ function readAsBase64() {
     }
 
 
-    document.getElementById("montoReal").addEventListener("blur", errorMonto);
+
     document.getElementById("plazoEntrega").addEventListener("blur", errorPlazoEntrega);
 
     document.getElementById("numero").addEventListener("blur", comprobarNumero);
     document.getElementById("anio").addEventListener("blur", comprobarNumero);
 
-    function errorMonto(){
-        var monto = document.getElementById("montoReal").value;
-
-        if(monto.length < 1){
-            document.getElementById("montoRealError").innerHTML = "              El monto es obligatorio ❌";
-        }
-        else{
-            document.getElementById("montoRealError").innerHTML = "";
-        }
- 
-    }
 
     function errorPlazoEntrega(){
         var plazoEntrega = document.getElementById("plazoEntrega").value;
@@ -475,13 +567,9 @@ function readAsBase64() {
         document.getElementById("idProveedor").value = id;
         document.getElementById("proveedorNombre").innerHTML = empresa ;
     }
-    function abrirModelNuevoServicio(){
-        ///SI MONTO REAL TIENE VALOR OBTENERLO(recordar cambiar)
-        var montoReal = document.getElementById("montoReal").value;
-        if(montoReal.length > 0){
-            document.getElementById("nuevoPrecioServicio").value = montoReal;
-        }
-            document.getElementById("modalNuevoServicio").showModal();
+    function abrirModelNuevoItem(){
+
+            document.getElementById("modalNuevoItem").showModal();
     }
 
 
@@ -489,7 +577,7 @@ function readAsBase64() {
     
     function cerrarModel(){
         //cerrar modal de servicio
-        document.getElementById("modalNuevoServicio").close();
+        document.getElementById("modalNuevoItem").close();
         document.getElementById("confirmarProveedor").style.display = "none";
         document.getElementById("modalconfirmar").style.display = "none";
     }
@@ -521,6 +609,17 @@ function readAsBase64() {
         });
         return retorno;
 
+
+    }
+
+    function agregarItem(id, descripcion, cantidad, unidad, precio){
+        var div = document.createElement("div");
+        div.setAttribute("class", "card");
+        div.setAttribute("id", "cardItem"+id);
+        div.innerHTML = "<div class='card-body'><h5 class='card-title'>"+nombre+"</h5><p class='card-text'>Precio: $"+precio+"</p><input type='button' class='btn btn-danger' onclick='eliminarItem("+id+")' value='Eliminar'></div>";
+        document.getElementById("items").appendChild(div);
+        document.getElementById("modalNuevoItem").close();
+    }
 
     }
 </script>

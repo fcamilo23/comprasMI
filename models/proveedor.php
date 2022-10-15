@@ -15,6 +15,9 @@ class ProveedorModel extends Model{
             if($post['id'] != ''){
                 $_SESSION['proveedorActual'] = $post['id'];
             }
+            if($post['idProveedor'] != ''){
+                $_SESSION['proveedorActual'] = $post['idProveedor'];
+            }     
         }
         header('Location: '.ROOT_URL.'proveedor/verProveedor');
 

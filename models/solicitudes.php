@@ -498,7 +498,7 @@ if (isset($_POST['submit'])) {
                 $_SESSION['solicitud']['artServ'] = $post['artServ'];
                 $_SESSION['solicitud']['inputas'] = $post['inputas'];
                 $_SESSION['solicitud']['detalle'] = $post['detalle'];
-                $_SESSION['solicitud']['oficinaSolicitante'] = $post['oficinaSolicitante'];
+                $_SESSION['solicitud']['oficinaSolicitante'] = $post['oficinasolicitante'];
                 $_SESSION['solicitud']['uo'] = $post['uo'];
                 $_SESSION['solicitud']['costo'] = $post['costo'];
                 $_SESSION['solicitud']['referente'] = $post['referente'];

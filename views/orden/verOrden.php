@@ -48,19 +48,19 @@ function mensajes(){
 <div class="container mt-5 mb-5">
     <div class="row d-flex justify-content-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8">
-            <div class="card">
+                    <div class="card">
                 <br>
             <h2 style="color: #001d5a; margin-left: 25px" class="">VER ORDEN</h1>
-                
-            <div class="card-body">
-                
-                            <label for="oc" class="form-label">OC</label>
-                            <div class="input-group mb-3">
-                                <p class="m-2">Numero   </p>
-                                <input id="numero" name="numero" type="text" class="m-2 miniinput form-control" value=" <?php  echo $viewmodel["orden"]["numero"] ?>" readonly> 
-                                <p class="m-2">Año:</p>
-                                <input id="anio" name="anio" type="text" class="m-2 miniinput form-control"  value=" <?php  echo $viewmodel["orden"]["anio"] ?>" readonly>
-                            </div>
+                <hr>
+                        <div class="card-body">
+                        <h4>OC: <?php echo $viewmodel['orden']['numero']; ?> - <?php echo $viewmodel['orden']['anio']; ?></h4>
+                        <h4>SR: <?php echo $viewmodel['solicitud']['unidad']; ?></h4>
+                        <h4>Aca iria el nuemero de procedimiento</h4>
+
+                    </div>
+                    </div>
+                    <div class="card" style="margin-top: 10px;">
+                        <div class="card-body">
                             
                             <div class="input-group mb-3">
                                 <p class="m-2">Moneda</p>
@@ -89,33 +89,48 @@ function mensajes(){
                             <p class="m-2">Nº Amplición</p>
                                 <input id="numeroAmpliacion" style="max-width: 20rem" name="numeroAmpliacion" type="text" class="form-control"  value="<?php  echo$viewmodel["orden"]["numeroAmpliacion"] ?>" readonly>
                             </div>
-                            <hr>
-                            <?php if($viewmodel["orden"]["servicio"] == "si"){ ?>
-                            <div class="input-group mb-3">
-                                <h3>SERVCICIO</h3>
-                                <label for="entrega" class="m-2 form-label">Inicio Servicio</label>
-                                <input id="inicio" name="inicio" type="date" class="miniinput2 form-control" value="<?php echo $viewmodel["orden"]["fechaInicio"] ?>" readonly>
-                                <div id="inicioError" class="invalid-feedback"></div>
-                                <label for="fin" class="m-2 form-label">Fin Servicio</label> 
-                                <input id="fin" name="fin" type="date" class="miniinput2 form-control" value="<?php echo $viewmodel["orden"]["fechaFin"] ?>" readonly>
-                            </div>
-                            <br>
-                            <?php } ?>
-                            <div>
-                                <h4><b>PROVEEDOR: </b><?php  echo $viewmodel["proveedor"]["empresa"] ?></h4>
-                                <h4><b>Razon Social: <?php  echo $viewmodel["proveedor"]["razon_social"] ?></h4>
-                                <h4><b>RUT: </b><?php  echo $viewmodel["proveedor"]["rut"] ?></h4>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-top: 10px;">
+                        <div class="card-body">
+                                <form action="<?php echo ROOT_URL; ?>proveedor/seleccionarProveedor" target='_blank' method="POST">
+                                    <input type="hidden" name="idProveedor" value="<?php echo $viewmodel['proveedor']['id']; ?>">
+                                    <h4><b>Proveedor:</b><input name="submit" class="btn btn-light btn-lg active" value="<?php  echo $viewmodel["proveedor"]["empresa"] ?>" type="submit"> </h4>
+                                    <h4><b>Razon Social: </b><?php  echo $viewmodel["proveedor"]["razon_social"] ?></h4>
+                                    <h4><b>RUT: </b><?php  echo $viewmodel["proveedor"]["rut"] ?></h4>
+                                </form>
 
+                        </div>
+                    </div>
+                    <div class="card" style="margin-top: 10px;">
+                        <div class="card-body" >
+                            <div class="col-12 center" style="text-align: center;">
+                                <a href="<?php echo ROOT_URL; ?>orden/editarOrden" class="float-right btn btn-primary">EDITAR ORDEN</a>
                             </div>
-                            <div class="col-12 center" style="text-align: center; margin-top: 50px">
-                            <a href="<?php echo ROOT_URL; ?>orden/editarOrden" class="float-right btn btn-primary">EDITAR ORDEN</a>
-                            </div>
-                            <hr>
-                            </div>
+                        </div>
+                    </div>
+                    <?php if($viewmodel['orden']['servicio'] == 'si') { ?>
+                        <div class="card" style="margin-top: 10px;">
+                            <div class="card-body" style="margin-top: 8px;">
+                                <h3 class="centro2"><b>Servicio/s</b></h3>
+                    <?php       for($i=0; $i < count($viewmodel['servicios']); $i++) { ?>
+                                <hr>
+                                    <div class="card-body" style="margin-top: 8px;">
+                                        <h4><?php echo $viewmodel['servicios'][$i]['nombreServicio']; ?></h4>
+                                        <p><b>TIPO: </b><?php echo $viewmodel['servicios'][$i]['tipoServicio']; ?></p>
+                                        <p><b>DESCRIPCION: </b><?php echo $viewmodel['servicios'][$i]['observacionServicio']; ?></p>
+                                        <p><b>MONTO: </b><?php echo $viewmodel['servicios'][$i]['precioServicio']; ?></p>
+                                        <p>Del <?php echo $viewmodel['servicios'][$i]['inicioServicio']; ?> al <?php echo $viewmodel['servicios'][$i]['finServicio']; ?></p>
+                                    </div>
+                               
+                        <?php }?>
+                        </div>
+                      <?php   } ?>
             </div>
         </div>
     </div>
 </div>
+
                             <!-- facturas -->
                             <div style="margin-top: 100px">
                             <form id="anexarFactura" action="<?php echo ROOT_PATH; ?>factura/nuevaFactura" method="post" >
