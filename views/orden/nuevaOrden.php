@@ -100,7 +100,6 @@ function readAsBase64() {
                                         <option value="€ (Euro)">€ (Euro)</option>
                                     </select>
                             </div>
-                            <!--<div id="montoRealError" class="center2"style="color:red position: static;" ></div>-->
                         
                             <label for="formaPago" class="form-label">Forma de Pago:</label>
                             <div class="input-group mb-3">
@@ -236,9 +235,17 @@ function readAsBase64() {
                                 </div>    
                             </div>
                         </div>
-                    </div>
+                        <div class="card-body" style="max-width:800px">
+                            <div class="form-group row">
+                                <label for="colFormLabel" class="col-sm-2 col-form-label" >Monto Total:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="montoReal" class="form-control miniinput2" id="montoReal" value="0" readonly>
+                                </div>
+                            </div>
+                        </div>
 
-            </div>
+                    </div>
+                </div>
         </div> 
     </div>
 </div>
@@ -258,11 +265,6 @@ function readAsBase64() {
         </div>
     </div>
 </div>
-
-</form>
-
-
-
 
 
                             
@@ -303,8 +305,8 @@ function readAsBase64() {
                                     </div>
                                 </div>
                                 </div>
-                                <!--MODAL -->
-</form>
+                                <!--MODAL</form> -->
+ </form>
 
                         <!--MODAL Items -->
                         <dialog class="divfiltros center " id="modalNuevoItem" style="margin-top:50px; z-index: 1; animation: createBox .15s">
@@ -367,6 +369,7 @@ function readAsBase64() {
 </body>
 <script>
     cantItems=0;
+    var montoReal=0;
 
     function servicio(opcion){
         var tipo = opcion.value;
@@ -463,21 +466,22 @@ function readAsBase64() {
                     <th style="width: 10%">`+tipo+`</th>
                     <th style="width: 10%">`+inicio+`</th>
                     <th style="width: 10%">`+fin+`</th>
-                    <th style="width: 5%"><button type="button" class="btn btn-danger" onclick="quitarItem(`+cantItems+`)">X</button></th>
-                    <input type="hidden" id="itemcantidad[]" value=`+cantidad+` >
-                    <input type="hidden" id="itemunidad[]" value=`+unidad+` >
-                    <input type="hidden" id="itemdescripcion[]" value=`+descripcion+` >
-                    <input type="hidden" id="itemprecio[]" value=`+precio+` >
-                    <input type="hidden" id="itemtipo[]" value=`+tipo+` >
-                    <input type="hidden" id="iteminicio[]" value=`+inicio+` readonly>
-                    <input type="hidden" id="itemfin[]" value=`+fin+` readonly>
-
-                    <input type="hidden" id="itemobservacion[]" value=`+observacion+` readonly>
-                    <input type="hidden" id="itemidsolicitud[]" value=`+idItemSolicitud+` readonly>
+                    <th style="width: 5%"><button type="button" class="btn btn-danger" onclick="quitarItem(`+cantItems+`,`+precio+`)">X</button></th>
+                    <input type="hidden" name="itemcantidad[]" id="itemcantidad[]" value=`+cantidad+` >
+                    <input type="hidden" name="itemunidad[]" id="itemunidad[]" value=`+unidad+` >
+                    <input type="hidden" name="itemdescripcion[]" id="itemdescripcion[]" value=`+descripcion+` >
+                    <input type="hidden" name="itemprecio[]" id="itemprecio[]" value=`+precio+` >
+                    <input type="hidden" name="itemtipo[]" id="itemtipo[]" value=`+tipo+` >
+                    <input type="hidden" name="iteminicio[]" id="iteminicio[]" value=`+inicio+` readonly>
+                    <input type="hidden" name="itemfin[]" id="itemfin[]" value=`+fin+` readonly>
+                    <input type="hidden" name="itemobservacion[]" id="itemobservacion[]" value=`+observacion+` readonly>
+                    <input type="hidden" name="itemidsolicitud[]"id="itemidsolicitud[]" value=`+idItemSolicitud+` readonly>
 				</tr>`
                 cerrerModelItem();
                 document.getElementById("tablaItems").innerHTML += fila;
                 cantItems++;
+                montoReal= parseFloat(montoReal) + parseFloat(precio);
+                document.getElementById("montoReal").value = montoReal;
             }
     }
     
@@ -503,7 +507,7 @@ function readAsBase64() {
         document.getElementById("modalNuevoItem").close();
         reiniciarModelItem();
     }
-    function quitarItem(id){
+    function quitarItem(id, monto){
         Swal.fire({
             title: '¿Quitar el Item?',
             text: "¡El item no se guardara!",
@@ -515,7 +519,10 @@ function readAsBase64() {
         }).then((result) => {
             if (result.isConfirmed) {
                 //eliminar el servicio
+                montoReal = parseFloat(montoReal) - parseFloat(monto);
+                document.getElementById("montoReal").value = montoReal;
                 document.getElementById("filaItem"+id).remove();
+                
                 
                 Swal.fire(
                     '¡Eliminado!',
@@ -533,7 +540,6 @@ function readAsBase64() {
         ///ESTE SCRIPT MANEJA TODO LO QUE SE REFIERE A PROVEEDOR Y CONTROL SIN SER LOS ITEMS 
 
     document.getElementById("plazoEntrega").addEventListener("blur", errorPlazoEntrega);
-
     document.getElementById("numero").addEventListener("blur", comprobarNumero);
     document.getElementById("anio").addEventListener("blur", comprobarNumero);
 
@@ -550,6 +556,7 @@ function readAsBase64() {
  
     }
     function validarFormulario(event){
+        comprobarNumero();
         let mensaje ="";
         var idProveedor = document.getElementById("idProveedor").value;
         //por si no selecciona proveedor
@@ -558,11 +565,9 @@ function readAsBase64() {
             event.preventDefault();
         }
 
-        comprobarNumero();
-        //controlar si div numeroAnioError tiene algun mensaje de error
+        
         var numeroAnioError = document.getElementById("numeroAnioError").innerHTML;
         if(numeroAnioError.length > 1){
-            //mostrar el mensaje de error igual al de numeroAnioError
             mensaje = "<hr><h4>Ya existe esa orden</h4><hr>"+mensaje;
             event.preventDefault();
         }
@@ -572,8 +577,6 @@ function readAsBase64() {
             mensaje = "<hr><h4>Debe agregar al menos un item</h4><hr>"+mensaje;
             event.preventDefault();
         }
-        mensaje+filas;
-
         
         if( mensaje.length > 1){
              

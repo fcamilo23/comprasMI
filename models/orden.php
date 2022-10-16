@@ -16,78 +16,79 @@ class OrdenModel extends Model{
     }
 
     public function agregarOrden(){
+
         $error="";
         $servicio='no';
         try{
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+
+
+                $error="Error al agregar la orden, no se cargaron ni servicios ni archivos";
+
+                $this->query('INSERT INTO   ordenes (numero, anio, moneda, montoReal, plazoEntrega, formaPago,numeroAmpliacion, idProveedor,idSolicitud,servicio) VALUES (:numero, :anio, :moneda, :montoReal, :plazoEntrega, :formaPago,:numeroAmpliacion, :idProveedor, :idSolicitud,:servicio)');
+                $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+                $this->bind(':numero', $post['numero']);
+                $this->bind(':anio', $post['anio']);
+                $this->bind(':moneda', $post['moneda']);
+                $this->bind(':montoReal', $post['montoReal']);
+                $this->bind(':formaPago', $post['formaPago']);
+                $this->bind(':plazoEntrega', $post['plazoEntrega']);
+                $this->bind(':numeroAmpliacion', $post['numeroAmpliacion']);
+                $this->bind(':idProveedor', $post['idProveedor']);
+                $this->bind(':servicio', $servicio);
+                $this->execute();
+
+                $this->query('SELECT id FROM ordenes WHERE idSolicitud = :idSolicitud AND numero = :numero AND anio = :anio LIMIT 1' );
+                $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+                $this->bind(':numero', $post['numero']);
+                $this->bind(':anio', $post['anio']);
+                $this->execute();
+                $idOrden = $this->single();
+
+                $error = "Error al agregar los items a la orden";
+                if(isset($post['itemdescripcion'])){
+                    for($i=0;$i<sizeof($post['itemdescripcion']);$i++){
+                        $this->query('INSERT INTO itemOrden (descripcion, cantidad, unidad, monto, idOrden, idSolicitud, moneda, idItemSolicitud,esservicio,inicio,fin) VALUES (:descripcion, :cantidad, :unidad, :monto, :idOrden,:idSolicitud,:moneda,:idItemSolicitud,:esservicio,:inicio,:fin)');
+                        $this->bind(':descripcion', $post['itemdescripcion'][$i]);
+                        $this->bind(':cantidad', $post['itemcantidad'][$i]);
+                        $this->bind(':unidad', $post['itemunidad'][$i]);
+                        $this->bind(':monto', $post['itemprecio'][$i]);
+                        $this->bind(':idOrden', $idOrden['id']);
+                        $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+                        $this->bind(':moneda', $post['moneda']);
+                        $this->bind(':idItemSolicitud', $post['itemidsolicitud'][$i]);
+                        $this->bind(':esservicio', $post['itemtipo'][$i]);
+                        $this->bind(':inicio', $post['iteminicio'][$i]);
+                        $this->bind(':fin', $post['itemfin'][$i]);
+                        $this->execute();
+                    }
+                }
+
+                if(isset($post['pdf'])){
+                    $error="Error al cargar los archivo/s adjunto/s:";
+                    for($i=0; $i<sizeof($post['pdf']); $i++){
+                        $error=$error.$post['pdfnombre'][$i]." ";
+                        $this->query('INSERT INTO archivosordenes (`idSolicitud`,`idOrden`, `nombre`, `pdf`) VALUES(:idSolicitud, :idOrden, :nombre, :pdf)');
+                        $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+                        $this->bind(':idOrden', $idOrden['id']);
+                        $this->bind(':nombre', $post['pdfnombre'][$i]);
+                        $this->bind(':pdf', $post['pdf'][$i]);
         
-            if(isset($post['nombreServicio'])){
-                $servicio='si';
-            }
-
-            $error="Error al agregar la orden, no se cargaron ni servicios ni archivos";
-
-            $this->query('INSERT INTO   ordenes (numero, anio, moneda, montoReal, plazoEntrega, formaPago,numeroAmpliacion, idProveedor,idSolicitud,servicio) VALUES (:numero, :anio, :moneda, :montoReal, :plazoEntrega, :formaPago,:numeroAmpliacion, :idProveedor, :idSolicitud,:servicio)');
-            $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
-            $this->bind(':numero', $post['numero']);
-            $this->bind(':anio', $post['anio']);
-            $this->bind(':moneda', $post['moneda']);
-            $this->bind(':montoReal', $post['montoReal']);
-            $this->bind(':formaPago', $post['formaPago']);
-            $this->bind(':plazoEntrega', $post['plazoEntrega']);
-            $this->bind(':numeroAmpliacion', $post['numeroAmpliacion']);
-            $this->bind(':idProveedor', $post['idProveedor']);
-            $this->bind(':servicio', $servicio);
-            $this->execute();
-
-            $this->query('SELECT id FROM ordenes WHERE idSolicitud = :idSolicitud AND numero = :numero AND anio = :anio LIMIT 1' );
-            $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
-            $this->bind(':numero', $post['numero']);
-            $this->bind(':anio', $post['anio']);
-            $this->execute();
-            $idOrden = $this->single();
-
-            if(isset($post['nombreServicio'])){
-                $error="Error al agregar el servicios y archivos";
-                for($i=0; $i<sizeof($post['nombreServicio']); $i++){
-
-                    $this->query('INSERT INTO servicios (idOrden, nombreServicio, observacionServicio, precioServicio, inicioServicio, finServicio, tipoServicio ) VALUES(:idOrden, :nombreServicio, :observacionServicio, :precioServicio, :inicioServicio, :finServicio, :tipoServicio)');
-                    $this->bind(':idOrden', $idOrden['id']);
-                    $this->bind(':nombreServicio', $post['nombreServicio'][$i]);
-                    $this->bind(':observacionServicio', $post['observacionServicio'][$i]);
-                    $this->bind(':precioServicio', $post['precioServicio'][$i]);
-                    $this->bind(':inicioServicio', $post['inicioServicio'][$i]);
-                    $this->bind(':finServicio', $post['finServicio'][$i]);
-                    $this->bind(':tipoServicio', $post['tiposervicio'][$i]);
-                    $this->execute();
+                        $this->execute();
+                    }
                 }
+
+                $_SESSION['mensaje']['tipo'] = 'success';
+                $_SESSION['mensaje']['contenido'] = 'Orden agregada correctamente';
+                header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+                return;
+            }catch(PDOException $e){
+                $_SESSION['mensaje']['tipo'] = 'error';
+                $_SESSION['mensaje']['contenido'] = $error;
+                header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+                return;      
             }
-
-
-            if(isset($post['pdf'])){
-                $error="Error al cargar los archivo/s adjunto/s:";
-                for($i=0; $i<sizeof($post['pdf']); $i++){
-                    $error=$error.$post['pdfnombre'][$i]." ";
-                    $this->query('INSERT INTO archivosordenes (`idSolicitud`,`idOrden`, `nombre`, `pdf`) VALUES(:idSolicitud, :idOrden, :nombre, :pdf)');
-                    $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
-                    $this->bind(':idOrden', $idOrden['id']);
-                    $this->bind(':nombre', $post['pdfnombre'][$i]);
-                    $this->bind(':pdf', $post['pdf'][$i]);
-    
-                    $this->execute();
-                }
-            }
-
-            $_SESSION['mensaje']['tipo'] = 'success';
-            $_SESSION['mensaje']['contenido'] = 'Orden agregada correctamente';
-            header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
-            return;
-        }catch(PDOException $e){
-            $_SESSION['mensaje']['tipo'] = 'error';
-            $_SESSION['mensaje']['contenido'] = $error;
-            header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
-            return;      
-        }
     }
    
 
@@ -99,14 +100,14 @@ class OrdenModel extends Model{
         }
         header('Location: '.ROOT_URL.'orden/verOrden');
         return;
-}
-///ver orden
-public function verOrden(){
-    //este if es para detectar si abro una orden desde la vista de "compras realizadas", no deberia afectar el resto
-    if(isset($_SESSION['idOrden'])){
-        $_SESSION['ordenActual'] = $_SESSION['idOrden'];
-        unset($_SESSION['idOrden']);
     }
+///ver orden
+    public function verOrden(){
+    //este if es para detectar si abro una orden desde la vista de "compras realizadas", no deberia afectar el resto
+        if(isset($_SESSION['idOrden'])){
+            $_SESSION['ordenActual'] = $_SESSION['idOrden'];
+            unset($_SESSION['idOrden']);
+        }
     //----------------------------------
     
 
