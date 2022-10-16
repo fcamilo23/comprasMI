@@ -214,7 +214,7 @@ function readAsBase64() {
                             </div>
                         <hr>
                         <div class="card-body" style="max-width:800px">
-                            <label for="nuevoIdItemSolicitud" class="m-2 form-label">Agregar Items de la solicitud</label>
+                            <label for="nuevoIdItemSolicitud" class=" form-label">Agregar Items de la solicitud o nuevos</label>
                             <div class="input-group mb-1 ">
                                 <select  name="nuevoIdItemSolicitud" class="form-control " id="nuevoIdItemSolicitud">
                                     <option value="-1">Seleccione Item</option>
@@ -222,8 +222,8 @@ function readAsBase64() {
                                     <option id="opcionItem<?php echo $item['id'] ?>" value="<?php echo $item['id'] ?>">
                                         <?php echo $item['cantidad'].' '.$item['unidad'].' '.$item['descripcion']  ?>
                                     </option>
-                                
                                     <?php endforeach; ?>
+                                    <option value="0">Nuevo Item</option>
                                     
                                 </select>
                                 <?php foreach($viewmodel['items'] as $item) : ?>
@@ -243,94 +243,6 @@ function readAsBase64() {
     </div>
 </div>
 
-
-
-<!-- 
-
-<div class="container" >
-    <div class="row d-flex justify-content-center ">
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10" >
-            <div class="card" style="margin-top: 10px">    
-                <div class="card-body ">
-                    <hr>
-                
-                    <div class="card">  
-                        <div class="card-body ">
-                            <h3 style="color: #001d5a; margin-left: 25px" class="">Agregar Item</h3>
-                            <label for="nuevoIdItemSolicitud" class="m-2 form-label">Item de la solicitud</label>
-                            <div class="input-group mb-1 ">
-                                <select  name="nuevoIdItemSolicitud" class="form-control " id="nuevoIdItemSolicitud">
-                                    <option value="-1">Seleccione Item</option>
-                                    <?php foreach($viewmodel['items'] as $item) : ?>
-                                    <option id="opcionItem<?php echo $item['id'] ?>" value="<?php echo $item['id'] ?>">
-                                        <?php echo $item['cantidad'].' '.$item['unidad'].' '.$item['descripcion']  ?>
-                                    </option>
-                                    
-                                    <?php endforeach; ?>
-                                    
-                                </select>
-                                <?php foreach($viewmodel['items'] as $item) : ?>
-                                    <input type="hidden" id="seleccionItemCantidad<?php echo $item['id'] ?>" value="<?php echo $item['cantidad'] ?>">
-                                    <input type="hidden" id="seleccionItemUnidad<?php echo $item['id'] ?>" value="<?php echo $item['unidad'] ?>">
-                                    <input type="hidden" id="seleccionItemDescripcion<?php echo $item['id'] ?>" value="<?php echo $item['descripcion'] ?>">
-                                <?php endforeach; ?>
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" onclick="abrirModelNuevoItem()">Agregar</button>
-                                </div>    
-                            </div>
-                        </div>
-                    </div>
-                </div>  
-            </div> 
-        </div>
-    </div>
-</div>
-                                -->
-<!--  
-<hr>       
-<div style="margin-top: 100px">
-<h1 style="color: #001d5a; margin-left: 25px" class="">Listado de Items</h1>
-<div class="d-flex justify-content-center">
-    <input type="submit" onclick="abrirModelNuevoItem()" class="float-right  btn btn-success" value="+ NUEVO ITEM">
-</div>
-
-                                <div id="items-conteiner" style="width: 100%; overflow: auto; padding: 25px; max-height: 500px"> 
-
-                                    <table id="items"style="width: 100%">
-                                        <thead>
-                                            
-                                            <tr>
-                                                <th>Descripción</th>
-                                                <th>Costo</th>
-                                                <th>R.U.T.</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody >
-                                        <tr><?php foreach($viewmodel as $item) : ?>
-
-                                            <td><?php echo $item['empresa'] ?></td>
-                                            <td><?php echo $item['razon_social'] ?></td>
-                                            <td>
-                                                <?php echo $item['rut'] ?>
-                                            </td>
-                                            <td>
-                                            <input type="button" value="✔️" class="btn btn-light" id="este" onclick="confirmarProveedor(<?php echo $item['id']?>, '<?php echo $item['empresa']?>', '<?php echo $item['rut'] ?>', '<?php echo $item['razon_social'] ?>')" >
-                                            </td>
-                                        </tr> <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
-                                    <div class="col-12 center" style="text-align: center; margin-top: 60px">
-
-                                    </div>
-                                </div>
-                            </div>
-                        
-                        </div>
-                    </div>
-                    <br>
-                    <hr>
-                    -->
 <div class="container" >
     <div class="row d-flex justify-content-center ">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10" >
@@ -409,6 +321,7 @@ function readAsBase64() {
                                             <label for="unidadNuevoItem" class="text-secondary m-2 form-label"> Unidad:</label> 
                                             <input id="unidadNuevoItem" type="text" class="miniinput2 form-control">
                                         </div>
+                                        <span id="cantidadUnidadItemError" class="center2" style="color:red; position: static;" ></span>
                                         <br>
                                         <label for="descripcionNuevoItem" class="text-secondary form-label mb-2 ">Descripción(si tiene cambios)</label>
                                             <div class="input-group mb-1 ">
@@ -425,7 +338,7 @@ function readAsBase64() {
                                             <input class="miniinput2 form-control" id="nuevoPrecioItem" name="nuevoPrecioItem" type="number" min="1" class="m-2 form-control">
                                             <label for="nuevoPrecioItem" class="text-secondary m-2 form-label">   Es servicio: </label>
                                             <select onchange="servicio(this)" class="miniinput2 form-control" id="nuevoTipoItem" name="nuevoTipoItem" class="m-2 form-control">
-                                                <option value="NO" selected>No</option>
+                                                <option value="No" selected>No</option>
                                                 <option value="General">General</option>
                                                 <option value="Licencia">Licencia</option>
                                             </select>
@@ -469,26 +382,24 @@ function readAsBase64() {
 
     function abrirModelNuevoItem(){
             reiniciarModelItem();
-            //obtener valor de select id="nuevoTipoItem"
             var itemseleccionado = document.getElementById("nuevoIdItemSolicitud").value;
-            // seleccionItemCantidad
            if(itemseleccionado > 0){
                 var cantidad = document.getElementById("seleccionItemCantidad"+itemseleccionado).value;
                 var unidad = document.getElementById("seleccionItemUnidad"+itemseleccionado).value;
                 var descripcion = document.getElementById("seleccionItemDescripcion"+itemseleccionado).value;
-
                 document.getElementById("idItemSolicitud").value = itemseleccionado;
                 document.getElementById("descripcionNuevoItem").value = descripcion;
                 document.getElementById("unidadNuevoItem").value = unidad;
                 document.getElementById("cantidadNuevoItem").value = cantidad;
+            }else{
+                if(itemseleccionado == -1){
+                    return;
+                }
             }
            document.getElementById("modalNuevoItem").showModal();
-    }
+    }  
 
-
-    
-
-        function crearItemOden(){
+    function crearItemOden(){
         ///comprobar inputs nombreServico
         var descripcion = document.getElementById("descripcionNuevoItem").value;
         var cantidad = document.getElementById("cantidadNuevoItem").value;
@@ -503,6 +414,7 @@ function readAsBase64() {
         document.getElementById("precioError").innerHTML = "";
         document.getElementById("inicioError").innerHTML = "";
         document.getElementById("fechasError").innerHTML = "";
+        document.getElementById("cantidadUnidadItemError").innerHTML = "";
 
         var error=false;
 
@@ -513,6 +425,14 @@ function readAsBase64() {
             
         if(precio == ""){
             document.getElementById("precioError").innerHTML = "El precio no puede estar vacio";
+            error=true;
+        }
+        if(unidad == ""){
+            document.getElementById("cantidadUnidadItemError").innerHTML = "La unidad no puede estar vacia";
+            error=true;
+        }
+        if(cantidad == "" || cantidad <= 0){
+            document.getElementById("cantidadUnidadItemError").innerHTML = "La cantidad no puede estar vacia";
             error=true;
         }
         if(tipo=="General" || tipo=="Licencia"){
@@ -543,7 +463,7 @@ function readAsBase64() {
                     <th style="width: 10%">`+tipo+`</th>
                     <th style="width: 10%">`+inicio+`</th>
                     <th style="width: 10%">`+fin+`</th>
-                    <th style="width: 5%"><button type="button" class="btn btn-danger" onclick="eliminarItem()">X</button></th>
+                    <th style="width: 5%"><button type="button" class="btn btn-danger" onclick="quitarItem(`+cantItems+`)">X</button></th>
                     <input type="hidden" id="itemcantidad[]" value=`+cantidad+` >
                     <input type="hidden" id="itemunidad[]" value=`+unidad+` >
                     <input type="hidden" id="itemdescripcion[]" value=`+descripcion+` >
@@ -559,55 +479,18 @@ function readAsBase64() {
                 document.getElementById("tablaItems").innerHTML += fila;
                 cantItems++;
             }
-
-}
+    }
     
 
-
-
-
-
-                //ingresar codigo html en el div Servicios
-                /*
-                <th style="width: 10%">Cantidad</th>
-                    <th style="width: 10%">Unidad</th>
-                    <th style="width: 35%">Descripcion</th>
-                    <th style="width: 10%">Monto</th>
-                    <th style="width: 10%">Servicio</th>
-                    <th style="width: 10%">Inicio</th>
-                    <th style="width: 10%">Fin</th>
-                    <th style="width: 5%"></th>
-                var div = document.getElementById("Servicios");
-                var html = `<div id="cardServicio`+cantItems+`" class="card" >
-                                <div class="card-body">
-                                    <div class="float-right text-end" >
-                                        <input type="button" class="btn btn-danger" onclick="quitarServicio(`+cantItems+`)" value="x">
-                                    </div>
-                                    <input type="hidden" name="nombreItem[]" value="`+descripcion+`">
-
-                                    <input type="hidden" name="precioServicio[]" value="`+precio+`">
-                                    <input type="hidden" name="inicioServicio[]" value="`+inicio+`">
-                                    <input type="hidden" name="finServicio[]" value="`+fin+`">
-                                    <input type="hidden" name="observacionServicio[]" value="`+document.getElementById("nuevoObservacionItem").value+`">
-                                    <input type="hidden" name="tiposervicio[]" value="`+document.getElementById("nuevoTipoItem").value+`">
-                                    <b><h4 class="card-title mb-2">`+descripcion+`</h4></b>
-                                    <h5 class=" mb-2"><b>Costo:</b>`+precio+`</h5>
-                                    <p class="card-text">Del `+inicio+` al`+fin+`</p>
-                                </div>
-                            </div>
-                            <br>`;
-                div.innerHTML += html;
-                cantItems++;
-                */
-
-    
     function reiniciarModelItem(){
-        document.getElementById("idItemSolicitud").value = "0";
+        document.getElementById("cantidadUnidadItemError").innerHTML = "";
         document.getElementById("descripcionNuevoItemError").innerHTML = "";
         document.getElementById("precioError").innerHTML = "";
         document.getElementById("inicioError").innerHTML = "";
         document.getElementById("fechasError").innerHTML = "";
+        document.getElementById("idItemSolicitud").value = "0";
         document.getElementById("descripcionNuevoItem").value="";
+        document.getElementById("cantidadNuevoItem").value="";
         document.getElementById("nuevoPrecioItem").value="";
         document.getElementById("nuevoInicioItem").value="";
         document.getElementById("nuevoFinItem").value="";
@@ -615,20 +498,15 @@ function readAsBase64() {
         document.getElementById("nuevoObservacionItem").value="";
         document.getElementById("nuevoTipoItem").value="No";
     }
+
     function cerrerModelItem(){
         document.getElementById("modalNuevoItem").close();
         reiniciarModelItem();
     }
-    
-
-
-
-/*
-    function quitarServicio(id){
-
+    function quitarItem(id){
         Swal.fire({
-            title: '¿Quitar el servicio?',
-            text: "¡El servicio no se guardara!",
+            title: '¿Quitar el Item?',
+            text: "¡El item no se guardara!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -637,8 +515,8 @@ function readAsBase64() {
         }).then((result) => {
             if (result.isConfirmed) {
                 //eliminar el servicio
-                var div = document.getElementById("cardServicio"+id);
-                div.remove();
+                document.getElementById("filaItem"+id).remove();
+                
                 Swal.fire(
                     '¡Eliminado!',
                     'El servicio ha sido quitado.',
@@ -646,21 +524,10 @@ function readAsBase64() {
                 )
             }
         });
+
     }
-    */
+
     </script>
-
-
-
-
-
-
-
-
-
-
-
-
 
     <script>
         ///ESTE SCRIPT MANEJA TODO LO QUE SE REFIERE A PROVEEDOR Y CONTROL SIN SER LOS ITEMS 
@@ -682,7 +549,6 @@ function readAsBase64() {
         }
  
     }
-    //evitar mandar formulario si idProveedor esta vacio
     function validarFormulario(event){
         let mensaje ="";
         var idProveedor = document.getElementById("idProveedor").value;
@@ -700,6 +566,13 @@ function readAsBase64() {
             mensaje = "<hr><h4>Ya existe esa orden</h4><hr>"+mensaje;
             event.preventDefault();
         }
+        //contar las filas de la tabla de items
+        var filas = document.getElementById("tablaItems").rows.length;
+        if(filas < 1){
+            mensaje = "<hr><h4>Debe agregar al menos un item</h4><hr>"+mensaje;
+            event.preventDefault();
+        }
+        mensaje+filas;
 
         
         if( mensaje.length > 1){
@@ -771,17 +644,6 @@ function readAsBase64() {
         document.getElementById("confirmarProveedor").style.display = "none";
         document.getElementById("modalconfirmar").style.display = "none";
      }
-
-/*
-    function agregarItem(id, descripcion, cantidad, unidad, precio){
-        var div = document.createElement("div");
-        div.setAttribute("class", "card");
-        div.setAttribute("id", "cardItem"+id);
-        div.innerHTML = "<div class='card-body'><h5 class='card-title'>"+nombre+"</h5><p class='card-text'>Precio: $"+precio+"</p><input type='button' class='btn btn-danger' onclick='eliminarItem("+id+")' value='Eliminar'></div>";
-        document.getElementById("items").appendChild(div);
-        document.getElementById("modalNuevoItem").close();
-    }
-*/
 
 </script>
 <?php } else{ ?>
