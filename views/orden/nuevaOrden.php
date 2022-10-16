@@ -121,8 +121,13 @@ function readAsBase64() {
                             </div>
                         </div>
                     </div>
+                </div>
+    </div>
+</div>
 
-
+<div class="container" >
+    <div class="row d-flex justify-content-center ">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10" >
                 <div class="card" style="margin-top: 10px">    
                     <div class="card-body ">
                             <!-- aqui se va a guardar proveedor -->
@@ -135,11 +140,11 @@ function readAsBase64() {
 
                             <hr>
                             <div id="main-container" style="width: 100%; overflow: auto; padding: 25px; max-height: 500px"> <!--  max-height: 800px -->
-
-                                <table id="proveedores"style="width: 100%">
-                                    <thead>
+                            
+                                <table id="proveedores"style="width: 100%; background: #b4bacc">
+                                    <thead style="background: #172033">
                                         
-                                        <tr>
+                                        <tr >
                                             <th>Empresa</th>
                                             <th>Razon Social</th>
                                             <th>R.U.T.</th>
@@ -147,7 +152,7 @@ function readAsBase64() {
                                         </tr>
                                     </thead>
                                     <tbody >
-                                    <tr><?php foreach($viewmodel['proveedores'] as $item) : ?>
+                                    <tr style="max-height:20px; height:20px"><?php foreach($viewmodel['proveedores'] as $item) : ?>
 
                                         <td><?php echo $item['empresa'] ?></td>
                                         <td><?php echo $item['razon_social'] ?></td>
@@ -161,13 +166,8 @@ function readAsBase64() {
                                     </tbody>
                                 </table>
                             </div>
-
-                        </div>
-                   </div> 
-
-
-
-
+                    </div>
+                </div>
 
                 <div class="card" style="margin-top: 10px">    
                     <div class="card-body ">
@@ -187,12 +187,106 @@ function readAsBase64() {
                         </div>
                    </div>  
                 </div> 
-                
-        </div>
+                <div class="card" style="margin-top: 10px">    
+                    <div class="card-body ">
+                        <h3 style="color: #001d5a; margin-left: 25px" class="">Items</h3>
+                        <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
+
+                                <table id="listaItems" style="width: 100%;">
+
+                                    <thead>
+                                        
+                                        <tr>
+                                            <th style="width: 10%">Cantidad</th>
+                                            <th style="width: 10%">Unidad</th>
+                                            <th style="width: 35%">Descripcion</th>
+                                            <th style="width: 10%">Monto</th>
+                                            <th style="width: 10%">Servicio</th>
+                                            <th style="width: 10%">Inicio</th>
+                                            <th style="width: 10%">Fin</th>
+                                            <th style="width: 5%"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablaItems">
+                            
+                                    </tbody>
+                                </table>
+                            </div>
+                        <hr>
+                        <div class="card-body" style="max-width:800px">
+                            <label for="nuevoIdItemSolicitud" class="m-2 form-label">Agregar Items de la solicitud</label>
+                            <div class="input-group mb-1 ">
+                                <select  name="nuevoIdItemSolicitud" class="form-control " id="nuevoIdItemSolicitud">
+                                    <option value="-1">Seleccione Item</option>
+                                    <?php foreach($viewmodel['items'] as $item) : ?>
+                                    <option id="opcionItem<?php echo $item['id'] ?>" value="<?php echo $item['id'] ?>">
+                                        <?php echo $item['cantidad'].' '.$item['unidad'].' '.$item['descripcion']  ?>
+                                    </option>
+                                
+                                    <?php endforeach; ?>
+                                    
+                                </select>
+                                <?php foreach($viewmodel['items'] as $item) : ?>
+                                    <input type="hidden" id="seleccionItemCantidad<?php echo $item['id'] ?>" value="<?php echo $item['cantidad'] ?>">
+                                    <input type="hidden" id="seleccionItemUnidad<?php echo $item['id'] ?>" value="<?php echo $item['unidad'] ?>">
+                                    <input type="hidden" id="seleccionItemDescripcion<?php echo $item['id'] ?>" value="<?php echo $item['descripcion'] ?>">
+                                <?php endforeach; ?>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="abrirModelNuevoItem()">Agregar</button>
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+        </div> 
     </div>
 </div>
 
 
+
+<!-- 
+
+<div class="container" >
+    <div class="row d-flex justify-content-center ">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10" >
+            <div class="card" style="margin-top: 10px">    
+                <div class="card-body ">
+                    <hr>
+                
+                    <div class="card">  
+                        <div class="card-body ">
+                            <h3 style="color: #001d5a; margin-left: 25px" class="">Agregar Item</h3>
+                            <label for="nuevoIdItemSolicitud" class="m-2 form-label">Item de la solicitud</label>
+                            <div class="input-group mb-1 ">
+                                <select  name="nuevoIdItemSolicitud" class="form-control " id="nuevoIdItemSolicitud">
+                                    <option value="-1">Seleccione Item</option>
+                                    <?php foreach($viewmodel['items'] as $item) : ?>
+                                    <option id="opcionItem<?php echo $item['id'] ?>" value="<?php echo $item['id'] ?>">
+                                        <?php echo $item['cantidad'].' '.$item['unidad'].' '.$item['descripcion']  ?>
+                                    </option>
+                                    
+                                    <?php endforeach; ?>
+                                    
+                                </select>
+                                <?php foreach($viewmodel['items'] as $item) : ?>
+                                    <input type="hidden" id="seleccionItemCantidad<?php echo $item['id'] ?>" value="<?php echo $item['cantidad'] ?>">
+                                    <input type="hidden" id="seleccionItemUnidad<?php echo $item['id'] ?>" value="<?php echo $item['unidad'] ?>">
+                                    <input type="hidden" id="seleccionItemDescripcion<?php echo $item['id'] ?>" value="<?php echo $item['descripcion'] ?>">
+                                <?php endforeach; ?>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="abrirModelNuevoItem()">Agregar</button>
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div> 
+        </div>
+    </div>
+</div>
+                                -->
+<!--  
 <hr>       
 <div style="margin-top: 100px">
 <h1 style="color: #001d5a; margin-left: 25px" class="">Listado de Items</h1>
@@ -200,7 +294,7 @@ function readAsBase64() {
     <input type="submit" onclick="abrirModelNuevoItem()" class="float-right  btn btn-success" value="+ NUEVO ITEM">
 </div>
 
-                                <div id="items-conteiner" style="width: 100%; overflow: auto; padding: 25px; max-height: 500px"> <!--  max-height: 800px -->
+                                <div id="items-conteiner" style="width: 100%; overflow: auto; padding: 25px; max-height: 500px"> 
 
                                     <table id="items"style="width: 100%">
                                         <thead>
@@ -236,10 +330,11 @@ function readAsBase64() {
                     </div>
                     <br>
                     <hr>
+                    -->
 <div class="container" >
     <div class="row d-flex justify-content-center ">
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12" >
-                    <div class="card">                
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10" >
+                    <div class="card text-center" style="margin-top: 40px; margin-bottom: 50px;">                
                         <div class="card-body ">
                             <div >           
                                 <a class="ml-2" href="<?php echo ROOT_PATH; ?>solicitudes/verSolicitud"><button type="button"  class="btn btn-secondary ml-3">CANCELAR</button></a>
@@ -248,48 +343,14 @@ function readAsBase64() {
                             </div>
                     </div>
             </div>
-
-
         </div>
     </div>
 </div>
 
 </form>
 
-<!--
-<div style="margin-top: 100px">
-<a href="<?php echo ROOT_PATH; ?>orden/nuevaOrden"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOrden.jpg" width="190px" height="50px" ></button></a>
-<h1 style="color: #001d5a; margin-left: 25px" class="">Órdenes de Compra</h1>
-
-<div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
-
-		<table id="solis" style="width: 100%;">
-
-			<thead>
-                
-				<tr>
-					<th>Número</th>
-                    <th>Procedimiento</th>
-                    <th>Proveedor</th>
-                    <th>Monto Real ($U)</th>
-                    <th>Plazo de Entrega</th>
-                    <th></th>
-                    <th></th>
 
 
-
-				</tr>
-			</thead>
-            <tbody >
-            
-
-
-            
-
-            </tbody>
-		</table>
-	</div>
-</div> -->
 
 
                             
@@ -333,141 +394,236 @@ function readAsBase64() {
                                 <!--MODAL -->
 </form>
 
-                        <!--MODAL Servicio -->
+                        <!--MODAL Items -->
                         <dialog class="divfiltros center " id="modalNuevoItem" style="margin-top:50px; z-index: 1; animation: createBox .15s">
-                                
+                            <div class="card">
                                     <div class="card-body ">
-                                    <label for="nuevoIdItemSolicitud" class="form-label">Item de la solicitud</label>
-                                        <div class="input-group mb-1 ">
-                                            <select name="nuevoIdItemSolicitud" class="m-2 form-control " id="nuevoIdItemSolicitud">
-                                                <option value="-1">Seleccione Item</option>
-                                                <?php foreach($viewmodel['items'] as $item) : ?>
-                                                <option onclick="agregarItem(<?php echo $item['id'] ?>)" value="<?php echo $item['id'] ?>">
-                                                    <?php echo $item['cantidad'].' '.$item['unidad'].' '.$item['descripcion']  ?>
-                                                </option>
 
-                                                <?php endforeach; ?>
-                                            </select>
+                                            <h3>AGREGAR ITEM</h3>
+                                            <hr>
+                                        <input type="hidden" id="idItemSolicitud">
+                                         <div class="input-group">
+                                            <label for="cantidadNuevoItem" class="text-secondary m-2 form-label">Cantidad: </label>
+                                            <input id="cantidadNuevoItem" type="number" class="miniinput2 form-control">
+                                            <div id="cantidadNuevoItem" class="invalid-feedback"></div>
+                                            <label for="unidadNuevoItem" class="text-secondary m-2 form-label"> Unidad:</label> 
+                                            <input id="unidadNuevoItem" type="text" class="miniinput2 form-control">
                                         </div>
-                                        <label for="descripcionNombreItem" class="form-label">Descripción(si tiene cambios)</label>
-                                                <div class="input-group mb-1 ">
-                                                <input id="descripcionNombreItem" name="descripcionNombreItem" type="text" class="m-2 form-control " >
-                                                <input type="button"  class="btn btn-light" value="*">
-                                                <span id="descripcionNombreItemError" class="center2" style="color:red; height:100%; " ></span>
-                                        </div>
-    
-                                        <label for="formaPago" class="form-label">Observacion:</label>
+                                        <br>
+                                        <label for="descripcionNuevoItem" class="text-secondary form-label mb-2 ">Descripción(si tiene cambios)</label>
+                                            <div class="input-group mb-1 ">
+                                                <input id="descripcionNuevoItem" name="descripcionNuevoItem" type="text" class="m-2 form-control " >
+                                                <span id="descripcionNuevoItemError" class="center2" style="color:red; height:100%; " ></span>
+                                            </div>
+                                        <label for="observacion" class="text-secondary form-label">Observacion (no obligatorio):</label>
                                             <div class="input-group mb-3">
-                                            <textarea id="nuevoObservacionServicio" name="nuevoObservacionServicio" class="form-control"></textarea>
+                                            <textarea id="nuevoObservacionItem" name="nuevoObservacionItem" class="form-control"></textarea>
                                         </div>
 
                                         <div class="input-group mb-1">
-                                            <label for="nuevoPrecioServicio" class="m-2 form-label">Precio: </label>
-                                            <input class="miniinput2 form-control" id="nuevoPrecioServicio" name="nuevoPrecioServicio" type="number" min="1" class="m-2 form-control">
-                                            <label for="nuevoPrecioServicio" class="m-2 form-label">   Tipo de servicio: </label>
-                                            <select class="miniinput2 form-control" id="nuevoTipoServicio" name="nuevoTipoServicio" class="m-2 form-control">
-                                                <option value="General" selected>General</option>
+                                            <label for="nuevoPrecioItem" class="text-secondary m-2 form-label">Precio: </label>
+                                            <input class="miniinput2 form-control" id="nuevoPrecioItem" name="nuevoPrecioItem" type="number" min="1" class="m-2 form-control">
+                                            <label for="nuevoPrecioItem" class="text-secondary m-2 form-label">   Es servicio: </label>
+                                            <select onchange="servicio(this)" class="miniinput2 form-control" id="nuevoTipoItem" name="nuevoTipoItem" class="m-2 form-control">
+                                                <option value="NO" selected>No</option>
+                                                <option value="General">General</option>
                                                 <option value="Licencia">Licencia</option>
                                             </select>
                                         </div>
-                                        <span id="precioError" class="center2"style="color:red; position: static;" ></span>
-                                        <br>
+                                        <span id="precioError" class="center2" style="color:red; position: static;" ></span>
+                                        <hr>
                                         
-                                        <div class="input-group mb-1">
-                                            <label for="entrega" class="m-2 form-label">Inicio: </label>
-                                            <input id="nuevoInicioServicio" name="nuevoInicioServicio" type="date" class="miniinput2 form-control">
+                                        <div class="input-group mb-1" >
+                                            <label for="entrega" class="text-secondary m-2 form-label" >Inicio: </label>
+                                            <input id="nuevoInicioItem" name="nuevoInicioItem" type="date" class="miniinput2 form-control" disabled>
                                             <div id="inicioError" class="invalid-feedback"></div>
-                                            <label for="fin" class="m-2 form-label">   Finaliza:</label> 
-                                            <input id="nuevoFinServicio" name="nuevoFinServicio" type="date" class="miniinput2 form-control">
+                                            <label for="fin" class="text-secondary m-2 form-label">   Finaliza:</label> 
+                                            <input id="nuevoFinItem" name="nuevoFinItem" type="date" class="miniinput2 form-control" disabled>
                                         </div>
                                         <span id="fechasError" class="center2"style="color:red; position: static;" ></span>
+                                        <hr>
+                                    
 
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrerModelItem()">CANCELAR</button>
+                                            <button type="button" class="btn btn-primary" onclick="crearItemOden()">AGREGAR</button>
                                     </div>
-
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarModel()">CANCELAR</button>
-                                            <button type="button" class="btn btn-primary" onclick="crearServicio()">GUARDAR</button>
-                              
-                                <br>
+                            </div>
                             </dialog>
                             <!--Fin Modal Servicio -->
 
 </body>
 <script>
-    cantServicios=0;
-        function crearServicio(){
+    cantItems=0;
+
+    function servicio(opcion){
+        var tipo = opcion.value;
+
+        if(tipo == "General" || tipo == "Licencia"){
+            document.getElementById("nuevoInicioItem").disabled = false;
+            document.getElementById("nuevoFinItem").disabled = false;
+        }else{
+            document.getElementById("nuevoInicioItem").disabled = true;
+            document.getElementById("nuevoFinItem").disabled = true;
+        }
+    }
+
+    function abrirModelNuevoItem(){
+            reiniciarModelItem();
+            //obtener valor de select id="nuevoTipoItem"
+            var itemseleccionado = document.getElementById("nuevoIdItemSolicitud").value;
+            // seleccionItemCantidad
+           if(itemseleccionado > 0){
+                var cantidad = document.getElementById("seleccionItemCantidad"+itemseleccionado).value;
+                var unidad = document.getElementById("seleccionItemUnidad"+itemseleccionado).value;
+                var descripcion = document.getElementById("seleccionItemDescripcion"+itemseleccionado).value;
+
+                document.getElementById("idItemSolicitud").value = itemseleccionado;
+                document.getElementById("descripcionNuevoItem").value = descripcion;
+                document.getElementById("unidadNuevoItem").value = unidad;
+                document.getElementById("cantidadNuevoItem").value = cantidad;
+            }
+           document.getElementById("modalNuevoItem").showModal();
+    }
+
+
+    
+
+        function crearItemOden(){
         ///comprobar inputs nombreServico
-        var nombreServico = document.getElementById("descripcionNombreItem").value;
-        var precio = document.getElementById("nuevoPrecioServicio").value;
-        var inicio = document.getElementById("nuevoInicioServicio").value;
-        var fin = document.getElementById("nuevoFinServicio").value;
-        document.getElementById("descripcionNombreItemError").innerHTML = "";
+        var descripcion = document.getElementById("descripcionNuevoItem").value;
+        var cantidad = document.getElementById("cantidadNuevoItem").value;
+        var unidad = document.getElementById("unidadNuevoItem").value;
+        var precio = document.getElementById("nuevoPrecioItem").value;
+        var inicio = document.getElementById("nuevoInicioItem").value;
+        var fin = document.getElementById("nuevoFinItem").value;
+        var tipo = document.getElementById("nuevoTipoItem").value;
+        var observacion = document.getElementById("nuevoObservacionItem").value;
+        var idItemSolicitud = document.getElementById("idItemSolicitud").value;
+        document.getElementById("descripcionNuevoItemError").innerHTML = "";
         document.getElementById("precioError").innerHTML = "";
         document.getElementById("inicioError").innerHTML = "";
         document.getElementById("fechasError").innerHTML = "";
+
         var error=false;
-        
-        if(nombreServico == ""){
-            document.getElementById("descripcionNombreItemError").innerHTML = "El nombre no puede estar vacio";
-            document.getElementById("descripcionNombreItem").focus();
+
+        if(descripcion == ""){
+            document.getElementById("descripcionNuevoItemError").innerHTML = "El nombre no puede estar vacio";
             error=true;
         }
             
         if(precio == ""){
             document.getElementById("precioError").innerHTML = "El precio no puede estar vacio";
-            document.getElementById("nuevoPrecioServicio").focus();
             error=true;
+        }
+        if(tipo=="General" || tipo=="Licencia"){
+            if(inicio == ""){
+                document.getElementById("inicioError").innerHTML = "La fecha de inicio no puede estar vacia";
+                error=true;
+            }
+            if(fin == ""){
+                document.getElementById("fechasError").innerHTML = "La fecha de fin no puede estar vacia";
+                error=true;
+            }
+            if(inicio > fin){
+                document.getElementById("fechasError").innerHTML = "La fecha de inicio no puede ser mayor a la fecha de fin";
+                error=true;
+            }
+        }else{
+            inicio = null;
+            fin = null;
         }
 
-        if(inicio > fin){
-            document.getElementById("fechasError").innerHTML = "El inicio no puede ser mayor al fin";
-            document.getElementById("nuevoInicioServicio").focus();
-            error=true;
-        }
-        if(fin == ""){
-            document.getElementById("fechasError").innerHTML = "La fecha de fin no puede estar vacia";
-            document.getElementById("nuevoInicioServicio").focus();
-            error=true;
-        }
-        if(inicio == ""){
-            document.getElementById("fechasError").innerHTML = "La fecha de inicio no puede estar vacia";
-            document.getElementById("nuevoFinServicio").focus();
-            error=true;
-        }
         if(error==false){
-            cerrarModel();
+            
+            var fila=`<tr id="filaItem`+cantItems+`">
+					<th style="width: 10%">`+cantidad+`</th>
+                    <th style="width: 10%">`+unidad+`</th>
+                    <th style="width: 35%">`+descripcion+`</th>
+                    <th style="width: 10%">`+precio+`</th>
+                    <th style="width: 10%">`+tipo+`</th>
+                    <th style="width: 10%">`+inicio+`</th>
+                    <th style="width: 10%">`+fin+`</th>
+                    <th style="width: 5%"><button type="button" class="btn btn-danger" onclick="eliminarItem()">X</button></th>
+                    <input type="hidden" id="itemcantidad[]" value=`+cantidad+` >
+                    <input type="hidden" id="itemunidad[]" value=`+unidad+` >
+                    <input type="hidden" id="itemdescripcion[]" value=`+descripcion+` >
+                    <input type="hidden" id="itemprecio[]" value=`+precio+` >
+                    <input type="hidden" id="itemtipo[]" value=`+tipo+` >
+                    <input type="hidden" id="iteminicio[]" value=`+inicio+` readonly>
+                    <input type="hidden" id="itemfin[]" value=`+fin+` readonly>
+
+                    <input type="hidden" id="itemobservacion[]" value=`+observacion+` readonly>
+                    <input type="hidden" id="itemidsolicitud[]" value=`+idItemSolicitud+` readonly>
+				</tr>`
+                cerrerModelItem();
+                document.getElementById("tablaItems").innerHTML += fila;
+                cantItems++;
+            }
+
+}
+    
+
+
+
+
 
                 //ingresar codigo html en el div Servicios
+                /*
+                <th style="width: 10%">Cantidad</th>
+                    <th style="width: 10%">Unidad</th>
+                    <th style="width: 35%">Descripcion</th>
+                    <th style="width: 10%">Monto</th>
+                    <th style="width: 10%">Servicio</th>
+                    <th style="width: 10%">Inicio</th>
+                    <th style="width: 10%">Fin</th>
+                    <th style="width: 5%"></th>
                 var div = document.getElementById("Servicios");
-                var html = `<div id="cardServicio`+cantServicios+`" class="card" >
+                var html = `<div id="cardServicio`+cantItems+`" class="card" >
                                 <div class="card-body">
                                     <div class="float-right text-end" >
-                                        <input type="button" class="btn btn-danger" onclick="quitarServicio(`+cantServicios+`)" value="x">
+                                        <input type="button" class="btn btn-danger" onclick="quitarServicio(`+cantItems+`)" value="x">
                                     </div>
-                                    <input type="hidden" name="nombreServicio[]" value="`+nombreServico+`">
+                                    <input type="hidden" name="nombreItem[]" value="`+descripcion+`">
+
                                     <input type="hidden" name="precioServicio[]" value="`+precio+`">
                                     <input type="hidden" name="inicioServicio[]" value="`+inicio+`">
                                     <input type="hidden" name="finServicio[]" value="`+fin+`">
-                                    <input type="hidden" name="observacionServicio[]" value="`+document.getElementById("nuevoObservacionServicio").value+`">
-                                    <input type="hidden" name="tiposervicio[]" value="`+document.getElementById("nuevoTipoServicio").value+`">
-                                    <b><h4 class="card-title mb-2">`+nombreServico+`</h4></b>
+                                    <input type="hidden" name="observacionServicio[]" value="`+document.getElementById("nuevoObservacionItem").value+`">
+                                    <input type="hidden" name="tiposervicio[]" value="`+document.getElementById("nuevoTipoItem").value+`">
+                                    <b><h4 class="card-title mb-2">`+descripcion+`</h4></b>
                                     <h5 class=" mb-2"><b>Costo:</b>`+precio+`</h5>
                                     <p class="card-text">Del `+inicio+` al`+fin+`</p>
                                 </div>
                             </div>
                             <br>`;
                 div.innerHTML += html;
-                cantServicios++;
-                   
-                document.getElementById("descripcionNombreItem").value="";
-                document.getElementById("nuevoPrecioServicio").value="";
-                document.getElementById("nuevoInicioServicio").value="";
-                document.getElementById("nuevoFinServicio").value="";
-                document.getElementById("nuevoObservacionServicio").value="";
-                document.getElementById("nuevoTipoServicio").value="General";
-        }
+                cantItems++;
+                */
 
+    
+    function reiniciarModelItem(){
+        document.getElementById("idItemSolicitud").value = "0";
+        document.getElementById("descripcionNuevoItemError").innerHTML = "";
+        document.getElementById("precioError").innerHTML = "";
+        document.getElementById("inicioError").innerHTML = "";
+        document.getElementById("fechasError").innerHTML = "";
+        document.getElementById("descripcionNuevoItem").value="";
+        document.getElementById("nuevoPrecioItem").value="";
+        document.getElementById("nuevoInicioItem").value="";
+        document.getElementById("nuevoFinItem").value="";
+        document.getElementById("unidadNuevoItem").value="";
+        document.getElementById("nuevoObservacionItem").value="";
+        document.getElementById("nuevoTipoItem").value="No";
     }
+    function cerrerModelItem(){
+        document.getElementById("modalNuevoItem").close();
+        reiniciarModelItem();
+    }
+    
 
+
+
+/*
     function quitarServicio(id){
 
         Swal.fire({
@@ -491,8 +647,23 @@ function readAsBase64() {
             }
         });
     }
+    */
+    </script>
 
 
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        ///ESTE SCRIPT MANEJA TODO LO QUE SE REFIERE A PROVEEDOR Y CONTROL SIN SER LOS ITEMS 
 
     document.getElementById("plazoEntrega").addEventListener("blur", errorPlazoEntrega);
 
@@ -567,20 +738,7 @@ function readAsBase64() {
         document.getElementById("idProveedor").value = id;
         document.getElementById("proveedorNombre").innerHTML = empresa ;
     }
-    function abrirModelNuevoItem(){
 
-            document.getElementById("modalNuevoItem").showModal();
-    }
-
-
-
-    
-    function cerrarModel(){
-        //cerrar modal de servicio
-        document.getElementById("modalNuevoItem").close();
-        document.getElementById("confirmarProveedor").style.display = "none";
-        document.getElementById("modalconfirmar").style.display = "none";
-    }
 
     function comprobarNumero(){
         var numero = document.getElementById("numero").value;
@@ -608,10 +766,13 @@ function readAsBase64() {
             }
         });
         return retorno;
-
-
     }
+    function cerrarModel(){
+        document.getElementById("confirmarProveedor").style.display = "none";
+        document.getElementById("modalconfirmar").style.display = "none";
+     }
 
+/*
     function agregarItem(id, descripcion, cantidad, unidad, precio){
         var div = document.createElement("div");
         div.setAttribute("class", "card");
@@ -620,8 +781,8 @@ function readAsBase64() {
         document.getElementById("items").appendChild(div);
         document.getElementById("modalNuevoItem").close();
     }
+*/
 
-    }
 </script>
 <?php } else{ ?>
 
