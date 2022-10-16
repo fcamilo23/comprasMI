@@ -546,7 +546,12 @@
     //evitar mandar formulario si idProveedor esta vacio
     function validarFormulario(event){
         let mensaje ="";
-
+        ///controlar que item tablaItems tenga al men
+        var filas = document.getElementById("tablaItems").rows.length;
+        if(filas < 1){
+            mensaje = "<hr><h4>Debe agregar al menos un item</h4><hr>"+mensaje;
+            event.preventDefault();
+        }
 
         if('<?php echo $viewmodel['orden']['servicio'] ?>' == 'si'){
             var fin = document.getElementById("fin").value;
