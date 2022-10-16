@@ -108,28 +108,53 @@ function mensajes(){
                                 <a href="<?php echo ROOT_URL; ?>orden/editarOrden" class="float-right btn btn-primary">EDITAR ORDEN</a>
                             </div>
                         </div>
-                    </div>
-                    <?php if($viewmodel['orden']['servicio'] == 'si') { ?>
-                        <div class="card" style="margin-top: 10px;">
-                            <div class="card-body" style="margin-top: 8px;">
-                                <h3 class="centro2"><b>Servicio/s</b></h3>
-                    <?php       for($i=0; $i < count($viewmodel['servicios']); $i++) { ?>
-                                <hr>
-                                    <div class="card-body" style="margin-top: 8px;">
-                                        <h4><?php echo $viewmodel['servicios'][$i]['nombreServicio']; ?></h4>
-                                        <p><b>TIPO: </b><?php echo $viewmodel['servicios'][$i]['tipoServicio']; ?></p>
-                                        <p><b>DESCRIPCION: </b><?php echo $viewmodel['servicios'][$i]['observacionServicio']; ?></p>
-                                        <p><b>MONTO: </b><?php echo $viewmodel['servicios'][$i]['precioServicio']; ?></p>
-                                        <p>Del <?php echo $viewmodel['servicios'][$i]['inicioServicio']; ?> al <?php echo $viewmodel['servicios'][$i]['finServicio']; ?></p>
-                                    </div>
-                               
-                        <?php }?>
-                        </div>
-                      <?php   } ?>
+                    </div>    
+                   
             </div>
         </div>
     </div>
 </div>
+<!-- tabla de Items -->
+<h3 style="color: #001d5a; margin-left: 25px" class="">Items</h3>
+                        <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
+
+                                <table id="listaItems" style="width: 100%;">
+
+                                    <thead>
+                                        
+                                        <tr>
+                                            <th style="width: 10%">Cantidad</th>
+                                            <th style="width: 10%">Unidad</th>
+                                            <th style="width: 35%">Descripcion</th>
+                                            <th style="width: 10%">Monto</th>
+                                            <th style="width: 10%">Servicio</th>
+                                            <th style="width: 10%">Inicio</th>
+                                            <th style="width: 10%">Fin</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablaItems">
+                                    <?php 
+                                    $i = 0;
+                                    $cantidad=0;
+                                    $total=0;
+                                    foreach($viewmodel['items'] as $item) : 
+                                    ?>
+
+                                        <tr id="filaItem<?php echo $i;?>">
+                                            <th style="width: 10%"><?php echo $item['cantidad'] ?> </th>
+                                            <th style="width: 10%"><?php echo $item['unidad'] ?> </th>
+                                            <th style="width: 35%"><?php echo $item['descripcion'] ?> </th>
+                                            <th style="width: 10%"><?php echo $item['monto'] ?> </th>
+                                            <th style="width: 10%"><?php echo $item['esservicio'] ?> </th>
+                                            <th style="width: 10%"><?php echo $item['inicio'] ?></th>
+                                            <th style="width: 10%"><?php echo $item['fin'] ?> </th>
+                                        </tr>
+                                        <?php $i++; $total += $item['monto'];
+                                     endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
 
                             <!-- facturas -->
                             <div style="margin-top: 100px">

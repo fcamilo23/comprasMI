@@ -49,6 +49,13 @@ class OrdenModel extends Model{
                 $error = "Error al agregar los items a la orden";
                 if(isset($post['itemdescripcion'])){
                     for($i=0;$i<sizeof($post['itemdescripcion']);$i++){
+                        $inicio=null;
+                        $fin=null;
+                        if($post['itemtipo'][$i] == 'General' && $post['itemtipo'][$i] == 'Licencia'  ){
+                            $inicio = $post['iteminicio'][$i];
+                            $fin = $post['itemfin'][$i];
+                        }
+
                         $this->query('INSERT INTO itemOrden (descripcion, cantidad, unidad, monto, idOrden, idSolicitud, moneda, idItemSolicitud,esservicio,inicio,fin) VALUES (:descripcion, :cantidad, :unidad, :monto, :idOrden,:idSolicitud,:moneda,:idItemSolicitud,:esservicio,:inicio,:fin)');
                         $this->bind(':descripcion', $post['itemdescripcion'][$i]);
                         $this->bind(':cantidad', $post['itemcantidad'][$i]);
@@ -59,8 +66,8 @@ class OrdenModel extends Model{
                         $this->bind(':moneda', $post['moneda']);
                         $this->bind(':idItemSolicitud', $post['itemidsolicitud'][$i]);
                         $this->bind(':esservicio', $post['itemtipo'][$i]);
-                        $this->bind(':inicio', $post['iteminicio'][$i]);
-                        $this->bind(':fin', $post['itemfin'][$i]);
+                        $this->bind(':inicio',$inicio);
+                        $this->bind(':fin', $fin);
                         $this->execute();
                     }
                 }
@@ -116,6 +123,10 @@ class OrdenModel extends Model{
     $this->bind(':id',  $_SESSION['ordenActual'] );
     $orden = $this->single();
 
+    $this->query('SELECT * FROM itemOrden WHERE idOrden = :idOrden');
+    $this->bind(':idOrden',  $_SESSION['ordenActual'] );
+    $items = $this->resultSet();
+
     ///obtener solicitud
     $this->query('SELECT * FROM solicitudescompra WHERE id = :id');
     $this->bind(':id',  $orden['idSolicitud'] );
@@ -144,7 +155,8 @@ class OrdenModel extends Model{
         'proveedor' => $proveedor,
         'facturas' => $facturas,
         'solicitud' => $solicitud,
-        'servicios' => $servicios
+        'servicios' => $servicios,
+        'items' => $items
     );
     return $viewmodel;
 
@@ -319,21 +331,33 @@ class OrdenModel extends Model{
 
     
     public function editarOrden(){
-        //traer todos los proveedores
+
         $this->query('SELECT * FROM proveedores');
         $proveedores = $this->resultSet();
-        //traer la orden
+
+        $this->query('SELECT * FROM item WHERE idSolicitud = :idSolicitud');
+        $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+        $itemsSolicitud = $this->resultSet();
+
+
+        $this->query('SELECT * FROM itemOrden WHERE idOrden = :idOrden');
+        $this->bind(':idOrden', $_SESSION['ordenActual']);
+        $itemsOrden = $this->resultSet();
+
         $this->query('SELECT *, p.empresa as nombreEmpresa FROM ordenes o JOIN proveedores p on o.idProveedor = p.id WHERE o.id = :id');
         $this->bind(':id', $_SESSION['ordenActual']);
         $orden = $this->single();
         $viewmodel = array(
             'proveedores' => $proveedores,
-            'orden' => $orden
+            'orden' => $orden,
+            'itemsSolicitud' => $itemsSolicitud,
+            'itemsOrden' => $itemsOrden
         );
         return $viewmodel;
     }
     
     public function modificarOrden(){
+
         try{
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -347,6 +371,39 @@ class OrdenModel extends Model{
             if(isset($post['editadoIdProveedor'])){
                 $proveedor = $post['editadoIdProveedor'];
             }
+            if(isset($post['quitarItem'])){
+                for($i = 0; $i < sizeof($post['quitarItem']); $i++){
+                    $this->query('DELETE FROM itemOrden WHERE id = :id');
+                    $this->bind(':id', $post['quitarItem'][$i]);
+                    $this->execute();
+                }
+            }
+
+            if(isset($post['itemdescripcion'])){
+                for($i=0;$i<sizeof($post['itemdescripcion']);$i++){
+                    $inicio=null;
+                    $fin=null;
+                    if($post['itemtipo'][$i] == 'General' && $post['itemtipo'][$i] == 'Licencia'  ){
+                        $inicio = $post['iteminicio'][$i];
+                        $fin = $post['itemfin'][$i];
+                    }
+
+                    $this->query('INSERT INTO itemOrden (descripcion, cantidad, unidad, monto, idOrden, idSolicitud, moneda, idItemSolicitud,esservicio,inicio,fin) VALUES (:descripcion, :cantidad, :unidad, :monto, :idOrden,:idSolicitud,:moneda,:idItemSolicitud,:esservicio,:inicio,:fin)');
+                    $this->bind(':descripcion', $post['itemdescripcion'][$i]);
+                    $this->bind(':cantidad', $post['itemcantidad'][$i]);
+                    $this->bind(':unidad', $post['itemunidad'][$i]);
+                    $this->bind(':monto', $post['itemprecio'][$i]);
+                    $this->bind(':idOrden', $_SESSION['ordenActual']);
+                    $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+                    $this->bind(':moneda', $post['moneda']);
+                    $this->bind(':idItemSolicitud', $post['itemidsolicitud'][$i]);
+                    $this->bind(':esservicio', $post['itemtipo'][$i]);
+                    $this->bind(':inicio',$inicio);
+                    $this->bind(':fin', $fin);
+                    $this->execute();
+                }
+            }
+
 
             $this->query('UPDATE ordenes SET moneda = :moneda, montoReal = :montoReal, plazoEntrega = :plazoEntrega, formaPago = :formaPago, fechaInicio = :fechaInicio, fechaFin = :fechaFin, idProveedor = :idProveedor, numeroAmpliacion = :numeroAmpliacion WHERE id = :id');
             $this->bind(':id', $_SESSION['ordenActual']);
@@ -363,14 +420,16 @@ class OrdenModel extends Model{
             $this->execute();
             $_SESSION['mensaje']['tipo'] = 'success';
             $_SESSION['mensaje']['contenido'] = 'Orden modificada correctamente';
-            header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+            header('Location: '.ROOT_URL.'orden/verOrden');
             return;
+
         }catch(PDOException $e){
             $_SESSION['mensaje']['tipo'] = 'error';
             $_SESSION['mensaje']['contenido'] = 'Error al modificar la orden ...Prueba de nuevo mas tarde';
-            header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+            header('Location: '.ROOT_URL.'orden/verOrden');
             return;      
         }
+
     }
 
     public function eliminarOrden(){

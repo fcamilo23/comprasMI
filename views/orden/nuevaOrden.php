@@ -364,11 +364,11 @@ function readAsBase64() {
                                     </div>
                             </div>
                             </dialog>
-                            <!--Fin Modal Servicio -->
+                            <!--Fin Modal Item -->
 
 </body>
 <script>
-    cantItems=0;
+    let cantItems=0;
     var montoReal=0;
 
     function servicio(opcion){
@@ -418,6 +418,8 @@ function readAsBase64() {
         document.getElementById("inicioError").innerHTML = "";
         document.getElementById("fechasError").innerHTML = "";
         document.getElementById("cantidadUnidadItemError").innerHTML = "";
+        let iniciomostrar=inicio;
+        let finmostrar=fin;
 
         var error=false;
 
@@ -454,6 +456,8 @@ function readAsBase64() {
         }else{
             inicio = null;
             fin = null;
+            iniciomostrar="";
+            finmostrar="";
         }
 
         if(error==false){
@@ -464,18 +468,18 @@ function readAsBase64() {
                     <th style="width: 35%">`+descripcion+`</th>
                     <th style="width: 10%">`+precio+`</th>
                     <th style="width: 10%">`+tipo+`</th>
-                    <th style="width: 10%">`+inicio+`</th>
-                    <th style="width: 10%">`+fin+`</th>
+                    <th style="width: 10%">`+iniciomostrar+`</th>
+                    <th style="width: 10%">`+iniciomostrar+`</th>
                     <th style="width: 5%"><button type="button" class="btn btn-danger" onclick="quitarItem(`+cantItems+`,`+precio+`)">X</button></th>
-                    <input type="hidden" name="itemcantidad[]" id="itemcantidad[]" value=`+cantidad+` >
-                    <input type="hidden" name="itemunidad[]" id="itemunidad[]" value=`+unidad+` >
-                    <input type="hidden" name="itemdescripcion[]" id="itemdescripcion[]" value=`+descripcion+` >
-                    <input type="hidden" name="itemprecio[]" id="itemprecio[]" value=`+precio+` >
-                    <input type="hidden" name="itemtipo[]" id="itemtipo[]" value=`+tipo+` >
-                    <input type="hidden" name="iteminicio[]" id="iteminicio[]" value=`+inicio+` readonly>
-                    <input type="hidden" name="itemfin[]" id="itemfin[]" value=`+fin+` readonly>
-                    <input type="hidden" name="itemobservacion[]" id="itemobservacion[]" value=`+observacion+` readonly>
-                    <input type="hidden" name="itemidsolicitud[]"id="itemidsolicitud[]" value=`+idItemSolicitud+` readonly>
+                    <input type="hidden" name="itemcantidad[]" id="itemcantidad[]" value="`+cantidad+`" >
+                    <input type="hidden" name="itemunidad[]" id="itemunidad[]" value="`+unidad+`">
+                    <input type="hidden" name="itemdescripcion[]" id="itemdescripcion[]" value="`+descripcion+`" >
+                    <input type="hidden" name="itemprecio[]" id="itemprecio[]" value="`+precio+`" >
+                    <input type="hidden" name="itemtipo[]" id="itemtipo[]" value="`+tipo+`" >
+                    <input type="hidden" name="iteminicio[]" id="iteminicio[]" value="`+inicio+`" readonly>
+                    <input type="hidden" name="itemfin[]" id="itemfin[]" value="`+fin+`" readonly>
+                    <input type="hidden" name="itemobservacion[]" id="itemobservacion[]" value="`+observacion+`" readonly>
+                    <input type="hidden" name="itemidsolicitud[]"id="itemidsolicitud[]" value="`+idItemSolicitud+`" readonly>
 				</tr>`
                 cerrerModelItem();
                 document.getElementById("tablaItems").innerHTML += fila;
@@ -501,6 +505,8 @@ function readAsBase64() {
         document.getElementById("unidadNuevoItem").value="";
         document.getElementById("nuevoObservacionItem").value="";
         document.getElementById("nuevoTipoItem").value="No";
+        document.getElementById("nuevoInicioItem").disabled=true;
+        document.getElementById("nuevoFinItem").disabled=true;
     }
 
     function cerrerModelItem(){
@@ -526,7 +532,7 @@ function readAsBase64() {
                 
                 Swal.fire(
                     '¡Eliminado!',
-                    'El servicio ha sido quitado.',
+                    'El item ha sido quitado.',
                     'success'
                 )
             }
