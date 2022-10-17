@@ -281,8 +281,9 @@
                             <thead style="background: #172033">
                                 <tr>
                                     <th style="width: 7%">Cantidad</th>
-                                    <th style="width: 30%">Unidad</th>
+                                    <th style="width: 28%">Unidad</th>
                                     <th>Descripcion</th>
+                                    <th style="width: 12%">Total ($U)</th>
 
                                 </tr>
                             </thead>
@@ -294,6 +295,8 @@
                                         <td><input  class="form-control" type="text" readonly value="<?php echo $item['cantidad'] ?>"></td>
                                         <td><input class="form-control" type="text" readonly value="<?php echo $item['unidad'] ?>"></td>
                                         <td><textarea class="form-control" rows="1" readonly type="text"><?php echo $item['descripcion'] ?></textarea></td>
+                                        <td><input class="form-control" type="text" readonly value="<?php echo $item['total'] ?>"></td>
+
                                     </tr>
 
                                     <?php endforeach; } ?>
