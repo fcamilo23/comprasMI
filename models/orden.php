@@ -18,15 +18,12 @@ class OrdenModel extends Model{
     public function agregarOrden(){
 
         $error="";
-        $servicio='no';
         try{
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-
-
                 $error="Error al agregar la orden, no se cargaron ni servicios ni archivos";
 
-                $this->query('INSERT INTO   ordenes (numero, anio, moneda, montoReal, plazoEntrega, formaPago,numeroAmpliacion, idProveedor,idSolicitud,servicio) VALUES (:numero, :anio, :moneda, :montoReal, :plazoEntrega, :formaPago,:numeroAmpliacion, :idProveedor, :idSolicitud,:servicio)');
+                $this->query('INSERT INTO   ordenes (numero, anio, moneda, montoReal, plazoEntrega, formaPago,numeroAmpliacion, idProveedor,idSolicitud) VALUES (:numero, :anio, :moneda, :montoReal, :plazoEntrega, :formaPago,:numeroAmpliacion, :idProveedor, :idSolicitud)');
                 $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
                 $this->bind(':numero', $post['numero']);
                 $this->bind(':anio', $post['anio']);
@@ -36,7 +33,6 @@ class OrdenModel extends Model{
                 $this->bind(':plazoEntrega', $post['plazoEntrega']);
                 $this->bind(':numeroAmpliacion', $post['numeroAmpliacion']);
                 $this->bind(':idProveedor', $post['idProveedor']);
-                $this->bind(':servicio', $servicio);
                 $this->execute();
 
                 $this->query('SELECT id FROM ordenes WHERE idSolicitud = :idSolicitud AND numero = :numero AND anio = :anio LIMIT 1' );
@@ -51,7 +47,7 @@ class OrdenModel extends Model{
                     for($i=0;$i<sizeof($post['itemdescripcion']);$i++){
                         $inicio=null;
                         $fin=null;
-                        if($post['itemtipo'][$i] == 'General' && $post['itemtipo'][$i] == 'Licencia'  ){
+                        if($post['itemtipo'][$i] == 'General' || $post['itemtipo'][$i] == 'Licencia'  ){
                             $inicio = $post['iteminicio'][$i];
                             $fin = $post['itemfin'][$i];
                         }
@@ -362,12 +358,7 @@ class OrdenModel extends Model{
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             $proveedor = $post['idProveedor'];
-            
-            if(isset($post['inicio']) && isset($post['fin']) && $post['inicio'] != '' && $post['fin'] != ''){
-                $fechaini = $post['inicio'];
-                $fechafin = $post['fin'];
-            }
-            
+
             if(isset($post['editadoIdProveedor'])){
                 $proveedor = $post['editadoIdProveedor'];
             }
@@ -383,7 +374,7 @@ class OrdenModel extends Model{
                 for($i=0;$i<sizeof($post['itemdescripcion']);$i++){
                     $inicio=null;
                     $fin=null;
-                    if($post['itemtipo'][$i] == 'General' && $post['itemtipo'][$i] == 'Licencia'  ){
+                    if($post['itemtipo'][$i] == 'General' || $post['itemtipo'][$i] == 'Licencia'  ){
                         $inicio = $post['iteminicio'][$i];
                         $fin = $post['itemfin'][$i];
                     }

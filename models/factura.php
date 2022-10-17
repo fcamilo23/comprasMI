@@ -47,7 +47,7 @@ class FacturaModel extends Model{
 			$this->execute();
 			
 			//obtener el id de la factura recien creada
-			$this->query('SELECT id FROM facturas WHERE idOrden = :idOrden AND numeroFactura = :numeroFactura');
+			$this->query('SELECT id FROM facturas WHERE idOrden = :idOrden AND numeroFactura = :numeroFactura LIMIT 1');
 			$this->bind(':idOrden', $post['idOrden']);
 			$this->bind(':numeroFactura', $post['numeroFactura']);
 			$idFactura = $this->single();
@@ -61,7 +61,7 @@ class FacturaModel extends Model{
 					$this->bind(':descripcion', $post['descripcionItem'][$i]);
 					$this->bind(':monto', $post['montoItem'][$i]);
 					$this->bind(':moneda', $post['monedaFactura']);
-					$this->bind(':idFactura', $idFactura);
+					$this->bind(':idFactura', $idFactura['id']);
 					$this->bind(':idOrden', $post['idOrden']);
 					$this->bind(':idItemOrden', $post['idItem'][$i]);
 					$this->execute();
@@ -113,7 +113,6 @@ class FacturaModel extends Model{
 		$this->query('SELECT * FROM itemFactura WHERE idFactura = :idFactura');
 		$this->bind(':idFactura', $_SESSION['idFactura']);
 		$items = $this->resultSet();
-
 
 		$this->query('SELECT id as idArchivo, nombre as nombreFactura FROM archivosfacturas WHERE idFactura = :idFactura');
 		$this->bind(':idFactura', $_SESSION['idFactura']);
