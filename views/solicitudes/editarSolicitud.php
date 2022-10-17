@@ -203,16 +203,18 @@
                             <thead style="background: #172033">
                                 <tr>
                                     <th style="width: 7%">Cantidad</th>
-                                    <th style="width: 30%">Unidad</th>
+                                    <th style="width: 28%">Unidad</th>
                                     <th>Descripcion</th>
+                                    <th style="width: 12%">Total ($U)</th>
                                     <th style="width: 3%"></th>
 
                                 </tr>
                             </thead>
                                     <tr class="tclass">
                                         <td><input type="number" class="form-control" name="cant" id="cant" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" ></td>
-                                        <td><input class="form-control" name="uni" id="uni" type="text"></td>
+                                        <td><input class="form-control" name="uni" id="uni" type="text" ></td>
                                         <td><textarea class="form-control" name="desc" id="desc" rows="1" type="text"></textarea></td>
+                                        <td><input class="form-control" name="total" id="total" type="number" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" placeholder="$"></td>
                                         <td><input type="button" id="alerta" class="btn btn-primary" onclick="alertAddItem()" value="+"></input></td>
                                         <input style="display: none" type="submit" id="add" name="submit"  class="btn btn-primary" value="+"></input>
 
@@ -232,6 +234,7 @@
                                         <input  class="form-control" type="text" name="cant1" readonly value="<?php echo $item['cantidad'] ?>"></td>
                                         <td><input class="form-control" type="text" name="uni1" readonly value="<?php echo $item['unidad'] ?>"></td>
                                         <td><textarea class="form-control" rows="1" name="desc1" readonly type="text"><?php echo $item['descripcion'] ?></textarea></td>
+                                        <td><input class="form-control" type="text" name="uni1" readonly value="<?php echo $item['total'] ?>"></td>
                                         <td><input type="button" style="color: white;" id=""  class="btn btnEliminar" onclick="alertDeleteItem(<?php echo $item['id']; ?>)" value="×" <?php if(count($_SESSION['items']) <= 1){?> disabled <?php } ?>  ></input>
                                         <input style="display:none" type="submit" id="delete" name="submit" class="btn btnEliminar" value="×"  <?php if(count($_SESSION['items']) <= 1){?> disabled <?php } ?>></input></td>
                                     

@@ -1,3 +1,26 @@
+<?php
+if($_SESSION['user_data']['rol'] != 'Administrador'){
+	?>
+	<script>
+    Swal.fire({
+        title: '',
+        text: "Solo los administradores tienen acceso al registro de usuarios",
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ok'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            window.location="<?php echo ROOT_URL; ?>";
+        }
+        })
+
+</script>
+
+	<?php
+}else{
+?>
 <div class="container mt-5 mb-5">
     <div class="row d-flex justify-content-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8">
@@ -154,3 +177,6 @@
             widget_cloudinary.open()
         }, false)
 </script>
+
+
+<?php } ?>

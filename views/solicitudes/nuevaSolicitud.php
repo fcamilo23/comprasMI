@@ -35,6 +35,8 @@
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Gastos e Inversiones</label>
         <label  style=" color: red">*</label>
         <select name="gastos_inversiones" id="gastos_inversiones" class="form-control">
+                <option value="0" selected>-</option>
+
                 <option <?php if(isset($_SESSION['solicitud']['gastos_inversiones'])){if($_SESSION['solicitud']['gastos_inversiones'] == "Bienes de Consumo") { ?> selected <?php }} ?> value="Bienes de Consumo" >Bienes de Consumo</option>
 				<option <?php if(isset($_SESSION['solicitud']['gastos_inversiones'])){if($_SESSION['solicitud']['gastos_inversiones'] == "Servicios No Personales") { ?> selected <?php }} ?> value="Servicios No Personales">Servicios No Personales</option>
 				<option <?php if(isset($_SESSION['solicitud']['gastos_inversiones'])){if($_SESSION['solicitud']['gastos_inversiones'] == "Bienes de Uso") { ?> selected <?php }} ?> value="Bienes de Uso">Bienes de Uso</option>
@@ -42,14 +44,14 @@
 
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Planificado</label>
         <label  style=" color: red">*</label>
-        <select name="planificado" id="planificado" class="form-control">
+        <select name="planificado" id="planificado" class="form-control" style="margin-bottom:45px">
 				<option <?php if(isset($_SESSION['solicitud']['planificado'])){if($_SESSION['solicitud']['planificado'] == "Si") { ?> selected <?php }} ?> value="Si">Si</option>
 				<option <?php if(isset($_SESSION['solicitud']['planificado'])){if($_SESSION['solicitud']['planificado'] == "No") { ?> selected <?php }} ?> value="No">No</option>
 			</select> 
 
-        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
+        <h1 style="display:none"><label  style="margin-top: 20px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
         <input type="number" name="costo" id="costo" min="0"  value="<?php if(isset($_SESSION['solicitud']['costo'])) {  echo $_SESSION['solicitud']['costo']; }?>" class="form-control" style="margin-top: 0px; margin-bottom: 40px;" placeholder="" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" > 
-    
+        </h1>
     </div>
         <!-- Por si hay que poner el procedimiento con numero y año como dijo Saul: Procedimiento|Numero|Año ---------------------------------------------------- 
         <label style="margin-top: 20px; color: rgb(130, 130, 130)">Procedimiento | Número | Año</label>
@@ -87,7 +89,7 @@
 
 
             <select name="oficinaSolicitante" id="oficinaSolicitante" style="" class="form-control">
-                
+                <option value="0" selected>-</option>
                 <?php
                 foreach($viewmodel as $item) : $oficina = $item['unidad'] . ' ' . $item['ue'];
                 ?>
@@ -103,7 +105,7 @@
         <input type="text" name="referente" id="referente" value="<?php if(isset($_SESSION['solicitud']['referente'])) {  echo $_SESSION['solicitud']['referente']; }?>" class="form-control" style="margin-top: 0px;"   >
 
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Contacto Referente</label>
-        <input type="text" name="contactoReferente" id="contactoReferente"  value="<?php if(isset($_SESSION['solicitud']['contactoReferente'])) {  echo $_SESSION['solicitud']['contactoReferente']; }?>" class="form-control" style="margin-top: 0px;"   >
+        <input type="text" name="contactoReferente" id="contactoReferente"  value="<?php if(isset($_SESSION['solicitud']['contactoReferente'])) {  echo $_SESSION['solicitud']['contactoReferente']; }?>" class="form-control" style="margin-top: 0px; margin-bottom: 30px"   >
 				
         </div>
 
@@ -119,7 +121,7 @@
         </div>-->
 
         
-    <div style="padding: 20 40;  background: rgb(239,239,239); border-radius: 5px">
+    <div style="padding: 20 40;  background: rgb(239,239,239); border-radius: 5px" class="mar">
         <label  id="pp" style="margin-top: 20px; color: rgb(130, 130, 130)">Grupos Art/Serv</label>
         <label  style=" color: red">*</label>
         <select name="grupoAS" id="grupoAS" onchange="arts(this);" class="form-control">
@@ -139,7 +141,7 @@
 
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Art/Serv</label>
         <label  style=" color: red">*</label>
-        <select name="artServ" id="artServ" style=" margin-bottom: 30px;" onchange="cambiarinput(value);" class="form-control" >
+        <select name="artServ" id="artServ" style=" margin-bottom: 30px;" onchange="cambiarinput(value);" class="form-control" placeholder="-">
 
         </select>
         <input type="text" style="display:none"  name="inputas" value="<?php if(isset($_SESSION['solicitud']['inputas'])){ echo $_SESSION['solicitud']['inputas']; } ?>"  id="inputas">
@@ -173,10 +175,10 @@
 
         <label  style="margin-top: 15px; color: rgb(130, 130, 130)">Detalle</label>
         <label  style=" color: red">*</label>
-        <textarea class="form-control" name="detalle" id="detalle" cols="40" rows="5" style="margin-top: 0px;" placeholder=""><?php if(isset($_SESSION['solicitud']['detalle'])) {  echo $_SESSION['solicitud']['detalle']; }?></textarea>
+        <textarea class="form-control" name="detalle" id="detalle" cols="40" rows="4" style="margin-top: 0px;" placeholder=""><?php if(isset($_SESSION['solicitud']['detalle'])) {  echo $_SESSION['solicitud']['detalle']; }?></textarea>
 
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Observaciones</label>
-        <textarea class="form-control" name="observaciones" cols="40" rows="5" style="margin-top: 0px;" placeholder=""><?php if(isset($_SESSION['solicitud']['observaciones'])) {  echo $_SESSION['solicitud']['observaciones']; }?></textarea>
+        <textarea class="form-control" name="observaciones" cols="40" rows="4" style="margin-top: 0px;" placeholder=""><?php if(isset($_SESSION['solicitud']['observaciones'])) {  echo $_SESSION['solicitud']['observaciones']; }?></textarea>
     </div>
     </div>
 
@@ -272,16 +274,19 @@
                             <thead style="background: #172033">
                                 <tr>
                                     <th style="width: 7%">Cantidad</th>
-                                    <th style="width: 30%">Unidad</th>
+                                    <th style="width: 28%">Unidad</th>
                                     <th>Descripcion</th>
+                                    <th style="width: 12%">Total ($U)</th>
                                     <th style="width: 3%"></th>
 
                                 </tr>
                             </thead>
                                     <tr class="tclass">
                                         <td><input class="form-control" name="cant" id="cant" type="number" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"></td>
-                                        <td><input class="form-control" name="uni" id="uni" type="text"></td>
+                                        <td><input class="form-control" name="uni" id="uni" type="text" ></td>
                                         <td><textarea class="form-control" name="desc" id="desc" rows="1" type="text"></textarea></td>
+                                        <td><input class="form-control" name="totalItem" id="totalItem" type="text" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'" placeholder="$"></td>
+
                                         <td><input type="submit" id="add" name="submit"  class="btn btn-primary" value="+"></input></td>
 
                                         
@@ -303,6 +308,7 @@
                                         <td ><input  class="form-control" type="text" readonly value="<?php echo $item['cantidad'] ?>"></td>
                                         <td><input class="form-control" type="text" readonly value="<?php echo $item['unidad'] ?>"></td>
                                         <td><textarea class="form-control" rows="1" readonly type="text"><?php echo $item['descripcion'] ?></textarea></td>
+                                        <td><input class="form-control" type="text" readonly value="<?php echo $item['totalItem'] ?>"></td>
                                         <td><input style="color: white" type="submit" id="delete" name="submit"  class="btn btnEliminar" value="×"></input></td>
                                     </form>
 
@@ -514,7 +520,7 @@ function cargarSelect(gas){
 
     if(gas.value == '0'){
         limpiarSelect();
-        addoption('');
+        //addoption('-');
     }
 
     if(gas.value == 'Artículos y Accesorios de Informática'){

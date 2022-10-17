@@ -314,7 +314,7 @@ if (isset($_POST['submit'])) {
                 );
 
                 
-                $this->query('INSERT INTO item(cantidad, unidad, descripcion, idSolicitud) VALUES ("'.$post['cant'].'", "'.$post['uni'].'", "'.$post['desc'].'", "'.$_SESSION['solicitudActual']['id'].'")');
+                $this->query('INSERT INTO item(cantidad, unidad, descripcion, idSolicitud, total) VALUES ("'.$post['cant'].'", "'.$post['uni'].'", "'.$post['desc'].'", "'.$_SESSION['solicitudActual']['id'].'", "'.$post['total'].'")');
                 $this->execute();
 
                 $this->query('SELECT * FROM item where id = (select max(id) from item)');
@@ -324,11 +324,12 @@ if (isset($_POST['submit'])) {
                     "cantidad"	=> $post['cant'],
                     "unidad"	=> $post['uni'],
                     "descripcion"	=> $post['desc'],
+                    "total"	=> $post['total'],
                     "id"	=> $item['id']);
                     
                 array_push($_SESSION['items'], $e); 
 
-                header('Location: '.ROOT_URL.'solicitudes/editarSolicitud#add');
+                header('Location: '.ROOT_URL.'solicitudes/editarSolicitud#cant');
             }
 
             if($post['submit'] == "×"){
@@ -452,7 +453,7 @@ if (isset($_POST['submit'])) {
                         $soli = $this->single(); 
                         if($soli['fechaHora'] == $fecha){ //$soli es el ultimo registro de la tabla, que se supone es la solicitud recien creada. Comparando la fechaHora me aseguro que asi sea
                             foreach ($_SESSION['items'] as $item) :
-                                $this->query('INSERT INTO item(cantidad, unidad, descripcion, idSolicitud) VALUES("'. $item['cantidad'] .'", "'. $item['unidad'] .'", "'. $item['descripcion'] .'", "'. $soli['id'] .'")');
+                                $this->query('INSERT INTO item(cantidad, unidad, descripcion, idSolicitud, total) VALUES("'. $item['cantidad'] .'", "'. $item['unidad'] .'", "'. $item['descripcion'] .'", "'. $soli['id'] .'", "'. $item['totalItem'] .'")');
                                 $this->execute();
                             endforeach;
 
@@ -518,7 +519,9 @@ if (isset($_POST['submit'])) {
                 $e = array(
                     "cantidad"	=> $post['cant'],
                     "unidad"	=> $post['uni'],
-                    "descripcion"	=> $post['desc']);
+                    "descripcion"	=> $post['desc'],
+                    "totalItem"	=> $post['totalItem']);
+
                     
                 array_push($_SESSION['items'], $e); 
 

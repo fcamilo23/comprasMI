@@ -694,6 +694,9 @@ section{
     .borderleftr{
         border-left: none;
     }
+    .mar{
+        margin-top: 20px;
+    }
 }
 
 @media (max-width: 1350px){
