@@ -1,4 +1,6 @@
 <body>
+<form id="formFactura" onsubmit="validarFormulario(event)" action="<?php echo ROOT_URL; ?>factura/agregarFactura" method="POST" enctype="multipart/form-data">
+
     <div class="container">
         <div class="row d-flex justify-content-center ">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-8">
@@ -9,7 +11,6 @@
 
                         <div class="card-body ">
 
-                            <form id="formFactura" onsubmit="validarFormulario(event)" action="<?php echo ROOT_URL; ?>factura/agregarFactura" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="idOrden" value="<?php echo $viewmodel['idOrden']; ?>">
                             <input type="hidden" name="idProveedor" value="<?php echo $viewmodel['idProveedor']; ?>">
            
@@ -56,9 +57,7 @@
                                                     <option value="€ (Euro)" <?php if($viewmodel["moneda"]=='€ (Euro)') { echo "selected"; } ?> >€ (Euro)</option>
                                                 </select>
                                             </div>
-                                                <div class="col-sm-4">
-                                                    <input id="montoFactura" name="montoFactura" type="number" min="0"  class=" form-control" required>
-                                                </div>
+
                                         </div>
                                         <div id="montoRealError" class="center2" style="color:red"></div>
 
@@ -97,35 +96,143 @@
                                     </div>
                                 </div>
                                 <!--MODAL -->
-                                <a href="<?php echo ROOT_URL; ?>orden/verOrden" ><input type="button" value="CANCELAR" class="btn btn-secondary"  ></a>
-                                <input type="submit" class="btn btn-primary" value="AGREGAR FACTURA"  onclick="abrirModal()" style="margin-top: 20px; margin-bottom: 20px">
+                                
 
-                            </form>
+                            
 
                         </div>
                 </div>
             </div>
+<div class="container" >
+    <div class="row d-flex justify-content-center ">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10" >
+            <div class="card text-center" style="margin-top: 40px; margin-bottom: 50px;">                
+                <div class="card-body ">
+            <hr>
+            <h3 style="color: #001d5a; margin-left: 25px" class="">Items</h3>
+                        <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
+
+                                <table id="listaItems" style="width: 100%;">
+
+                                    <thead>
+                                        
+                                        <tr>
+                                            <th style="width: 20%">Cantidad</th>
+                                            <th style="width: 20%">Unidad</th>
+                                            <th style="width: 30%">Descripcion</th>
+                                            <th style="width: 20%">Monto</th>
+                                            <th>Agregar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablaItems">
+                                    <?php 
+                                    foreach($viewmodel['items'] as $item) : 
+                                    ?>
+
+                                        <tr id="filaItem<?php echo $item['id'] ?>">
+                                            <th style="width: 20%"><input id="itemCantidad<?php echo $item['id'] ?>" type="number" min="1"class="form-control"value="<?php echo $item['cantidad'] ?>" readonly> </th>
+                                            <th style="width: 20%"><?php echo $item['unidad'] ?> </th>
+                                            <th style="width: 30%"><?php echo $item['descripcion'] ?> </th>
+                                            <th style="width: 20%"><input id="itemMonto<?php echo $item['id'] ?>" type="number" min="1"class="form-control"value="<?php echo $item['monto'] ?>" readonly> </th>
+                                            <th id="agregar<?php echo $item['id'] ?>"style="width: 5%"><button type="button" class="btn btn-success" onclick="agregarItem(<?php echo $item['id'] ?>,<?php echo $item['monto'] ?> )">+</button></th>
+                                        </tr>
+                                        <input type="hidden" id="itemOrden<?php echo $item['id'] ?>" value="<?php echo $item['id'] ?>">
+                                        <input type="hidden" id="descripcion<?php echo $item['id'] ?>" value="<?php echo $item['descripcion'] ?>">
+                                        <input type="hidden" id="unidad<?php echo $item['id'] ?>" value="<?php echo $item['descripcion'] ?>">
+                                        <input type="hidden" id="descripcion<?php echo $item['id'] ?>" value="<?php echo $item['descripcion'] ?>">
+                                        <input type="hidden" id="recuperacionCantidad<?php echo $item['id'] ?>" value="<?php echo $item['cantidad'] ?>">
+                                        <input type="hidden" id="recuperacionMonto<?php echo $item['id'] ?>" value="<?php echo $item['monto'] ?>">
+                                        <?php  endforeach; ?>
+                                    </tbody>
+                                </table>
+                            <!--MODAL   
+                                <div class="form-group row" style="margin-top: 40px;">
+                                <label for="colFormLabel" class="col-sm-2 col-form-label" >Monto Total:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="montoReal" class="form-control miniinput2" id="montoReal" value="0" readonly>
+                                </div>
+                            </div>-->  
+                            </div>
         </div>
     </div>
+    <div class="card text-center" style="margin-top: 40px; margin-bottom: 50px;">                
+                <div class="card-body ">
+
+                    <div >  
+                        <a href="<?php echo ROOT_URL; ?>orden/verOrden" ><input type="button" value="CANCELAR" class="btn btn-secondary"  ></a>
+                        <input type="submit" class="btn btn-primary" value="AGREGAR FACTURA"  onclick="abrirModal()" style="margin-top: 20px; margin-bottom: 20px">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </form>
 </body>
+<script>
+    let total=0;    
+    function agregarItem(idItem,monto){
+        ///readonly false a cantidad y monto
+        document.getElementById("itemCantidad"+idItem).readOnly = false;
+        document.getElementById("itemMonto"+idItem).readOnly = false;
+        document.getElementById("agregar"+idItem).innerHTML = '<button type="button" class="btn btn-danger" onclick="quitarItem('+idItem+','+monto+')">-</button>';
+        //agregar name a cantidad monto unidad y descripcion
+        document.getElementById("itemCantidad"+idItem).setAttribute("name", "cantidadItem[]");
+        document.getElementById("itemMonto"+idItem).setAttribute("name", "montoItem[]");
+        document.getElementById("unidad"+idItem).setAttribute("name", "unidadItem[]");
+        document.getElementById("descripcion"+idItem).setAttribute("name", "descripcionItem[]");
+        document.getElementById("itemOrden"+idItem).setAttribute("name", "idItem[]");
+
+    }
+
+    function quitarItem(idItem,monto){
+        //readonly true a cantidad y monto
+        document.getElementById("itemCantidad"+idItem).value = document.getElementById("recuperacionCantidad"+idItem).value;
+        document.getElementById("itemMonto"+idItem).value = document.getElementById("recuperacionMonto"+idItem).value;
+        document.getElementById("itemCantidad"+idItem).readOnly = true;
+        document.getElementById("itemMonto"+idItem).readOnly = true;
+        document.getElementById("agregar"+idItem).innerHTML = '<button type="button" class="btn btn-success" onclick="agregarItem('+idItem+','+monto+')">+</button>';
+        //quitar name a cantidad monto unidad y descripcion
+        document.getElementById("itemCantidad"+idItem).removeAttribute("name");
+        document.getElementById("itemMonto"+idItem).removeAttribute("name");
+        document.getElementById("unidad"+idItem).removeAttribute("name");
+        document.getElementById("descripcion"+idItem).removeAttribute("name");
+        document.getElementById("itemOrden"+idItem).removeAttribute("name");
+        //recuperar valores
+
+    }
+
+    ///funcion que controla que exista un name en html
+    function existeName(name){
+        var inputs = document.getElementsByTagName('input');
+        for (var i = 0; i < inputs.length; i++) {
+            if (inputs[i].getAttribute('name') == name) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+</script>
+
 <script>
 
     function validarFormulario(event){
         let errores = "";
         var numeroFactura = document.getElementById('numeroFactura').value;
-        var montoFactura = document.getElementById('montoFactura').value;
         var fechaFactura = document.getElementById('fechaFactura').value;
         var loadFileFactura = document.getElementById('loadFileFactura').value;
 
-       
+       if(existeName("descripcionItem[]") == false){
+            errores += "Debe agregar al menos un item a la factura";
+        }
         if(numeroFactura == null || numeroFactura.length == 0 || /^\s+$/.test(numeroFactura)){
             errores = errores + "<p>Debe ingresar un numero de factura</p><hr>";
             event.preventDefault();
         }
-        if(montoFactura == null || montoFactura.length == 0 || /^\s+$/.test(montoFactura)){
-            errores = errores + "<p>Debe ingresar un monto</p><hr>";
-            event.preventDefault();
-        }
+
         if(fechaFactura == null || fechaFactura.length == 0 || /^\s+$/.test(fechaFactura)){
             errores = errores + "<p>Debe ingresar una fecha</p><hr>";
             event.preventDefault();

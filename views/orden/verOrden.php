@@ -115,7 +115,7 @@ function mensajes(){
     </div>
 </div>
 <!-- tabla de Items -->
-<h3 style="color: #001d5a; margin-left: 25px" class="">Items</h3>
+                        <h3 style="color: #001d5a; margin-left: 25px" class="">Items</h3>
                         <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
 
                                 <table id="listaItems" style="width: 100%;">

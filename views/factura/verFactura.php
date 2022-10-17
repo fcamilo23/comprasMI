@@ -27,12 +27,22 @@
                     <br>
                     <div class="card">
                         <div class="card-body "> 
-                            <h2>PROVEEDOR</h2>
+                            <h4>PROVEEDOR</h4>
                         
                             <hr>
                             <h5><b>Empresa: </b> <?php echo $viewmodel['proveedor']['empresa']?></h5>
                             <h5><b>Razon Social: </b> <?php echo $viewmodel['proveedor']['razon_social']?></h5>
                             <h5><b>RUT: </b> <?php echo $viewmodel['proveedor']['rut']?></h5>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body "> 
+                        <h4>ITEMS</h4>
+                        <?php foreach($viewmodel['items'] as $item) : ?>
+                        
+                            <hr>
+                            <h6><?php echo $item['cantidad'].' '.$item['unidad'].'- '.$item['descripcion'].'- '.$item['monto'] ?></h6>
+                        <?php endforeach; ?>
                         </div>
                     </div>
                     

@@ -6,6 +6,9 @@ class FacturaModel extends Model{
 		if(! isset($post['idOrden'])){
 			header('Location: '.ROOT_URL.'orden/verOrden');
 		}
+		$this->query('SELECT * FROM itemOrden WHERE idOrden = :idOrden');
+		$this->bind(':idOrden', $post['idOrden']);
+		$items = $this->resultSet();
 		$viewmodel = array(
 			'idOrden' => $post['idOrden'],
 			'idProveedor' => $post['idProveedor'],
@@ -15,33 +18,58 @@ class FacturaModel extends Model{
 			'empresa' => $post['empresa'],
 			'razon_social' => $post['razon_social'],
 			'rut' => $post['rut'],
+			'items' => $items
 		);
     	return $viewmodel;
 	}
 
 	public function agregarFactura(){
 		$error="Error al agregar la factura ...Prueba de nuevo mas tarde";
-		try{
+	try{
 			
 			$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-			
-			$this->query('INSERT INTO facturas (idOrden, idProveedor,numeroFactura, monedaFactura, montoFactura, conceptoFactura,fechaFactura) VALUES (:idOrden, :idProveedor, :numeroFactura, :monedaFactura, :montoFactura, :conceptoFactura, :fechaFactura)');
+			$montoTotal = 1000;
+			if(isset($post['montoItem'])){
+				for($i=0; $i < count($post['montoItem']); $i++){
+					$montoTotal += (int)$post['montoItem'][$i] ;
+				}
+			}
+					
+			$this->query('INSERT INTO facturas (idOrden, idProveedor,numeroFactura, monedaFactura, montoFactura, conceptoFactura,fechaFactura) 
+			VALUES (:idOrden, :idProveedor, :numeroFactura, :monedaFactura, :montoFactura, :conceptoFactura, :fechaFactura)');
 			$this->bind(':idOrden', $post['idOrden']);
 			$this->bind(':idProveedor', $post['idProveedor']);
 			$this->bind(':numeroFactura', $post['numeroFactura']);
-			$this->bind(':montoFactura', $post['montoFactura']);
+			$this->bind(':montoFactura', $montoTotal);
 			$this->bind(':monedaFactura', $post['monedaFactura']);
 			$this->bind(':conceptoFactura', $post['conceptoFactura']);
 			$this->bind(':fechaFactura', $post['fechaFactura']);
 			$this->execute();
-
+			
 			//obtener el id de la factura recien creada
 			$this->query('SELECT id FROM facturas WHERE idOrden = :idOrden AND numeroFactura = :numeroFactura');
 			$this->bind(':idOrden', $post['idOrden']);
 			$this->bind(':numeroFactura', $post['numeroFactura']);
 			$idFactura = $this->single();
 
-			$error="Error al agregar archivo adjunto ...Prueba de nuevo mas tarde";
+			if(isset($post['descripcionItem'])){
+				for($i=0; $i < count($post['descripcionItem']); $i++){
+					$this->query('INSERT INTO itemfactura (cantidad, unidad, descripcion, monto, moneda, idFactura, idOrden,idItemOrden  ) 
+					VALUES (:cantidad, :unidad, :descripcion, :monto,:moneda, :idFactura, :idOrden, :idItemOrden)');
+					$this->bind(':cantidad', $post['cantidadItem'][$i]);
+					$this->bind(':unidad', $post['unidadItem'][$i]);
+					$this->bind(':descripcion', $post['descripcionItem'][$i]);
+					$this->bind(':monto', $post['montoItem'][$i]);
+					$this->bind(':moneda', $post['monedaFactura']);
+					$this->bind(':idFactura', $idFactura);
+					$this->bind(':idOrden', $post['idOrden']);
+					$this->bind(':idItemOrden', $post['idItem'][$i]);
+					$this->execute();
+				}
+
+			}
+
+		$error="Error al agregar archivo adjunto ...Prueba de nuevo mas tarde";
 			// inserta en la tabla archivosFacturas
 			$this->query('INSERT INTO archivosfacturas (idFactura, nombre, pdf) VALUES (:idFactura, :nombre, :pdf)');
 			$this->bind(':idFactura', $idFactura['id']);
@@ -53,7 +81,6 @@ class FacturaModel extends Model{
             $_SESSION['mensaje']['contenido'] = 'Factura agregada correctamente';
 			header('Location: '.ROOT_URL.'orden/verOrden');
 			return;
-
 
 		}catch(PDOException $e){
 			try{
@@ -83,6 +110,11 @@ class FacturaModel extends Model{
 		$this->bind(':idFactura', $_SESSION['idFactura']);
 		$factura = $this->single();
 
+		$this->query('SELECT * FROM itemFactura WHERE idFactura = :idFactura');
+		$this->bind(':idFactura', $_SESSION['idFactura']);
+		$items = $this->resultSet();
+
+
 		$this->query('SELECT id as idArchivo, nombre as nombreFactura FROM archivosfacturas WHERE idFactura = :idFactura');
 		$this->bind(':idFactura', $_SESSION['idFactura']);
 		$archivo = $this->single();
@@ -108,6 +140,7 @@ class FacturaModel extends Model{
 			'montoFactura' => $factura['montoFactura'],
 			'conceptoFactura' => $factura['conceptoFactura'],
 			'fechaFactura' => $factura['fechaFactura'],
+			'items' => $items
 
 		);
 		return $viewmodel;
@@ -119,6 +152,7 @@ class FacturaModel extends Model{
 			if(isset($post['idFactura'])){
 				$_SESSION ['idFactura'] = $post ['idFactura'];
 			}
+			$this->query('DELETE FROM itemFactura WHERE idFactura = :idFactura');
 
 			$this->query('DELETE FROM archivosfacturas WHERE idFactura = :idFactura');
 			$this->bind(':idFactura', $_SESSION['idFactura']);
