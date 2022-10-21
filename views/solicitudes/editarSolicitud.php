@@ -1,3 +1,24 @@
+<?php if($_SESSION['user_data']['rol'] == 'Consultor'){ ?>
+
+    <script>
+        Swal.fire({
+            title: '',
+            text: "Debes ser usuario Operador o Administrador para editar una solicitud de compra",
+            icon: 'warning',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ok'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                window.location="<?php echo ROOT_URL; ?>";
+            }
+        })
+
+    </script>
+
+<?php }else{ ?>
+
 <a href="<?php echo ROOT_URL; ?>solicitudes/verSolicitud"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
 
 <div class="row col-12 center" style="background: white; width: 70%; padding: 40px; border: 1px solid rgba(220, 220, 220); border-radius: 5px; margin-top: 3%;">
@@ -492,3 +513,6 @@ function alertAddCambios(){
 
 
 </script>
+
+
+<?php } ?>

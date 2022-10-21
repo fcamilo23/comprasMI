@@ -1,3 +1,37 @@
+<?php if($_SESSION['user_data']['rol'] == 'Consultor'){ ?>
+
+<script>
+    Swal.fire({
+        title: '',
+        text: "Debes ser Operador o Administrador para agregar una novedad",
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ok'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            window.location="<?php echo ROOT_URL; ?>";
+        }
+    })
+
+</script>
+
+<?php }else{ ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <?php if($_SESSION['solicitudActual']['SR'] != "") {?>
 
 
@@ -678,3 +712,10 @@ function readAsBase64() {
 
 
 <?php }?>
+
+
+
+
+
+
+<?php } ?>

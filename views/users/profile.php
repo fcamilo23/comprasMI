@@ -1,4 +1,17 @@
-
+<?php if(isset($_SESSION['mensajePass'])){
+    ?>
+    <script>
+        Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Se actualizó su contraseña',
+        showConfirmButton: false,
+        timer: 1500
+        })
+    </script>
+    <?php
+    unset($_SESSION['mensajePass']);
+} ?>
 <!--
 <div class="row col-12" style="height: 850px; margin-top: 10px; background: #e9e9e9; width: 80%; margin-left: 15%">
     <div class="col-lg-6" style="margin-top: 0px;" >

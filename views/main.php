@@ -118,20 +118,29 @@
             <label for="check"><h1 style="float: right; margin-right:10px; color: grey; font-size: 40px; cursor:pointer;">×</h1></p><br><br>
 
         </div>
-        <nav>
+        <nav id="nav">
 
             <a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes">Solicitudes de Compra</a>
             <a href="<?php echo ROOT_URL; ?>orden/comprasRealizadas">Compras Realizadas</a>
-            <a href="<?php echo ROOT_URL; ?>orden/contratosAVencer">Vencimientos</a>
             <a href="<?php echo ROOT_URL; ?>oficina/listaOficinas">Oficinas Solicitantes</a>
             <a href="<?php echo ROOT_URL; ?>users/listaUsuarios">Usuarios</a>
             <a href="<?php echo ROOT_URL; ?>proveedor/listaProveedores">Proveedores</a>
+            <p onclick="selectCheck()" name="abrirReportes" id="abrirReportes" ><button style="font-size: 22px;  background: none; border: none; color: rgb(200,200,200)">Reportes</button></p>
+            
 
-
+            <input type="checkbox" style="display:none" id="checkmodal">
 
 
         </nav>
+        <dialog class="" id="modalreportes" style="width: 300px; background: #00133a; margin-left: 340px; margin-top: -25px; border: none; border-radius: 0px; padding: 25px;  z-index: 1; animation: createBox .15s; border: none">
+            <a class="optReportes" href="<?php echo ROOT_URL; ?>orden/contratosAVencer" style="border:none"><div style="border:none" class="optReportes">   Vencimientos</div></a><br>
+            <a class="optReportes" href="<?php echo ROOT_URL; ?>orden/comprasRealizadas"><div class="optReportes">   Ejecución de Inversiones</div></a><br>
+            <a class="optReportes" href="<?php echo ROOT_URL; ?>orden/contratosAVencer"><div class="optReportes">   Entregas Pendientes</div></a>
+        </dialog>
+        
+
     </div>
+
 
 </div>
         
@@ -237,3 +246,57 @@
         
     </script>
 
+
+
+
+
+<script>
+        const abrirModal1 = document.querySelector("#abrirReportes");
+        const modal1 = document.querySelector("#modalreportes");
+        const nav = document.querySelector("#nav");
+        const checkmodal = document.querySelector("#checkmodal");
+
+
+        //const cerrarModal1 = document.querySelector("#cerrarReportes");
+
+
+        abrirModal1.addEventListener("mouseenter",()=>{
+
+                //abrirModal1.classList.add("mystyle");
+                if(checkmodal.checked == false){
+                    modal1.show();
+                    abrirModal1.classList.add("hoverp");
+                    checkmodal.checked = true;
+                    return false; 
+                }else{
+                    modal1.close();
+                    abrirModal1.classList.remove("hoverp");
+                    checkmodal.checked = false; 
+                    return false; 
+                }
+                
+                
+                
+
+            
+        })
+
+        
+
+        
+        function selectCheck()
+        {    
+            if(checkmodal.checked == false){
+                    modal1.show();
+                    abrirModal1.classList.add("hoverp");
+                    checkmodal.checked = true;
+                }else{
+                    modal1.close();
+                    abrirModal1.classList.remove("hoverp");
+                    checkmodal.checked = false; 
+                }
+                
+        }
+
+
+    </script>

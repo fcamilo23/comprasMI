@@ -109,6 +109,42 @@ class UserModel extends Model{
 		return;
 	}
 
+	public function resetPassword(){
+		require './assets/utils/mail.php';
+		if(!isset($_SESSION['codigo'])){
+			$_SESSION['codigo'] = strval(rand(1111, 1000000));
+			//echo $_SESSION['codigo'];
+			sendEmailPass($_SESSION['user_data']['email'], $_SESSION['codigo']);
+		}
+
+		
+	
+		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+		if(isset($post) && isset($post['submit'])){
+
+			
+			if($post['code'] != $_SESSION['codigo']){
+				Messages::setMsg('El código ingresado no es correcto, intente de nuevo', 'error');
+
+			}else{
+				
+				$password = md5($post['password1']);
+				$this->query('UPDATE usuarios SET password = "'. $password .'" WHERE cedula = "'. $_SESSION['user_data']['cedula'] .'"');
+				$this->execute();
+
+				$_SESSION['mensajePass'] = '1';
+				header('Location: '.ROOT_URL.'users/profile');
+				unset($_SESSION['codigo']);
+
+			}
+			
+
+		}
+
+		return;
+	}
+
+
 
 	public function editar(){
 		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);

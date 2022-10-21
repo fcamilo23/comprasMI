@@ -24,7 +24,7 @@ function mensajes(){
     <div class="row d-flex justify-content-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body" style="padding: 65px">
                     <h2 class="card-title">PROVEEDOR</h2>
                     <hr>
                     <?php
@@ -32,28 +32,29 @@ function mensajes(){
                      
                     ?>
 
-                        <h5><b>NOMBRE EMPRESA: </b></h5>
+                        <h5><b>Empresa: </b></h5>
                         <input id="empresa" name="empresa" type="text" value="<?php echo $viewmodel["empresa"] ?>" class="editar form-control editar" readonly>
                         <div id="empresaError"></div>
                         <br>
-                        <h5><b>RAZON SOCIAL: </b></h5>
+                        <h5><b>Razón Social: </b></h5>
                         <input id="razon_social" name="razon_social" type="text" value="<?php echo $viewmodel["razon_social"] ?>" class="editar form-control" readonly>
                         <br>
                         <h5><b>R.U.T.: </b></h5>
                         <input id="rut" name="rut" type="text" value="<?php echo $viewmodel["rut"] ?>" class="editar form-control" readonly>
                         <br>
-                        <h5><b>TELEFONO: </b></h5>
+                        <h5><b>Teléfono: </b></h5>
                         <input id="telefono" name="telefono" type="text" value="<?php echo $viewmodel["telefono"] ?>" class="editar form-control" readonly>
                         <br>
-                        <h5><b>CORREO: </b></h5>
+                        <h5><b>Correo: </b></h5>
                         <input id="email" name="email" type="text" value="<?php echo $viewmodel["email"] ?>" class="editar form-control" readonly>
                         <br>
-
-                        <a href= "<?php echo ROOT_PATH; ?>proveedor/editarProveedor"><input type="button" class="btn btn-success" id="editar" name="editar" value="EDITAR"></a>
+                        <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+                        <a href= "<?php echo ROOT_PATH; ?>proveedor/editarProveedor"><input type="button" class="btn btn-success" id="editar" name="editar"  value="✏️  Editar  "></a>
+                        <?php } ?>
                         <hr>
                     <div id="main-container" style="width: 100%; overflow: auto; padding: 15px;">
 
-                        <table style="width: 100%">
+                        <table style="width: 100%; border: 2px solid rgb(235,235,235)">
                         
 
                             <thead>
@@ -62,7 +63,9 @@ function mensajes(){
                                     <th>Referente</th>
                                     <th>Telefono</th>
                                     <th>Correo</th>
-                                    <th></th>
+                                    <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+                                        <th></th>
+                                    <?php } ?>
 
                                 </tr>
                             </thead>
@@ -70,16 +73,22 @@ function mensajes(){
                             <?php foreach($viewmodel['referentes'] as $ref) : ?>
                             <tr>
                                 <form  id="editarReferente<?php echo $ref["id"] ?>" action="<?php echo ROOT_PATH; ?>proveedor/editarReferente" method="POST">
-                                    <td><input type="text" class="form-control" id="ereferente<?php echo $ref["id"] ?>" name="ereferente" value="<?php echo $ref['nombre'] ?>"></td>
-                                    <td><input type="text" class="form-control" id="etelefono" name="etelefono" value="<?php echo $ref['telefono'] ?>"></td>
-                                    <td><input type="text" class="form-control" id="ecorreo" name="ecorreo" value="<?php echo $ref['email'] ?>"></td>
+                                    <td><input <?php if($_SESSION['user_data']['rol'] == 'Consultor'){ ?> disabled <?php } ?> type="text" class="form-control" id="ereferente<?php echo $ref["id"] ?>" name="ereferente" value="<?php echo $ref['nombre'] ?>"></td>
+                                    <td><input <?php if($_SESSION['user_data']['rol'] == 'Consultor'){ ?> disabled <?php } ?>  type="text" class="form-control" id="etelefono" name="etelefono" value="<?php echo $ref['telefono'] ?>"></td>
+                                    <td><input <?php if($_SESSION['user_data']['rol'] == 'Consultor'){ ?> disabled <?php } ?>  type="text" class="form-control" id="ecorreo" name="ecorreo" value="<?php echo $ref['email'] ?>"></td>
                                     <input type="hidden" name="id" id="id" value="<?php echo $viewmodel["id"] ?>">
                                     <input type="hidden" name="idReferente" id="idReferente" value="<?php echo $ref["id"] ?>">
                                     <input type="hidden" name="accion" id="accion" value="ediproveedor">
-                                    <td><input type="button" onclick="cartelModificarReferente(<?php echo $ref['id'] ?>);" class="btn btn-success" value=">"></td>
+                                    <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+                                        <td><input type="button" onclick="cartelModificarReferente(<?php echo $ref['id'] ?>);" class="btn btn-success" value="✏️"></td>
+                                    <?php } ?>
+
                                 </form>
                             </tr>
                                 <?php endforeach; ?>
+                                
+                                <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+
                                 <form id="nuevoReferente" action="<?php echo ROOT_PATH; ?>proveedor/agregarReferente" method="POST">
                                     <td><input type="text" class="form-control" id="nreferente" name="nreferente">
                                         <span style="position : static; width:100%; color:red" id="nreferenteError"></span>
@@ -90,8 +99,10 @@ function mensajes(){
                                     <td>
                                     
                                     <input type="hidden" name="id" id="id" value="<?php echo $viewmodel["id"] ?>">
-                                    <input type="button" onclick="cartelAgregarReferente();" id="nuevo-ref" class = "btn btn-primary" value="+">
+                                    <input type="button" onclick="cartelAgregarReferente();" id="nuevo-ref" class = "btn btn-primary azul" value=" + ">
                                 </form>
+                                <?php } ?>
+
                                 </td>
 
                             </tr> 
@@ -108,6 +119,9 @@ function mensajes(){
 ?>
 
 <script type="text/javascript">
+
+
+
 
     document.getElementById("nreferente").addEventListener("keyup", nreferente_vacio);
     document.getElementById("nreferente").addEventListener("blur", nreferente_vacio);
@@ -138,7 +152,7 @@ function cartelModificarReferente(idReferente){
     }
     else{
         Swal.fire({
-        title: 'Confirma el agregar referente?',
+        title: 'Seguro que desea modificar el referente?',
         text: "",
         icon: 'warning',
         showCancelButton: true,
@@ -155,7 +169,7 @@ function cartelModificarReferente(idReferente){
                 Swal.fire({
                     icon: 'error',
                     title: 'Cancelado',
-                    text: 'Aun no se agrega referente',
+                    text: 'Todo sigue como estaba!',
                 });
             }
         }
@@ -192,7 +206,7 @@ function cartelAgregarReferente(){
                 Swal.fire({
                     icon: 'error',
                     title: 'Cancelado',
-                    text: 'Aun no se agrega referente',
+                    text: 'No se agregó el referente!',
                 });
             }
         }

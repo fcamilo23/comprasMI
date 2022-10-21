@@ -3,29 +3,30 @@
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="card-title">Nuevo Proveedor</h2>
+                    <br>
+                    <h2 class="card-title" style="text-align: center">EDITAR PROVEEDOR</h2><br>
                     <form  id="editarProveedor" action="<?php echo ROOT_PATH; ?>proveedor/realizarEditadoProveedor" method="POST">
-                        <h5><b>NOMBRE EMPRESA: </b></h5>
+                        <h5><b>Empresa: </b></h5>
                         <input id="empresa" name="empresa" type="text" value="<?php echo $viewmodel['empresa'] ?>" class="editar form-control editar">
                         <span style="position : static; width:100%; color:red" id="empresaError"></span>
                         <br>
-                        <h5><b>RAZON SOCIAL: </b></h5>
+                        <h5><b>Razón Social: </b></h5>
                         <input id="razon_social" name="razon_social" type="text" value="<?php echo $viewmodel['razon_social'] ?>" class="editar form-control" >
                         <br>
                         <h5><b>R.U.T.: </b></h5>
                         <input id="rut" name="rut" type="text" value="<?php echo $viewmodel['rut'] ?>" class="editar form-control" >
                         <br>
-                        <h5><b>TELEFONO: </b></h5>
+                        <h5><b>Teléfono: </b></h5>
                         <input id="telefono" name="telefono" type="text" value="<?php echo $viewmodel['telefono'] ?>" class="editar form-control" >
                         <br>
-                        <h5><b>CORREO: </b></h5>
+                        <h5><b>Correo: </b></h5>
                         <input id="email" name="email" type="text" value="<?php echo $viewmodel['email'] ?>" class="editar form-control" >
                         <br>
                         
                         <input type="hidden" id="id" name="id" value="<?php echo $viewmodel['id'] ?>">
-                    </form>
-                    <a href="<?php echo ROOT_URL; ?>proveedor/verProveedor"><input  class="btn btn-secondary" type="button" value ="CANCELAR"></a>
-                    <input  class="btn btn-success" onclick="cartelEditarProveedor();" type="button" value ="GUARDAR CAMBIOS">
+                    </form><br>
+                    <a href="<?php echo ROOT_URL; ?>proveedor/verProveedor"><input  class="btn btn-secondary" type="button" value ="Cancelar"></a>
+                    <input  class="btn btn-success" onclick="cartelEditarProveedor();" type="button" value ="Guardar Cambios">
                 </div>
             </div>
         </div>

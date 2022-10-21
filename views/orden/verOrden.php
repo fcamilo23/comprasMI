@@ -102,13 +102,18 @@ function mensajes(){
 
                         </div>
                     </div>
+                    <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+
                     <div class="card" style="margin-top: 10px;">
                         <div class="card-body" >
                             <div class="col-12 center" style="text-align: center;">
                                 <a href="<?php echo ROOT_URL; ?>orden/editarOrden" class="float-right btn btn-primary">EDITAR ORDEN</a>
                             </div>
                         </div>
-                    </div>    
+                    </div> 
+                    
+                    <?php } ?>
+
                    
             </div>
         </div>
@@ -168,16 +173,20 @@ function mensajes(){
                                 <input type="hidden" name="razon_social" value="<?php echo $viewmodel["proveedor"]["razon_social"] ?>">
                                 <input type="hidden" name="moneda" value="<?php echo $viewmodel["orden"]["moneda"] ?>">
 
-                            <button type="submit" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/anexarFactura.jpg" width="190px" height="50px" ></button>
+                            <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+                                <button type="submit" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/anexarFactura.jpg" width="190px" height="50px" ></button>
+                            <?php } ?>
+
                             </form>
 
-                            <h1 style="color: #001d5a; margin-left: 25px" class="">Facturas</h1>
 
                             <div id="main-container" style="width: 100%; overflow: auto; padding: 25px;"> <!--  max-height: 800px -->
                                 <?php 
                                 if ($viewmodel["facturas"] != null) {
                                  
                                 ?>
+                                <h1 style="color: #001d5a; margin-left: 25px" class="">Facturas</h1>
+
                                 <table id="pdf"style="width: 100%">
                                     <thead>
                                         
@@ -233,20 +242,22 @@ function mensajes(){
                                     </tbody>
                                 </table>
                                 <?php } else { ?>
-                                    <h3>No hay facturas agregadas</h3>
+                                    <h3>No hay facturas anexadas</h3>
                                 <?php } ?> 
                                 </div>
                             </div>
                             <!-------------->
                             <hr>
-                            <h1 style="color: #001d5a; margin-left: 25px" class="">Archivos Adjuntos</h1>
-                            <button type="button" id="btnmodal" class="excel sombraAzul1" onclick="abrirModal()"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button>
+                            <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+                                <button type="button" id="btnmodal" class="excel sombraAzul1" onclick="abrirModal()"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button>
+                            <?php } ?>
 
                             <div id="contenedor-archivos" style="width: 100%; overflow: auto; padding: 25px;"> <!--  max-height: 800px -->
                                 <?php 
                                 if ($viewmodel["archivos"] != null) {
                                  
                                 ?>
+                                <h1 style="color: #001d5a; margin-left: 25px" class="">Archivos Adjuntos</h1>
                                 <table id="pdf"style="width: 100%">
                                     <thead>
                                         
@@ -263,7 +274,9 @@ function mensajes(){
                                             <form id="eliminarArchivo<?php echo $item['id'] ?>" action="<?php echo ROOT_PATH; ?>orden/eliminarArchivo" method="post">
                                                 <input type="hidden" name="idArchivo" value="<?php echo $item['id'] ?>">
                                             </form> 
-                                            <input type="button" name="" onclick="cartelEliminarArchivo(<?php echo $item['id'] ?>)" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
+                                            <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+                                                <input type="button" name="" onclick="cartelEliminarArchivo(<?php echo $item['id'] ?>)" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
+                                            <?php } ?>
 
                                             <form action="<?php echo ROOT_URL; ?>orden/verArchivo" method="post">
                                                 <input type="hidden" name="idArchivo" value="<?php echo $item['id'] ?>">
@@ -276,7 +289,7 @@ function mensajes(){
                                     </tbody>
                                 </table>
                                 <?php } else { ?>
-                                    <h3>No hay archivos</h3>
+                                    <h3>No hay archivos adjuntos</h3>
                                 <?php } ?> 
                             </div>
                             <br>

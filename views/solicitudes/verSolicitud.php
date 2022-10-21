@@ -1,3 +1,26 @@
+<?php if(!isset($_SESSION['solicitudActual'])){ ?>
+
+<script>
+    Swal.fire({
+        title: 'Error!',
+        text: "Por favor no intentes acceder a las cosas ingresando directamente la ruta",
+        icon: 'error',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ok'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            window.location="<?php echo ROOT_URL; ?>";
+        }
+    })
+
+</script>
+
+<?php }else{ ?>
+
+
+
 <script>
 
     mensajes();
@@ -124,10 +147,12 @@
 ?>
  <!---->
 <a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
-<a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaNovedad"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaNovedad.jpg" width="218px" height="48px" ></button></a>
-<a href="<?php echo ROOT_PATH; ?>orden/nuevaOrden"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOrden.jpg" width="190px" height="50px" ></button></a>
-<a href="<?php echo ROOT_PATH; ?>solicitudes/nuevoArchivo"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button></a>
 
+<?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+    <a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaNovedad"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaNovedad.jpg" width="218px" height="48px" ></button></a>
+    <a href="<?php echo ROOT_PATH; ?>orden/nuevaOrden"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOrden.jpg" width="190px" height="50px" ></button></a>
+    <a href="<?php echo ROOT_PATH; ?>solicitudes/nuevoArchivo"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button></a>
+    <?php } ?>
 
 <div class="row col-12 center" style="background: white; width: 70%; padding: 40px; border: 1px solid rgba(220, 220, 220); border-radius: 5px; margin-top: 3%;">
 <div style="width: 100%; margin-bottom: 50px;" class="">
@@ -306,10 +331,12 @@
 
                             </tbody>
                         </table>
-
-    <div class="col-12 center" style="text-align: center; margin-top: 60px">
-        <a href="<?php echo ROOT_URL; ?>solicitudes/editarSolicitud"><input class="btn btn-primary" value="Editar Solicitud" style="width: 150px;"/> </a>
-    </div>
+                        
+    <?php if($_SESSION['user_data']['rol'] == 'Administrador' || $_SESSION['user_data']['rol'] == 'Operador'){ ?>
+        <div class="col-12 center" style="text-align: center; margin-top: 60px">
+            <a href="<?php echo ROOT_URL; ?>solicitudes/editarSolicitud"><input class="btn btn-primary" value="✏️ Editar Solicitud" style="width: 170px"/> </a>
+        </div>
+    <?php } ?>
 
 </div>
 
@@ -318,7 +345,9 @@
 <?php if($_SESSION['ordenes'] != null){?>
 
 <div style="margin-top: 100px">
-<a href="<?php echo ROOT_PATH; ?>orden/nuevaOrden"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOrden.jpg" width="190px" height="50px" ></button></a>
+<?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+    <a href="<?php echo ROOT_PATH; ?>orden/nuevaOrden"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOrden.jpg" width="190px" height="50px" ></button></a>
+<?php } ?>
 <h1 style="color: #001d5a; margin-left: 25px" class="">Órdenes de Compra</h1>
 
 <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
@@ -381,8 +410,11 @@
                         <form id="eliminarOrden<?php echo $orden['idOrden']; ?>" action="<?php echo ROOT_PATH; ?>orden/eliminarOrden" method="POST">
                             <input type="hidden" name="idOrden" value="<?php echo $orden['idOrden']; ?>">
                         </form>
-                        <input type="button" value="✖" onclick="cartelEliminarOrden(<?php echo $orden['idOrden']; ?>)" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
-                    </td>
+                        <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+                            <input type="button" value="✖" onclick="cartelEliminarOrden(<?php echo $orden['idOrden']; ?>)" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
+                        <?php } ?>
+
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             
@@ -403,8 +435,9 @@
 
 <div style="margin-top: 40px; align-text: center">
 <?php if($_SESSION['novedades'] != null){?>
-<a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaNovedad"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaNovedad.jpg" width="218px" height="48px" ></button></a>
-
+<?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+    <a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaNovedad"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaNovedad.jpg" width="218px" height="48px" ></button></a>
+<?php } ?>
 
 <h1  class="" style="color: #001d5a; margin-left: 25px">Novedades</h1>
 
@@ -441,7 +474,10 @@
 	</div>
     <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
     <?php if($_SESSION['archivos'] != null){?>
-    <a  href="<?php echo ROOT_PATH; ?>solicitudes/nuevoArchivo"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button></a>
+
+    <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+        <a  href="<?php echo ROOT_PATH; ?>solicitudes/nuevoArchivo"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button></a>
+    <?php } ?>
 
     <h1  class="" style="color: #001d5a; margin-left: 25px">Archivos</h1>
 		<table id="solis" style="width: 100%; margin-top: 30px;">
@@ -461,7 +497,9 @@
                     <form action="<?php echo ROOT_PATH; ?>solicitudes/eliminarArchivo" method="post">
                             <input type="hidden" name="id" value="<?php echo $item['id'] ?>">
                             
-                            <input type="submit" name="" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
+                            <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+                                <input type="button" name="" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
+                            <?php } ?>
                     </form>  
                     <form action="<?php echo ROOT_PATH; ?>solicitudes/verArchivo" method="post">
                         <input type="hidden" name="id" value="<?php echo $item['id'] ?>">
@@ -494,12 +532,12 @@ function cartelEliminarOrden(id){
         })
 
         swalWithBootstrapButtons.fire({
-        title: 'Borrar Orden?',
-        text: "Seguro que quieres borrar esta orden, tambien se eliminan las facturas y archivos!",
+        title: 'Seguro que desea borrar la orden?',
+        text: "Tambien se eliminarán las facturas y archivos!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Si, borrar!',
-        cancelButtonText: 'No, borrar!',
+        cancelButtonText: 'No, cancelar!',
         reverseButtons: true
         }).then((result) => {
         if (result.isConfirmed) {
@@ -513,7 +551,7 @@ function cartelEliminarOrden(id){
         ) {
             swalWithBootstrapButtons.fire(
             'Cancelado',
-            'No se elimino la orden ',
+            'Todo sigue como estaba!',
             'error'
             )
         }
@@ -556,3 +594,6 @@ function deleteFileAlert(){
 
 
 </script>
+
+
+<?php } ?>

@@ -24,12 +24,15 @@
                             <form action="<?php echo ROOT_PATH; ?>oficina/listaOficinas" method="post">
                             <td><input type="text" class="miniinput form-control" name="eid" id="eid"value="<?php echo $item['unidad'] ?>" readonly></td>
                             <td><input type="text" class="form-control" name="eue" id="eue"value="<?php echo $item['ue'] ?>"><div id="errorEue"></td>
+                            <?php if($_SESSION['user_data']['rol'] == 'Administrador'){ ?>
                             <td>
                             <input type="hidden" name="accion" id="accion" value="editar">
                                 <button class = "btn btn-primary" type="submit">✒️</button>
                             </td>
+                            <?php } ?>
                             </form>
                         </tr> <?php endforeach; ?>
+                        <?php if($_SESSION['user_data']['rol'] == 'Administrador'){ ?>
                         <tr>
                             <form action="<?php echo ROOT_PATH; ?>oficina/listaOficinas" method="post">
                                 <td><input type="text" name="nid" class="miniinput form-control" id="nid" value="" ><div id="errorNid"></div></td>
@@ -42,6 +45,8 @@
                                 </td>
                             </form>
                         </tr>
+                        <?php } ?>
+
                         </tbody>
                 </table>
             </div>

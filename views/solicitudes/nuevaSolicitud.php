@@ -1,4 +1,4 @@
-
+<?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
 
 
 <form id="filtro" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">       
@@ -636,3 +636,24 @@ function arts(gas) {
 
 
 </script>
+
+
+<?php }else{ ?>
+    <script>
+    Swal.fire({
+        title: '',
+        text: "Debes ser usuario Operador o Administrador para registrar una solicitud de compra",
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ok'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            window.location="<?php echo ROOT_URL; ?>";
+        }
+        })
+
+</script>
+
+<?php } ?>

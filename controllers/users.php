@@ -20,13 +20,17 @@ class Users extends Controller{
 		$viewmodel = new UserModel();
 		$this->returnView($viewmodel->profile(), true);
 	}
-
+	protected function resetPassword(){
+		$viewmodel = new UserModel();
+		$this->returnView($viewmodel->resetPassword(), true);
+	}
 
 	protected function editar(){
 		$viewmodel = new UserModel();
 		$this->returnView($viewmodel->editar(), true);
 	}
 
+	
 
 
 

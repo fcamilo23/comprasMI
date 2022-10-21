@@ -2,17 +2,20 @@
 <?php if($_SESSION['user_data']['rol'] == 'Administrador'){?>
 <a href="<?php echo ROOT_PATH; ?>users/register"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoUser.jpg" width="200px" height="50px" ></button></a>
 <?php } ?>
-<h1  class="center" style="color: #001d5a; margin-left: 40%">Usuarios</h1>
 
-<script>
-        $(document).ready(function() {
-        $('#us').DataTable( {
-            
-        } );
+
+    <script>
+    $(document).ready(function() {
+    $('#us').DataTable( {
+        dom: 'lBfrtip',
+        buttons: [
+           
+        ]
     } );
-    </script>
+} );
+</script>
 
-<div id="main-container" style="width: 100%; overflow: auto; padding: 15px;">
+<div id="main-container" style="width: 100%; overflow: auto; padding: 55px; background: #fff">
 
 
 
@@ -24,7 +27,7 @@
                     <th>Apellido</th>
                     <th>Email</th>
                     <th>Rol</th>
-                    <th></th>
+                    <?php if($_SESSION['user_data']['rol'] == 'Administrador'){ ?><th></th>  <?php }?>
 
 				</tr>
 			</thead>
@@ -36,13 +39,13 @@
                 <td><?php echo $item['apellido'] ?></td>
                 <td><?php echo $item['email'] ?></td>
                 <td><?php echo $item['rol'] ?></td>
-                <td>
+                <?php if($_SESSION['user_data']['rol'] == 'Administrador'){ ?><td>
                 <form id="editarUser" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
                 <input type="text" name="ciuser" value="<?php echo $item['cedula'] ?>" style="display:none" />    
                 <input type="submit" name="submit" value="Editar" style="background: #001d5a; border: none" class="btn btn-primary "/>
                 <!--<input type="submit" value="Eliminar" style="color: #fff; border: none" class="btn btnEliminar "/>-->
                 </form>
-                </td>
+                </td> <?php } ?>
 
 
                 

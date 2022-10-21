@@ -1,4 +1,28 @@
 
+
+<?php 
+if(isset($_SESSION['usuarioActual'])){
+
+if($_SESSION['user_data']['rol'] == 'Consultor' && $_SESSION['usuarioActual']['cedula'] != $_SESSION['user_data']['cedula']){ ?>
+
+<script>
+    Swal.fire({
+        title: '',
+        text: "Debes ser Administrador para editar el perfil de otro usuario",
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ok'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            window.location="<?php echo ROOT_URL; ?>";
+        }
+    })
+
+</script>
+
+<?php }else{ ?>
 <!--
 <div class="row col-12" style="height: 850px; margin-top: 10px; background: #e9e9e9; width: 80%; margin-left: 15%">
     <div class="col-lg-6" style="margin-top: 0px;" >
@@ -29,8 +53,11 @@
 
 </div></div>
 -->
-
 <a href="<?php echo ROOT_URL; ?>users/listaUsuarios"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
+<?php if($_SESSION['user_data']['cedula'] == $_SESSION['usuarioActual']['cedula']){ ?>
+    <input type="button" style=" margin-right: 30px; float: right"class="btn btn-success sombra" onclick="alertPassword()" value="Actualizar Contraseña"/>
+    <input type="submit" name="resetPass" id="resetPass" style="display: none">
+<?php } ?>
 
        
 <div class="col-12 perfil center" style="padding: 50px; background: white; margin-top: 60px">
@@ -87,3 +114,58 @@
 </div>
 <div></div>
 
+
+
+<script>
+
+function alertPassword(){
+  
+        Swal.fire({
+            title: 'Seguro que desea actualizar su contraseña?',
+            text: "Se le enviará un código de reestablecimiento a su correo",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'No, cancelar!',
+            confirmButtonText: 'Si, cambiar contraseña!'
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            window.location.href = 'resetPassword';
+
+            
+            //document.getElementById('resetPassword').click();
+            
+
+        }
+})
+
+
+   
+
+}
+
+</script>
+
+
+<?php }}else{   ?>
+    
+<script>
+    Swal.fire({
+        title: 'Que intentas hacer? ',
+        text: "No puedes ingresar las rutas directas para navegar en la web, la romperás 😠 ",
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ok'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            window.location="<?php echo ROOT_URL; ?>";
+        }
+    })
+
+</script>
+
+<?php } ?>

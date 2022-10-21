@@ -14,7 +14,7 @@
 <script>
     $(document).ready(function() {
     $('#listaProveedores').DataTable( {
-        dom: 'Bfrtip',
+        dom: 'lBfrtip',
         buttons: [
            
         ]
@@ -22,9 +22,11 @@
 } );
 </script>
 <a href="<?php echo ROOT_URL; ?>"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
-<a href="<?php echo ROOT_PATH; ?>proveedor/nuevoProveedor"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaProv.jpg" width="190px" height="50px" ></button></a>
+<?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+    <a href="<?php echo ROOT_PATH; ?>proveedor/nuevoProveedor"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaProv.jpg" width="190px" height="50px" ></button></a>
+<?php } ?>
 
-<div id="main-container" style="width: 100%; overflow: auto; padding: 15px;">
+<div id="main-container" style="width: 100%; overflow: auto; padding: 55px; background: #fff">
 
 		<table id="listaProveedores"style="width: 100%">
         

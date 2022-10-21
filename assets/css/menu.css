@@ -204,6 +204,19 @@
 }
 
 
+.optReportes{
+    font-size: 20px; 
+    height: 55px;
+    line-height: 55px;
+    color: white; 
+    text-decoration: none;
+    border-radius: 5px;
+    outline: none;
+}
+.optReportes:hover{
+    background-color: #1e2a57;
+
+}
 
 .verde{
     color:#1a8504;
@@ -511,6 +524,27 @@ input{
     border-left: 5px solid #c7c7c7;
     background: #1e2a57;
 }
+
+
+.cont-menu nav p{
+    display: block;
+    text-decoration: none;
+    padding: 30px;
+    color: #c7c7c7;
+    border-left: 5px solid transparent;
+    transition: all 400ms ease;
+    cursor:pointer;
+    text-align: center;
+}
+.cont-menu nav p:hover{
+    border-left: 5px solid #c7c7c7;
+    background: #1e2a57;
+}
+.hoverp{
+    border-left: 5px solid #c7c7c7;
+    background: #1e2a57;
+}
+
 .cont-menu label{
     position: absolute;
     right: 5px;
