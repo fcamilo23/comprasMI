@@ -79,7 +79,12 @@
     margin-top: 10%;
     width: 15%;
 }
-
+.amarillo{
+    background: rgb(255, 255, 87);
+}
+.amarillo:hover{
+    background: rgba(253, 250, 40, 0.938);
+}
 .mystyle{
     box-shadow: 0px 15px 15px 15px #a87a25;
     -webkit-box-shadow: 5px 5px 5px 5px #333333;

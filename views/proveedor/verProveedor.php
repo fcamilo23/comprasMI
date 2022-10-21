@@ -49,7 +49,7 @@ function mensajes(){
                         <input id="email" name="email" type="text" value="<?php echo $viewmodel["email"] ?>" class="editar form-control" readonly>
                         <br>
                         <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
-                        <a href= "<?php echo ROOT_PATH; ?>proveedor/editarProveedor"><input type="button" class="btn btn-success" id="editar" name="editar"  value="✏️  Editar  "></a>
+                        <a href= "<?php echo ROOT_PATH; ?>proveedor/editarProveedor"><input type="button" class="btn amarillo" id="editar" name="editar"  value="✏️  Editar Datos"></a>
                         <?php } ?>
                         <hr>
                     <div id="main-container" style="width: 100%; overflow: auto; padding: 15px;">
@@ -80,7 +80,7 @@ function mensajes(){
                                     <input type="hidden" name="idReferente" id="idReferente" value="<?php echo $ref["id"] ?>">
                                     <input type="hidden" name="accion" id="accion" value="ediproveedor">
                                     <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
-                                        <td><input type="button" onclick="cartelModificarReferente(<?php echo $ref['id'] ?>);" class="btn btn-success" value="✏️"></td>
+                                        <td><input type="button" onclick="cartelModificarReferente(<?php echo $ref['id'] ?>);" class="btn  amarillo" value="✏️"></td>
                                     <?php } ?>
 
                                 </form>
