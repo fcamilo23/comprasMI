@@ -20,6 +20,28 @@
 </div>
 
 <script>
+    var input = document.getElementById("code");
+        input.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+        }
+    });
+
+    var input = document.getElementById("password1");
+        input.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+        }
+    });
+
+    var input = document.getElementById("password2");
+        input.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+        }
+    });
+
+
     function alertPass(){
         password1 = document.getElementById('password1');
         password2 = document.getElementById('password2');

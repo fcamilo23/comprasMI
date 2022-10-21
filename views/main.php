@@ -115,16 +115,16 @@
 <div id="menux1" class="container-menu" >
     <div id="menux" class="cont-menu">
         <div style="">
-            <label for="check"><h1 style="float: right; margin-right:10px; color: grey; font-size: 40px; cursor:pointer;">×</h1></p><br><br>
+            <label for="check" id="a0"><h1 style="float: right; margin-right:10px; color: grey; font-size: 40px; cursor:pointer;">×</h1></p><br><br>
 
         </div>
         <nav id="nav">
 
-            <a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes">Solicitudes de Compra</a>
-            <a href="<?php echo ROOT_URL; ?>orden/comprasRealizadas">Compras Realizadas</a>
-            <a href="<?php echo ROOT_URL; ?>oficina/listaOficinas">Oficinas Solicitantes</a>
-            <a href="<?php echo ROOT_URL; ?>users/listaUsuarios">Usuarios</a>
-            <a href="<?php echo ROOT_URL; ?>proveedor/listaProveedores">Proveedores</a>
+            <a id="a1" href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes">Solicitudes de Compra</a>
+            <a id="a2" href="<?php echo ROOT_URL; ?>orden/comprasRealizadas">Compras Realizadas</a>
+            <a id="a3" href="<?php echo ROOT_URL; ?>oficina/listaOficinas">Oficinas Solicitantes</a>
+            <a id="a4" href="<?php echo ROOT_URL; ?>users/listaUsuarios">Usuarios</a>
+            <a id="a5" href="<?php echo ROOT_URL; ?>proveedor/listaProveedores">Proveedores</a>
             <p onclick="selectCheck()" name="abrirReportes" id="abrirReportes" ><button style="font-size: 22px;  background: none; border: none; color: rgb(200,200,200)">Reportes</button></p>
             
 
@@ -255,6 +255,12 @@
         const modal1 = document.querySelector("#modalreportes");
         const nav = document.querySelector("#nav");
         const checkmodal = document.querySelector("#checkmodal");
+        const a1 = document.querySelector("#a1");
+        const a2 = document.querySelector("#a2");
+        const a3 = document.querySelector("#a3");
+        const a4 = document.querySelector("#a4");
+        const a5 = document.querySelector("#a5");
+
 
 
         //const cerrarModal1 = document.querySelector("#cerrarReportes");
@@ -282,6 +288,61 @@
         })
 
         
+        a0.addEventListener("mouseenter",()=>{
+
+        //abrirModal1.classList.add("mystyle");
+
+            modal1.close();
+            abrirModal1.classList.remove("hoverp");
+            checkmodal.checked = false; 
+
+        })
+        a1.addEventListener("mouseenter",()=>{
+
+            //abrirModal1.classList.add("mystyle");
+           
+                modal1.close();
+                abrirModal1.classList.remove("hoverp");
+                checkmodal.checked = false; 
+
+        })
+                    a2.addEventListener("mouseenter",()=>{
+
+            //abrirModal1.classList.add("mystyle");
+
+                modal1.close();
+                abrirModal1.classList.remove("hoverp");
+                checkmodal.checked = false; 
+
+            })
+            a3.addEventListener("mouseenter",()=>{
+
+            //abrirModal1.classList.add("mystyle");
+
+                modal1.close();
+                abrirModal1.classList.remove("hoverp");
+                checkmodal.checked = false; 
+
+            })
+            a4.addEventListener("mouseenter",()=>{
+
+            //abrirModal1.classList.add("mystyle");
+
+                modal1.close();
+                abrirModal1.classList.remove("hoverp");
+                checkmodal.checked = false; 
+
+            })
+            a5.addEventListener("mouseenter",()=>{
+
+            //abrirModal1.classList.add("mystyle");
+
+                modal1.close();
+                abrirModal1.classList.remove("hoverp");
+                checkmodal.checked = false; 
+
+            })
+
 
         
         function selectCheck()
