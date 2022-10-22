@@ -115,7 +115,7 @@
 <div id="menux1" class="container-menu" >
     <div id="menux" class="cont-menu">
         <div style="">
-            <label for="check" id="a0"><h1 style="float: right; margin-right:10px; color: grey; font-size: 40px; cursor:pointer;">×</h1></p><br><br>
+            <label for="check" id="a0"><h1 style="float: right; margin-right:10px; color: grey; font-size: 40px; cursor:pointer;"></h1></p><br><br>
 
         </div>
         <nav id="nav">
@@ -125,7 +125,7 @@
             <a id="a3" href="<?php echo ROOT_URL; ?>oficina/listaOficinas">Oficinas Solicitantes</a>
             <a id="a4" href="<?php echo ROOT_URL; ?>users/listaUsuarios">Usuarios</a>
             <a id="a5" href="<?php echo ROOT_URL; ?>proveedor/listaProveedores">Proveedores</a>
-            <p onclick="selectCheck()" name="abrirReportes" id="abrirReportes" ><button style="font-size: 22px;  background: none; border: none; color: rgb(200,200,200)">Reportes</button></p>
+            <p onclick="return false" name="abrirReportes" id="abrirReportes" ><button onclick="return false" style="font-size: 22px;  background: none; border: none; color: rgb(200,200,200)">Reportes</button></p>
             
 
             <input type="checkbox" style="display:none" id="checkmodal">
@@ -260,6 +260,9 @@
         const a3 = document.querySelector("#a3");
         const a4 = document.querySelector("#a4");
         const a5 = document.querySelector("#a5");
+        const check = document.querySelector("#check");
+        const menux1 = document.querySelector("#menux1");
+
 
 
 
@@ -343,6 +346,13 @@
 
             })
 
+            menux1.addEventListener("click",()=>{
+
+            //abrirModal1.classList.add("mystyle");
+
+                check.checked = false; 
+
+            })
 
         
         function selectCheck()
