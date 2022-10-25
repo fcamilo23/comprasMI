@@ -55,9 +55,9 @@ function mensajes(){
                     <div class="card">
                 <br>
             <h2 style="color: #001d5a; margin-left: 25px" class="text-center">ORDEN OC: <?php echo $viewmodel['orden']['numero']; ?> - <?php echo $viewmodel['orden']['anio']; ?></h1>
-                <hr>
+                
                         <div class="card-body">
-                       
+                        <hr>
                             <h4 style="color: #001d5a;" class="m-2"><b>Solicitud SR: </b><?php echo $viewmodel['solicitud']['SR']; ?></h4>
                             <h4 style="color: #001d5a;"  class="m-2"><b>Procedimiento:</b> <?php echo $viewmodel['solicitud']['procedimiento']." ".$viewmodel['solicitud']['numProc']." ".$viewmodel['solicitud']['anioProc']; ?> </h4>
                             <hr>
@@ -96,9 +96,15 @@ function mensajes(){
                                 <h4 style="color: #001d5a;"  class="m-2"><b>Forma de Pago:</b></h4>
                             </div>
 
-                            <div class="input-group mb-3">
-                                <textarea id="formaPago" name="formaPago" class="form-control" readonly><?php  echo$viewmodel["orden"]["formaPago"] ?></textarea>
-                            </div>
+                            
+                            <div class="card">
+                                <div class="card-body" >
+                                    <div class="input-group mb-1" style="width: 800">
+                                        <h5 style="min-width: 500"><?php  echo$viewmodel["orden"]["formaPago"] ?></h5>
+                                    </div>
+                                </div>
+                            </div>   
+                            
     
 
                         </div>
