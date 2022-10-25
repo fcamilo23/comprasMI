@@ -130,16 +130,15 @@
                                     ?>
 
                                         <tr id="filaItem<?php echo $item['id'] ?>">
-                                            <th style="width: 20%"><input id="itemCantidad<?php echo $item['id'] ?>" type="number" min="1"class="form-control"value="<?php echo $item['cantidad'] ?>" readonly> </th>
+                                            <th style="width: 20%"><input id="itemCantidad<?php echo $item['id'] ?>" type="number" step="0.01" min="1"class="form-control"value="<?php echo $item['cantidad'] ?>" readonly> </th>
                                             <th style="width: 20%"><?php echo $item['unidad'] ?> </th>
                                             <th style="width: 30%"><?php echo $item['descripcion'] ?> </th>
-                                            <th style="width: 20%"><input id="itemMonto<?php echo $item['id'] ?>" type="number" min="1"class="form-control"value="<?php echo $item['monto'] ?>" readonly> </th>
+                                            <th style="width: 20%"><input id="itemMonto<?php echo $item['id'] ?>" type="number" step="0.01" min="1"class="form-control"value="<?php echo $item['monto'] ?>" readonly> </th>
                                             <th id="agregar<?php echo $item['id'] ?>"style="width: 5%"><button type="button" class="btn btn-success" onclick="agregarItem(<?php echo $item['id'] ?>,<?php echo $item['monto'] ?> )">+</button></th>
                                         </tr>
                                         <input type="hidden" id="itemOrden<?php echo $item['id'] ?>" value="<?php echo $item['id'] ?>">
                                         <input type="hidden" id="descripcion<?php echo $item['id'] ?>" value="<?php echo $item['descripcion'] ?>">
-                                        <input type="hidden" id="unidad<?php echo $item['id'] ?>" value="<?php echo $item['descripcion'] ?>">
-                                        <input type="hidden" id="descripcion<?php echo $item['id'] ?>" value="<?php echo $item['descripcion'] ?>">
+                                        <input type="hidden" id="unidad<?php echo $item['id'] ?>" value="<?php echo $item['unidad'] ?>">
                                         <input type="hidden" id="recuperacionCantidad<?php echo $item['id'] ?>" value="<?php echo $item['cantidad'] ?>">
                                         <input type="hidden" id="recuperacionMonto<?php echo $item['id'] ?>" value="<?php echo $item['monto'] ?>">
                                         <?php  endforeach; ?>

@@ -123,6 +123,7 @@
             <a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes">Solicitudes de Compra</a>
             <a href="<?php echo ROOT_URL; ?>orden/comprasRealizadas">Compras Realizadas</a>
             <a href="<?php echo ROOT_URL; ?>oficina/listaOficinas">Oficinas Solicitantes</a>
+            <a href="<?php echo ROOT_URL; ?>orden/contratosAVencer">Vencimientos</a>
             <a href="<?php echo ROOT_URL; ?>users/listaUsuarios">Usuarios</a>
             <a href="<?php echo ROOT_URL; ?>proveedor/listaProveedores">Proveedores</a>
             <p onclick="selectCheck()" name="abrirReportes" id="abrirReportes" ><button style="font-size: 22px;  background: none; border: none; color: rgb(200,200,200)">Reportes</button></p>

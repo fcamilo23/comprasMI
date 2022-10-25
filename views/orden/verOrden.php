@@ -42,7 +42,11 @@ function mensajes(){
 </form> 
 <!---MODAL FIN---->
 
-<a href="<?php echo ROOT_URL; ?>solicitudes/verSolicitud"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
+<a href="<?php echo ROOT_URL; ?>solicitudes/verSolicitud"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Solicitud"/></a>
+<?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+    <button type="submit" form="anexarFactura" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/anexarFactura.jpg" width="190px" height="50px" ></button>
+    <button type="button" id="btnmodal" class="excel sombraAzul1" onclick="abrirModal()"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button>
+    <?php } ?>
 
 
 <div class="container mt-5 mb-5">
@@ -50,54 +54,64 @@ function mensajes(){
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8">
                     <div class="card">
                 <br>
-            <h2 style="color: #001d5a; margin-left: 25px" class="">VER ORDEN</h1>
+            <h2 style="color: #001d5a; margin-left: 25px" class="text-center">ORDEN OC: <?php echo $viewmodel['orden']['numero']; ?> - <?php echo $viewmodel['orden']['anio']; ?></h1>
                 <hr>
                         <div class="card-body">
-                        <h4>OC: <?php echo $viewmodel['orden']['numero']; ?> - <?php echo $viewmodel['orden']['anio']; ?></h4>
-                        <h4>SR: <?php echo $viewmodel['solicitud']['unidad']; ?></h4>
-                        <h4>Aca iria el nuemero de procedimiento</h4>
+                       
+                            <h4 style="color: #001d5a;" class="m-2"><b>Solicitud SR: </b><?php echo $viewmodel['solicitud']['SR']; ?></h4>
+                            <h4 style="color: #001d5a;"  class="m-2"><b>Procedimiento:</b> <?php echo $viewmodel['solicitud']['procedimiento']." ".$viewmodel['solicitud']['numProc']." ".$viewmodel['solicitud']['anioProc']; ?> </h4>
+                            <hr>
+                            <div class="input-group mb-3">
+                            <?php    
+                            $monedaOrden;
+                                            if($viewmodel["orden"]["moneda"]== "$ (Pesos Uruguayos)"){
+                                                $monedaOrden = '$U';
+                                            }else{
+                                                if($viewmodel["orden"]["moneda"] == "U.I.(Unidades Indexadas)"){
+                                                    $monedaOrden = "U.I.";
+                                                }else{
+                                                    if($viewmodel["orden"]["moneda"] == "U.R. (Unidades Reajustables)"){
+                                                        $monedaOrden = "U.R.";
+                                                    }else{
+                                                        if($viewmodel["orden"]["moneda"] == "€ (Euro)"){
+                                                            $monedaOrden = "€";
+                                                        }else{
+                                                            $monedaOrden = 'U$S';
+                                                        }
+                                                    }
+                                                }
+                                            }
+                            ?>
+                            <div class="input-group mb-1">   
+                                <h4 style="color: #001d5a;"  class="m-2"><b>Monto Total:</b> <?php  echo $monedaOrden." ". $viewmodel["orden"]["montoReal"] ?></h4>
+                            </div>
+                            <div class="input-group mb-1">  
+                                <h4 style="color: #001d5a;"  class="m-2"><b>Fecha Entrega:</b>     <?php  echo$viewmodel["orden"]["plazoEntrega"] ?></h4>
+                            </div>
+                            <div class="input-group mb-1"> 
+                                <h4 style="color: #001d5a;"   class="m-2"><b>Nº Amplición:</b> <?php  echo$viewmodel["orden"]["numeroAmpliacion"] ?></h4>
+                            </div>  
 
-                    </div>
-                    </div>
-                    <div class="card" style="margin-top: 10px;">
-                        <div class="card-body">
-                            
-                            <div class="input-group mb-3">
-                                <p class="m-2">Moneda</p>
-                                <input name="moneda"  id="moneda" style="max-width: 15rem" class="m-2 form-control"  value="<?php  echo$viewmodel["orden"]["moneda"] ?>"readonly>
-                               <p class="m-2"> Monto:</p>
-                                <input id="montoReal" name="montoReal" type="text" class="m-2 miniinput2 form-control"  value="<?php  echo$viewmodel["orden"]["montoReal"] ?>"readonly>
-                                <div id=montoError" class="invalid-feedback"></div>
+                            <div class="input-group mb-1">  
+                                <h4 style="color: #001d5a;"  class="m-2"><b>Forma de Pago:</b></h4>
                             </div>
 
-                            <label for="procedimiento" class="form-label">Tipo de Procedimiento</label>
-                            <div class="input-group mb-3">
-                                <input id="procedimiento" name="procedimiento" class="form-control" value="<?php  echo$viewmodel["orden"]["procedimiento"] ?>" readonly>
-                            </div>
-   
-                            <div class="input-group mb-3">
-                            <label for="plazoEntrega" class="m-2 form-label">Fecha Entrega</label>
-                                <input id="plazoEntrega" name="plazoEntrega" type="text" class="miniinput2 form-control" value="<?php  echo$viewmodel["orden"]["plazoEntrega"] ?>" readonly>
-                            </div>
-    
-                            <label for="formaPago" class="form-label">Forma de Pago:</label>
                             <div class="input-group mb-3">
                                 <textarea id="formaPago" name="formaPago" class="form-control" readonly><?php  echo$viewmodel["orden"]["formaPago"] ?></textarea>
                             </div>
     
-                            <div class="input-group mb-3">
-                            <p class="m-2">Nº Amplición</p>
-                                <input id="numeroAmpliacion" style="max-width: 20rem" name="numeroAmpliacion" type="text" class="form-control"  value="<?php  echo$viewmodel["orden"]["numeroAmpliacion"] ?>" readonly>
-                            </div>
+
                         </div>
+
                     </div>
+                </div>
                     <div class="card" style="margin-top: 10px;">
                         <div class="card-body">
                                 <form action="<?php echo ROOT_URL; ?>proveedor/seleccionarProveedor" target='_blank' method="POST">
                                     <input type="hidden" name="idProveedor" value="<?php echo $viewmodel['proveedor']['id']; ?>">
-                                    <h4><b>Proveedor:</b><input name="submit" class="btn btn-light btn-lg active" value="<?php  echo $viewmodel["proveedor"]["empresa"] ?>" type="submit"> </h4>
-                                    <h4><b>Razon Social: </b><?php  echo $viewmodel["proveedor"]["razon_social"] ?></h4>
-                                    <h4><b>RUT: </b><?php  echo $viewmodel["proveedor"]["rut"] ?></h4>
+                                    <h4 style="color: #001d5a;" ><b>Proveedor:</b><input name="submit" class="btn btn-light btn-lg active" value="<?php  echo $viewmodel["proveedor"]["empresa"] ?>" type="submit"> </h4>
+                                    <h4 style="color: #001d5a;"  ><b>Razon Social: </b><?php  echo $viewmodel["proveedor"]["razon_social"] ?></h4>
+                                    <h4 style="color: #001d5a;" ><b>RUT: </b><?php  echo $viewmodel["proveedor"]["rut"] ?></h4>
                                 </form>
 
                         </div>

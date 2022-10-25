@@ -294,38 +294,7 @@ class OrdenModel extends Model{
 
         return $row;
     }
-
-
-
-    public function contratosAVencer (){
-
-
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        if(isset($post) && isset($post['submit'])){
-            if($post['submit'] == 'Ampliar'){
-                $_SESSION['idOrden'] = $post['numero'];
-                
-
-            }
-            header('Location: '.ROOT_URL.'orden/verOrden');
-        }
-
-        
-        $this->query('SELECT * FROM proveedores');
-        $_SESSION['proveedores'] = $this->resultSet();
-        
-       
-        $this->query('SELECT * FROM `ordenes` WHERE servicio = "Si" and fechaFin < (select curdate()) ORDER BY `ordenes`.`fechaFin` ASC');
-        $_SESSION['vencidos'] = $this->resultSet();
-
-
-        $this->query('SELECT * FROM `ordenes` WHERE servicio = "Si" and fechaFin >= (select curdate()) ORDER BY `ordenes`.`fechaFin` ASC');
-        $row = $this->resultSet();
-
-        return $row;
-    }
-
-    
+      
     public function editarOrden(){
 
         $this->query('SELECT * FROM proveedores');
@@ -460,6 +429,38 @@ class OrdenModel extends Model{
             $_SESSION['mensaje']['contenido'] = 'Error al eliminar la orden ...Prueba de nuevo mas tarde ';
             header('Location: '.ROOT_URL.'solicitudes/versolicitud');
         }
+    }
+
+    public function contratosAVencer (){
+
+
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(isset($post) && isset($post['submit'])){
+            if($post['submit'] == 'Ampliar'){
+                $_SESSION['idOrden'] = $post['numero'];
+                
+
+            }
+            header('Location: '.ROOT_URL.'orden/verOrden');
+        }
+
+        
+        $this->query('SELECT * FROM proveedores');
+        $_SESSION['proveedores'] = $this->resultSet();
+        
+       
+        $this->query('SELECT * FROM `itemOrden` 
+                    JOIN ordenes ON itemOrden.idOrden = ordenes.id
+                    WHERE (esservicio = "General" OR esservicio="Licencia")and itemOrden.fin < (select curdate()) ORDER BY itemOrden.fin ASC');
+        $_SESSION['vencidos'] = $this->resultSet();
+
+
+        $this->query('SELECT * FROM `itemOrden` 
+                    JOIN ordenes ON itemOrden.idOrden = ordenes.id
+                    WHERE (esservicio = "General" OR esservicio="Licencia") and itemOrden.fin >= (select curdate()) ORDER BY itemOrden.fin ASC');
+        $row = $this->resultSet();
+
+        return $row;
     }
 
 }

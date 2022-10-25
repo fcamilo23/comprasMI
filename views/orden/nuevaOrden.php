@@ -114,7 +114,7 @@ function readAsBase64() {
                             <label for="numero" class="form-label"></label>
                             <div class="input-group mb-3 center2">
                                 <p class="m-3">Numero</p>
-                                <input id="numero" name="numero" min="1" max="9999999"type="number" class="m-2 miniinput2 form-control " required>
+                                <input id="numero" name="numero" min="1" max="9999999"type="number"  step="0.01" class="m-2 miniinput2 form-control " required>
                                 <p class="m-3" style="margin-left: 200px;" >   Año: </p>
                                 <input id="anio" name="anio" type="number" min="2010" max="2060" class="m-2 miniinput2 form-control" value="<?php echo date('Y') ?>" required>
                             </div>
@@ -263,6 +263,7 @@ function readAsBase64() {
                                     <input type="hidden" id="seleccionItemCantidad<?php echo $item['id'] ?>" value="<?php echo $item['cantidad'] ?>">
                                     <input type="hidden" id="seleccionItemUnidad<?php echo $item['id'] ?>" value="<?php echo $item['unidad'] ?>">
                                     <input type="hidden" id="seleccionItemDescripcion<?php echo $item['id'] ?>" value="<?php echo $item['descripcion'] ?>">
+                                    <input type="hidden" id="seleccionItemMonto<?php echo $item['id'] ?>" value="<?php echo $item['total'] ?>">
                                 <?php endforeach; ?>
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="button" onclick="abrirModelNuevoItem()">Agregar</button>
@@ -424,10 +425,12 @@ function readAsBase64() {
                 var cantidad = document.getElementById("seleccionItemCantidad"+itemseleccionado).value;
                 var unidad = document.getElementById("seleccionItemUnidad"+itemseleccionado).value;
                 var descripcion = document.getElementById("seleccionItemDescripcion"+itemseleccionado).value;
+                var monto = document.getElementById("seleccionItemMonto"+itemseleccionado).value;
                 document.getElementById("idItemSolicitud").value = itemseleccionado;
                 document.getElementById("descripcionNuevoItem").value = descripcion;
                 document.getElementById("unidadNuevoItem").value = unidad;
                 document.getElementById("cantidadNuevoItem").value = cantidad;
+                document.getElementById("nuevoPrecioItem").value = monto;
             }else{
                 if(itemseleccionado == -1){
                     return;

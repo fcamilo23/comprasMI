@@ -1,14 +1,14 @@
 <body>
 <a href="<?php echo ROOT_URL; ?>orden/verOrden"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
 
-    <div class="container">
+    <div class="container" style="margin-bottom: 40px" >
         <div class="row d-flex justify-content-center ">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-8">
                 <div class="card">
                     <br>
                 <h1 style="color: #001d5a; text-align:center; margin-bottom: 30px" class="center">VER FACTURA</h1>
 
-                <div class="card-body ">
+                <div class="card-body " style="margin-bottom: 30px">
                     <div class="card">
                         <div class="card-body ">
                         <form action="<?php echo ROOT_URL; ?>factura/verArchivo" method="post">
@@ -38,11 +38,30 @@
                     <div class="card">
                         <div class="card-body "> 
                         <h4>ITEMS</h4>
-                        <?php foreach($viewmodel['items'] as $item) : ?>
-                        
-                            <hr>
-                            <h6><?php echo $item['cantidad'].' '.$item['unidad'].'- '.$item['descripcion'].'- '.$item['monto'] ?></h6>
-                        <?php endforeach; ?>
+                        <div id="main-container" style="width: 100%; overflow: auto; max-height: 800px">
+
+                            <table id="listaItems" style="width: 100%;">
+
+                                <thead>
+                                    
+                                    <tr>
+                                        <th style="width: 15%">Cantidad</th>
+                                        <th style="width: 15%">Unidad</th>
+                                        <th style="width: 50%">Descripcion</th>
+                                        <th style="width: 20%">Monto</th>
+
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaItems">
+                                    <?php foreach($viewmodel['items'] as $item) : ?>
+                                        <tr>
+                                            <td><?php echo $item['cantidad']; ?></td>
+                                            <td><?php echo $item['unidad']; ?></td>
+                                            <td><?php echo $item['descripcion']; ?></td>
+                                            <td><?php echo $item['monto']; ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
                         </div>
                     </div>
                     
