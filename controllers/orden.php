@@ -51,17 +51,17 @@ class Orden extends Controller{
         include './assets/utils/validationAjax.php';
         if($_POST["numero"] == "" || $_POST["anio"] == ""){
             if($_POST["numero"] == "" && $_POST["anio"] == ""){
-                echo "              El numero de orden y año es obligatorio ❌";
+                echo "                                                                       El numero de orden y año es obligatorio ❌";
             }else{
                 if($_POST["numero"] == ""){
-                    echo "              El numero de orden es obligatorio ❌";
+                    echo "                                                                       El numero de orden es obligatorio ❌";
                 }else{
-                    echo "              El año es obligatorio ❌";
+                    echo "                                                                       El año es obligatorio ❌";
                 }
             }
         }else{
                 if(!isValidatedNumero(new OrdenModel(), $_POST["numero"], $_POST["anio"])){
-                    echo "              La orden ya existe ❌"; 
+                    echo "                                                                       La orden ya existe ❌"; 
                 }
                 else{
                     echo "true";

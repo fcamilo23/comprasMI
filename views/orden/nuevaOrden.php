@@ -102,20 +102,20 @@ function readAsBase64() {
 <form id="formOrden" onsubmit="validarFormulario(event)" action="<?php echo ROOT_URL; ?>orden/agregarOrden" method ="POST" enctype="multipart/form-data" >
 <div class="container" >
     <div class="row d-flex justify-content-center ">
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8" >
-            <div class="card">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10" >
+            <div class="card" style="margin-bottom: 40px; margin-top: 50px">
                 <br>
             <h2 style="color: #001d5a; text-align: center; margin-bottom: 50px" class="center">Nueva Orden de Compra</h2>
                 
-            <div class="card-body ">
+            <div class="card-body " style="">
                 
 
 
                             <label for="numero" class="form-label"></label>
                             <div class="input-group mb-3 center2">
                                 <p class="m-3">Numero</p>
-                                <input id="numero" name="numero" min="1" max="9999999"type="number" class="m-2 miniinput2 form-control " required>
-                                <p class="m-3" style="margin-left: 200px;" >   Año: </p>
+                                <input id="numero" name="numero" min="1" max="9999999"type="number" class="m-2  form-control " required>
+                                <p class="m-3" style="margin-left: 200px;" >      Año </p>
                                 <input id="anio" name="anio" type="number" min="2010" max="2060" class="m-2 miniinput2 form-control" value="<?php echo date('Y') ?>" required>
                             </div>
                             <div id="numeroAnioError"  style="color:red; min-height:100%; position: static;" ></div>
@@ -126,7 +126,7 @@ function readAsBase64() {
                             
                             <div class="input-group mb-3 center2">
                                 <p class="m-3">Moneda</p>
-                                <select name="moneda"  id="moneda" class="m-2  form-control">
+                                <select name="moneda"  id="moneda" class="m-2  form-control" > 
                                         <option value="$ (Pesos Uruguayos)" selected>$U (Pesos Uruguayos)</option>
                                         <option value="U$S (Dolares)">US$ (Dólares)</option>
                                         <option value="U.I.(Unidades Indexadas)">U.I.(Unidades Indexadas)</option>
@@ -134,34 +134,38 @@ function readAsBase64() {
                                         <option value="€ (Euro)">€ (Euro)</option>
                                     </select>
                             </div>
-                        
-                            <label for="formaPago" class="form-label">Forma de Pago:</label>
-                            <div class="input-group mb-3">
-                                <textarea id="formaPago" name="formaPago" class="form-control"></textarea>
-                             </div>
+                        <br><br>
+                           
                              
-                            <div class="input-group mb-3" style="">
-                            <label for="plazoEntrega" class="m-2 form-label" >Fecha Entrega</label>
+                            <div class="input-group mb-3 center2" style="">
+                            <label for="plazoEntrega" class="m-2 form-label" >  Fecha Entrega</label>
                                 <input id="plazoEntrega" name="plazoEntrega" type="date" class="form-control" style="max-width: 15rem" required>
+                                <p class="m-2">       Nº Ampliación </p>
+                                <input id="numeroAmplicacion" style="width: 2rem" name="numeroAmpliacion" type="text" class="form-control">
+
+
                             </div>
                             <div id="plazoEntregaError" style="color:red" class="center2"></div>
 
 
                             <label for="numeroAmplicacion" style="margin-top: 10px"></label>
                             <div class="input-group mb-3">
-                            <p class="m-2">Nº Ampliación </p>
-                                <input id="numeroAmplicacion" style="max-width: 15rem" name="numeroAmpliacion" type="text" class="form-control">
                             </div>
+                            
                         </div>
+                        <br>
+                        <label for="formaPago" class="form-label">              Forma de Pago</label>
+                            <textarea id="formaPago" name="formaPago" class="form-control center" style="width: 90%;"></textarea>
+                            <br><br>
                     </div>
                 </div>
     </div>
 </div>
 
-<div class="container" >
-    <div class="row d-flex justify-content-center ">
+<div class="container"  >
+    <div class="row d-flex justify-content-center " >
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10" >
-                <div class="card" style="margin-top: 10px">    
+                <div class="card" style="margin-top: 10px; margin-bottom: 50px">    
                     <div class="card-body ">
                             <!-- aqui se va a guardar proveedor -->
                             <input id="idProveedor" name="idProveedor" type="hidden" >
@@ -202,25 +206,8 @@ function readAsBase64() {
                     </div>
                 </div>
 
-                <div class="card" style="margin-top: 10px">    
-                    <div class="card-body ">
-                            
-                                <h3 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h3>
-                                <div class="card-body">
-                                <div class="mb-3">
-                                    <label for="formFile" class="form-label">Subir PDF (*No es obligatorio, puede hacerlo mas adelante)</label>
-                                    <input class="form-control" id="loadFile" accept="application/pdf" type="file" onchange="readAsBase64()"  width="190px" height="50px"/>
-                                </div>
-
-                                <hr>
-                                <table style="max-width: 500px" id="guardado">
-
-                                </table>
-                                <br>
-                        </div>
-                   </div>  
-                </div> 
-                <div class="card" style="margin-top: 10px">    
+                
+                <div class="card" style="margin-top: 10px; margin-bottom: 50px">    
                     <div class="card-body ">
                         <h3 style="color: #001d5a; margin-left: 25px" class="">Items</h3>
                         <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
@@ -247,9 +234,9 @@ function readAsBase64() {
                             </div>
                         <hr>
                         <div class="card-body" style="max-width:800px">
-                            <label for="nuevoIdItemSolicitud" class=" form-label">Agregar Items de la solicitud o nuevos</label>
-                            <div class="input-group mb-1 ">
-                                <select  name="nuevoIdItemSolicitud" class="form-control " id="nuevoIdItemSolicitud">
+                            <label for="nuevoIdItemSolicitud" class=" form-label">                       Agregar Items de la solicitud o nuevos</label>
+                            <div class="input-group ">                      
+                                <select  name="nuevoIdItemSolicitud" class="form-control" id="nuevoIdItemSolicitud">
                                     <option value="-1">Seleccione Item</option>
                                     <?php foreach($viewmodel['items'] as $item) : ?>
                                     <option id="opcionItem<?php echo $item['id'] ?>" value="<?php echo $item['id'] ?>">
@@ -269,7 +256,7 @@ function readAsBase64() {
                                 </div>    
                             </div>
                         </div>
-                        <div class="card-body" style="max-width:800px">
+                        <div class="card-body" style="max-width:800px"><br><br>
                             <div class="form-group row">
                                 <label for="colFormLabel" class="col-sm-2 col-form-label" >Monto Total:</label>
                                 <div class="col-sm-10">
@@ -280,9 +267,31 @@ function readAsBase64() {
 
                     </div>
                 </div>
+                <div class="card" style="margin-top: 10px">    
+                    <div class="card-body ">
+                            
+                                <h3 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h3>
+                                <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Subir PDF (*No es obligatorio, puede hacerlo mas adelante)</label>
+                                    <input class="form-control" id="loadFile" accept="application/pdf" type="file" onchange="readAsBase64()"  width="190px" height="50px"/>
+                                </div>
+
+                                <hr>
+                                <table style="max-width: 500px" id="guardado">
+
+                                </table>
+                                <br>
+                        </div>
+                   </div>  
+                </div> 
         </div> 
+        
     </div>
+    
 </div>
+
+
 
 <div class="container" >
     <div class="row d-flex justify-content-center ">
@@ -290,9 +299,9 @@ function readAsBase64() {
                     <div class="card text-center" style="margin-top: 40px; margin-bottom: 50px;">                
                         <div class="card-body ">
                             <div >           
-                                <a class="ml-2" href="<?php echo ROOT_PATH; ?>solicitudes/verSolicitud"><button type="button"  class="btn btn-secondary ml-3">CANCELAR</button></a>
-    
-                                <input type="submit" class="float-right btn btn-primary " value="GUARDAR">
+                                <a class="ml-2" href="<?php echo ROOT_PATH; ?>solicitudes/verSolicitud"><button type="button"  class="btn btn-secondary ml-3">   Cancelar   </button></a>
+                                        
+                                <input type="submit" class="float-right btn btn-primary " value="    Guardar    ">
                             </div>
                     </div>
             </div>
@@ -347,11 +356,11 @@ function readAsBase64() {
                             <div class="card">
                                     <div class="card-body ">
 
-                                            <h3>AGREGAR ITEM</h3>
+                                            <h3>Agregar Item</h3>
                                             <hr>
                                         <input type="hidden" id="idItemSolicitud">
                                          <div class="input-group">
-                                            <label for="cantidadNuevoItem" class="text-secondary m-2 form-label">Cantidad: </label>
+                                            <label for="cantidadNuevoItem" class="text-secondary m-2 form-label" style="text-decoration: none">Cantidad: </label>
                                             <input id="cantidadNuevoItem" type="number" class="miniinput2 form-control">
                                             <div id="cantidadNuevoItem" class="invalid-feedback"></div>
                                             <label for="unidadNuevoItem" class="text-secondary m-2 form-label"> Unidad:</label> 

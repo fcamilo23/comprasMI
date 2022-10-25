@@ -173,6 +173,10 @@ function mensajes(){
                                 <input type="hidden" name="razon_social" value="<?php echo $viewmodel["proveedor"]["razon_social"] ?>">
                                 <input type="hidden" name="moneda" value="<?php echo $viewmodel["orden"]["moneda"] ?>">
 
+
+                                <hr>
+
+
                             <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
                                 <button type="submit" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/anexarFactura.jpg" width="190px" height="50px" ></button>
                             <?php } ?>
@@ -242,7 +246,7 @@ function mensajes(){
                                     </tbody>
                                 </table>
                                 <?php } else { ?>
-                                    <h3>No hay facturas anexadas</h3>
+                                    <h3 style="color: rgb(180,180,180)">No hay facturas anexadas</h3>
                                 <?php } ?> 
                                 </div>
                             </div>
@@ -289,7 +293,7 @@ function mensajes(){
                                     </tbody>
                                 </table>
                                 <?php } else { ?>
-                                    <h3>No hay archivos adjuntos</h3>
+                                    <h3 style="color: rgb(180,180,180)">No hay archivos adjuntos</h3>
                                 <?php } ?> 
                             </div>
                             <br>
