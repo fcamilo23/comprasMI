@@ -55,7 +55,7 @@ class FacturaModel extends Model{
 			if(isset($post['descripcionItem'])){
 				for($i=0; $i < count($post['descripcionItem']); $i++){
 					$this->query('INSERT INTO itemfactura (cantidad, unidad, descripcion, monto, moneda, idFactura, idOrden,idItemOrden  ) 
-					VALUES (:cantidad, :unidad, :descripcion, :monto,:moneda, :idFactura, :idOrden, :idItemOrden)');
+												VALUES (:cantidad, :unidad, :descripcion, :monto,:moneda, :idFactura, :idOrden, :idItemOrden)');
 					$this->bind(':cantidad', $post['cantidadItem'][$i]);
 					$this->bind(':unidad', $post['unidadItem'][$i]);
 					$this->bind(':descripcion', $post['descripcionItem'][$i]);

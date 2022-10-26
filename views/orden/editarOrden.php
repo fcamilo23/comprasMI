@@ -16,13 +16,13 @@
             <div class="card">
                 <br>
             <h2 style="color: #001d5a; margin-left: 25px" class="">EDITAR ORDEN</h1>
+            <hr>
                 <div class="card-body">
                              <!-- aqui se va a guardar proveedor -->
                              <input type="hidden" id="idProveedor" name="idProveedor" value="<?php  echo $viewmodel["orden"]["idProveedor"] ?>" />
                             <!--  -->
-                            <label for="oc" class="form-label">OC</label>
                             <div class="input-group mb-3">
-                                <p class="m-2">Numero   </p>
+                                <p class="m-2">Numero        </p>
                                 <input id="numero" name="numero" type="text" class="m-2 miniinput form-control" value=" <?php  echo $viewmodel["orden"]["numero"]?>" readonly>  
                                 <p class="m-2">Año:</p>
                                 <input id="anio" name="anio" type="text" class="m-2 miniinput form-control"  min="2010" max="2060" value=" <?php  echo $viewmodel["orden"]["anio"] ?>" readonly required>
@@ -30,7 +30,7 @@
 
                             
                             <div class="input-group mb-3">
-                                <p class="m-2">Moneda</p>
+                                <p class="m-2">Moneda     </p>
                                <select name="moneda"  id="moneda" class="m-2  form-control" style="max-width:300px;" >
                                         <option <?php if ($viewmodel["orden"]["moneda"]== "$ (Pesos Uruguayos)"){?> selected <?php } ?>value="$ (Pesos Uruguayos)" selected>$U (Pesos Uruguayos)</option>
                                         <option <?php if ($viewmodel["orden"]["moneda"]== 'U$S (Dolares)'){?> selected <?php } ?> value="U$S (Dolares)">US$ (Dólares)</option>
@@ -38,6 +38,10 @@
                                         <option <?php if ($viewmodel["orden"]["moneda"]== "U.R. (Unidades Reajustables)"){?> selected <?php } ?> value="U.R. (Unidades Reajustables)">U.R. (Unidades Reajustables)</option>
                                         <option <?php if ($viewmodel["orden"]["moneda"]== "€ (Euro)"){?> selected <?php } ?> value="€ (Euro)">€ (Euro)</option>
                                     </select>
+                            </div>
+                            <div class="input-group mb-3">
+                            <p class="m-2">Nº Amplición</p>
+                                <input id="numeroAmpliacion" style="max-width: 20rem" name="numeroAmpliacion" type="text" class="form-control"  value="<?php  echo$viewmodel["orden"]["numeroAmpliacion"] ?>" >
                             </div>
 
                             <div id="montoRealError" class="center2"style="color:red" ></div>
@@ -51,28 +55,13 @@
                                 <textarea id="formaPago" style="max-width:800px" name="formaPago" class="form-control"><?php  echo$viewmodel["orden"]["formaPago"] ?></textarea>
                             </div>
                             
-                            <div class="input-group mb-3">
-                            <p class="m-2">Nº Amplición</p>
-                                <input id="numeroAmpliacion" style="max-width: 20rem" name="numeroAmpliacion" type="text" class="form-control"  value="<?php  echo$viewmodel["orden"]["numeroAmpliacion"] ?>" >
-                            </div>
-                            <hr>
-                            <?php if($viewmodel["orden"]["servicio"] == "si"){ ?>
-                            <div class="input-group mb-3">
-                                <h3>SERVCICIO</h3>
-                                <label for="entrega" class="m-2 form-label">Inicio Servicio</label>
-                                <input id="inicio" name="inicio" type="date" class="miniinput2 form-control" value="<?php echo $viewmodel["orden"]["fechaInicio"] ?>" >
-                                <div id="inicioError" class="invalid-feedback"></div>
-                                <label for="fin" class="m-2 form-label">Fin Servicio</label> 
-                                <input id="fin" name="fin" type="date" class="miniinput2 form-control" value="<?php echo $viewmodel["orden"]["fechaFin"] ?>" >
-                            </div>
-                            <br>
-                            <?php } ?>
+
+                            <hr><hr>
                             <h4 id="proveedorNombre">PROVEEDOR: <?php echo $viewmodel["orden"]["nombreEmpresa"] ?></h4>
                             
                             <div>
                                 <input type="button" class="btn btn-success" id="editor" onclick ="mostrarProveedores()" value="CAMBIAR PROVEEDOR">
                             </div>
-
                             <hr>
                             <div id="main-container" style="width: 100%; overflow: auto; padding: 25px; display:none;"> <!--  max-height: 800px -->
 
@@ -174,6 +163,7 @@
                                     <input type="hidden" id="seleccionItemCantidad<?php echo $item['id'] ?>" value="<?php echo $item['cantidad'] ?>">
                                     <input type="hidden" id="seleccionItemUnidad<?php echo $item['id'] ?>" value="<?php echo $item['unidad'] ?>">
                                     <input type="hidden" id="seleccionItemDescripcion<?php echo $item['id'] ?>" value="<?php echo $item['descripcion'] ?>">
+                                    <input type="hidden" id="seleccionItemMonto<?php echo $item['id'] ?>" value="<?php echo $item['total'] ?>">
                                 <?php endforeach; ?>
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="button" onclick="abrirModelNuevoItem()">Agregar</button>
@@ -253,7 +243,7 @@
                                         <input type="hidden" id="idItemSolicitud">
                                          <div class="input-group">
                                             <label for="cantidadNuevoItem" class="text-secondary m-2 form-label">Cantidad: </label>
-                                            <input id="cantidadNuevoItem" type="number" class="miniinput2 form-control">
+                                            <input id="cantidadNuevoItem" type="number" step="0.01" class="miniinput2 form-control">
                                             <div id="cantidadNuevoItem" class="invalid-feedback"></div>
                                             <label for="unidadNuevoItem" class="text-secondary m-2 form-label"> Unidad:</label> 
                                             <input id="unidadNuevoItem" type="text" class="miniinput2 form-control">
@@ -354,10 +344,12 @@
                 var cantidad = document.getElementById("seleccionItemCantidad"+itemseleccionado).value;
                 var unidad = document.getElementById("seleccionItemUnidad"+itemseleccionado).value;
                 var descripcion = document.getElementById("seleccionItemDescripcion"+itemseleccionado).value;
+                var monto = document.getElementById("seleccionItemMonto"+itemseleccionado).value;
                 document.getElementById("idItemSolicitud").value = itemseleccionado;
                 document.getElementById("descripcionNuevoItem").value = descripcion;
                 document.getElementById("unidadNuevoItem").value = unidad;
                 document.getElementById("cantidadNuevoItem").value = cantidad;
+                document.getElementById("nuevoPrecioItem").value = monto;
             }else{
                 if(itemseleccionado == -1){
                     return;

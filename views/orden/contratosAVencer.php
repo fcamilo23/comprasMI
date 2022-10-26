@@ -86,7 +86,7 @@
                     <th >Procedimiento</th>
                     <th >Proveedor</th>
                     <th >Fecha Inicio</th>
-                    <th >Fecha Fin</th>
+                    <th >Fecha fin</th>
                     <th >Tiempo Restante</th>
                     <th ></th>
 
@@ -110,9 +110,9 @@
             
             foreach($viewmodel as $item) : ?>
 			<tr style="border-bottom: 5px solid grey"
-            <?php if($item['fechaFin'] > $_SESSION['3meses']){ ?>class="semaforoVerde" <?php }?>
-            <?php if($item['fechaFin'] <= $_SESSION['3meses'] && $item['fechaFin'] > $_SESSION['1mes']){ ?>class="semaforoAmarillo" <?php }?>
-            <?php if($item['fechaFin'] <= $_SESSION['1mes']){ ?>class="semaforoRojo" <?php }?>
+            <?php if($item['fin'] > $_SESSION['3meses']){ ?>class="semaforoVerde" <?php }?>
+            <?php if($item['fin'] <= $_SESSION['3meses'] && $item['fin'] > $_SESSION['1mes']){ ?>class="semaforoAmarillo" <?php }?>
+            <?php if($item['fin'] <= $_SESSION['1mes']){ ?>class="semaforoRojo" <?php }?>
 
 
             >
@@ -125,12 +125,12 @@
                 if($p['id'] == $item['idProveedor']){ 
                     echo $p['empresa'];
                 } endforeach;?></td>
-                <td><?php if($item['fechaInicio'] == ""){echo 'N/A';}else{ $date = new DateTime($item['fechaInicio'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y'); }?></td>
-                <td><?php if($item['fechaFin'] == ""){echo 'N/A';}else{ $date = new DateTime($item['fechaFin'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y'); }?></td>
+                <td><?php if($item['inicio'] == ""){echo 'N/A';}else{ $date = new DateTime($item['inicio'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y'); }?></td>
+                <td><?php if($item['fin'] == ""){echo 'N/A';}else{ $date = new DateTime($item['fin'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y'); }?></td>
                 <td><strong>
                 <?php
                     $now = time(); // or your date as well
-                    $your_date = strtotime($item['fechaFin']);
+                    $your_date = strtotime($item['fin']);
                     $datediff = $your_date - $now;
             
                     $res = round($datediff / (60 * 60 * 24));
@@ -212,7 +212,7 @@
                     <th >Procedimiento</th>
                     <th >Proveedor</th>
                     <th >Fecha Inicio</th>
-                    <th >Fecha Fin</th>
+                    <th >Fecha fin</th>
                     <th ></th>
 
 
@@ -244,8 +244,8 @@
                 if($p['id'] == $item['idProveedor']){ 
                     echo $p['empresa'];
                 } endforeach;?></td>
-                <td><?php if($item['fechaInicio'] == ""){echo 'N/A';}else{ $date = new DateTime($item['fechaInicio'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y'); }?></td>
-                <td><?php if($item['fechaFin'] == ""){echo 'N/A';}else{ $date = new DateTime($item['fechaFin'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y'); }?></td>
+                <td><?php if($item['inicio'] == ""){echo 'N/A';}else{ $date = new DateTime($item['inicio'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y'); }?></td>
+                <td><?php if($item['fin'] == ""){echo 'N/A';}else{ $date = new DateTime($item['fin'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y'); }?></td>
 
 
 
