@@ -21,7 +21,7 @@ class SolicitudesModel extends Model{
 
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if(isset($post) && isset($post['submit'])){
-            if($_POST['submit'] == 'Ampliar'){
+            if($_POST['submit'] == 'Ampliar'||$_POST['submit'] == '◄ Solicitud'){
             $id = $post['numero'];
 
             

@@ -163,7 +163,7 @@
                                     <input type="hidden" id="seleccionItemCantidad<?php echo $item['id'] ?>" value="<?php echo $item['cantidad'] ?>">
                                     <input type="hidden" id="seleccionItemUnidad<?php echo $item['id'] ?>" value="<?php echo $item['unidad'] ?>">
                                     <input type="hidden" id="seleccionItemDescripcion<?php echo $item['id'] ?>" value="<?php echo $item['descripcion'] ?>">
-                                    <input type="hidden" id="seleccionItemMonto<?php echo $item['id'] ?>" value="<?php echo $item['total'] ?>">
+                                    <input type="hidden" id="seleccionItemPrecio<?php echo $item['id'] ?>" value="<?php echo $item['total'] ?>">
                                 <?php endforeach; ?>
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="button" onclick="abrirModelNuevoItem()">Agregar</button>
@@ -344,12 +344,12 @@
                 var cantidad = document.getElementById("seleccionItemCantidad"+itemseleccionado).value;
                 var unidad = document.getElementById("seleccionItemUnidad"+itemseleccionado).value;
                 var descripcion = document.getElementById("seleccionItemDescripcion"+itemseleccionado).value;
-                var monto = document.getElementById("seleccionItemMonto"+itemseleccionado).value;
+                var precio = document.getElementById("seleccionItemPrecio"+itemseleccionado).value;
                 document.getElementById("idItemSolicitud").value = itemseleccionado;
                 document.getElementById("descripcionNuevoItem").value = descripcion;
                 document.getElementById("unidadNuevoItem").value = unidad;
                 document.getElementById("cantidadNuevoItem").value = cantidad;
-                document.getElementById("nuevoPrecioItem").value = monto;
+                document.getElementById("nuevoPrecioItem").value = precio;
             }else{
                 if(itemseleccionado == -1){
                     return;

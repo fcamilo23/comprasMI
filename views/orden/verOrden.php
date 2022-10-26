@@ -41,8 +41,10 @@ function mensajes(){
     </dialog> 
 </form> 
 <!---MODAL FIN---->
-
-<a href="<?php echo ROOT_URL; ?>solicitudes/verSolicitud"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Solicitud"/></a>
+<form id="editar" method="post" action="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes">       
+                <td><input type="text" name="numero" style="display: none" value="<?php echo $viewmodel['solicitud']['id']; ?>"/>
+                <input type="submit" name="submit" value="◄ Solicitud" style="background: #001d5a; border: none; margin-left: 30px" class="btn btn-primary sombraAzul"/></td>
+                </form>
 <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
     <button type="submit" form="anexarFactura" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/anexarFactura.jpg" width="190px" height="50px" ></button>
     <button type="button" id="btnmodal" class="excel sombraAzul1" onclick="abrirModal()"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button>
@@ -127,8 +129,19 @@ function mensajes(){
                     <div class="card" style="margin-top: 10px;">
                         <div class="card-body" >
                             <div class="col-12 center" style="text-align: center;">
-                                <a href="<?php echo ROOT_URL; ?>orden/editarOrden" class="float-right btn btn-primary">EDITAR ORDEN</a>
+                            
+                            <?php 
+                            $read="";
+                            if(count($viewmodel['facturas'])>0){ 
+                                $read="readonly";
+                                ?>
+                               <p class=".text-muted">*Una vez creada una Factura no se puede editar la Orden de Compra</p>
+                            <?php
+                            }else{
+                            ?>
+                                <a href="<?php echo ROOT_URL; ?>orden/editarOrden" class="float-right btn btn-primary"<?php echo $read ?> >EDITAR ORDEN</a>
                             </div>
+                            <?php } ?>
                         </div>
                     </div> 
                     

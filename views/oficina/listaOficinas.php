@@ -17,13 +17,20 @@
                                 <th></th>
 
                             </tr>
+                        <?php 
+                        $read = "";
+                        if($_SESSION['user_data']['rol'] != 'Administrador'){ 
+                            $read = 'readonly';
+                        }
+                            ?>
+                            
 
                         </thead>
                         <tbody>
                         <tr><?php foreach($viewmodel as $item) : ?>
                             <form action="<?php echo ROOT_PATH; ?>oficina/listaOficinas" method="post">
                             <td><input type="text" class="miniinput form-control" name="eid" id="eid"value="<?php echo $item['unidad'] ?>" readonly></td>
-                            <td><input type="text" class="form-control" name="eue" id="eue"value="<?php echo $item['ue'] ?>"><div id="errorEue"></td>
+                            <td><input type="text" class="form-control" name="eue" id="eue"value="<?php echo $item['ue'] ?>" <?php echo $read; ?>><div id="errorEue" ></td>
                             <?php if($_SESSION['user_data']['rol'] == 'Administrador'){ ?>
                             <td>
                             <input type="hidden" name="accion" id="accion" value="editar">

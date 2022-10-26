@@ -78,26 +78,18 @@
         <h1></h1>
 			<thead style="background: rgb(20,20,20);" >
               
-				<tr>
-                    <th >Id</th>
+            <tr>
+                    <th>Cantidad</th>
+                    <th>Descripción</th>
                     <th >Orden</th>
-                    <th >Moneda</th>
-                    <th >Monto Real</th>
-                    <th >Procedimiento</th>
+                    <th >Monto</th>
                     <th >Proveedor</th>
                     <th >Fecha Inicio</th>
                     <th >Fecha fin</th>
-                    <th >Tiempo Restante</th>
+                    <th >Tiempo restante</th>
                     <th ></th>
-
-
-
-
-
-
 				</tr>
-
-              
+          
 			</thead>
             <tbody >
             <?php 
@@ -113,14 +105,32 @@
             <?php if($item['fin'] > $_SESSION['3meses']){ ?>class="semaforoVerde" <?php }?>
             <?php if($item['fin'] <= $_SESSION['3meses'] && $item['fin'] > $_SESSION['1mes']){ ?>class="semaforoAmarillo" <?php }?>
             <?php if($item['fin'] <= $_SESSION['1mes']){ ?>class="semaforoRojo" <?php }?>
-
-
             >
-                <td><?php echo $item['id'] ?></td>
+
+            <td><?php echo $item['cantidad']." ".$item['unidad'];?></td>
+                <td><?php echo $item['descripcion'];?></td>
                 <td><?php echo 'OC ' . $item['numero'] .'-' . $item['anio'] ?></td>
-                <td><?php echo $item['moneda'] ?></td>
-                <td><?php echo $item['montoReal'] ?></td>
-                <td><?php echo $item['procedimiento'] ?></td>
+                <?php    
+                            $moneda;
+                                            if($item["moneda"]== "$ (Pesos Uruguayos)"){
+                                                $moneda = '$U';
+                                            }else{
+                                                if($item["moneda"] == "U.I.(Unidades Indexadas)"){
+                                                    $moneda = "U.I.";
+                                                }else{
+                                                    if($item["moneda"] == "U.R. (Unidades Reajustables)"){
+                                                        $moneda = "U.R.";
+                                                    }else{
+                                                        if($item["moneda"] == "€ (Euro)"){
+                                                            $moneda = "€";
+                                                        }else{
+                                                            $moneda = 'U$S';
+                                                        }
+                                                    }
+                                                }
+                                            }
+                            ?>
+                <td><?php echo $moneda." ".$item['montoReal'] ?></td>
                 <td><?php foreach($_SESSION['proveedores'] as $p) : 
                 if($p['id'] == $item['idProveedor']){ 
                     echo $p['empresa'];
@@ -205,21 +215,14 @@
 			<thead style="background: rgb(20,20,20);" >
               
 				<tr>
-                    <th >Id</th>
+                    <th>Cantidad</th>
+                    <th>Descripción</th>
                     <th >Orden</th>
-                    <th >Moneda</th>
-                    <th >Monto Real</th>
-                    <th >Procedimiento</th>
+                    <th >Monto</th>
                     <th >Proveedor</th>
                     <th >Fecha Inicio</th>
                     <th >Fecha fin</th>
                     <th ></th>
-
-
-
-
-
-
 				</tr>
 
               
@@ -235,11 +238,31 @@
             
             foreach($_SESSION['vencidos'] as $item) : ?>
 			<tr style="border-bottom: 5px solid grey" class="semaforoRojo">
-                <td><?php echo $item['id'] ?></td>
+                <td><?php echo $item['cantidad']." ".$item['unidad'];?></td>
+                <td><?php echo $item['descripcion'];?></td>
                 <td><?php echo 'OC ' . $item['numero'] .'-' . $item['anio'] ?></td>
-                <td><?php echo $item['moneda'] ?></td>
-                <td><?php echo $item['montoReal'] ?></td>
-                <td><?php echo $item['procedimiento'] ?></td>
+                <?php    
+                            $moneda;
+                                            if($item["moneda"]== "$ (Pesos Uruguayos)"){
+                                                $moneda = '$U';
+                                            }else{
+                                                if($item["moneda"] == "U.I.(Unidades Indexadas)"){
+                                                    $moneda = "U.I.";
+                                                }else{
+                                                    if($item["moneda"] == "U.R. (Unidades Reajustables)"){
+                                                        $moneda = "U.R.";
+                                                    }else{
+                                                        if($item["moneda"] == "€ (Euro)"){
+                                                            $moneda = "€";
+                                                        }else{
+                                                            $moneda = 'U$S';
+                                                        }
+                                                    }
+                                                }
+                                            }
+                            ?>
+                <td><?php echo $moneda." ".$item['montoReal'] ?></td>
+
                 <td><?php foreach($_SESSION['proveedores'] as $p) : 
                 if($p['id'] == $item['idProveedor']){ 
                     echo $p['empresa'];

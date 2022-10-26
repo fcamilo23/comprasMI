@@ -28,7 +28,7 @@ class FacturaModel extends Model{
 	try{
 			
 			$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-			$montoTotal = 1000;
+			$montoTotal = 0;
 			if(isset($post['montoItem'])){
 				for($i=0; $i < count($post['montoItem']); $i++){
 					$montoTotal += (int)$post['montoItem'][$i] ;

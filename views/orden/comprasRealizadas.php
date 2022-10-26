@@ -113,9 +113,7 @@
 				<tr>
                     <th>Id</th>
                     <th>Orden</th>
-                    <th>Moneda</th>
-                    <th>Monto Real</th>
-                    <th>Artículo o Servicio</th>
+                    <th>Monto</th>
                     <th>Plazo Entrega</th>
                     <th>Procedimiento</th>
                     <th>Proveedor</th>
@@ -133,9 +131,26 @@
 			<tr><?php foreach($viewmodel as $item) : ?>
                 <td><?php echo $item['id'] ?></td>
                 <td><?php echo 'OC ' . $item['numero'] .'-' . $item['anio'] ?></td>
-                <td><?php echo $item['moneda'] ?></td>
-                <td><?php echo $item['montoReal'] ?></td>
-                <td><?php if($item['servicio'] == 'Si'){echo 'Servicio';}else{echo 'Artículo';} ?></td>
+                <?php 
+                $moneda;
+                if($item['moneda'] == "$ (Pesos Uruguayos)"){
+                    $moneda = '$U';
+                }else{
+                    if($item['moneda'] == "U.I.(Unidades Indexadas)"){
+                        $moneda = "U.I.";
+                    }else{
+                        if($item['moneda'] == "U.R. (Unidades Reajustables)"){
+                            $moneda = "U.R.";
+                        }else{
+                            if($item['moneda'] == "€ (Euro)"){
+                                $moneda = "€";
+                            }else{
+                                $moneda = 'U$S';
+                            }
+                        }
+                    }
+                } ?>
+                <td><?php echo $moneda." ".$item['montoReal']; ?></td>
                 <td><?php echo $item['plazoEntrega'] ?></td>
                 <td><?php echo $item['procedimiento'] ?></td>
                 <td><?php foreach($_SESSION['proveedores'] as $p) : 
