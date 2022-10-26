@@ -357,31 +357,32 @@ function readAsBase64() {
                                     <div class="card-body ">
 
                                             <h3>Agregar Item</h3>
+                                            
                                             <hr>
                                         <input type="hidden" id="idItemSolicitud">
                                          <div class="input-group">
-                                            <label for="cantidadNuevoItem" class="text-secondary m-2 form-label" style="text-decoration: none">Cantidad: </label>
+                                            <label for="cantidadNuevoItem" class=" m-2 form-label" style="font-weight: normal">Cantidad: </label>
                                             <input id="cantidadNuevoItem" type="number" class="miniinput2 form-control">
                                             <div id="cantidadNuevoItem" class="invalid-feedback"></div>
-                                            <label for="unidadNuevoItem" class="text-secondary m-2 form-label"> Unidad:</label> 
+                                            <label for="unidadNuevoItem" class="m-2 form-label" style="font-weight: normal"> Unidad:</label> 
                                             <input id="unidadNuevoItem" type="text" class="miniinput2 form-control">
                                         </div>
                                         <span id="cantidadUnidadItemError" class="center2" style="color:red; position: static;" ></span>
                                         <br>
-                                        <label for="descripcionNuevoItem" class="text-secondary form-label mb-2 ">Descripción(si tiene cambios)</label>
+                                        <label for="descripcionNuevoItem" class="form-label mb-2 " style="font-weight: normal">Descripción</label>
                                             <div class="input-group mb-1 ">
-                                                <input id="descripcionNuevoItem" name="descripcionNuevoItem" type="text" class="m-2 form-control " >
+                                                <input id="descripcionNuevoItem" name="descripcionNuevoItem" type="text" class="mb-3 form-control " >
                                                 <span id="descripcionNuevoItemError" class="center2" style="color:red; height:100%; " ></span>
                                             </div>
-                                        <label for="observacion" class="text-secondary form-label">Observacion (no obligatorio):</label>
+                                        <label for="observacion" class="form-label" style="font-weight: normal">Observación (opcional):</label>
                                             <div class="input-group mb-3">
                                             <textarea id="nuevoObservacionItem" name="nuevoObservacionItem" class="form-control"></textarea>
                                         </div>
 
                                         <div class="input-group mb-1">
-                                            <label for="nuevoPrecioItem" class="text-secondary m-2 form-label">Precio: </label>
+                                            <label for="nuevoPrecioItem" class="m-2 form-label" style="font-weight: normal">Precio: </label>
                                             <input class="miniinput2 form-control" id="nuevoPrecioItem" name="nuevoPrecioItem" type="number" min="1" class="m-2 form-control">
-                                            <label for="nuevoPrecioItem" class="text-secondary m-2 form-label">   Es servicio: </label>
+                                            <label for="nuevoPrecioItem" class="m-2 form-label" style="font-weight: normal">   Es servicio: </label>
                                             <select onchange="servicio(this)" class="miniinput2 form-control" id="nuevoTipoItem" name="nuevoTipoItem" class="m-2 form-control">
                                                 <option value="No" selected>No</option>
                                                 <option value="General">General</option>
@@ -392,18 +393,18 @@ function readAsBase64() {
                                         <hr>
                                         
                                         <div class="input-group mb-1" >
-                                            <label for="entrega" class="text-secondary m-2 form-label" >Inicio: </label>
+                                            <label for="entrega" class=" m-2 form-label" style="font-weight: normal">Inicio: </label>
                                             <input id="nuevoInicioItem" name="nuevoInicioItem" type="date" class="miniinput2 form-control" disabled>
                                             <div id="inicioError" class="invalid-feedback"></div>
-                                            <label for="fin" class="text-secondary m-2 form-label">   Finaliza:</label> 
+                                            <label for="fin" class="m-2 form-label" style="font-weight: normal">  Finalización:</label> 
                                             <input id="nuevoFinItem" name="nuevoFinItem" type="date" class="miniinput2 form-control" disabled>
                                         </div>
                                         <span id="fechasError" class="center2"style="color:red; position: static;" ></span>
                                         <hr>
                                     
 
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrerModelItem()">CANCELAR</button>
-                                            <button type="button" class="btn btn-primary" onclick="crearItemOden()">AGREGAR</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrerModelItem()">Cancelar</button>
+                                            <button type="button" class="btn btn-primary" onclick="crearItemOden()">Agregar</button>
                                     </div>
                             </div>
                             </dialog>
