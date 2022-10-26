@@ -6,17 +6,20 @@ class Users extends Controller{
 		$this->returnView($viewmodel->register(), true);
 	}
 	protected function setPass(){
+		$this->sesionAbierta ();
 		$viewmodel = new UserModel();
 		$this->returnView($viewmodel->setPass(), true);
 	}
 
 	protected function listaUsuarios(){
+		$this->sesionAbierta ();
 		$viewmodel = new UserModel();
 		$this->returnView($viewmodel->listaUsuarios(), true);
 	}
 
 
 	protected function profile(){
+		$this->sesionAbierta ();
 		$viewmodel = new UserModel();
 		$this->returnView($viewmodel->profile(), true);
 	}
@@ -84,4 +87,12 @@ class Users extends Controller{
 		// Redirect
 		header('Location: '.ROOT_URL);
 	}
+	
+	protected function sesionAbierta () {
+		if (!isset($_SESSION['is_logged_in']) ||$_SESSION['is_logged_in'] == false){
+			 header('Location: '.ROOT_URL.'users/login');
+		 }
+	}
+	
+
 }

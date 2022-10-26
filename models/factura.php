@@ -4,7 +4,7 @@ class FacturaModel extends Model{
 
 		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 		if(! isset($post['idOrden'])){
-			header('Location: '.ROOT_URL.'orden/verOrden');
+			header('Location: '.ROOT_URL);
 		}
 		$this->query('SELECT * FROM itemOrden WHERE idOrden = :idOrden');
 		$this->bind(':idOrden', $post['idOrden']);
@@ -91,7 +91,11 @@ class FacturaModel extends Model{
 			}catch(PDOException $a) {}
 			$_SESSION['mensaje']['tipo'] = 'error';
             $_SESSION['mensaje']['contenido'] = $error;
-			header('Location: '.ROOT_URL.'orden/verOrden');
+			if(isset($post['idOrden'])){
+				header('Location: '.ROOT_URL.'orden/verOrden');
+			}else{
+			header('Location: '.ROOT_URL);
+			}
 			return;
 		}
 	}
@@ -105,11 +109,20 @@ class FacturaModel extends Model{
 	}
 
 	public function verFactura(){
-
+		if(isset($_SESSION['idFactura']) || $_SESSION['idFactura'] =='' ){
+			header('Location: '.ROOT_URL);
+			return;
+		}
 		$this->query('SELECT * FROM facturas WHERE id = :idFactura');
 		$this->bind(':idFactura', $_SESSION['idFactura']);
 		$factura = $this->single();
-
+		/// si factura no existe
+		if(!$factura){
+			$_SESSION['mensaje']['tipo'] = 'error';
+			$_SESSION['mensaje']['contenido'] = 'Factura no encontrada';
+			header('Location: '.ROOT_URL.'orden/verOrden');
+			return;
+		}
 		$this->query('SELECT * FROM itemFactura WHERE idFactura = :idFactura');
 		$this->bind(':idFactura', $_SESSION['idFactura']);
 		$items = $this->resultSet();
@@ -150,6 +163,9 @@ class FacturaModel extends Model{
 			$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 			if(isset($post['idFactura'])){
 				$_SESSION ['idFactura'] = $post ['idFactura'];
+			}else{
+				header('Location: '.ROOT_URL);
+				return;
 			}
 			$this->query('DELETE FROM itemFactura WHERE idFactura = :idFactura');
 
@@ -163,7 +179,9 @@ class FacturaModel extends Model{
 
 			$_SESSION['mensaje']['tipo'] = 'success';
 			$_SESSION['mensaje']['contenido'] = 'Factura eliminada correctamente';
+			unset($_SESSION ['idFactura']);
 			header('Location: '.ROOT_URL.'orden/verOrden');
+			
 			return;
 		}catch(PDOException $e){
 			$_SESSION['mensaje']['tipo'] = 'error';
@@ -174,11 +192,17 @@ class FacturaModel extends Model{
 	}
 	
 	public function verArchivo(){
+
 		
 		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+		if(isset($post['idArchivo'])){
 			$this->query('SELECT * FROM archivosfacturas WHERE id = :idArchivo');
 			$this->bind(':idArchivo', $post['idArchivo']);
 			$viewmodel = $this->single();
 			return $viewmodel;
+		}else{
+			header('Location: '.ROOT_URL);
+			return;
+		}
 	}
 }

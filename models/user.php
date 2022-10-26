@@ -222,7 +222,7 @@ class UserModel extends Model{
 					"rol"	=> $row['rol'],
 				);
 				?>
-					<h1>llegamos aca1</h1>
+
 				<?php
 				
 				header('Location: '.ROOT_URL.'');

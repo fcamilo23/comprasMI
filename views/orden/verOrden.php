@@ -250,7 +250,7 @@ function mensajes(){
                                         <td><?php echo $factura['fechaFactura'] ?></td>
                                         <td>
                                         <form id="eliminarFactura<?php echo $factura['id'] ?>" action="<?php echo ROOT_PATH; ?>factura/eliminarFactura" method="post">
-                                            <input type="hidden" name="id" value="<?php echo $factura['id'] ?>">
+                                            <input type="hidden" name="idFactura" value="<?php echo $factura['id'] ?>">
                                             <input type="button" name="" onclick="cartelEliminarFactura(<?php echo $factura['id'] ?>)" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
                                         </form>
 
