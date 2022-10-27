@@ -130,7 +130,7 @@
                                                 }
                                             }
                             ?>
-                <td><?php echo $moneda." ".$item['montoReal'] ?></td>
+                <td><?php echo $moneda." ".$item['monto'] ?></td>
                 <td><?php foreach($_SESSION['proveedores'] as $p) : 
                 if($p['id'] == $item['idProveedor']){ 
                     echo $p['empresa'];

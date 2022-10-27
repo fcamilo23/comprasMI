@@ -7,14 +7,15 @@
             buttons: [
                 'excel'
             ],
+            order: [[0, 'desc']],
             dom: 'lBfrtip',
             "columnDefs": [ {
-                "targets": [15,14,13,12,11,8,7,6,2,0],
+                "targets": [14,13,12,11,8,7,6,5,2,0],
                 "searchable": false,
                 
                 } ,
                 {
-                "targets": [14,13,11],
+                "targets": [6,14,13,11],
                 "visible": false,
                 }
             

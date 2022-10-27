@@ -32,7 +32,7 @@
 
 
 
-<?php if($_SESSION['solicitudActual']['SR'] != "") {?>
+<?php if($_SESSION['solicitudActual']['SR'] != "" && $_SESSION['solicitudActual']['procedimiento'] != "---" && $_SESSION['solicitudActual']['numProcedimiento'] != "0"  && $_SESSION['solicitudActual']['anioProcedimiento'] != "0" && $_SESSION['solicitudActual']['numProcedimiento'] != ""  && $_SESSION['solicitudActual']['anioProcedimiento'] != "" ) {?>
 
 
 <script>
@@ -126,7 +126,7 @@ function readAsBase64() {
                             
                             <div class="input-group mb-3 center2">
                                 <p class="m-3">Moneda</p>
-                                <select name="moneda"  id="moneda" class="m-2  form-control" > 
+                                <select name="moneda"  id="moneda" onchange="cambiarMoneda(this)" class="m-2  form-control" > 
                                         <option value="$ (Pesos Uruguayos)" selected>$U (Pesos Uruguayos)</option>
                                         <option value="U$S (Dolares)">US$ (Dólares)</option>
                                         <option value="U.I.(Unidades Indexadas)">U.I.(Unidades Indexadas)</option>
@@ -259,9 +259,11 @@ function readAsBase64() {
                         </div>
                         <div class="card-body" style="max-width:800px"><br><br>
                             <div class="form-group row">
-                                <label for="colFormLabel" class="col-sm-2 col-form-label" >Monto Total:</label>
+
                                 <div class="col-sm-10">
-                                    <input type="text" name="montoReal" class="form-control miniinput2" id="montoReal" value="0" readonly>
+                                <label for="colFormLabel" id="mtotal" class="" style="display: inline-block" >Monto Total en $U (Pesos Uruguayos):</label>
+     
+                                    <input type="text" name="montoReal" class="form-control miniinput2" style="display: inline-block" id="montoReal" value="0" readonly>
                                 </div>
                             </div>
                         </div>
@@ -448,7 +450,11 @@ function readAsBase64() {
             }
            document.getElementById("modalNuevoItem").showModal();
     }  
+    function cambiarMoneda(select){
+        document.getElementById("mtotal").textContent = "Monto total en " + select.value + ":";
 
+
+    }
     function crearItemOden(){
         ///comprobar inputs nombreServico
         var descripcion = document.getElementById("descripcionNuevoItem").value;
@@ -707,8 +713,8 @@ function readAsBase64() {
 
 <script>
     Swal.fire({
-        title: '',
-        text: "La solicitud de compra debe tener un SR para poder agregarle una orden de compra",
+        title: 'Ups!',
+        text: "La solicitud de compra debe tener 'SR' y un procedimiento definido para poder agregarle una orden de compra",
         icon: 'warning',
         showCancelButton: false,
         confirmButtonColor: '#3085d6',

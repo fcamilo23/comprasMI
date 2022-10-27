@@ -87,11 +87,11 @@
         <label  style=" color: rgb(130, 130, 130)">Oficina Solicitante</label>
         <label  style=" color: red">*</label>
 
-
             <select name="oficinaSolicitante" id="oficinaSolicitante" style="" class="form-control">
                 <option value="0" selected>-</option>
                 <?php
                 foreach($viewmodel as $item) : $oficina = $item['unidad'] . ' ' . $item['ue'];
+                
                 ?>
                 <option <?php if(isset($_SESSION['solicitud']['oficinaSolicitante'])){if($_SESSION['solicitud']['oficinaSolicitante'] == $oficina) { ?> selected <?php }} ?>  value="<?php echo $oficina ?>" ><?php echo $oficina ?></option>
                 <?php endforeach; ?>

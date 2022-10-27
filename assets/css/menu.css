@@ -80,10 +80,14 @@
     width: 15%;
 }
 .amarillo{
-    background: rgb(255, 255, 87);
+    background: rgb(255, 255, 189);
+    border: 1px solid rgb(196, 196, 196);
+
 }
 .amarillo:hover{
-    background: rgba(253, 250, 40, 0.938);
+    background: rgba(247, 243, 7, 0.938);
+    border: 1px solid grey;
+
 }
 .mystyle{
     box-shadow: 0px 15px 15px 15px #a87a25;

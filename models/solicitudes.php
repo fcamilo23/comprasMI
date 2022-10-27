@@ -21,7 +21,7 @@ class SolicitudesModel extends Model{
 
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if(isset($post) && isset($post['submit'])){
-            if($_POST['submit'] == 'Ampliar'||$_POST['submit'] == '◄ Solicitud'){
+            if($_POST['submit'] == 'Ampliar'||$_POST['submit'] == 'Ir a la Solicitud'){
             $id = $post['numero'];
 
             
@@ -499,7 +499,7 @@ if (isset($_POST['submit'])) {
                 $_SESSION['solicitud']['artServ'] = $post['artServ'];
                 $_SESSION['solicitud']['inputas'] = $post['inputas'];
                 $_SESSION['solicitud']['detalle'] = $post['detalle'];
-                $_SESSION['solicitud']['oficinaSolicitante'] = $post['oficinasolicitante'];
+                $_SESSION['solicitud']['oficinaSolicitante'] = $post['oficinaSolicitante'];
                 $_SESSION['solicitud']['uo'] = $post['uo'];
                 $_SESSION['solicitud']['costo'] = $post['costo'];
                 $_SESSION['solicitud']['referente'] = $post['referente'];

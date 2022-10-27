@@ -40,10 +40,13 @@ function mensajes(){
                     <input id="cerrarFiltros2" onclick ="cerrarModal()" type="button" class="float-right btn btn-secondary " value="CERRAR">
     </dialog> 
 </form> 
+
 <!---MODAL FIN---->
 <form id="editar" method="post" action="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes">       
+                <a href="<?php echo ROOT_URL; ?>orden/comprasRealizadas"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
+
                 <td><input type="text" name="numero" style="display: none" value="<?php echo $viewmodel['solicitud']['id']; ?>"/>
-                <input type="submit" name="submit" value="◄ Solicitud" style="background: #001d5a; border: none; margin-left: 30px" class="btn btn-primary sombraAzul"/></td>
+                <input type="submit" name="submit" value="Ir a la Solicitud" style="background: #001d5a; border: none; margin-left: 30px" class="btn btn-primary sombraAzul"/></td>
                 </form>
 <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
     <button type="submit" form="anexarFactura" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/anexarFactura.jpg" width="190px" height="50px" ></button>
@@ -139,7 +142,7 @@ function mensajes(){
                             <?php
                             }else{
                             ?>
-                                <a href="<?php echo ROOT_URL; ?>orden/editarOrden" class="float-right btn btn-primary"<?php echo $read ?> >EDITAR ORDEN</a>
+                                <a href="<?php echo ROOT_URL; ?>orden/editarOrden" class="float-right btn amarillo"<?php echo $read ?> >✏️ Editar Orden</a>
                             </div>
                             <?php } ?>
                         </div>
@@ -161,13 +164,14 @@ function mensajes(){
                                     <thead>
                                         
                                         <tr>
-                                            <th style="width: 10%">Cantidad</th>
-                                            <th style="width: 10%">Unidad</th>
-                                            <th style="width: 35%">Descripcion</th>
-                                            <th style="width: 10%">Monto</th>
-                                            <th style="width: 10%">Servicio</th>
-                                            <th style="width: 10%">Inicio</th>
-                                            <th style="width: 10%">Fin</th>
+                                            <th >Cantidad</th>
+                                            <th >Unidad</th>
+                                            <th style="width: 30%">Descripcion</th>
+                                            <th >Moneda</th>
+                                            <th >Monto</th>
+                                            <th >Servicio</th>
+                                            <th >Inicio (y-m-d)</th>
+                                            <th >Fin (y-m-d)</th>
                                             
                                         </tr>
                                     </thead>
@@ -180,13 +184,14 @@ function mensajes(){
                                     ?>
 
                                         <tr id="filaItem<?php echo $i;?>">
-                                            <th style="width: 10%"><?php echo $item['cantidad'] ?> </th>
-                                            <th style="width: 10%"><?php echo $item['unidad'] ?> </th>
-                                            <th style="width: 35%"><?php echo $item['descripcion'] ?> </th>
-                                            <th style="width: 10%"><?php echo $item['monto'] ?> </th>
-                                            <th style="width: 10%"><?php echo $item['esservicio'] ?> </th>
-                                            <th style="width: 10%"><?php echo $item['inicio'] ?></th>
-                                            <th style="width: 10%"><?php echo $item['fin'] ?> </th>
+                                            <th ><?php echo $item['cantidad'] ?> </th>
+                                            <th ><?php echo $item['unidad'] ?> </th>
+                                            <th ><?php echo $item['descripcion'] ?> </th>
+                                            <th ><?php echo $item['moneda'] ?> </th>
+                                            <th ><?php echo $item['monto'] ?> </th>
+                                            <th ><?php echo $item['esservicio'] ?> </th>
+                                            <th ><?php if($item['esservicio'] == "No"){echo 'N/A';}else{echo $item['inicio'];} ?></th>
+                                            <th ><?php if($item['esservicio'] == "No"){echo 'N/A';}else{ echo $item['fin'];} ?> </th>
                                         </tr>
                                         <?php $i++; $total += $item['monto'];
                                      endforeach; ?>

@@ -178,8 +178,8 @@
 				<option <?php if ($_SESSION['solicitudActual']['planificado'] == "No"){?> selected <?php } ?> value="No">No</option>
 			</select> 
 
-            <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Costo Estimado ($U)</label>
-            <input type="number" name="costo" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['costoAprox'] ?>" required placeholder="0" disabled>
+            <label  style="margin-top: 20px; color: rgb(130, 130, 130); display: none">Costo Estimado ($U)</label>
+            <input type="number" name="costo" class="form-control" style="margin-top: 0px; display: none" value="<?php echo $_SESSION['solicitudActual']['costoAprox'] ?>" required placeholder="0" disabled>
         
         </div>
         
@@ -190,17 +190,17 @@
         <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Oficina Solicitante</label>
         <input type="text" name="oficinaSolicitante" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['oficinaSolicitante'] ?>" disabled>
 
-        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">UO</label>
+        <label  style="margin-top: 25px; color: rgb(130, 130, 130)">UO</label>
         <input type="text" name="UO" id="UO" value="<?php echo $_SESSION['solicitudActual']['uo'] ?>" class="form-control" style="margin-top: 0px;" disabled  >
 
 
 
        
 
-        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Referente de Compra</label>
+        <label  style="margin-top: 25px; color: rgb(130, 130, 130)">Referente de Compra</label>
         <input type="text" name="costo" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['referente'] ?>" required placeholder="" disabled>
         
-        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Contacto Referente</label>
+        <label  style="margin-top: 25px; color: rgb(130, 130, 130)">Contacto Referente</label>
         <input type="text" name="costo" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['contactoReferente'] ?>" required placeholder="" disabled>
         
 
@@ -268,10 +268,10 @@
         <div style="padding: 20 40; background: rgb(239,239,239); border-radius: 5px; margin-top: 30px">
 
             <label  style="margin-top: 14px; color: rgb(130, 130, 130)">Detalle</label>
-            <textarea class="form-control" name="detalle" cols="40" rows="5" style="margin-top: 0px;" placeholder="" disabled><?php echo $_SESSION['solicitudActual']['detalle'] ?></textarea>
+            <textarea class="form-control" name="detalle" cols="40" rows="4" style="margin-top: 0px;" placeholder="" disabled><?php echo $_SESSION['solicitudActual']['detalle'] ?></textarea>
 
             <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Observaciones</label>
-            <textarea class="form-control" name="observaciones" cols="40" rows="5" style="margin-top: 0px;" value="" placeholder="" disabled><?php echo $_SESSION['solicitudActual']['observaciones'] ?></textarea>
+            <textarea class="form-control" name="observaciones" cols="40" rows="4" style="margin-top: 0px;" value="" placeholder="" disabled><?php echo $_SESSION['solicitudActual']['observaciones'] ?></textarea>
         </div>
 
 <div style="padding: 15 40; background: rgb(239,239,239); border-radius: 5px; margin-top: 30px">
@@ -334,7 +334,7 @@
                         
     <?php if($_SESSION['user_data']['rol'] == 'Administrador' || $_SESSION['user_data']['rol'] == 'Operador'){ ?>
         <div class="col-12 center" style="text-align: center; margin-top: 60px">
-            <a href="<?php echo ROOT_URL; ?>solicitudes/editarSolicitud"><input class="btn btn-primary" value="✏️ Editar Solicitud" style="width: 170px"/> </a>
+            <a href="<?php echo ROOT_URL; ?>solicitudes/editarSolicitud"><input class="btn amarillo" value="✏️ Editar Solicitud" style="width: 170px"/> </a>
         </div>
     <?php } ?>
 

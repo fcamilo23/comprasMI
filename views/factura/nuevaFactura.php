@@ -1,3 +1,22 @@
+<script>
+    $(document).ready(function(){
+        document.getElementById('fechaFactura').valueAsDate = new Date();
+
+        const moneda = document.getElementById('monedaFactura').value.substring(0,3);
+        const moneda1 = document.getElementById('monedaFactura').value.substring(0,2);
+
+        if(moneda == "$ (" || moneda == "€ ("){
+            document.getElementById('thMonto').textContent = "Total " + moneda1;
+        }else{
+            document.getElementById('thMonto').textContent = "Total " + moneda;
+        }
+
+
+
+
+});
+   
+</script>
 <body>
 <form id="formFactura" onsubmit="validarFormulario(event)" action="<?php echo ROOT_URL; ?>factura/agregarFactura" method="POST" enctype="multipart/form-data">
 
@@ -47,9 +66,9 @@
                                         </div>
 
                                        <div class="mb-3 row">
-                                            <label for="monedaFactura" class="col-sm-2 col-form-label"> Monto</label>
+                                            <label for="monedaFactura" class="col-sm-2 col-form-label"> Moneda</label>
                                             <div class="col-sm-4">
-                                                <select name="monedaFactura" id="monedaFactura" class="form-control">
+                                                <select name="monedaFactura" id="monedaFactura" onchange="cambiarMoneda(this)" class="form-control">
                                                     <option value="$ (Pesos Uruguayos)" <?php if($viewmodel["moneda"]=='$U (Pesos Uruguayos)') { echo "selected"; } ?>>$U (Pesos Uruguayos)</option>
                                                     <option value="U$S (Dolares)" <?php if($viewmodel["moneda"]=='U$S (Dolares)') { echo "selected"; } ?>>US$ (Dólares)</option>
                                                     <option value="U.I.(Unidades Indexadas)" <?php if($viewmodel["moneda"]=='U.I.(Unidades Indexadas)') { echo "selected"; } ?> >U.I.(Unidades Indexadas)</option>
@@ -64,7 +83,7 @@
                                         <div class="mb-3 row">
                                             <label for="fecha" class="col-sm-2 col-form-label"> Fecha</label>
                                             <div class="col-sm-4">
-                                                <input id="fechaFactura" name="fechaFactura" type="date" class="form-control"  style="max-width: 15rem" required>
+                                                <input id="fechaFactura" name="fechaFactura" type="date" value="27/10/2022" class="form-control"  style="max-width: 15rem" required>
                                             </div>
                                         </div>
                                         <div id="fechaError" style="color:red" class="center2">     </div>
@@ -120,7 +139,7 @@
                                             <th style="width: 20%">Cantidad</th>
                                             <th style="width: 20%">Unidad</th>
                                             <th style="width: 30%">Descripcion</th>
-                                            <th style="width: 20%">Monto</th>
+                                            <th id="thMonto" style="width: 20%">Monto</th>
                                             <th>Agregar</th>
                                         </tr>
                                     </thead>
@@ -262,6 +281,21 @@
 
     function cerrarModel(){
         document.getElementById('modalconfirmar').style.display = "none";
+    }
+
+    
+
+    function cambiarMoneda(select){
+        const moneda = select.value.substring(0,3);
+        const moneda1 = select.value.substring(0,2);
+
+        if(moneda == "$ (" || moneda == "€ ("){
+            document.getElementById('thMonto').textContent = "Total " + moneda1;
+        }else{
+            document.getElementById('thMonto').textContent = "Total " + moneda;
+        }
+
+        
     }
 
     ////CARGAR ARCHIVOS/////

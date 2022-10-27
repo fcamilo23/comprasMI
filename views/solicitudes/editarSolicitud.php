@@ -23,7 +23,7 @@
 
 <div class="row col-12 center" style="background: white; width: 70%; padding: 40px; border: 1px solid rgba(220, 220, 220); border-radius: 5px; margin-top: 3%;">
     <div class="col-lg-6 center">
-        <form id="verSolicitud" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
+        <form id="verSolicitud" method="post" autocomplete="off" action="<?php $_SERVER['PHP_SELF']; ?>">
 
         <input type="number" id="id" name="id" class="form-control" value="<?php echo $_SESSION['solicitudActual']['id']; ?>" style="margin-top: 0px; display:none" placeholder=""   >
 
@@ -51,8 +51,8 @@
 			</select> 
 
 
-            <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Costo Estimado ($U) *</label>
-            <input type="number" name="costo" id="costo" class="form-control" style="margin-top: 0px;" placeholder="0" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"  value="<?php echo $_SESSION['solicitudActual']['costoAprox'] ?>"   >
+            <label  style="margin-top: 20px; color: rgb(130, 130, 130); display: none">Costo Estimado ($U) *</label>
+            <input type="number" name="costo" id="costo" class="form-control" style="margin-top: 0px;display: none" placeholder="0" onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'"  value="<?php echo $_SESSION['solicitudActual']['costoAprox'] ?>"   >
         </div>
 
 
@@ -148,8 +148,8 @@
 			</select> 
            
 
-            <input type="number" name="numProcedimiento" id="numProcedimiento" value="<?php if(isset($_SESSION['solicitudActual']['numProcedimiento'])) {  echo $_SESSION['solicitudActual']['numProcedimiento']; }?>"   class="form-control" style="margin-top: 0px; width: 20%; display: inline-block"   onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
-            <input type="number" name="anioProcedimiento" id="anioProcedimiento" value="<?php if(isset($_SESSION['solicitudActual']['anioProcedimiento'])) {  echo $_SESSION['solicitudActual']['anioProcedimiento']; }?>"  class="form-control" style="margin-top: 0px; width: 28%; display: inline-block"   onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
+            <input type="number" autocomplete="off" name="numProcedimiento" id="numProcedimiento" value="<?php if(isset($_SESSION['solicitudActual']['numProcedimiento'])) {  echo $_SESSION['solicitudActual']['numProcedimiento']; }?>"   class="form-control" style="margin-top: 0px; width: 20%; display: inline-block"   onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
+            <input type="number" autocomplete="off" name="anioProcedimiento" id="anioProcedimiento" value="<?php if(isset($_SESSION['solicitudActual']['anioProcedimiento'])) {  echo $_SESSION['solicitudActual']['anioProcedimiento']; }?>"  class="form-control" style="margin-top: 0px; width: 28%; display: inline-block"   onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) && event.code!=='Space'">
         </div>
 
 

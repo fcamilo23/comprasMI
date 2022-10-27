@@ -57,11 +57,13 @@
                             
 
                             <hr><hr>
-                            <h4 id="proveedorNombre">PROVEEDOR: <?php echo $viewmodel["orden"]["nombreEmpresa"] ?></h4>
-                            
+                            <br>
                             <div>
-                                <input type="button" class="btn btn-success" id="editor" onclick ="mostrarProveedores()" value="CAMBIAR PROVEEDOR">
+                                <h4 id="proveedorNombre" style="display: inline-block">𝗣𝗥𝗢𝗩𝗘𝗘𝗗𝗢𝗥:      <?php echo $viewmodel["orden"]["nombreEmpresa"] ?></h4>
+
+                                <input type="button" class="btn amarillo" style="float: right;" id="editor" onclick ="mostrarProveedores()" value="✏️ Cambiar Proveedor">
                             </div>
+                            <br>
                             <hr>
                             <div id="main-container" style="width: 100%; overflow: auto; padding: 25px; display:none;"> <!--  max-height: 800px -->
 

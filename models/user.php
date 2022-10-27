@@ -191,6 +191,8 @@ class UserModel extends Model{
 		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
 		if($post && $post['submit']){
+			echo 441;
+
 			$password = md5($post['password']);
 			
 			$password = "";
@@ -206,8 +208,12 @@ class UserModel extends Model{
 
 			$row = $this->single();
 
+
 			if($row){
+				//echo $post['cedula'];
+
 				if($row['password'] == md5($row['codigo'])){
+					
 				$_SESSION['setPass'] = $post['cedula'];
 				header('Location: '.ROOT_URL.'users/setPass');
 					
