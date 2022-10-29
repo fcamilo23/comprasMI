@@ -109,7 +109,7 @@ class FacturaModel extends Model{
 	}
 
 	public function verFactura(){
-		if(isset($_SESSION['idFactura']) || $_SESSION['idFactura'] =='' ){
+		if(!isset($_SESSION['idFactura']) || $_SESSION['idFactura'] =='' ){
 			header('Location: '.ROOT_URL);
 			return;
 		}

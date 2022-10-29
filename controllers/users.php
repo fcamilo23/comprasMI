@@ -6,7 +6,6 @@ class Users extends Controller{
 		$this->returnView($viewmodel->register(), true);
 	}
 	protected function setPass(){
-		$this->sesionAbierta ();
 		$viewmodel = new UserModel();
 		$this->returnView($viewmodel->setPass(), true);
 	}
