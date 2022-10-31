@@ -52,7 +52,8 @@ class OrdenModel extends Model{
                             $fin = $post['itemfin'][$i];
                         }
 
-                        $this->query('INSERT INTO itemOrden (descripcion, cantidad, unidad, monto, idOrden, idSolicitud, moneda, idItemSolicitud,esservicio,inicio,fin) VALUES (:descripcion, :cantidad, :unidad, :monto, :idOrden,:idSolicitud,:moneda,:idItemSolicitud,:esservicio,:inicio,:fin)');
+                        $this->query('INSERT INTO itemOrden (descripcion, cantidad, unidad, monto, idOrden, idSolicitud, moneda, idItemSolicitud,esservicio,inicio,fin,estado) 
+                        VALUES (:descripcion, :cantidad, :unidad, :monto, :idOrden,:idSolicitud,:moneda,:idItemSolicitud,:esservicio,:inicio,:fin,:estado)');
                         $this->bind(':descripcion', $post['itemdescripcion'][$i]);
                         $this->bind(':cantidad', $post['itemcantidad'][$i]);
                         $this->bind(':unidad', $post['itemunidad'][$i]);
@@ -64,6 +65,7 @@ class OrdenModel extends Model{
                         $this->bind(':esservicio', $post['itemtipo'][$i]);
                         $this->bind(':inicio',$inicio);
                         $this->bind(':fin', $fin);
+                        $this->bind(':estado', 'activo');
                         $this->execute();
                     }
                 }
@@ -294,6 +296,21 @@ class OrdenModel extends Model{
 
         return $row;
     }
+    public function anularOrden(){
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(isset($post['idOrden'])&&isset($post['cambiar'])){
+            if($post['cambiar'] == 'inactivo' || $post['cambiar'] == 'activo'){
+                $this->query('UPDATE ordenes SET estado = :estado WHERE id = :id');
+                $this->bind(':id', $post['idOrden']);
+                $this->bind(':estado', $post['cambiar']);
+                $this->execute();
+                $_SESSION['mensaje']['tipo'] = 'success';
+                $_SESSION['mensaje']['contenido'] = 'Cambio realizado correctamente';
+                header('Location: '.ROOT_URL.'solicitudes/verSolicitud#ordenes');
+                return;
+            }
+        }
+    }
       
     public function editarOrden(){
 
@@ -365,15 +382,13 @@ class OrdenModel extends Model{
             }
 
 
-            $this->query('UPDATE ordenes SET moneda = :moneda, montoReal = :montoReal, plazoEntrega = :plazoEntrega, formaPago = :formaPago, fechaInicio = :fechaInicio, fechaFin = :fechaFin, idProveedor = :idProveedor, numeroAmpliacion = :numeroAmpliacion WHERE id = :id');
+            $this->query('UPDATE ordenes SET moneda = :moneda, montoReal = :montoReal, plazoEntrega = :plazoEntrega, formaPago = :formaPago, idProveedor = :idProveedor, numeroAmpliacion = :numeroAmpliacion WHERE id = :id');
             $this->bind(':id', $_SESSION['ordenActual']);
             $this->bind(':moneda', $post['moneda']);
             $this->bind(':montoReal', $post['montoReal']);
             $this->bind(':formaPago', $post['formaPago']);
             $this->bind(':plazoEntrega', $post['plazoEntrega']);
 
-            $this->bind(':fechaInicio', $fechaini);
-            $this->bind(':fechaFin', $fechafin);
             $this->bind(':idProveedor', $proveedor);
             $this->bind(':numeroAmpliacion', $post['numeroAmpliacion']);
 
@@ -391,7 +406,7 @@ class OrdenModel extends Model{
         }
 
     }
-
+/*
     public function eliminarOrden(){
         try{
          
@@ -430,7 +445,7 @@ class OrdenModel extends Model{
             header('Location: '.ROOT_URL.'solicitudes/versolicitud');
         }
     }
-
+*/
     public function contratosAVencer (){
 
 
@@ -451,13 +466,13 @@ class OrdenModel extends Model{
        
         $this->query('SELECT * FROM `itemOrden` 
                     JOIN ordenes ON itemOrden.idOrden = ordenes.id
-                    WHERE (esservicio = "General" OR esservicio="Licencia")and itemOrden.fin < (select curdate()) ORDER BY itemOrden.fin ASC');
+                    WHERE ordenes.estado="activo" AND (esservicio = "General" OR esservicio="Licencia")and itemOrden.fin < (select curdate()) ORDER BY itemOrden.fin ASC');
         $_SESSION['vencidos'] = $this->resultSet();
 
 
         $this->query('SELECT * FROM `itemOrden` 
                     JOIN ordenes ON itemOrden.idOrden = ordenes.id
-                    WHERE (esservicio = "General" OR esservicio="Licencia") and itemOrden.fin >= (select curdate()) ORDER BY itemOrden.fin ASC');
+                    WHERE ordenes.estado="activo" AND (esservicio = "General" OR esservicio="Licencia") and itemOrden.fin >= (select curdate()) ORDER BY itemOrden.fin ASC');
         $row = $this->resultSet();
 
         return $row;

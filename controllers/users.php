@@ -72,13 +72,13 @@ class Users extends Controller{
 		$this->returnView($viewmodel->login(), true);
 	}
 
-	protected function loginWithFacebook(){
+/*	protected function loginWithFacebook(){
 		$viewmodel = new UserModel();
 		return $viewmodel->loginWithFacebook();
 	
 		// $this->returnView($viewmodel->loginWithFacebook(), false);
 	}
-
+*/
 	protected function logout(){
 		unset($_SESSION['is_logged_in']);
 		unset($_SESSION['user_data']);

@@ -51,11 +51,18 @@ class Orden extends Controller{
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->seleccionarOrden(), true);
     }
+    /*
     protected function eliminarOrden(){
         $this->sesionAbierta ();
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->eliminarOrden(), true);
     }  
+    */
+    protected function anularOrden(){
+        $this->sesionAbierta ();
+        $viewmodel = new OrdenModel();
+        $this->returnView($viewmodel->anularOrden(), true);
+    }
     
     protected  function isValidatedNumero(){
         include './assets/utils/validationAjax.php';

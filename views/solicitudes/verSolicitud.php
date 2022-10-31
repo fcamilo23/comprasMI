@@ -352,7 +352,7 @@
 
 <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
 
-		<table id="solis" style="width: 100%;">
+		<table id="ordenes" style="width: 100%;">
 
 			<thead>
                 
@@ -371,11 +371,16 @@
 			</thead>
             <tbody >
             
-                <?php foreach ($_SESSION['ordenes']  as $orden) : ?>
+                <?php foreach ($_SESSION['ordenes']  as $orden) :
+                $text='';
+                if($orden['estado'] == 'inactivo'){
+                    $text='text-secondary';
+                }
+                ?>
                     <tr>
-                    <td>OC <?php echo $orden['numero']; ?>-<?php echo $orden['anio']; ?></td>
-                    <td><?php echo $orden['procedimiento']; ?></td>
-                    <td><?php echo $orden['proveedor']; ?></td>
+                    <td class="<?php echo $text ?>">OC <?php echo $orden['numero']; ?>-<?php echo $orden['anio']; ?></td>
+                    <td class="<?php echo $text ?>"><?php echo $orden['procedimiento']; ?></td>
+                    <td class="<?php echo $text ?>"><?php echo $orden['proveedor']; ?></td>
                     <?php
                     $moneda;
                     if($orden['moneda'] == "$ (Pesos Uruguayos)"){
@@ -396,9 +401,9 @@
                         }
                     }
                     ?>
-                    <td> <?php echo $moneda; ?> <?php echo $orden['montoReal']; ?> </td>
+                    <td class="<?php echo $text ?>"> <?php echo $moneda; ?> <?php echo $orden['montoReal']; ?> </td>
                     
-                    <td><?php echo $orden['plazoEntrega']; ?></td>
+                    <td class="<?php echo $text ?>"><?php echo $orden['plazoEntrega']; ?></td>
 
                     <td>
                         <form  action="<?php echo ROOT_PATH; ?>orden/seleccionarOrden" method="POST">
@@ -407,12 +412,23 @@
                         </form>
                     </td>
                     <td>
-                        <form id="eliminarOrden<?php echo $orden['idOrden']; ?>" action="<?php echo ROOT_PATH; ?>orden/eliminarOrden" method="POST">
+                        <form id="anularOrden<?php echo $orden['idOrden']; ?>" action="<?php echo ROOT_PATH; ?>orden/anularOrden" method="POST">
                             <input type="hidden" name="idOrden" value="<?php echo $orden['idOrden']; ?>">
-                        </form>
-                        <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
-                            <input type="button" value="✖" onclick="cartelEliminarOrden(<?php echo $orden['idOrden']; ?>)" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
-                        <?php } ?>
+                            <?php if($orden['estado'] == 'activo'){ ?>
+                                <input type="hidden" name="cambiar" value="inactivo">
+                                    <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+                                        <input type="button" value="Anular" onclick="cartelAnularOrden(<?php echo $orden['idOrden'];?>,'inhabilitar' )" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
+                                    <?php } ?>
+
+                            <?php }else{ if($orden['estado'] == 'inactivo'){?>
+                                <input type="hidden" name="cambiar" value="activo">
+                                    <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+                                        <input type="button" value="Activar" onclick="cartelAnularOrden(<?php echo $orden['idOrden']; ?>,'habilitar')" style="float:right; margin-right: 4%; border: none; color:white;" class="btn  btn-success sombraVerde"/>
+                                    <?php } 
+                                } 
+                            }?>    
+                            </form>
+
 
                         </td>
                     </tr>
@@ -522,7 +538,7 @@
 </div>
 
 <script>
-function cartelEliminarOrden(id){
+function cartelAnularOrden(id, accion){
         const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
             confirmButton: 'btn btn-success',
@@ -532,18 +548,18 @@ function cartelEliminarOrden(id){
         })
 
         swalWithBootstrapButtons.fire({
-        title: 'Seguro que desea borrar la orden?',
-        text: "Tambien se eliminarán las facturas y archivos!",
+        title: 'Seguro que desea '+accion+' la orden?',
+        text: "Se perdera el acceso a las facturas y archivos!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Si, borrar!',
+        confirmButtonText: 'Si, '+accion+'!',
         cancelButtonText: 'No, cancelar!',
         reverseButtons: true
         }).then((result) => {
         if (result.isConfirmed) {
-            //enviar formulario
+            //enviar a
 
-            document.getElementById('eliminarOrden'+id).submit();
+            document.getElementById('anularOrden'+id).submit();
 
         } else if (
             /* Read more about handling dismissals below */

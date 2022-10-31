@@ -105,17 +105,17 @@ function readAsBase64() {
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10" >
             <div class="card" style="margin-bottom: 40px; margin-top: 50px">
                 <br>
-            <h2 style="color: #001d5a; text-align: center; margin-bottom: 50px" class="center">Nueva Orden de Compra</h2>
-                
-            <div class="card-body " style="">
+            <h2 style="color: #001d5a; text-align: center;"class="center">Nueva Orden de Compra</h2>
+                <hr style= "margin-bottom: 20px" >
+            <div class="card-body " >
                 
 
 
                             <label for="numero" class="form-label"></label>
-                            <div class="input-group mb-3 center2">
-                                <p class="m-3">Numero</p>
+                            <div class="input-group  center2">
+                                <p class="m-3">Numero<b class="text-danger">*</b></p>
                                 <input id="numero" name="numero" min="1" max="9999999"type="number" class="m-2  form-control " required>
-                                <p class="m-3" style="margin-left: 200px;" >      Año </p>
+                                <p class="m-3" style="margin-left: 200px;" >      Año <b class="text-danger">*</b></p>
                                 <input id="anio" name="anio" type="number" min="2010" max="2060" class="m-2 miniinput2 form-control" value="<?php echo date('Y') ?>" required>
                             </div>
                             <div id="numeroAnioError"  style="color:red; min-height:100%; position: static;" ></div>
@@ -124,21 +124,23 @@ function readAsBase64() {
                             
                        
                             
-                            <div class="input-group mb-3 center2">
-                                <p class="m-3">Moneda</p>
-                                <select name="moneda"  id="moneda" onchange="cambiarMoneda(this)" class="m-2  form-control" > 
-                                        <option value="$ (Pesos Uruguayos)" selected>$U (Pesos Uruguayos)</option>
+                            <div class="input-group  mt-3 center2">
+                                <p class="m-3">Moneda<b class="text-danger">*</b></p>
+                                <select name="moneda"  id="moneda" onchange="cambiarMoneda(this)" class="m-2  form-control" required>
+                                        <option id="moneda--" value="" selected disabled="disabled">--</option>
+                                        <option value="$ (Pesos Uruguayos)" >$U (Pesos Uruguayos)</option>
                                         <option value="U$S (Dolares)">US$ (Dólares)</option>
                                         <option value="U.I.(Unidades Indexadas)">U.I.(Unidades Indexadas)</option>
                                         <option value="U.R. (Unidades Reajustables)">U.R. (Unidades Reajustables)</option>
                                         <option value="€ (Euro)">€ (Euro)</option>
                                     </select>
                             </div>
+                            <div id="monedaError"  class="center2" style="color:red; min-height:100%; position: static;" ></div>
                         <br><br>
                            
                              
-                            <div class="input-group mb-3 center2" style="">
-                            <label for="plazoEntrega" class="m-2 form-label" >  Fecha Entrega</label>
+                            <div class="input-group center2" >
+                            <label for="plazoEntrega" class="m-2 form-label" >  Fecha Entrega<b class="text-danger">*</b></label>
                                 <input id="plazoEntrega" name="plazoEntrega" type="date" class="form-control" style="max-width: 15rem" required>
                                 <p class="m-2">       Nº Ampliación </p>
                                 <input id="numeroAmplicacion" style="width: 2rem" name="numeroAmpliacion" type="text" class="form-control">
@@ -153,7 +155,7 @@ function readAsBase64() {
                             </div>
                             
                         </div>
-                        <br>
+
                         <label for="formaPago" class="form-label">              Forma de Pago</label>
                             <textarea id="formaPago" name="formaPago" class="form-control center" style="width: 90%;"></textarea>
                             <br><br>
@@ -261,7 +263,7 @@ function readAsBase64() {
                             <div class="form-group row">
 
                                 <div class="col-sm-10">
-                                <label for="colFormLabel" id="mtotal" class="" style="display: inline-block" >Monto Total en $U (Pesos Uruguayos):</label>
+                                <label for="colFormLabel" id="mtotal" class="" style="display: inline-block" >Monto Total</label>
      
                                     <input type="text" name="montoReal" class="form-control miniinput2" style="display: inline-block" id="montoReal" value="0" readonly>
                                 </div>
@@ -359,20 +361,20 @@ function readAsBase64() {
                             <div class="card">
                                     <div class="card-body ">
 
-                                            <h3>Agregar Item</h3>
+                                            <h3>Agregar Item a la Orden</h3>
                                             
                                             <hr>
                                         <input type="hidden" id="idItemSolicitud">
                                          <div class="input-group">
-                                            <label for="cantidadNuevoItem" class=" m-2 form-label" style="font-weight: normal">Cantidad: </label>
+                                            <label for="cantidadNuevoItem" class=" m-2 form-label" style="font-weight: normal">Cantidad:<b class="text-danger">*</b></label>
                                             <input id="cantidadNuevoItem" type="number" class="miniinput2 form-control">
                                             <div id="cantidadNuevoItem" class="invalid-feedback"></div>
-                                            <label for="unidadNuevoItem" class="m-2 form-label" style="font-weight: normal"> Unidad:</label> 
+                                            <label for="unidadNuevoItem" class="m-2 form-label" style="font-weight: normal"> Unidad:<b class="text-danger">*</b></label> 
                                             <input id="unidadNuevoItem" type="text" class="miniinput2 form-control">
                                         </div>
                                         <span id="cantidadUnidadItemError" class="center2" style="color:red; position: static;" ></span>
                                         <br>
-                                        <label for="descripcionNuevoItem" class="form-label mb-2 " style="font-weight: normal">Descripción</label>
+                                        <label for="descripcionNuevoItem" class="form-label mb-2 " style="font-weight: normal">Descripción<b class="text-danger">*</b></label>
                                             <div class="input-group mb-1 ">
                                                 <input id="descripcionNuevoItem" name="descripcionNuevoItem" type="text" class="mb-3 form-control " >
                                                 <span id="descripcionNuevoItemError" class="center2" style="color:red; height:100%; " ></span>
@@ -383,9 +385,11 @@ function readAsBase64() {
                                         </div>
 
                                         <div class="input-group mb-1">
-                                            <label for="nuevoPrecioItem" class="m-2 form-label" style="font-weight: normal">Precio: </label>
+                                            <label for="nuevoPrecioItem" id="mtotal1" class="m-2 form-label" style="font-weight: normal" ><b class="text-danger">*</b></label>
                                             <input class="miniinput2 form-control" id="nuevoPrecioItem" name="nuevoPrecioItem" type="number" min="1" class="m-2 form-control">
-                                            <label for="nuevoPrecioItem" class="m-2 form-label" style="font-weight: normal">   Es servicio: </label>
+                                        </div>
+                                        <div class="input-group mb-1">
+                                            <label for="nuevoTipoItem" class="m-2 form-label" style="font-weight: normal"> Es servicio:<b class="text-danger">*</b></label>
                                             <select onchange="servicio(this)" class="miniinput2 form-control" id="nuevoTipoItem" name="nuevoTipoItem" class="m-2 form-control">
                                                 <option value="No" selected>No</option>
                                                 <option value="General">General</option>
@@ -431,24 +435,35 @@ function readAsBase64() {
     }
 
     function abrirModelNuevoItem(){
+        var tipoMoneda = document.getElementById("moneda").value;
+        if(tipoMoneda == ""){
+            comprobarMoneda();
+            Swal.fire({
+                icon: 'warning',
+                html: 'Debe seleccionar una moneda',
+              });
+              return;
+        }
+
             reiniciarModelItem();
             var itemseleccionado = document.getElementById("nuevoIdItemSolicitud").value;
            if(itemseleccionado > 0){
                 var cantidad = document.getElementById("seleccionItemCantidad"+itemseleccionado).value;
                 var unidad = document.getElementById("seleccionItemUnidad"+itemseleccionado).value;
                 var descripcion = document.getElementById("seleccionItemDescripcion"+itemseleccionado).value;
-                var precio = document.getElementById("seleccionItemPrecio"+itemseleccionado).value;
+                
                 document.getElementById("idItemSolicitud").value = itemseleccionado;
                 document.getElementById("descripcionNuevoItem").value = descripcion;
                 document.getElementById("unidadNuevoItem").value = unidad;
                 document.getElementById("cantidadNuevoItem").value = cantidad;
-                document.getElementById("nuevoPrecioItem").value = precio;
+
             }else{
                 if(itemseleccionado == -1){
                     return;
                 }
             }
-           document.getElementById("modalNuevoItem").showModal();
+            document.getElementById("mtotal1").innerHTML = "Precio en "+document.getElementById("moneda").value+":<b class='text-danger'>*</b>";
+            document.getElementById("modalNuevoItem").showModal();
     }  
     function cambiarMoneda(select){
         document.getElementById("mtotal").textContent = "Monto total en " + select.value + ":";
@@ -477,7 +492,7 @@ function readAsBase64() {
         var error=false;
 
         if(descripcion == ""){
-            document.getElementById("descripcionNuevoItemError").innerHTML = "El nombre no puede estar vacio";
+            document.getElementById("descripcionNuevoItemError").innerHTML = "La descripcion no puede estar vacio";
             error=true;
         }
             
@@ -601,6 +616,10 @@ function readAsBase64() {
     document.getElementById("plazoEntrega").addEventListener("blur", errorPlazoEntrega);
     document.getElementById("numero").addEventListener("blur", comprobarNumero);
     document.getElementById("anio").addEventListener("blur", comprobarNumero);
+    
+    document.getElementById("moneda").addEventListener("change", function(){
+        document.getElementById("mtotal").value = "Monto total en: "+document.getElementById("moneda").value;
+    });
 
 
     function errorPlazoEntrega(){
@@ -614,6 +633,17 @@ function readAsBase64() {
         }
  
     }
+    function comprobarMoneda(){
+        var moneda = document.getElementById("moneda").value;
+        if(moneda == ""){
+            document.getElementById("monedaError").innerHTML = "              La moneda es obligatoria ❌" ;
+            return true;
+        }
+        else{
+            document.getElementById("monedaError").innerHTML = "";
+            return  false;
+        }
+    }
     function validarFormulario(event){
         comprobarNumero();
         let mensaje ="";
@@ -621,6 +651,10 @@ function readAsBase64() {
         //por si no selecciona proveedor
         if(idProveedor.length < 1){
             mensaje = "<hr><h4>Debe seleccionar un proveedor </h4><hr>";
+            event.preventDefault();
+        }
+        if(comprobarMoneda()){
+            mensaje = "<hr><h4>Debe seleccionar una moneda </h4><hr>"+mensaje;
             event.preventDefault();
         }
 

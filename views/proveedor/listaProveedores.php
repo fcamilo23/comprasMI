@@ -43,7 +43,8 @@
 				</tr>
 			</thead>
             <tbody >
-			<tr><?php foreach($viewmodel as $item) : ?>
+			<?php foreach($viewmodel as $item) : ?>
+                <tr>
 
                 <td><?php echo $item['empresa'] ?></td>
                 <td><?php echo $item['razon_social'] ?></td>

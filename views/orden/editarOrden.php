@@ -2,6 +2,7 @@
     $('#myModal').on('shown.bs.modal', function () {
   $('#myInput').trigger('focus')
 })
+
 </script>
 
 
@@ -37,7 +38,7 @@
                                         <option <?php if ($viewmodel["orden"]["moneda"]== "U.I.(Unidades Indexadas)"){?> selected <?php } ?> value="U.I.(Unidades Indexadas)">U.I.(Unidades Indexadas)</option>
                                         <option <?php if ($viewmodel["orden"]["moneda"]== "U.R. (Unidades Reajustables)"){?> selected <?php } ?> value="U.R. (Unidades Reajustables)">U.R. (Unidades Reajustables)</option>
                                         <option <?php if ($viewmodel["orden"]["moneda"]== "€ (Euro)"){?> selected <?php } ?> value="€ (Euro)">€ (Euro)</option>
-                                    </select>
+                                </select>
                             </div>
                             <div class="input-group mb-3">
                             <p class="m-2">Nº Amplición</p>
@@ -49,6 +50,7 @@
                             <label for="plazoEntrega" class="m-2 form-label">Fecha Entrega</label>
                                 <input id="plazoEntrega" min='2010-01-01' max='2050-01-01' name="plazoEntrega" type="date" class="miniinput2 form-control" value="<?php  echo$viewmodel["orden"]["plazoEntrega"] ?>" required>
                             </div>
+                            <div id="plazoEntregaError" style="color:red" class="center2"></div>
 
                             <label for="formaPago" class="form-label">Forma de Pago:</label>
                             <div class="input-group mb-3">
@@ -174,7 +176,7 @@
                         </div>
                         <div class="card-body" style="max-width:800px">
                             <div class="form-group row">
-                                <label for="colFormLabel" class="col-sm-2 col-form-label" >Monto Total:</label>
+                                <label for="colFormLabel" id="mtotal" class="col-sm-2 col-form-label" >Total en:</label>
                                 <div class="col-sm-10">
                                     <input type="text" name="montoReal" class="form-control miniinput2" id="montoReal" value="<?php echo $total ?>" readonly>
                                 </div>
@@ -237,35 +239,38 @@
                                 <!--MODAL -->
                         </form>
                         <dialog class="divfiltros center " id="modalNuevoItem" style="margin-top:50px; z-index: 1; animation: createBox .15s">
-                            <div class="card">
+                        <div class="card">
                                     <div class="card-body ">
 
-                                            <h3>AGREGAR ITEM</h3>
+                                            <h3>Agregar Item a la Orden</h3>
+                                            
                                             <hr>
                                         <input type="hidden" id="idItemSolicitud">
                                          <div class="input-group">
-                                            <label for="cantidadNuevoItem" class="text-secondary m-2 form-label">Cantidad: </label>
-                                            <input id="cantidadNuevoItem" type="number" step="0.01" class="miniinput2 form-control">
+                                            <label for="cantidadNuevoItem" class=" m-2 form-label" style="font-weight: normal">Cantidad:<b class="text-danger">*</b></label>
+                                            <input id="cantidadNuevoItem" type="number" class="miniinput2 form-control">
                                             <div id="cantidadNuevoItem" class="invalid-feedback"></div>
-                                            <label for="unidadNuevoItem" class="text-secondary m-2 form-label"> Unidad:</label> 
+                                            <label for="unidadNuevoItem" class="m-2 form-label" style="font-weight: normal"> Unidad:<b class="text-danger">*</b></label> 
                                             <input id="unidadNuevoItem" type="text" class="miniinput2 form-control">
                                         </div>
                                         <span id="cantidadUnidadItemError" class="center2" style="color:red; position: static;" ></span>
                                         <br>
-                                        <label for="descripcionNuevoItem" class="text-secondary form-label mb-2 ">Descripción(si tiene cambios)</label>
+                                        <label for="descripcionNuevoItem" class="form-label mb-2 " style="font-weight: normal">Descripción<b class="text-danger">*</b></label>
                                             <div class="input-group mb-1 ">
-                                                <input id="descripcionNuevoItem" name="descripcionNuevoItem" type="text" class="m-2 form-control " >
+                                                <input id="descripcionNuevoItem" name="descripcionNuevoItem" type="text" class="mb-3 form-control " >
                                                 <span id="descripcionNuevoItemError" class="center2" style="color:red; height:100%; " ></span>
                                             </div>
-                                        <label for="observacion" class="text-secondary form-label">Observacion (no obligatorio):</label>
+                                        <label for="observacion" class="form-label" style="font-weight: normal">Observación (opcional):</label>
                                             <div class="input-group mb-3">
                                             <textarea id="nuevoObservacionItem" name="nuevoObservacionItem" class="form-control"></textarea>
                                         </div>
 
                                         <div class="input-group mb-1">
-                                            <label for="nuevoPrecioItem" class="text-secondary m-2 form-label">Precio: </label>
+                                            <label for="nuevoPrecioItem" id="mtotal1" class="m-2 form-label" style="font-weight: normal" ><b class="text-danger">*</b></label>
                                             <input class="miniinput2 form-control" id="nuevoPrecioItem" name="nuevoPrecioItem" type="number" min="1" class="m-2 form-control">
-                                            <label for="nuevoPrecioItem" class="text-secondary m-2 form-label">   Es servicio: </label>
+                                        </div>
+                                        <div class="input-group mb-1">
+                                            <label for="nuevoTipoItem" class="m-2 form-label" style="font-weight: normal"> Es servicio:<b class="text-danger">*</b></label>
                                             <select onchange="servicio(this)" class="miniinput2 form-control" id="nuevoTipoItem" name="nuevoTipoItem" class="m-2 form-control">
                                                 <option value="No" selected>No</option>
                                                 <option value="General">General</option>
@@ -276,25 +281,27 @@
                                         <hr>
                                         
                                         <div class="input-group mb-1" >
-                                            <label for="entrega" class="text-secondary m-2 form-label" >Inicio: </label>
+                                            <label for="entrega" class=" m-2 form-label" style="font-weight: normal">Inicio: </label>
                                             <input id="nuevoInicioItem" name="nuevoInicioItem" type="date" class="miniinput2 form-control" disabled>
                                             <div id="inicioError" class="invalid-feedback"></div>
-                                            <label for="fin" class="text-secondary m-2 form-label">   Finaliza:</label> 
+                                            <label for="fin" class="m-2 form-label" style="font-weight: normal">  Finalización:</label> 
                                             <input id="nuevoFinItem" name="nuevoFinItem" type="date" class="miniinput2 form-control" disabled>
                                         </div>
                                         <span id="fechasError" class="center2"style="color:red; position: static;" ></span>
                                         <hr>
                                     
 
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrerModelItem()">CANCELAR</button>
-                                            <button type="button" class="btn btn-primary" onclick="crearItemOden()">AGREGAR</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrerModelItem()">Cancelar</button>
+                                            <button type="button" class="btn btn-primary" onclick="crearItemOden()">Agregar</button>
                                     </div>
                             </div>
                             </dialog>
 </body>
 <script>
+    document.getElementById("mtotal").innerHTML = "Monto en: "+document.getElementById("moneda").value;
     let montoReal = <?php echo $total ?>;
     let cantItems = <?php echo $i ?>;
+
 
     function quitarItemDeLaBase(id,i,monto){
         Swal.fire({
@@ -357,6 +364,7 @@
                     return;
                 }
             }
+            document.getElementById("mtotal1").innerHTML = "Precio en "+document.getElementById("moneda").value+":<b class='text-danger'>*</b>";
            document.getElementById("modalNuevoItem").showModal();
     }  
 
@@ -501,6 +509,7 @@
 </script>
  
 <script>
+   
             $(document).ready(function() {
     $('#proveedores').DataTable( {
         dom: 'Bfrtip',
@@ -510,10 +519,10 @@
     } );
 } );
 
-    document.getElementById("montoReal").addEventListener("blur", errorMonto);
+ /*
     document.getElementById("plazoEntrega").addEventListener("blur", errorPlazoEntrega);
-
-
+   
+    document.getElementById("montoReal").addEventListener("blur", errorMonto);
     function errorMonto(){
         var monto = document.getElementById("montoReal").value;
 
@@ -525,6 +534,14 @@
         }
  
     }
+*/
+
+    document.getElementById("moneda").addEventListener("change", function(){
+    document.getElementById("mtotal").innerHTML = "Monto en: "+document.getElementById("moneda").value;
+    });
+    </script>
+ 
+    <script>
 
     function errorPlazoEntrega(){
         var plazoEntrega = document.getElementById("plazoEntrega").value;
@@ -537,7 +554,9 @@
         }
  
     }
+
     //evitar mandar formulario si idProveedor esta vacio
+
     function validarFormulario(event){
         let mensaje ="";
         ///controlar que item tablaItems tenga al men
@@ -547,14 +566,6 @@
             event.preventDefault();
         }
 
-        if('<?php echo $viewmodel['orden']['servicio'] ?>' == 'si'){
-            var fin = document.getElementById("fin").value;
-            var inicio = document.getElementById("inicio").value;
-            if(fin <= inicio){
-                mensaje = "<hr><h4>La fecha de inicio debe ser menor a la fecha de fin </h4><hr>"+mensaje;
-                event.preventDefault();
-            }
-        }
         if( mensaje != ""){
              
                 Swal.fire({
@@ -587,6 +598,8 @@
 
     }
 
+
+
     function seleccionProveedor(id,empresa,razon_social,rut){
 
         document.getElementById("confirmarProveedor").style.display = "none";
@@ -598,11 +611,11 @@
     }
    
 
-
     function cerrarModel(){
         document.getElementById("confirmarProveedor").style.display = "none";
         document.getElementById("modalconfirmar").style.display = "none";
     }
+
 
     function mostrarProveedores(){
         document.getElementById("main-container").style.display = "block";

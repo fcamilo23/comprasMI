@@ -36,9 +36,10 @@
     }
 	
 	function isValidatedNumero($userModel, $numero,$anio){
-		$userModel->query('SELECT * FROM Ordenes WHERE numero = :numero AND anio = :anio');
+		$userModel->query('SELECT * FROM Ordenes WHERE numero = :numero AND anio = :anio AND idSolicitud=:idSolicitud');
 		$userModel->bind(':numero', $numero);
 		$userModel->bind(':anio', $anio);
+		$userModel->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
 		$row = $userModel->single();
 		if($row){
 			return false;
