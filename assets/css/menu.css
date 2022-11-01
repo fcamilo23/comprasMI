@@ -663,13 +663,13 @@ section{
 
 .homeimg{
     margin: 0 auto;
-    width: 950px;
-    height: 380px;
+    width: 80vh;
+    height: 37vh;
     border-radius: 10px;
-    margin-top: 10%;
+    margin-top: 40px;
 }
 .homeimg1{
-    margin: 0 auto;
+    margin: 0 0;
     background: white;
     height: 100%;
     width: 100%;
@@ -720,11 +720,17 @@ section{
     border-right: 3px solid rgb(220,220,220);
 }
 
+.inicio{
+    width: 50%;
+}
+
 .borderleftr{
     border-left: 3px solid rgb(220,220,220);
 }
 @media (max-width: 550px){
-    
+    .inicio{
+        width: 80%;
+    }
    
 }
 
@@ -740,6 +746,8 @@ section{
     .mar{
         margin-top: 20px;
     }
+   
+   
 }
 
 @media (max-width: 1350px){
@@ -747,6 +755,10 @@ section{
     .borderright{
         border-right: none;
     }
+    .inicio{
+        width: 80%;
+    }
+   
     
     .borderright{
         border-left: none;
@@ -767,7 +779,6 @@ section{
 
 
     .homeimg{
-        margin: 50% auto;
         width: 600px;
         height: 300px;
         border-radius: 10px;
@@ -775,7 +786,7 @@ section{
 
     .homeimg1{
         margin: 0 auto;
-        height: 100%;
+        
     
     }
     
@@ -850,7 +861,7 @@ section{
 
 @media (max-width: 950px){
     .homeimg{
-        margin-left: -5%;
+        margin: 0 auto;
         width: 500px;  
         height: 250px;
         transition: all .5s;
@@ -859,7 +870,6 @@ section{
 
     .perfil{
         width: 600px; 
-        margin-left:0%; 
         margin-top: 150px
     }
 }
