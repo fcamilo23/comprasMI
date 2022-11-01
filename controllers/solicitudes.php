@@ -44,6 +44,12 @@ class Solicitudes extends Controller{
 		$this->returnView($viewmodel->verArchivo(), true);
 	}
 
+	protected function ejecucionInversiones(){
+		$this->sesionAbierta ();
+		$viewmodel = new SolicitudesModel();
+		$this->returnView($viewmodel->ejecucionInversiones(), true);
+	}
+
 	protected function eliminarArchivo(){
 		$this->sesionAbierta ();
 		$viewmodel = new SolicitudesModel();

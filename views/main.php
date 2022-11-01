@@ -134,7 +134,7 @@
         </nav>
         <dialog class="" id="modalreportes" style="width: 300px; background: #00133a; margin-left: 340px; margin-top: -25px; border: none; border-radius: 0px; padding: 25px;  z-index: 1; animation: createBox .15s; border: none">
             <a class="optReportes" href="<?php echo ROOT_URL; ?>orden/contratosAVencer" style="border:none"><div style="border:none" class="optReportes">   Vencimientos</div></a><br>
-            <a class="optReportes" href="<?php echo ROOT_URL; ?>orden/comprasRealizadas"><div class="optReportes">   Ejecución de Inversiones</div></a><br>
+            <a class="optReportes" href="<?php echo ROOT_URL; ?>solicitudes/ejecucionInversiones"><div class="optReportes">   Ejecución de Inversiones</div></a><br>
             <a class="optReportes" href="<?php echo ROOT_URL; ?>orden/contratosAVencer"><div class="optReportes">   Entregas Pendientes</div></a>
         </dialog>
         

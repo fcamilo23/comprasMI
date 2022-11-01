@@ -16,6 +16,7 @@ class OrdenModel extends Model{
     }
 
     public function agregarOrden(){
+       
 
         $error="";
         try{
@@ -34,6 +35,15 @@ class OrdenModel extends Model{
                 $this->bind(':numeroAmpliacion', $post['numeroAmpliacion']);
                 $this->bind(':idProveedor', $post['idProveedor']);
                 $this->execute();
+
+                
+                $this->query('SELECT fechaPrimerOrden FROM solicitudescompra WHERE id = "'. $_SESSION['solicitudActual']['id'] .'"');
+                $fechaPrimerOrden = $this->single();
+                if($fechaPrimerOrden['fechaPrimerOrden'] == NULL){
+                    $this->query('UPDATE solicitudescompra SET fechaPrimerOrden = "'. date('Y/m/d') .'" WHERE id = "'.$_SESSION['solicitudActual']['id'].'" ');
+                    $this->execute();
+                }
+                
 
                 $this->query('SELECT id FROM ordenes WHERE idSolicitud = :idSolicitud AND numero = :numero AND anio = :anio LIMIT 1' );
                 $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
@@ -67,6 +77,8 @@ class OrdenModel extends Model{
                         $this->bind(':fin', $fin);
                         $this->bind(':estado', 'activo');
                         $this->execute();
+
+                        
                     }
                 }
 
