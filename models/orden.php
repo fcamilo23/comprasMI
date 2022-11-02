@@ -62,8 +62,8 @@ class OrdenModel extends Model{
                             $fin = $post['itemfin'][$i];
                         }
 
-                        $this->query('INSERT INTO itemOrden (descripcion, cantidad, unidad, monto, idOrden, idSolicitud, moneda, idItemSolicitud,esservicio,inicio,fin,sinFacturar) 
-                                                VALUES (:descripcion, :cantidad, :unidad, :monto, :idOrden,:idSolicitud,:moneda,:idItemSolicitud,:esservicio,:inicio,:fin,:cantidad)');
+                        $this->query('INSERT INTO itemOrden (descripcion, cantidad, unidad, monto, idOrden, idSolicitud, moneda, idItemSolicitud,esservicio,inicio,fin,sinFacturar,observacion) 
+                                                VALUES (:descripcion, :cantidad, :unidad, :monto, :idOrden,:idSolicitud,:moneda,:idItemSolicitud,:esservicio,:inicio,:fin,:cantidad,:observacion)');
                         $this->bind(':descripcion', $post['itemdescripcion'][$i]);
                         $this->bind(':cantidad', $post['itemcantidad'][$i]);
                         $this->bind(':unidad', $post['itemunidad'][$i]);
@@ -75,6 +75,7 @@ class OrdenModel extends Model{
                         $this->bind(':esservicio', $post['itemtipo'][$i]);
                         $this->bind(':inicio',$inicio);
                         $this->bind(':fin', $fin);
+                        $this->bind(':observacion', $post['itemobservacion'][$i]);
                         $this->execute();
                     }
                 }
@@ -363,8 +364,8 @@ public function verOrden(){
                         $fin = $post['itemfin'][$i];
                     }
 
-                    $this->query('INSERT INTO itemOrden (descripcion, cantidad, unidad, monto, idOrden, idSolicitud, moneda, idItemSolicitud,esservicio,inicio,fin,sinFacturar) VALUES (:descripcion, :cantidad, :unidad, :monto, :idOrden,:idSolicitud,:moneda,:idItemSolicitud,:esservicio,:inicio,:fin,:cantidad)');
-                    $this->bind(':descripcion', $post['itemdescripcion'][$i]);
+                    $this->query('INSERT INTO itemOrden (descripcion, cantidad, unidad, monto, idOrden, idSolicitud, moneda, idItemSolicitud,esservicio,inicio,fin,sinFacturar,observacion) 
+                    VALUES (:descripcion, :cantidad, :unidad, :monto, :idOrden,:idSolicitud,:moneda,:idItemSolicitud,:esservicio,:inicio,:fin,:cantidad,:observacion)');                    $this->bind(':descripcion', $post['itemdescripcion'][$i]);
                     $this->bind(':cantidad', $post['itemcantidad'][$i]);
                     $this->bind(':unidad', $post['itemunidad'][$i]);
                     $this->bind(':monto', $post['itemprecio'][$i]);
@@ -375,6 +376,7 @@ public function verOrden(){
                     $this->bind(':esservicio', $post['itemtipo'][$i]);
                     $this->bind(':inicio',$inicio);
                     $this->bind(':fin', $fin);
+                    $this->bind(':observacion', $post['itemobservacion'][$i]);
                     $this->execute();
                 }
             }

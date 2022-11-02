@@ -246,8 +246,7 @@ function readAsBase64() {
                                         <?php echo $item['cantidad'].' '.$item['unidad'].' '.$item['descripcion']  ?>
                                     </option>
                                     <?php endforeach; ?>
-                                    <option value="0">Nuevo Item</option>
-                                    
+                                   
                                 </select>
                                 <?php foreach($viewmodel['items'] as $item) : ?>
                                     <input type="hidden" id="seleccionItemCantidad<?php echo $item['id'] ?>" value="<?php echo $item['cantidad'] ?>">

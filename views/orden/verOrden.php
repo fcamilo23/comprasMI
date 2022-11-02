@@ -184,6 +184,7 @@ function mensajes(){
                                             <th >Servicio</th>
                                             <th >Inicio (y-m-d)</th>
                                             <th >Fin (y-m-d)</th>
+                                            <th>Obs.</th>
                                             
                                         </tr>
                                     </thead>
@@ -205,6 +206,17 @@ function mensajes(){
                                             <th ><?php echo $item['esservicio'] ?> </th>
                                             <th ><?php if($item['esservicio'] == "No"){echo 'N/A';}else{echo $item['inicio'];} ?></th>
                                             <th ><?php if($item['esservicio'] == "No"){echo 'N/A';}else{ echo $item['fin'];} ?> </th>
+                                            <th >
+                                                <?php if($item['observacion'] != "")
+                                                { ?>
+                                                  
+                                                <input class="rounded-circle border-white" onclick="verObsercion(<?php echo $item['id']?>)" type="button" value="  ❕  ">
+                                                <input type="hidden" id="observacion<?php echo $item['id']?>" value="<?php echo $item['observacion']?>">
+                                                <?php }else{
+                                                    
+                                                } ?>
+                                            </th>
+
                                         </tr>
                                         <?php $i++; $total += $item['monto'];
                                      endforeach; ?>
@@ -437,6 +449,16 @@ function readAsBase64() {
         }
         });
 
+    }
+
+    function verObsercion(id){
+        var observacion = document.getElementById('observacion'+id).value;
+        Swal.fire({
+            title: 'Observación',
+            text: observacion,
+           
+            confirmButtonText: 'Ok'
+        })
     }
 
     function cartelEliminarArchivo(id){
