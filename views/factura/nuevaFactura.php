@@ -66,7 +66,7 @@
                                         </div>
 
                                        <div class="mb-3 row">
-                                            <label for="monedaFactura" class="col-sm-2 col-form-label"> Moneda</label>
+                                            <label for="monedaFactura" class="col-sm-2 col-form-label"> Total </label>
                                             <div class="col-sm-4">
                                                 <select name="monedaFactura" id="monedaFactura" onchange="cambiarMoneda(this)" class="form-control">
                                                     <option value="$ (Pesos Uruguayos)" <?php if($viewmodel["moneda"]=='$U (Pesos Uruguayos)') { echo "selected"; } ?>>$U (Pesos Uruguayos)</option>
@@ -76,9 +76,13 @@
                                                     <option value="€ (Euro)" <?php if($viewmodel["moneda"]=='€ (Euro)') { echo "selected"; } ?> >€ (Euro)</option>
                                                 </select>
                                             </div>
+                                            <div class="col-sm-4">
+                                            <input id="montoFactura" name="montoFactura" type="number" class="form-control" placeholder="Monto"required>
 
+                                            </div>
+                                            <div id="montoRealError" class="center2" style="color:red"></div>
                                         </div>
-                                        <div id="montoRealError" class="center2" style="color:red"></div>
+
 
                                         <div class="mb-3 row">
                                             <label for="fecha" class="col-sm-2 col-form-label"> Fecha</label>
@@ -136,40 +140,35 @@
                                     <thead>
                                         
                                         <tr>
-                                            <th style="width: 20%">Cantidad</th>
-                                            <th style="width: 20%">Unidad</th>
-                                            <th style="width: 30%">Descripcion</th>
-                                            <th id="thMonto" style="width: 20%">Monto</th>
-                                            <th>Agregar</th>
+                                            <th style="width: 10%">Restan</th>
+                                            <th style="width: 15%">Cantidad</th>
+                                            <th style="width: 25%">Unidad</th>
+                                            <th style="width: 40%">Descripcion</th>
+                                            <th style="width: 10%">Agregar</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tablaItems">
                                     <?php 
                                     foreach($viewmodel['items'] as $item) : 
+                                    if($item['sinFacturar'] >0){
                                     ?>
 
                                         <tr id="filaItem<?php echo $item['id'] ?>">
-                                            <th style="width: 20%"><input id="itemCantidad<?php echo $item['id'] ?>" type="number" step="0.01" min="1"class="form-control"value="<?php echo $item['cantidad'] ?>" readonly> </th>
-                                            <th style="width: 20%"><?php echo $item['unidad'] ?> </th>
-                                            <th style="width: 30%"><?php echo $item['descripcion'] ?> </th>
-                                            <th style="width: 20%"><input id="itemMonto<?php echo $item['id'] ?>" type="number" step="0.01" min="1"class="form-control"value="<?php echo $item['monto'] ?>" readonly> </th>
+                                            <th style="width: 15%"><?php echo $item['sinFacturar'] ?></th>
+                                            <th style="width: 15%"><input id="itemCantidad<?php echo $item['id'] ?>" type="number" step="" min="1" max="<?php echo $item['sinFacturar'] ?>"class="form-control"value="<?php echo $item['sinFacturar'] ?>" readonly> </th>
+                                            <th style="width: 35%"><?php echo $item['unidad'] ?> </th>
+                                            <th style="width: 40%"><?php echo $item['descripcion'] ?> </th>
                                             <th id="agregar<?php echo $item['id'] ?>"style="width: 5%"><button type="button" class="btn btn-success" onclick="agregarItem(<?php echo $item['id'] ?>,<?php echo $item['monto'] ?> )">+</button></th>
                                         </tr>
                                         <input type="hidden" id="itemOrden<?php echo $item['id'] ?>" value="<?php echo $item['id'] ?>">
                                         <input type="hidden" id="descripcion<?php echo $item['id'] ?>" value="<?php echo $item['descripcion'] ?>">
                                         <input type="hidden" id="unidad<?php echo $item['id'] ?>" value="<?php echo $item['unidad'] ?>">
-                                        <input type="hidden" id="recuperacionCantidad<?php echo $item['id'] ?>" value="<?php echo $item['cantidad'] ?>">
-                                        <input type="hidden" id="recuperacionMonto<?php echo $item['id'] ?>" value="<?php echo $item['monto'] ?>">
-                                        <?php  endforeach; ?>
+                                        <input type="hidden" id="recuperacionCantidad<?php echo $item['id'] ?>" value="<?php echo $item['sinFacturar'] ?>">
+                                        <?php  }
+                                    endforeach; ?>
                                     </tbody>
                                 </table>
-                            <!--MODAL   
-                                <div class="form-group row" style="margin-top: 40px;">
-                                <label for="colFormLabel" class="col-sm-2 col-form-label" >Monto Total:</label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="montoReal" class="form-control miniinput2" id="montoReal" value="0" readonly>
-                                </div>
-                            </div>-->  
+
                             </div>
         </div>
     </div>
@@ -193,11 +192,9 @@
     function agregarItem(idItem,monto){
         ///readonly false a cantidad y monto
         document.getElementById("itemCantidad"+idItem).readOnly = false;
-        document.getElementById("itemMonto"+idItem).readOnly = false;
         document.getElementById("agregar"+idItem).innerHTML = '<button type="button" class="btn btn-danger" onclick="quitarItem('+idItem+','+monto+')">-</button>';
         //agregar name a cantidad monto unidad y descripcion
         document.getElementById("itemCantidad"+idItem).setAttribute("name", "cantidadItem[]");
-        document.getElementById("itemMonto"+idItem).setAttribute("name", "montoItem[]");
         document.getElementById("unidad"+idItem).setAttribute("name", "unidadItem[]");
         document.getElementById("descripcion"+idItem).setAttribute("name", "descripcionItem[]");
         document.getElementById("itemOrden"+idItem).setAttribute("name", "idItem[]");
@@ -207,13 +204,10 @@
     function quitarItem(idItem,monto){
         //readonly true a cantidad y monto
         document.getElementById("itemCantidad"+idItem).value = document.getElementById("recuperacionCantidad"+idItem).value;
-        document.getElementById("itemMonto"+idItem).value = document.getElementById("recuperacionMonto"+idItem).value;
         document.getElementById("itemCantidad"+idItem).readOnly = true;
-        document.getElementById("itemMonto"+idItem).readOnly = true;
         document.getElementById("agregar"+idItem).innerHTML = '<button type="button" class="btn btn-success" onclick="agregarItem('+idItem+','+monto+')">+</button>';
         //quitar name a cantidad monto unidad y descripcion
         document.getElementById("itemCantidad"+idItem).removeAttribute("name");
-        document.getElementById("itemMonto"+idItem).removeAttribute("name");
         document.getElementById("unidad"+idItem).removeAttribute("name");
         document.getElementById("descripcion"+idItem).removeAttribute("name");
         document.getElementById("itemOrden"+idItem).removeAttribute("name");
@@ -236,15 +230,47 @@
 </script>
 
 <script>
+document.getElementById("numeroFactura").addEventListener("blur", errorNumeroFactura);
+document.getElementById("montoFactura").addEventListener("blur", errorMonto);
 
-    function validarFormulario(event){
+
+function errorNumeroFactura (){
+    var numeroFactura = document.getElementById("numeroFactura").value;
+    if(numeroFactura ==""){
+        document.getElementById("numeroError").innerHTML = "El campo no puede estar vacio X";
+    }
+    else{
+        document.getElementById("numeroError").innerHTML = "";
+    }
+}
+function errorMonto(){
+    var montoFactura = document.getElementById("montoFactura").value;
+    if(montoFactura <= 0 || montoFactura ==""){
+        document.getElementById("montoRealError").innerHTML = "     El Monto no puede estar vacio o en 0 X";
+    }
+    else{
+        document.getElementById("montoRealError").innerHTML = "";
+    }
+}
+
+  
+
+
+</script>
+
+<script>
+function validarFormulario(event){
         let errores = "";
         var numeroFactura = document.getElementById('numeroFactura').value;
         var fechaFactura = document.getElementById('fechaFactura').value;
         var loadFileFactura = document.getElementById('loadFileFactura').value;
+        var montoFactura = document.getElementById('montoFactura').value;
 
        if(existeName("descripcionItem[]") == false){
             errores += "Debe agregar al menos un item a la factura";
+        }
+        if(montoFactura == 0 || montoFactura == ""){
+            errores += "El monto de la factura no puede ser 0";
         }
         if(numeroFactura == null || numeroFactura.length == 0 || /^\s+$/.test(numeroFactura)){
             errores = errores + "<p>Debe ingresar un numero de factura</p><hr>";
@@ -278,6 +304,52 @@
         }
         
     }
+    function validarFormulario(event){
+        let errores = "";
+        var numeroFactura = document.getElementById('numeroFactura').value;
+        var fechaFactura = document.getElementById('fechaFactura').value;
+        var loadFileFactura = document.getElementById('loadFileFactura').value;
+        var montoFactura = document.getElementById('montoFactura').value;
+
+       if(existeName("descripcionItem[]") == false){
+            errores += "Debe agregar al menos un item a la factura";
+        }
+        if(montoFactura == 0 || montoFactura == ""){
+            errores += "El monto de la factura no puede ser 0";
+        }
+        if(numeroFactura == null || numeroFactura.length == 0 || /^\s+$/.test(numeroFactura)){
+            errores = errores + "<p>Debe ingresar un numero de factura</p><hr>";
+            event.preventDefault();
+        }
+
+        if(fechaFactura == null || fechaFactura.length == 0 || /^\s+$/.test(fechaFactura)){
+            errores = errores + "<p>Debe ingresar una fecha</p><hr>";
+            event.preventDefault();
+        }
+        if(loadFileFactura == null || loadFileFactura.length == 0 || /^\s+$/.test(loadFileFactura)){
+            errores = errores + "<p>Debe ingresar un archivo</p><hr>";
+            event.preventDefault();
+        }
+        
+        if( errores != ""){
+             
+             Swal.fire({
+             icon: 'error',
+             title: 'Oops...',
+             html: errores,
+            });
+            event.preventDefault();
+            return;
+        }
+        var modalconfirmar = document.getElementById('modalconfirmar').style.display;
+        if(modalconfirmar != "block"){
+            //abrir modalconfirmar
+            document.getElementById('modalconfirmar').style.display = "block";
+            event.preventDefault();
+        }
+        
+    }
+
 
     function cerrarModel(){
         document.getElementById('modalconfirmar').style.display = "none";

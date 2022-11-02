@@ -22,6 +22,14 @@ function mensajes(){
 
 <body onload="mensajes()">
 
+<?php $completo=true; 
+ foreach($viewmodel['items'] as $item) {
+    if($item['sinFacturar']>0 ){
+    $completo=false;
+    }
+ }
+?>
+
 <!---MODAL---->
 <form id="formArchivo" action="<?php echo ROOT_PATH; ?>orden/subirArchivos" method='post'>
 
@@ -48,8 +56,11 @@ function mensajes(){
                 <td><input type="text" name="numero" style="display: none" value="<?php echo $viewmodel['solicitud']['id']; ?>"/>
                 <input type="submit" name="submit" value="Ir a la Solicitud" style="background: #001d5a; border: none; margin-left: 30px" class="btn btn-primary sombraAzul"/></td>
                 </form>
-<?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
-    <button type="submit" form="anexarFactura" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/anexarFactura.jpg" width="190px" height="50px" ></button>
+<?php if($_SESSION['user_data']['rol'] != 'Consultor'){ 
+    if($completo==false){   
+        ?>
+        <button type="submit" form="anexarFactura" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/anexarFactura.jpg" width="190px" height="50px" ></button>
+<?php } ?>    
     <button type="button" id="btnmodal" class="excel sombraAzul1" onclick="abrirModal()"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button>
     <?php } ?>
 
@@ -164,6 +175,7 @@ function mensajes(){
                                     <thead>
                                         
                                         <tr>
+                                            <th >Facturado</th>
                                             <th >Cantidad</th>
                                             <th >Unidad</th>
                                             <th style="width: 30%">Descripcion</th>
@@ -184,6 +196,7 @@ function mensajes(){
                                     ?>
 
                                         <tr id="filaItem<?php echo $i;?>">
+                                            <th ><?php echo $item['cantidad']-$item['sinFacturar'] ?> </th>
                                             <th ><?php echo $item['cantidad'] ?> </th>
                                             <th ><?php echo $item['unidad'] ?> </th>
                                             <th ><?php echo $item['descripcion'] ?> </th>
@@ -215,7 +228,7 @@ function mensajes(){
                                 <hr>
 
 
-                            <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+                            <?php if($_SESSION['user_data']['rol'] != 'Consultor' && $completo==false){ ?>
                                 <button type="submit" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/anexarFactura.jpg" width="190px" height="50px" ></button>
                             <?php } ?>
 
@@ -228,7 +241,9 @@ function mensajes(){
                                  
                                 ?>
                                 <h1 style="color: #001d5a; margin-left: 25px" class="">Facturas</h1>
-
+                                <?php  if($completo==true){   ?>
+                                <h5 style=" margin-left: 25px" class="text-muted">*Ya se facturaron todos los item de la Orden</h5>
+                                <?php  }   ?>
                                 <table id="pdf"style="width: 100%">
                                     <thead>
                                         
@@ -492,4 +507,3 @@ function readAsBase64() {
 
 
 </script>
-
