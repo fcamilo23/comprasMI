@@ -48,8 +48,6 @@
                                         <th style="width: 15%">Cantidad</th>
                                         <th style="width: 15%">Unidad</th>
                                         <th style="width: 50%">Descripcion</th>
-                                        <th style="width: 20%">Monto</th>
-
                                         
                                     </tr>
                                 </thead>
@@ -59,7 +57,6 @@
                                             <td><?php echo $item['cantidad']; ?></td>
                                             <td><?php echo $item['unidad']; ?></td>
                                             <td><?php echo $item['descripcion']; ?></td>
-                                            <td><?php echo $item['monto']; ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                         </div>

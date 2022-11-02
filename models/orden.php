@@ -21,9 +21,11 @@ class OrdenModel extends Model{
         try{
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-                $error="Error al agregar la orden, no se cargaron ni servicios ni archivos";
+            $procedimiento= $_SESSION['solicitudActual']['procedimiento']." ".$_SESSION['solicitudActual']['numProcedimiento']." - ".$_SESSION['solicitudActual']['anioProcedimiento'];
 
-                $this->query('INSERT INTO   ordenes (numero, anio, moneda, montoReal, plazoEntrega, formaPago,numeroAmpliacion, idProveedor,idSolicitud) VALUES (:numero, :anio, :moneda, :montoReal, :plazoEntrega, :formaPago,:numeroAmpliacion, :idProveedor, :idSolicitud)');
+                $error="Error al agregar la orden, no se cargaron ni servicios ni archivos";
+                $this->query('INSERT INTO   ordenes (numero, anio, moneda, montoReal, plazoEntrega, formaPago,numeroAmpliacion, idProveedor,idSolicitud,estado, procedimiento) 
+                VALUES (:numero, :anio, :moneda, :montoReal, :plazoEntrega, :formaPago,:numeroAmpliacion, :idProveedor, :idSolicitud, "activo", :procedimiento)');
                 $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
                 $this->bind(':numero', $post['numero']);
                 $this->bind(':anio', $post['anio']);
@@ -33,7 +35,15 @@ class OrdenModel extends Model{
                 $this->bind(':plazoEntrega', $post['plazoEntrega']);
                 $this->bind(':numeroAmpliacion', $post['numeroAmpliacion']);
                 $this->bind(':idProveedor', $post['idProveedor']);
+                $this->bind(':procedimiento', $procedimiento);
                 $this->execute();
+
+                $this->query('SELECT fechaPrimerOrden FROM solicitudescompra WHERE id = "'. $_SESSION['solicitudActual']['id'] .'"');
+                $fechaPrimerOrden = $this->single();
+                if($fechaPrimerOrden['fechaPrimerOrden'] == NULL){
+                    $this->query('UPDATE solicitudescompra SET fechaPrimerOrden = "'. date('Y/m/d') .'" WHERE id = "'.$_SESSION['solicitudActual']['id'].'" ');
+                    $this->execute();
+                }
 
                 $this->query('SELECT id FROM ordenes WHERE idSolicitud = :idSolicitud AND numero = :numero AND anio = :anio LIMIT 1' );
                 $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
@@ -52,8 +62,8 @@ class OrdenModel extends Model{
                             $fin = $post['itemfin'][$i];
                         }
 
-                        $this->query('INSERT INTO itemOrden (descripcion, cantidad, unidad, monto, idOrden, idSolicitud, moneda, idItemSolicitud,esservicio,inicio,fin,estado) 
-                        VALUES (:descripcion, :cantidad, :unidad, :monto, :idOrden,:idSolicitud,:moneda,:idItemSolicitud,:esservicio,:inicio,:fin,:estado)');
+                        $this->query('INSERT INTO itemOrden (descripcion, cantidad, unidad, monto, idOrden, idSolicitud, moneda, idItemSolicitud,esservicio,inicio,fin,sinFacturar) 
+                                                VALUES (:descripcion, :cantidad, :unidad, :monto, :idOrden,:idSolicitud,:moneda,:idItemSolicitud,:esservicio,:inicio,:fin,:cantidad)');
                         $this->bind(':descripcion', $post['itemdescripcion'][$i]);
                         $this->bind(':cantidad', $post['itemcantidad'][$i]);
                         $this->bind(':unidad', $post['itemunidad'][$i]);
@@ -65,11 +75,9 @@ class OrdenModel extends Model{
                         $this->bind(':esservicio', $post['itemtipo'][$i]);
                         $this->bind(':inicio',$inicio);
                         $this->bind(':fin', $fin);
-                        $this->bind(':estado', 'activo');
                         $this->execute();
                     }
                 }
-
                 if(isset($post['pdf'])){
                     $error="Error al cargar los archivo/s adjunto/s:";
                     for($i=0; $i<sizeof($post['pdf']); $i++){
@@ -88,12 +96,13 @@ class OrdenModel extends Model{
                 $_SESSION['mensaje']['contenido'] = 'Orden agregada correctamente';
                 header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
                 return;
-            }catch(PDOException $e){
+        }catch(PDOException $e){
                 $_SESSION['mensaje']['tipo'] = 'error';
                 $_SESSION['mensaje']['contenido'] = $error;
                 header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
                 return;      
-            }
+        }
+
     }
    
 
@@ -107,7 +116,7 @@ class OrdenModel extends Model{
         return;
     }
 ///ver orden
-    public function verOrden(){
+public function verOrden(){
     //este if es para detectar si abro una orden desde la vista de "compras realizadas", no deberia afectar el resto
         if(isset($_SESSION['idOrden'])){
             $_SESSION['ordenActual'] = $_SESSION['idOrden'];
@@ -277,25 +286,14 @@ class OrdenModel extends Model{
                     }
     
                 }
-                //echo $consulta;
-    
-               
                 if($consulta == "SELECT * FROM ordenes WHERE "){$consulta = "SELECT * FROM ordenes";}
                 $this->query($consulta);
                 $row = $this->resultSet();
             }
-
-           
-            
         }
-
-        
-
-        
-
-
         return $row;
     }
+
     public function anularOrden(){
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if(isset($post['idOrden'])&&isset($post['cambiar'])){
@@ -365,7 +363,7 @@ class OrdenModel extends Model{
                         $fin = $post['itemfin'][$i];
                     }
 
-                    $this->query('INSERT INTO itemOrden (descripcion, cantidad, unidad, monto, idOrden, idSolicitud, moneda, idItemSolicitud,esservicio,inicio,fin) VALUES (:descripcion, :cantidad, :unidad, :monto, :idOrden,:idSolicitud,:moneda,:idItemSolicitud,:esservicio,:inicio,:fin)');
+                    $this->query('INSERT INTO itemOrden (descripcion, cantidad, unidad, monto, idOrden, idSolicitud, moneda, idItemSolicitud,esservicio,inicio,fin,sinFacturar) VALUES (:descripcion, :cantidad, :unidad, :monto, :idOrden,:idSolicitud,:moneda,:idItemSolicitud,:esservicio,:inicio,:fin,:cantidad)');
                     $this->bind(':descripcion', $post['itemdescripcion'][$i]);
                     $this->bind(':cantidad', $post['itemcantidad'][$i]);
                     $this->bind(':unidad', $post['itemunidad'][$i]);
@@ -463,7 +461,7 @@ class OrdenModel extends Model{
         $this->query('SELECT * FROM proveedores');
         $_SESSION['proveedores'] = $this->resultSet();
         
-       
+    
         $this->query('SELECT * FROM `itemOrden` 
                     JOIN ordenes ON itemOrden.idOrden = ordenes.id
                     WHERE ordenes.estado="activo" AND (esservicio = "General" OR esservicio="Licencia")and itemOrden.fin < (select curdate()) ORDER BY itemOrden.fin ASC');

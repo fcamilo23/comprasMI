@@ -100,6 +100,7 @@ function readAsBase64() {
 </script>
 <body>
 <form id="formOrden" onsubmit="validarFormulario(event)" action="<?php echo ROOT_URL; ?>orden/agregarOrden" method ="POST" enctype="multipart/form-data" >
+<input type="hidden" value="<?php echo $_SESSION['solicitudActual']['procedimiento']." ".$_SESSION['solicitudActual']['numProcedimiento']." - ".$_SESSION['solicitudActual']['anioProcedimiento'] ?>" name="procedimiento">
 <div class="container" >
     <div class="row d-flex justify-content-center ">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10" >
@@ -387,6 +388,8 @@ function readAsBase64() {
                                         <div class="input-group mb-1">
                                             <label for="nuevoPrecioItem" id="mtotal1" class="m-2 form-label" style="font-weight: normal" ><b class="text-danger">*</b></label>
                                             <input class="miniinput2 form-control" id="nuevoPrecioItem" name="nuevoPrecioItem" type="number" min="1" class="m-2 form-control">
+                                            <span id="precioError" class="center2" style="color:red; position: static;" ></span>
+
                                         </div>
                                         <div class="input-group mb-1">
                                             <label for="nuevoTipoItem" class="m-2 form-label" style="font-weight: normal"> Es servicio:<b class="text-danger">*</b></label>
@@ -396,7 +399,6 @@ function readAsBase64() {
                                                 <option value="Licencia">Licencia</option>
                                             </select>
                                         </div>
-                                        <span id="precioError" class="center2" style="color:red; position: static;" ></span>
                                         <hr>
                                         
                                         <div class="input-group mb-1" >

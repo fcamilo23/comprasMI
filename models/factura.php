@@ -25,22 +25,16 @@ class FacturaModel extends Model{
 
 	public function agregarFactura(){
 		$error="Error al agregar la factura ...Prueba de nuevo mas tarde";
-	try{
+		try{
 			
 			$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-			$montoTotal = 0;
-			if(isset($post['montoItem'])){
-				for($i=0; $i < count($post['montoItem']); $i++){
-					$montoTotal += (int)$post['montoItem'][$i] ;
-				}
-			}
-					
+			
 			$this->query('INSERT INTO facturas (idOrden, idProveedor,numeroFactura, monedaFactura, montoFactura, conceptoFactura,fechaFactura) 
 			VALUES (:idOrden, :idProveedor, :numeroFactura, :monedaFactura, :montoFactura, :conceptoFactura, :fechaFactura)');
 			$this->bind(':idOrden', $post['idOrden']);
 			$this->bind(':idProveedor', $post['idProveedor']);
 			$this->bind(':numeroFactura', $post['numeroFactura']);
-			$this->bind(':montoFactura', $montoTotal);
+			$this->bind(':montoFactura', $post['montoFactura']);
 			$this->bind(':monedaFactura', $post['monedaFactura']);
 			$this->bind(':conceptoFactura', $post['conceptoFactura']);
 			$this->bind(':fechaFactura', $post['fechaFactura']);
@@ -54,13 +48,16 @@ class FacturaModel extends Model{
 
 			if(isset($post['descripcionItem'])){
 				for($i=0; $i < count($post['descripcionItem']); $i++){
-					$this->query('INSERT INTO itemfactura (cantidad, unidad, descripcion, monto, moneda, idFactura, idOrden,idItemOrden  ) 
-												VALUES (:cantidad, :unidad, :descripcion, :monto,:moneda, :idFactura, :idOrden, :idItemOrden)');
+					// descontar de itemorden
+					$this->query('UPDATE itemOrden SET sinFacturar = sinFacturar - :cantidadItem WHERE id = :id');
+					$this->bind(':id', $post['idItem'][$i]);
+					$this->bind(':cantidadItem', $post['cantidadItem'][$i]);
+					$this->execute();
+					$this->query('INSERT INTO itemfactura (cantidad, unidad, descripcion, idFactura, idOrden,idItemOrden  ) 
+												VALUES (:cantidad, :unidad, :descripcion, :idFactura, :idOrden, :idItemOrden)');
 					$this->bind(':cantidad', $post['cantidadItem'][$i]);
 					$this->bind(':unidad', $post['unidadItem'][$i]);
 					$this->bind(':descripcion', $post['descripcionItem'][$i]);
-					$this->bind(':monto', $post['montoItem'][$i]);
-					$this->bind(':moneda', $post['monedaFactura']);
 					$this->bind(':idFactura', $idFactura['id']);
 					$this->bind(':idOrden', $post['idOrden']);
 					$this->bind(':idItemOrden', $post['idItem'][$i]);
