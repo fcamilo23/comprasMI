@@ -65,14 +65,27 @@ class FacturaModel extends Model{
 				}
 
 			}
+			if(isset($post['pdf'])){
+				$error="Error al cargar los archivo/s adjunto/s:";
+				for($i=0; $i<sizeof($post['pdf']); $i++){
+					$error=$error.$post['pdfnombre'][$i]." ";
+					$this->query('INSERT INTO archivosfacturas (idFactura, nombre, pdf) VALUES (:idFactura, :nombre, :pdf)');
+					$this->bind(':idFactura', $idFactura['id']);
 
+					$this->bind(':nombre', $post['pdfnombre'][$i]);
+					$this->bind(':pdf', $post['pdf'][$i]);
+	
+					$this->execute();
+				}
+			}
+		/*
 		$error="Error al agregar archivo adjunto ...Prueba de nuevo mas tarde";
 			// inserta en la tabla archivosFacturas
 			$this->query('INSERT INTO archivosfacturas (idFactura, nombre, pdf) VALUES (:idFactura, :nombre, :pdf)');
 			$this->bind(':idFactura', $idFactura['id']);
 			$this->bind(':nombre', $post['pdfNombreFactura']);
 			$this->bind(':pdf', $post['pdfFactura']);
-
+		*/
 			$this->execute();
 			$_SESSION['mensaje']['tipo'] = 'success';
             $_SESSION['mensaje']['contenido'] = 'Factura agregada correctamente';
@@ -126,7 +139,7 @@ class FacturaModel extends Model{
 
 		$this->query('SELECT id as idArchivo, nombre as nombreFactura FROM archivosfacturas WHERE idFactura = :idFactura');
 		$this->bind(':idFactura', $_SESSION['idFactura']);
-		$archivo = $this->single();
+		$archivo = $this->resultSet();
 
 		$this->query('SELECT id as idOrden, numero as numeroOrden, anio as anioOrden FROM ordenes WHERE id = :idOrden');
 		$this->bind(':idOrden', $factura['idOrden']);

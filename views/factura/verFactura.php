@@ -11,10 +11,7 @@
                 <div class="card-body " style="margin-bottom: 30px">
                     <div class="card">
                         <div class="card-body ">
-                        <form action="<?php echo ROOT_URL; ?>factura/verArchivo" method="post">
-                            <input type="hidden" id="idArchivo" name="idArchivo" value="<?php echo $viewmodel['archivosFacuturas']['idArchivo']; ?>">
-                            <input type="submit" value="VER ARCHIVO" class="btn btn-primary azul sombraAzul1" style="margin-right: 30px; float: right; margin-bottom: 30px"/>
-                        </form>
+
                                 <h5><b>OC: </b> <?php echo $viewmodel['orden']['numeroOrden']?> - <?php echo $viewmodel['orden']['anioOrden'] ?> </h5> 
                                 <h3><b>Factura: </b> <?php echo $viewmodel['numeroFactura']?></h3>
                                 <h5><b>Fecha: </b> <?php echo $viewmodel['fechaFactura']?></h5>
@@ -59,9 +56,39 @@
                                             <td><?php echo $item['descripcion']; ?></td>
                                         </tr>
                                     <?php endforeach; ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    
+                    <div class="card">
+                        <div class="card-body "> 
+                            <h4>ARCHIVOS</h4>
+                            <div id="main-container" style="width: 100%; overflow: auto; max-height: 800px">
+
+                            <table id="listaFactura" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 75%">PDF</th>
+                                        <th style="width: 25%">Accion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach($viewmodel['archivosFacuturas'] as $archivo) : ?>
+                                        <tr>
+                                            <td><?php echo $archivo['nombreFactura']; ?></td>
+                                            <td>
+
+                                            <form action="<?php echo ROOT_URL; ?>factura/verArchivo" method="post">
+                                            <input type="hidden" id="idArchivo" name="idArchivo" value="<?php echo $archivo['idArchivo']; ?>">
+                                                <input type="submit" name="submit" value="Ver" style="background: #001d5a; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul"/>
+                                            </form>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                            </table>
+
+                        </div>
+                    </div>
                     <h5><b></b>
                 </div>
             </div>
@@ -70,3 +97,4 @@
 </body>
 
 
+<!--archivosFacuturas-->

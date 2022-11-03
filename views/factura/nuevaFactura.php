@@ -45,14 +45,22 @@
 
                                 </div>
                                 <hr>
-                                <h4 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h4>
-                                <div class="card-body">
+
+                                    <h4 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h4>
+                                    <div class="card-body">
+  
                                     <div class="mb-3">
-                                        <label for="formFileFactura" class="form-label">Subir PDF (Obligatorio)</label>
-                                        <input class="form-control" id="loadFileFactura" name="loadFileFactura" onchange="readAsBase64()" accept="application/pdf" type="file" width="190px" height="50px" />
-                                        <input type="hidden" name="pdfFactura" id="pdfFactura" value="">
-                                        <input type ="hidden" name="pdfNombreFactura" id="pdfNombreFactura" value="">
+                                    <input class="form-control" id="loadFile" accept="application/pdf" type="file" onchange="readAsBase64()"  width="190px" height="50px"/>
                                     </div>
+                                    <div class="">
+                                        <label for="">PDF para anexar:</label>
+                                    </div>
+
+                                <hr>
+                                
+                                    <table style="max-width: 600px" id="guardado">
+
+                                </table>
                                 </div>
                                 <hr>
                                 <div class="card">
@@ -263,72 +271,25 @@ function validarFormulario(event){
         let errores = "";
         var numeroFactura = document.getElementById('numeroFactura').value;
         var fechaFactura = document.getElementById('fechaFactura').value;
-        var loadFileFactura = document.getElementById('loadFileFactura').value;
         var montoFactura = document.getElementById('montoFactura').value;
 
        if(existeName("descripcionItem[]") == false){
-            errores += "Debe agregar al menos un item a la factura";
+            errores += "<h4>Debe agregar al menos un item a la factura</h4><hr>";
         }
         if(montoFactura == 0 || montoFactura == ""){
-            errores += "El monto de la factura no puede ser 0";
+            errores += "<h4>El monto de la factura no puede ser 0</h4><hr>";
         }
         if(numeroFactura == null || numeroFactura.length == 0 || /^\s+$/.test(numeroFactura)){
-            errores = errores + "<p>Debe ingresar un numero de factura</p><hr>";
+            errores = errores + "<h4>Debe ingresar un numero de factura</h4><hr>";
             event.preventDefault();
         }
 
         if(fechaFactura == null || fechaFactura.length == 0 || /^\s+$/.test(fechaFactura)){
-            errores = errores + "<p>Debe ingresar una fecha</p><hr>";
+            errores = errores + "<h4>Debe ingresar una fecha</h4><hr>";
             event.preventDefault();
         }
-        if(loadFileFactura == null || loadFileFactura.length == 0 || /^\s+$/.test(loadFileFactura)){
-            errores = errores + "<p>Debe ingresar un archivo</p><hr>";
-            event.preventDefault();
-        }
-        
-        if( errores != ""){
-             
-             Swal.fire({
-             icon: 'error',
-             title: 'Oops...',
-             html: errores,
-            });
-            event.preventDefault();
-            return;
-        }
-        var modalconfirmar = document.getElementById('modalconfirmar').style.display;
-        if(modalconfirmar != "block"){
-            //abrir modalconfirmar
-            document.getElementById('modalconfirmar').style.display = "block";
-            event.preventDefault();
-        }
-        
-    }
-    function validarFormulario(event){
-        let errores = "";
-        var numeroFactura = document.getElementById('numeroFactura').value;
-        var fechaFactura = document.getElementById('fechaFactura').value;
-        var loadFileFactura = document.getElementById('loadFileFactura').value;
-        var montoFactura = document.getElementById('montoFactura').value;
-
-       if(existeName("descripcionItem[]") == false){
-            errores += "Debe agregar al menos un item a la factura";
-        }
-        if(montoFactura == 0 || montoFactura == ""){
-            errores += "El monto de la factura no puede ser 0";
-        }
-        if(numeroFactura == null || numeroFactura.length == 0 || /^\s+$/.test(numeroFactura)){
-            errores = errores + "<p>Debe ingresar un numero de factura</p><hr>";
-            event.preventDefault();
-        }
-
-        if(fechaFactura == null || fechaFactura.length == 0 || /^\s+$/.test(fechaFactura)){
-            errores = errores + "<p>Debe ingresar una fecha</p><hr>";
-            event.preventDefault();
-        }
-        if(loadFileFactura == null || loadFileFactura.length == 0 || /^\s+$/.test(loadFileFactura)){
-            errores = errores + "<p>Debe ingresar un archivo</p><hr>";
-            event.preventDefault();
+        if(existeName("pdfnombre[]") == false){
+            errores += "<h4>Debe agregar al menos un archivo</h4><hr>";
         }
         
         if( errores != ""){
@@ -354,7 +315,8 @@ function validarFormulario(event){
     function cerrarModel(){
         document.getElementById('modalconfirmar').style.display = "none";
     }
-
+</script>
+<script>
     
 
     function cambiarMoneda(select){
@@ -369,31 +331,58 @@ function validarFormulario(event){
 
         
     }
+</script>
+<script>
+   ////CARGAR ARCHIVOS/////
+let cant = 0;
+function readAsBase64() {
 
-    ////CARGAR ARCHIVOS/////
-    function readAsBase64() {
+    var files = document.getElementById("loadFile").files;
+    if (files.length > 0) {
 
-        var files = document.getElementById("loadFileFactura").files;
-        if (files.length > 0) {
+        var fileToLoad = files[0];
+        var fileReader = new FileReader();
+        var base64File;
 
-            var fileToLoad = files[0];
-            var fileReader = new FileReader();
-            // Reading file content when it's loaded
-            fileReader.onload = function(event) {
-                console.log(event.target.result);
-                base64File = event.target.result;
-                console.log(fileToLoad.name);
-                document.getElementById("pdfFactura").value = event.target.result;
-                document.getElementById("pdfNombreFactura").value = fileToLoad.name+"";
-               // base64File = event.target.result;
-                //AGREGAR AL INPUT PDFFACTURA EL ARCHIVO EN BASE64FILE
-               // document.getElementById("pdfFactura").value = base64File;
-                //PONER NOMBRE EN PDFNOMBREFACTURA
-              //  document.getElementById("pdfNombreFactura").value = fileToLoad.name;
-            };
-                        
-            fileReader.readAsDataURL(fileToLoad);
-        }
+        fileReader.onload = function(event) {
+            base64File = event.target.result;
+
+            var input = document.createElement("input");
+            input.setAttribute("type", "hidden");
+            input.setAttribute("name", "pdf[]");
+            input.setAttribute("id", cant+"pdf");
+            input.setAttribute("value", base64File);
+            document.getElementById("formFactura").appendChild(input);
+
+            var inputName = document.createElement("input");
+            inputName.setAttribute("type", "hidden");
+            inputName.setAttribute("name", "pdfnombre[]");
+            inputName.setAttribute("id", cant+"pdfnombre");
+            inputName.setAttribute("value", fileToLoad.name);
+            document.getElementById("formFactura").appendChild(inputName);
+
+            var table = document.getElementById("guardado");
+            var row = table.insertRow(cant);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            cell1.innerHTML = fileToLoad.name;
+            cell2.innerHTML = '<button type="button" id="'+cant+'"class="btn btn-danger" onclick="eliminar('+cant+')">Eliminar</button>';   
+            cant++;
+    
+        };
+        
+        fileReader.readAsDataURL(fileToLoad);
+    }
 }
+ 
+    function eliminar(id){
+        var input = document.getElementById(id+"pdf");
+        input.parentNode.removeChild(input);
+        var inputName = document.getElementById(id+"pdfnombre");
+        inputName.parentNode.removeChild(inputName);
+        var table = document.getElementById("guardado");
+        table.rows[id].style.display = "none";
+
+    }
 
 </script>
