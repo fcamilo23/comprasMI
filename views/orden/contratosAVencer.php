@@ -63,8 +63,8 @@
 </script>
   
   
-  <a href="<?php echo ROOT_URL; ?>"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
-
+  <a href="<?php echo ROOT_URL; ?>"><input type="button" style="width: 100px; margin-left: 30px" class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
+  <input type="button" class="btn btn-primary azul sombraAzul1" onclick="abrirModel();" value="Generar Reporte anual"> 
 
 <!--<button type="button" tabindex="0" aria-controls="solis" class="excel sombraVerde"> <img src="<?php echo ROOT_PATH; ?>imagenes/Excel1.jpg" width="150px" height="50px" ></button>-->
 
@@ -292,11 +292,36 @@
             </tbody>
 		</table>
     </div>
+    <div class="modal" tabindex="-1" role="dialog" id="modalanio">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Ingrese Año:</h5>
+
+        </div>
+        <div class="modal-body">
+            <form id="formAnio" method="post" action="<?php echo ROOT_URL; ?>orden/reporteServicios">
+                
+        <div class="modal-body" id="mensajeOrden">
+            <input type = "number" class="form-control" name="anio" min="2010" max="2060" value="<?php date("Y") ?>">
+        </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">CONFIRMAR</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarModel()">CANCELAR</button>
+            </div>
+            </form>
+            </div>
+        </div>
+    </div>
     
 
     <script>
-   
-       
+        function abrirModel(){
+            $('#modalanio').modal('show');
+        }
+        function cerrarModel(){
+            $('#modalanio').modal('hide');
+        }
 
        
 

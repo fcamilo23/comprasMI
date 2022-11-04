@@ -63,6 +63,11 @@ class Orden extends Controller{
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->anularOrden(), true);
     }
+    protected function reporteServicios(){
+        $this->sesionAbierta ();
+        $viewmodel = new OrdenModel();
+        $this->returnView($viewmodel->reporteServicios(), true);
+    }
     
     protected  function isValidatedNumero(){
         include './assets/utils/validationAjax.php';

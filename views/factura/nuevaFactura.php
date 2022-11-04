@@ -25,45 +25,67 @@
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-8">
                 <div class="card">
                     <br>
-                    <h1 style="color: #001d5a; text-align:center; margin-bottom: 30px" class="center">Agregar Factura
-                        </h1>
+                    <h1 style="color: #001d5a; text-align:center; margin-bottom: 10px" class="center">Agregar Factura</h1>
 
                         <div class="card-body ">
 
-                            <input type="hidden" name="idOrden" value="<?php echo $viewmodel['idOrden']; ?>">
+                            <input type="hidden" name="idOrden" value="<?php echo $viewmodel['orden']['id']; ?>">
                             <input type="hidden" name="idProveedor" value="<?php echo $viewmodel['idProveedor']; ?>">
-           
-                            <hr>
-                                <h5><b>DATOS:</b></h5>
+                                        <?php
+                                            $moneda;
+                                            if($viewmodel['orden']["moneda"] == "$ (Pesos Uruguayos)"){
+                                                $moneda = '$U';
+                                            }else{
+                                                if($viewmodel['orden']["moneda"] == "U.I.(Unidades Indexadas)"){
+                                                    $moneda = "U.I.";
+                                                }else{
+                                                    if($viewmodel['orden']["moneda"] == "U.R. (Unidades Reajustables)"){
+                                                        $moneda = "U.R.";
+                                                    }else{
+                                                        if($viewmodel['orden']["moneda"] == "€ (Euro)"){
+                                                            $moneda = "€";
+                                                        }else{
+                                                            $moneda = 'U$S';
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ?>
+                        
+                            
+                                <h5><b>DATOS DE LA ORDEN:</b></h5>
                                 <div class="card">
                                     <div class="card-body">
-                                        <h6><b>ORDEN: </b> <?php echo $viewmodel["numero"]?>-<?php echo $viewmodel["anio"]?></h6>
+                                        <h6><b>PROCEDIMIENTO: </b> <?php echo $viewmodel['orden']["procedimiento"]?></h6>
+                                        <h6><b>ORDEN: </b> <?php echo $viewmodel['orden']["numero"]?>-<?php echo $viewmodel['orden']["anio"]?></h6>
+                                        <h6><b>Monto de la Orden:</b><?php echo $moneda." ".$viewmodel['orden']["montoReal"]?></h6>
+                                        <hr>
                                         <h6><b>PROVEEDOR: </b><?php echo $viewmodel["empresa"]?></h6>
                                         <h6><b>Razon Social: </b><?php echo $viewmodel["razon_social"]?></h6>
                                         <h6><b>R.U.T.: </b><?php echo $viewmodel["rut"]?></h6>
                                     </div>
-
                                 </div>
                                 <hr>
-
-                                    <h4 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h4>
+                                </div>
+                                </div>
+                                <div class="card" style="margin-top: 10px;">
+                                    
                                     <div class="card-body">
-  
-                                    <div class="mb-3">
-                                    <input class="form-control" id="loadFile" accept="application/pdf" type="file" onchange="readAsBase64()"  width="190px" height="50px"/>
+                                        <h4 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h4>
+    
+                                        <div class="mb-3">
+                                        <input class="form-control" id="loadFile" accept="application/pdf" type="file" onchange="readAsBase64()"  width="190px" height="50px"/>
+                                        </div>
+                                        <div class="">
+                                            <label for="">PDF para anexar:</label>
+                                        </div>
+                                        <hr>
+                                        <table style="max-width: 600px" id="guardado">
+                                        </table>
                                     </div>
-                                    <div class="">
-                                        <label for="">PDF para anexar:</label>
-                                    </div>
-
-                                <hr>
-                                
-                                    <table style="max-width: 600px" id="guardado">
-
-                                </table>
                                 </div>
-                                <hr>
-                                <div class="card">
+
+                                <div class="card" style="margin-top: 10px;">
                                     <div class="card-body">
                                         <div class="mb-3 row">
                                             <label for="numeroFactura" class="col-sm-2 col-form-label"> N° Factura</label>
@@ -77,11 +99,11 @@
                                             <label for="monedaFactura" class="col-sm-2 col-form-label"> Total </label>
                                             <div class="col-sm-4">
                                                 <select name="monedaFactura" id="monedaFactura" onchange="cambiarMoneda(this)" class="form-control">
-                                                    <option value="$ (Pesos Uruguayos)" <?php if($viewmodel["moneda"]=='$U (Pesos Uruguayos)') { echo "selected"; } ?>>$U (Pesos Uruguayos)</option>
-                                                    <option value="U$S (Dolares)" <?php if($viewmodel["moneda"]=='U$S (Dolares)') { echo "selected"; } ?>>US$ (Dólares)</option>
-                                                    <option value="U.I.(Unidades Indexadas)" <?php if($viewmodel["moneda"]=='U.I.(Unidades Indexadas)') { echo "selected"; } ?> >U.I.(Unidades Indexadas)</option>
-                                                    <option value="U.R. (Unidades Reajustables)" <?php if($viewmodel["moneda"]=='U.R. (Unidades Reajustables)') { echo "selected"; } ?> >U.R. (Unidades Reajustables)</option>
-                                                    <option value="€ (Euro)" <?php if($viewmodel["moneda"]=='€ (Euro)') { echo "selected"; } ?> >€ (Euro)</option>
+                                                    <option value="$ (Pesos Uruguayos)" <?php if($viewmodel["orden"]["moneda"]=='$U (Pesos Uruguayos)') { echo "selected"; } ?>>$U (Pesos Uruguayos)</option>
+                                                    <option value="U$S (Dolares)" <?php if($viewmodel["orden"]["moneda"]=='U$S (Dolares)') { echo "selected"; } ?>>US$ (Dólares)</option>
+                                                    <option value="U.I.(Unidades Indexadas)" <?php if($viewmodel["orden"]["moneda"]=='U.I.(Unidades Indexadas)') { echo "selected"; } ?> >U.I.(Unidades Indexadas)</option>
+                                                    <option value="U.R. (Unidades Reajustables)" <?php if($viewmodel["orden"]["moneda"]=='U.R. (Unidades Reajustables)') { echo "selected"; } ?> >U.R. (Unidades Reajustables)</option>
+                                                    <option value="€ (Euro)" <?php if($viewmodel["orden"]["moneda"]=='€ (Euro)') { echo "selected"; } ?> >€ (Euro)</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-4">

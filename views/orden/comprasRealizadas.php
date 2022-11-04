@@ -112,10 +112,10 @@
                 
 				<tr>
                     <th>Id</th>
+                    <th>Procedimiento</th>
                     <th>Orden</th>
                     <th>Monto</th>
                     <th>Plazo Entrega</th>
-                    <th>Procedimiento</th>
                     <th>Proveedor</th>
                     <th></th>
 
@@ -130,6 +130,7 @@
 
 			<tr><?php foreach($viewmodel as $item) : ?>
                 <td><?php echo $item['id'] ?></td>
+                <td><?php echo $item['procedimiento'] ?></td>
                 <td><?php echo 'OC ' . $item['numero'] .'-' . $item['anio'] ?></td>
                 <?php 
                 $moneda;
@@ -152,7 +153,6 @@
                 } ?>
                 <td><?php echo $moneda." ".$item['montoReal']; ?></td>
                 <td><?php echo $item['plazoEntrega'] ?></td>
-                <td><?php echo $item['procedimiento'] ?></td>
                 <td><?php foreach($_SESSION['proveedores'] as $p) : 
                 if($p['id'] == $item['idProveedor']){ 
                     echo $p['empresa'];

@@ -9,12 +9,12 @@ class FacturaModel extends Model{
 		$this->query('SELECT * FROM itemOrden WHERE idOrden = :idOrden');
 		$this->bind(':idOrden', $post['idOrden']);
 		$items = $this->resultSet();
+		$this->query('SELECT * FROM ordenes WHERE id = :idOrden');
+		$this->bind(':idOrden', $post['idOrden']);
+		$orden = $this->single();
 		$viewmodel = array(
-			'idOrden' => $post['idOrden'],
+			'orden' => $orden,
 			'idProveedor' => $post['idProveedor'],
-			'numero' => $post['numero'],
-			'anio' => $post['anio'],
-			'moneda' => $post['moneda'],
 			'empresa' => $post['empresa'],
 			'razon_social' => $post['razon_social'],
 			'rut' => $post['rut'],

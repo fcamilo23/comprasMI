@@ -448,12 +448,10 @@ public function verOrden(){
 */
     public function contratosAVencer (){
 
-
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if(isset($post) && isset($post['submit'])){
             if($post['submit'] == 'Ampliar'){
-                $_SESSION['idOrden'] = $post['numero'];
-                
+                $_SESSION['idOrden'] = $post['numero'];      
 
             }
             header('Location: '.ROOT_URL.'orden/verOrden');
@@ -478,5 +476,27 @@ public function verOrden(){
         return $row;
     }
 
+    public function reporteServicios(){
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $this->query('SELECT * FROM `itemOrden` 
+                    JOIN ordenes ON itemOrden.idOrden = ordenes.id
+                    JOIN proveedores ON proveedores.id = ordenes.idProveedor
+                    WHERE (esservicio = "General" OR esservicio="Licencia") and itemOrden.fin >= :inicioAnio AND itemOrden.inicio <= :finAnio 
+                    ORDER BY itemOrden.fin ASC');
+        $this->bind(':inicioAnio', $post['anio']."-01-01");
+        $this->bind(':finAnio', $post['anio']."-12-31");
+
+        $row = $this->resultSet();
+        $data = array();
+        $data['anio'] = $post['anio'];
+        $data['servicios'] = $row;  
+        return $data;
+    }
+
 }
+
+
+
+
 ?>

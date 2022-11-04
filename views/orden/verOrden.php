@@ -179,8 +179,7 @@ function mensajes(){
                                             <th >Cantidad</th>
                                             <th >Unidad</th>
                                             <th style="width: 30%">Descripcion</th>
-                                            <th >Moneda</th>
-                                            <th >Monto</th>
+                                            <th >Monto (<?php echo $monedaOrden ?>) </th>
                                             <th >Servicio</th>
                                             <th >Inicio (y-m-d)</th>
                                             <th >Fin (y-m-d)</th>
@@ -201,7 +200,6 @@ function mensajes(){
                                             <th ><?php echo $item['cantidad'] ?> </th>
                                             <th ><?php echo $item['unidad'] ?> </th>
                                             <th ><?php echo $item['descripcion'] ?> </th>
-                                            <th ><?php echo $item['moneda'] ?> </th>
                                             <th ><?php echo $item['monto'] ?> </th>
                                             <th ><?php echo $item['esservicio'] ?> </th>
                                             <th ><?php if($item['esservicio'] == "No"){echo 'N/A';}else{echo $item['inicio'];} ?></th>
