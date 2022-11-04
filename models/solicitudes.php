@@ -211,6 +211,7 @@ if (isset($_POST['submit'])) {
     public function ejecucionInversiones(){
         
         $anio = date('Y');
+        $_SESSION['anioInversiones'] = $anio;
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         
         if(isset($post) && isset($post['submit'])){
@@ -223,7 +224,8 @@ if (isset($_POST['submit'])) {
         $this->query('SELECT * FROM `solicitudescompra` WHERE fechaPrimerOrden LIKE "'.$anio.'%" AND (grupoAS = "Equipos de Informática" OR grupoAS = "Equipos de Comunicaciones" OR grupoAS = "Programas de Computación")'); // JOIN ordenes ON ordenes.idSolicitud = solicitudescompra.id');
         $row = $this->resultSet();
 
-       
+        $this->query('SELECT * FROM cotizaciones WHERE anio = "'.$anio.'" ORDER BY id');
+        $_SESSION['cotis'] = $this->resultSet();
         //echo $anio;
 
 

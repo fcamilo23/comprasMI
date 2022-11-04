@@ -12,7 +12,7 @@
                 title: 'Ejecución de Inversiones <?php echo date('d-m-Y'); ?>'
             }
              ],
-             order: [[2, 'asc']],
+             order: [[2, 'desc']],
              dom: 'lBfrtip',
              "columnDefs": [ {
                  "targets": [],
@@ -20,8 +20,8 @@
                  
                  } ,
                  {
-                 "targets": [],
-                 "visible": false,
+                 "targets": [0,1,2,3,4,5,6,7],
+                 "orderable": false,
                  }
              
                 ]
@@ -113,7 +113,7 @@
 
 
  </select> 
-    <?php  unset($_SESSION['anioInversiones']); ?>
+   
  <!--
 
  <select name="anio" class="form-control" onchange="selectAnio(this)" style="float: right; width: 140px; float: right; margin-bottom: 0px" id="">
@@ -146,7 +146,8 @@
  
  
  <div id="main-container" style="width: 100%; overflow: auto; padding: 25px; background: #fff"> <!--  max-height: 800px -->
- 
+ <h3 class="center"  style="text-align: center">Ejecución de Inversiones  -   Año <?php echo $_SESSION['anioInversiones']; ?></h3>
+
  
          <table id="solis" style="width: 100%;">
  
@@ -167,15 +168,31 @@
                  </tr>
              </thead>
              <tbody >
-             <tr ><?php foreach($viewmodel as $item) : ?>
+             <tr class="exclude">
+             <td></td>
+             <td></td>
+             <td></td>
+             <td></td>
+             <td></td>
+             <td></td>
+             <td></td>
+             <td></td>
+
+             </tr>
+             <?php $totalestimado=0; $totalreal=0; $totalfacturado=0; foreach($viewmodel as $item) : ?>
+                <tr >
                 <td><?php echo $item['detalle'] ?></td>
                  <td><?php if($item['numProc'] != "0" && $item['anioProc'] != "0"){echo $item['procedimiento'] . " ". $item['numProc'] . "/" . $item['anioProc'];}else{ echo "---";} ?></td>
                  <td><?php echo $item['grupoAS']; ?></td>
                  <td><?php echo $item['gastos_inversiones'] ?></td>
-                 <td>$<?php echo number_format($item['costoAprox'], 2, '.', ',') ?></td>
+                 <td>$<?php echo number_format($item['costoAprox']) ?></td>
                  <td>$<?php echo number_format($item['montoRealOrden']) ?></td>
                  <td>$<?php echo number_format($item['montoRealFacturado']) ?></td>
                  <td><?php echo $item['observaciones'] ?></td>
+
+                 <?php $totalestimado += $item['costoAprox']; ?>
+                 <?php $totalreal += $item['montoRealOrden']; ?>
+                 <?php $totalfacturado += $item['montoRealFacturado']; ?>
 
                 <!-- <form id="editar" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">       
                  <td><input type="text" name="numero" style="display: none" value="<?php echo $item['id']; ?>"/>
@@ -183,13 +200,48 @@
                  </form> -->
  
              </tr> <?php endforeach; ?>
-             </tbody>
-         </table>
- 
- 
-     </div>
-     </form>
 
+             <tr class="exclude">
+             <td></td>
+             <td></td>
+             <td></td>
+             <td></td>
+             <td></td>
+             <td></td>
+             <td></td>
+             <td></td>
+
+             </tr>
+             
+             <tr class="total azul" style="">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="font-weight: bold">Totales</td>
+                <td style="font-weight: bold">$U <?php echo number_format($totalestimado); ?></td>
+                <td style="font-weight: bold">$U <?php echo number_format($totalreal); ?></td>
+                <td style="font-weight: bold">$U <?php echo number_format($totalfacturado); ?></td>
+                <td></td>
+
+             </tr>
+             </tbody>
+
+            
+         </table>
+
+     </div>
+            <div class="center" style="margin-top: 60px; border-radius: 5px; background: white; padding: 20px; width: 550px">
+            <h5  style="text-align: center; margin-left: -15px; color:grey ">Cotizaciones del año <?php echo $_SESSION['anioInversiones']; ?></h5><br>
+                <?php if(isset($_SESSION['cotis']) && $_SESSION['cotis'] != null ){ ?>
+     <?php foreach($_SESSION['cotis'] as $coti) : ?>
+            <h5 style="margin-left: 40px; color:grey "><?php echo $coti['moneda'] . ': $U '. $coti['valor'] ?></h5>
+         <?php endforeach; }
+         else{
+            ?> <h4 style="text-align: center; margin-left: -15px; color:grey ">No hay cotizaciones para este año</h4> <?php
+         }?>
+         </div>
+     </form>
+     <?php  unset($_SESSION['anioInversiones']); ?>
  
      <script>
          const abrirModal = document.querySelector("#abrirFiltros");

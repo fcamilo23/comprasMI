@@ -318,14 +318,14 @@ thead{
 
 
 
-tr:not(.semaforoRojo, .semaforoVerde, .semaforoAmarillo):nth-child(even){
+tr:not(.exclude, .total, .semaforoRojo, .semaforoVerde, .semaforoAmarillo):nth-child(even){
 	background-color: #ddd;
 }
 
 
 
 
-tr:not(.semaforoRojo, .semaforoVerde, .semaforoAmarillo):hover td{
+tr:not(.exclude, .total, .semaforoRojo, .semaforoVerde, .semaforoAmarillo):hover td{
 	background-color: #b4bacc;
 	color: black;
     transition: all .3s;
@@ -714,6 +714,12 @@ section{
     border-radius: 5px;
     text-align: center;
 }
+
+.total{
+    color:white;
+}
+
+
 
 
 .borderrightr{
