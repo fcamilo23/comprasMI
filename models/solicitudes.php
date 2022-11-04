@@ -164,7 +164,7 @@ if (isset($_POST['submit'])) {
     }
 
     public function obtenerPesosUruguayos($valorInicial, $moneda, $anio, $montoReal){
-        $anio = 2022;
+       // $anio = 2022;
         $this->query('SELECT * FROM `cotizaciones` WHERE anio = "'. $anio .'" AND moneda = "Dolar"'); // JOIN ordenes ON ordenes.idSolicitud = solicitudescompra.id');
         $dolar = $this->single();
         $this->query('SELECT * FROM `cotizaciones` WHERE anio = "'. $anio .'" AND moneda = "U.I.(Unidades Indexadas)"'); // JOIN ordenes ON ordenes.idSolicitud = solicitudescompra.id');
@@ -174,7 +174,7 @@ if (isset($_POST['submit'])) {
         $this->query('SELECT * FROM `cotizaciones` WHERE anio = "'. $anio .'" AND moneda = "€ (Euro)"'); // JOIN ordenes ON ordenes.idSolicitud = solicitudescompra.id');
         $euro = $this->single();
 
-
+        if($dolar != null){
 
 
         if($moneda == '$ (Pesos Uruguayos)'){
@@ -199,24 +199,33 @@ if (isset($_POST['submit'])) {
         }
 
         return $valorInicial;
+    }else{
+        Messages::setMsg('Debes agregar una instancia de cotizaciones para el año '.$anio , 'warning');
+
+    }
     }
 
 
 
 
     public function ejecucionInversiones(){
-        $anio = 2022;
+        
+        $anio = date('Y');
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        
         if(isset($post) && isset($post['submit'])){
-            if(isset($post['anio'])){
-                $anio = $post['anio'];
-            }
+            $anio = $post['anio'];
+            $_SESSION['anioInversiones'] = $anio;
         }
         //$this->query('SELECT * FROM `cotizaciones` WHERE anio = "'. $anio .'" AND moneda = "Dolar"'); // JOIN ordenes ON ordenes.idSolicitud = solicitudescompra.id');
         //$dolar = $this->single();
 
         $this->query('SELECT * FROM `solicitudescompra` WHERE fechaPrimerOrden LIKE "'.$anio.'%" AND (grupoAS = "Equipos de Informática" OR grupoAS = "Equipos de Comunicaciones" OR grupoAS = "Programas de Computación")'); // JOIN ordenes ON ordenes.idSolicitud = solicitudescompra.id');
         $row = $this->resultSet();
+
+       
+        //echo $anio;
+
 
       
 
