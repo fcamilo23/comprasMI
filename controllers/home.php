@@ -5,6 +5,11 @@ class Home extends Controller{
 		$this->returnView($viewmodel->Index(), true);
 	}
 
+	protected function cotizaciones(){
+		$viewmodel = new HomeModel();
+		$this->returnView($viewmodel->cotizaciones(), true);
+	}
+
 	protected function buscarContenido(){
 		include './assets/utils/buscarContenido.php';
 
