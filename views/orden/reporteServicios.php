@@ -1,8 +1,39 @@
-<div id="main-container" style="width: 100%; overflow: auto; padding: 25px; background: #fff"> <!--  max-height: 800px -->
+<script>
+       $(document).ready(function() {
+        $('#compras').DataTable( {
+            buttons: [
+            {
+                extend: 'excel',
+                title: 'REPORTE DE SERVICIOS VIGENTES EN EL <?php echo $viewmodel['anio']; ?>',
+                filename: '*',
+                header: true
+
+            }
+
+            ],
+
+            paging: false,
+            order: [[0, 'desc']],
+            dom: 'lBfrtip',
+            searching: false,
+            ///poner titulo al excel
+        } );
+    } );
+</script>
+    
+<a href="<?php echo ROOT_URL; ?>orden/contratosAVencer"><input type="button" style="width: 200px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="Volver a Vencimientos"/></a>
+
+<button form="anioDespues" type="submit" class="btn btn-primary excel sombraAzul1">></button>
+<p class="excel" value=><b><?php echo $viewmodel['anio'] ?></b></p>
+<button form="anioAntes" type="submit" class="btn btn-primary excel "><</button>
+
+<div id="main-container" style="width: auto; overflow:auto; padding: 25px; background: #fff"> <!--  max-height: 800px -->
             <h3 class="center" style="text-align: center">Reporte de Servicios Vigentes en el año <?php echo $viewmodel['anio']; ?></h3>
 <br>
-		<table id="compras" >
-        <h1></h1>
+		<table id="compras" style=" overflow-x: auto; ">
+
+        <caption>Reporte de Servicios Vigentes en el año <?php echo $viewmodel['anio']. "-"."Realizado ".date('d/m/y') ?></caption>
+        </tbody>
 			<thead style="background: rgb(20,20,20);" >
               
             <tr>
@@ -10,19 +41,20 @@
                     <th>Descripción</th>
                     <th >Procedimiento</th>
                     <th>Orden</th>
-                    <th >Monto</th>
+                <!-- <th >Monto</th> -->
                     <th >Proveedor</th>
                     <th >Fecha Inicio</th>
-                    <th >Fecha fin</th>
-                    <th >Meses</th>
-                    <th >Meses Anio</th>
-                    <th >Monto Mensual</th>
+                    <th >Fecha Fin</th>
+                <!--   <th >Meses</th>
+                    <th >Meses Anio</th> -->
+                    <th style="min-width:40px; max-width:90px;" >Monto Mensual</th> 
                     <th >Monto Estimado Anual</th>
                     <th >Monto Estimado Total</th>
-                    <th ></th>
+                    <th>Tipo</th>
+                    <th style="display:none"  >Observacion</th>
 			</tr>
         </thead>
-        <tbody >
+        <tbody>
 
             <tr><?php foreach($viewmodel['servicios'] as $item) : 
                 $moneda;
@@ -54,27 +86,19 @@
                 ?>
                 <td><?php echo $item['procedimiento']." ".$numero ?> </td>
                 <td><?php echo 'OC ' . $item['numero'] .'-' .$item['anio'] ?></td>
-                <td><?php echo $item['moneda']." ".$item['monto']; ?></td>
-                <td>proveedor</td>
+                <!-- <td><?php echo $item['moneda']." ".$item['monto']; ?></td> -->
+                <td> <?php echo $item['empresa'] ?></td>
                 <td><?php echo $item['inicio'] ?></td>
                 <td><?php echo $item['fin'] ?></td>
-                <td>
-                    <?php 
-                        $fecha1 = new DateTime($item['inicio']);
-                        $fecha2 = new DateTime($item['fin']);
-                        $fecha = $fecha1->diff($fecha2);
-                         $fecha->m = $fecha->m +($fecha->y*12);
-                         if($fecha->d >15||$fecha->m==0){
-                            $fecha->m= $fecha->m +1;
-                        }
-                        $mesesServicio = $fecha->m;
-                       echo $mesesServicio;
-                    
-                    ?>
-                
-                </td>
-                <td>
                 <?php 
+                    $fecha1 = new DateTime($item['inicio']);
+                    $fecha2 = new DateTime($item['fin']);
+                    $fecha = $fecha1->diff($fecha2);
+                        $fecha->m = $fecha->m +($fecha->y*12);
+                        if($fecha->d >15||$fecha->m==0){
+                        $fecha->m= $fecha->m +1;
+                    }
+                    $mesesServicio = $fecha->m;
                     $desde;
                     $hasta;
                     $principioAnio = new DateTime('01-01-'.$viewmodel['anio']);
@@ -95,15 +119,19 @@
                         $fecha->m= $fecha->m +1;
                     }
                     $mesesServicioAnio = $fecha->m;
-                    echo $mesesServicioAnio;
-        
-                ?>
 
-                </td>
+                ?>
+               <!-- <td><?php echo $mesesServicio ?></td>
+                <td><?php echo $mesesServicioAnio ?></td>-->
                 <td>
+
                     <?php 
-                        $montoMensual = round($item['monto']/$mesesServicio,2);
-                        echo $moneda." ".$montoMensual ?>
+                    $montoMensual=round($item['monto']/$mesesServicio,2);
+                    if($item['esservicio']=="Licencia"){
+                        echo $moneda."  0" ;
+                    }else{
+                        echo $moneda." ".$montoMensual;
+                    }?>
                 </td>
                 <td>
                     <?php echo $moneda." ".$montoMensual*$mesesServicioAnio ?>
@@ -111,7 +139,17 @@
                 <td>
                     <?php echo $moneda." ".$item['monto'] ?>
                 </td>
+                <td> <?php echo $item['esservicio'] ?></td>
+                <td style="display:none" >
+                    <?php echo "hola".$item['observacion'] ?>
             </tr><?php endforeach;?>
         </tbody>
        
 </table>
+</div>
+<form id="anioDespues" action="<?php echo ROOT_URL; ?>orden/reporteServicios" method="post">
+    <input  type="hidden" name="anio" value="<?php echo $viewmodel['anio']+1; ?>">
+</form>
+<form id="anioAntes" action="<?php echo ROOT_URL; ?>orden/reporteServicios" method="post">
+    <input  style="display:none" type="hidden" name="anio" value="<?php echo $viewmodel['anio']-1; ?>">
+</form>

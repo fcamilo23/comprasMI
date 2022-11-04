@@ -478,6 +478,9 @@ public function verOrden(){
 
     public function reporteServicios(){
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(!isset($post['anio'])){
+            header('Location: '.ROOT_URL);
+        }
 
         $this->query('SELECT * FROM `itemOrden` 
                     JOIN ordenes ON itemOrden.idOrden = ordenes.id

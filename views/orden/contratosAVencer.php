@@ -270,23 +270,11 @@
                 <td><?php if($item['inicio'] == ""){echo 'N/A';}else{ $date = new DateTime($item['inicio'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y'); }?></td>
                 <td><?php if($item['fin'] == ""){echo 'N/A';}else{ $date = new DateTime($item['fin'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y'); }?></td>
 
-
-
-                
-                
-
                 <form id="verOrden" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">       
 
                 <td><input type="text" name="numero" style="display:none" value="<?php echo $item['id']; ?>"/>
                 <input type="submit" name="submit" id="ver" value="Ampliar" style="background: rgb(230,230,230); color:black; border: 1px solid grey"  class="btn btn-primary sombra"/></td>
                 </form>
-
-
-            
-
-
-            
-
 
 			</tr> <?php endforeach; ?>
             </tbody>
@@ -303,7 +291,7 @@
             <form id="formAnio" method="post" action="<?php echo ROOT_URL; ?>orden/reporteServicios">
                 
         <div class="modal-body" id="mensajeOrden">
-            <input type = "number" class="form-control" name="anio" min="2010" max="2060" value="<?php date("Y") ?>">
+            <input type = "number" class="form-control" name="anio" min="2010" max="2060" value="<?php echo date("Y") ?>">
         </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">CONFIRMAR</button>
