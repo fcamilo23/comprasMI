@@ -236,7 +236,12 @@
          </table>
  
                 <label class="btn amarillo" onclick="habilitarinputs(this)" id="habilitarinputs" style="float:right; margin-top: 50px" for="">Habilitar Edición</label>
+
+
                 <input type="submit" name="submit" id="editar" value="Guardar Cambios" class="btn azul" style="color:white; display:none; float: right; margin-top: 50px">
+
+                <label class="btn amarillo" onclick="inhabilitarinputs(this)" id="inhabilitarinputs" style="display: none; background: #999999; margin-right: 20px; color:white; float:right; margin-top: 50px" for="">Cancelar</label>
+
      </div>
      </form>
 
@@ -276,19 +281,49 @@
          }
 
  
- 
+            $d = document.getElementById('Dolar').value;
+            $e = document.getElementById('€ (Euro)').value;
+            $ui = document.getElementById('U.I.(Unidades Indexadas)').value;
+            $ur = document.getElementById('U.R. (Unidades Reajustables)').value;
+
          function habilitarinputs(boton){
             
             //const anio = document.getElementById('anio').value;
             //alert(anio); 
             boton.style.display="none";
             document.getElementById('editar').style.display = "block";
+            document.getElementById('inhabilitarinputs').style.display = "block";
+
 
 
             document.getElementById('Dolar').readOnly = false;
             document.getElementById('€ (Euro)').readOnly = false;
             document.getElementById('U.I.(Unidades Indexadas)').readOnly = false;
             document.getElementById('U.R. (Unidades Reajustables)').readOnly = false;
+
+
+             
+  
+  
+          }
+
+          function inhabilitarinputs(boton){
+            
+            //const anio = document.getElementById('anio').value;
+            //alert(anio); 
+            boton.style.display="none";
+            document.getElementById('editar').style.display = "none";
+            document.getElementById('habilitarinputs').style.display = "block";
+
+            document.getElementById('Dolar').value = $d;
+            document.getElementById('€ (Euro)').value = $e;
+            document.getElementById('U.I.(Unidades Indexadas)').value = $ui;
+            document.getElementById('U.R. (Unidades Reajustables)').value = $ur;
+
+            document.getElementById('Dolar').readOnly = true;
+            document.getElementById('€ (Euro)').readOnly = true;
+            document.getElementById('U.I.(Unidades Indexadas)').readOnly = true;
+            document.getElementById('U.R. (Unidades Reajustables)').readOnly = true;
 
 
              
