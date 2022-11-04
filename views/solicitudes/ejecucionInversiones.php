@@ -240,3 +240,10 @@
  
  
      </script>
+
+     <?php if($_SESSION['actualizarRep'] == '0'){
+            $_SESSION['actualizarRep'] = '1'; ?>
+           <script> location.reload(); </script> <?php
+     }else{
+        $_SESSION['actualizarRep'] = '0';
+     } ?>

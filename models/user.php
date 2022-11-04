@@ -218,7 +218,7 @@ class UserModel extends Model{
 				header('Location: '.ROOT_URL.'users/setPass');
 					
 				}else{
-
+				$_SESSION['actualizarRep'] = '0';
 				$_SESSION['is_logged_in'] = true;
 				$_SESSION['user_data'] = array(
 					"cedula"	=> $row['cedula'],
