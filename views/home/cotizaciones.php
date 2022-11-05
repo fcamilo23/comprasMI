@@ -151,7 +151,7 @@
      }
  ?>
      
-     <a href="<?php echo ROOT_URL; ?>solicitudes/ejecucionInversiones"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
+     <a href="<?php echo ROOT_URL; ?>solicitudes/ejecucionInversiones"><input type="button" style=" margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄  Volver al reporte"/></a>
  
  <!--<button type="button" tabindex="0" aria-controls="solis" class="excel sombraVerde"> <img src="<?php echo ROOT_PATH; ?>imagenes/Excel1.jpg" width="150px" height="50px" ></button>-->
  <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
@@ -236,7 +236,7 @@
          </table>
  
                 <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
-                <label class="btn amarillo" onclick="habilitarinputs(this)" id="habilitarinputs" style="float:right; margin-top: 50px" for="">Habilitar Edición</label>
+                <label class="btn amarillo" onclick="habilitarinputs(this)" id="habilitarinputs" style="width: 120px; float:right; margin-top: 50px" for="">✏️ Editar</label>
 
 
                 <input type="submit" name="submit" id="editar" value="Guardar Cambios" class="btn azul" style="color:white; display:none; float: right; margin-top: 50px">

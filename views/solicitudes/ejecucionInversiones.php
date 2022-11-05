@@ -87,7 +87,7 @@
 <?php } ?>
 
 
- <input type="submit" name="submit" id="submit" class="btn azul" style="color: white; float:right; margin-right: 50px "  value="Seleccionar"/>
+ <input type="submit" name="submit" id="submit" class="btn azul" style="color: white; float:right; margin-right: 50px; background: black "  value="Seleccionar"/>
  <select name="anio" class="form-control"  onchange="selectAnio()" style="float: right; width: 140px; float: right; margin-bottom: 0px" id="anio">
     <option <?php if(isset($_SESSION['anioInversiones']) && $_SESSION['anioInversiones'] == '2022') {?> selected <?php } ?> value="2022">2022</option>
     <option <?php if(isset($_SESSION['anioInversiones']) && $_SESSION['anioInversiones'] == '2023') {?> selected <?php } ?> value="2023">2023</option>
@@ -151,7 +151,7 @@
  
          <table id="solis" style="width: 100%;">
  
-             <thead>
+             <thead style="background: black">
                  
                  <tr >
                      <th>Detalle</th>
@@ -213,15 +213,15 @@
 
              </tr>
              
-             <tr class="total azul" style="">
+             <tr class="total " style="background: rgb(30,30,30)">
                 <td></td>
                 <td></td>
                 <td></td>
-                <td style="font-weight: bold">Totales</td>
-                <td style="font-weight: bold">$U <?php echo number_format($totalestimado); ?></td>
-                <td style="font-weight: bold">$U <?php echo number_format($totalreal); ?></td>
-                <td style="font-weight: bold">$U <?php echo number_format($totalfacturado); ?></td>
-                <td></td>
+                <td style="font-weight: bold;">Totales</td>
+                <td style="font-weight: bold;">$U <?php echo number_format($totalestimado); ?></td>
+                <td style="font-weight: bold;">$U <?php echo number_format($totalreal); ?></td>
+                <td style="font-weight: bold;">$U <?php echo number_format($totalfacturado); ?></td>
+                <td style="font-weight: bold;"></td>
 
              </tr>
              </tbody>

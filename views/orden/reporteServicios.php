@@ -23,12 +23,12 @@
     
 <a href="<?php echo ROOT_URL; ?>orden/contratosAVencer"><input type="button" style="width: 200px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="Volver a Vencimientos"/></a>
 
-<button form="anioDespues" type="submit" class="btn btn-primary excel sombraAzul1">></button>
-<p class="excel" value=><b><?php echo $viewmodel['anio'] ?></b></p>
-<button form="anioAntes" type="submit" class="btn btn-primary excel "><</button>
+<button form="anioDespues" type="submit" class="btn btn-primary excel sombra" style="background: black">►</button>
+<p class="excel" style="font-size: 25px" value=><b><?php echo $viewmodel['anio'] ?></b></p>
+<button form="anioAntes" type="submit" class="btn btn-primary excel sombra" style="background: black">◄</button>
 
 <div id="main-container" style="width: auto; overflow:auto; padding: 25px; background: #fff"> <!--  max-height: 800px -->
-            <h3 class="center" style="text-align: center">Reporte de Servicios Vigentes en el año <?php echo $viewmodel['anio']; ?></h3>
+            <h3 class="center" style="text-align: center">Reporte de Vencimiento de Servicios en el año <?php echo $viewmodel['anio']; ?></h3>
 <br>
 		<table id="compras" style=" overflow-x: auto; ">
 

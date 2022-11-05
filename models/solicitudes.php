@@ -174,8 +174,7 @@ if (isset($_POST['submit'])) {
         $this->query('SELECT * FROM `cotizaciones` WHERE anio = "'. $anio .'" AND moneda = "€ (Euro)"'); // JOIN ordenes ON ordenes.idSolicitud = solicitudescompra.id');
         $euro = $this->single();
 
-        if($dolar != null){
-
+        
 
         if($moneda == '$ (Pesos Uruguayos)'){
             $valorInicial = $valorInicial + $montoReal;
@@ -199,10 +198,7 @@ if (isset($_POST['submit'])) {
         }
 
         return $valorInicial;
-    }else{
-        Messages::setMsg('Debes agregar una instancia de cotizaciones para el año '.$anio , 'warning');
-
-    }
+    
     }
 
 
@@ -212,34 +208,37 @@ if (isset($_POST['submit'])) {
         
         $anio = date('Y');
         $_SESSION['anioInversiones'] = $anio;
+        
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         
         if(isset($post) && isset($post['submit'])){
             $anio = $post['anio'];
             $_SESSION['anioInversiones'] = $anio;
         }
+        
         //$this->query('SELECT * FROM `cotizaciones` WHERE anio = "'. $anio .'" AND moneda = "Dolar"'); // JOIN ordenes ON ordenes.idSolicitud = solicitudescompra.id');
         //$dolar = $this->single();
 
         $this->query('SELECT * FROM `solicitudescompra` WHERE fechaPrimerOrden LIKE "'.$anio.'%" AND (grupoAS = "Equipos de Informática" OR grupoAS = "Equipos de Comunicaciones" OR grupoAS = "Programas de Computación")'); // JOIN ordenes ON ordenes.idSolicitud = solicitudescompra.id');
         $row = $this->resultSet();
+        
 
         $this->query('SELECT * FROM cotizaciones WHERE anio = "'.$anio.'" ORDER BY id');
         $_SESSION['cotis'] = $this->resultSet();
         //echo $anio;
 
-
-      
-
+      if($_SESSION['cotis'] != null){
+        
+        
 
     foreach ($row as $item) {
-
         $this->query('SELECT * FROM `item` WHERE idSolicitud = "'.$item['id'].'"'); // JOIN ordenes ON ordenes.idSolicitud = solicitudescompra.id');
         $itemsoli = $this->resultSet();
         $costoAprox = 0;
         foreach ($itemsoli as $items){
             $costoAprox = $costoAprox + $items['total'];
         }
+
         //echo $item['id'];
 
         //TODO ESTO ES PARA CARGAR EL VALOR CORRECTO EN PESOS URUGUAYOS EN LA SOLICITUD--------------------------
@@ -250,6 +249,8 @@ if (isset($_POST['submit'])) {
 
 
         foreach ($ordenes as $orden){
+            
+            //echo $_SESSION['anioInversiones'];
 
             $montoRealPesos = $this->obtenerPesosUruguayos($montoRealPesos, $orden['moneda'], $anio, $orden['montoReal']);
            
@@ -282,6 +283,9 @@ if (isset($_POST['submit'])) {
 
 
     }  
+}else{
+     Messages::setMsg('Debes agregar una instancia de cotizaciones para el año '.$anio , 'warning');
+    }
     
         return $row;
     }
