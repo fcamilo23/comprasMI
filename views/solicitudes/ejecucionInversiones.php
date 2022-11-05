@@ -193,7 +193,7 @@
                  <?php $totalestimado += $item['costoAprox']; ?>
                  <?php $totalreal += $item['montoRealOrden']; ?>
                  <?php $totalfacturado += $item['montoRealFacturado']; ?>
-
+                
                 <!-- <form id="editar" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">       
                  <td><input type="text" name="numero" style="display: none" value="<?php echo $item['id']; ?>"/>
                  <input type="submit" name="submit" value="Ampliar" style="background: #001d5a; border: none" class="btn btn-primary sombraAzul"/></td>

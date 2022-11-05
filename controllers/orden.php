@@ -63,6 +63,14 @@ class Orden extends Controller{
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->anularOrden(), true);
     }
+
+    protected function entregasPendientes(){
+        $this->sesionAbierta ();
+        $viewmodel = new OrdenModel();
+        $this->returnView($viewmodel->entregasPendientes(), true);
+    }
+
+
     protected function reporteServicios(){
         $this->sesionAbierta ();
         $viewmodel = new OrdenModel();

@@ -156,6 +156,11 @@ public function verOrden(){
     $this->bind(':idOrden',  $_SESSION['ordenActual'] );
     $facturas = $this->resultSet();
 
+    if(isset($post) && isset($post['submit'])){
+        header('Location: '.ROOT_URL.'home/cotizaciones');
+
+    }
+
     
     $viewmodel = array(
         'orden' => $orden,
@@ -186,6 +191,28 @@ public function verOrden(){
         header('Location: '.ROOT_URL.'orden/verOrden');
         return;
     }
+
+
+
+    public function entregasPendientes(){
+        
+        $this->query('SELECT * FROM ordenes WHERE entregada <> "entregada" AND estado = "activo" AND plazoEntrega < (select curdate()) AND idSolicitud IN (SELECT id FROM solicitudescompra WHERE (gastos_inversiones = "Bienes de Consumo" OR gastos_inversiones = "Bienes de Uso") AND estado = "Adjudicada")');
+        $row = $this->resultSet();
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        if(isset($post) && isset($post['submit'])){
+            echo 7623;
+            $_SESSION['idOrden'] = $post['numero'];
+            header('Location: '.ROOT_URL.'orden/verOrden');
+
+
+        }
+        
+        return $row;
+    }
+
+
+
 
     public function subirArchivos (){
 

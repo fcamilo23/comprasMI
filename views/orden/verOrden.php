@@ -55,7 +55,18 @@ function mensajes(){
 
                 <td><input type="text" name="numero" style="display: none" value="<?php echo $viewmodel['solicitud']['id']; ?>"/>
                 <input type="submit" name="submit" value="Ir a la Solicitud" style="background: #001d5a; border: none; margin-left: 30px" class="btn btn-primary sombraAzul"/></td>
-                </form>
+
+                <?php if($viewmodel['orden']['entregada']=='entregada' ){ ?> <label style="font-size: 23px; margin-left: 40px" class="verde">✔️ Entregada</label> <?php }else{
+                    ?> 
+                        <input type="submit" name="submit"  id="entregar"  value="Entregada" style="display: none; background: rgb(20, 77, 3); border: none; margin-left: 30px" class="btn btn-primary sombra"/></td>
+                        <input type="button" onclick="alertEntregar()" value="✔️ Confirmar Entrega" style="background: rgb(20, 77, 3); border: none; margin-left: 30px" class="btn btn-primary sombra"/></td>
+                
+                    <?php
+                } ?>
+</form>
+
+
+
 <?php if($_SESSION['user_data']['rol'] != 'Consultor' && $viewmodel['orden']['estado']=='activo' ){ 
     if($completo==false){   
         ?>
@@ -503,6 +514,33 @@ function readAsBase64() {
         });
     }
  
+    function alertEntregar(){
+            
+            const entregar = document.getElementById("entregar");
+            
+            Swal.fire({
+                title: 'Estás seguro?',
+                text: "Se marcará la compra como entregada total",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, confirmar!',
+                cancelButtonText: 'No, cancelar!'
+
+                }).then((result) => {
+                if (result.isConfirmed) {
+
+                    
+                    entregar.click();
+                    
+
+
+                }
+                })
+
+        }
+
     function eliminar(id){
         var input = document.getElementById(id+"pdf");
         input.parentNode.removeChild(input);
