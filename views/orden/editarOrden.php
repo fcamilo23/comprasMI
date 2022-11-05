@@ -31,7 +31,7 @@
 
                             
                             <div class="input-group mb-3">
-                                <p class="m-2">Moneda     </p>
+                                <p class="m-2">Moneda<b class="text-danger">*</b>     </p>
                                <select name="moneda"  id="moneda" class="m-2  form-control" style="max-width:300px;" >
                                         <option <?php if ($viewmodel["orden"]["moneda"]== "$ (Pesos Uruguayos)"){?> selected <?php } ?>value="$ (Pesos Uruguayos)" selected>$U (Pesos Uruguayos)</option>
                                         <option <?php if ($viewmodel["orden"]["moneda"]== 'U$S (Dolares)'){?> selected <?php } ?> value="U$S (Dolares)">US$ (Dólares)</option>
@@ -47,7 +47,7 @@
 
                             <div id="montoRealError" class="center2"style="color:red" ></div>
                             <div class="input-group mb-3">
-                            <label for="plazoEntrega" class="m-2 form-label">Fecha Entrega</label>
+                            <label for="plazoEntrega" class="m-2 form-label">Fecha Entrega<b class="text-danger">*</b></label>
                                 <input id="plazoEntrega" min='2010-01-01' max='2050-01-01' name="plazoEntrega" type="date" class="miniinput2 form-control" value="<?php  echo$viewmodel["orden"]["plazoEntrega"] ?>" required>
                             </div>
                             <div id="plazoEntregaError" style="color:red" class="center2"></div>
@@ -61,7 +61,7 @@
                             <hr><hr>
                             <br>
                             <div>
-                                <h4 id="proveedorNombre" style="display: inline-block">𝗣𝗥𝗢𝗩𝗘𝗘𝗗𝗢𝗥:      <?php echo $viewmodel["orden"]["nombreEmpresa"] ?></h4>
+                                <h4 id="proveedorNombre" style="display: inline-block">𝗣𝗥𝗢𝗩𝗘𝗘𝗗𝗢𝗥:<b class="text-danger">*</b>     <?php echo $viewmodel["orden"]["nombreEmpresa"] ?></h4>
 
                                 <input type="button" class="btn amarillo" style="float: right;" id="editor" onclick ="mostrarProveedores()" value="✏️ Cambiar Proveedor">
                             </div>
@@ -108,7 +108,7 @@
             <div class="card">
                 <div class="card-body" id="todoItems">
 
-                    <h3 style="color: #001d5a; margin-left: 25px" class="">Items</h3>
+                    <h3 style="color: #001d5a; margin-left: 25px" class="">Items<b class="text-danger">*</b></h3>
                         <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
 
                                 <table id="listaItems" style="width: 100%;">

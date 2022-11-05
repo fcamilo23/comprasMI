@@ -20,11 +20,12 @@ class Factura extends Controller{
                 $viewmodel = new FacturaModel();
                 $this->returnView($viewmodel->verFactura(), true);
         }
+        /*
         protected function eliminarFactura(){
                 $this->sesionAbierta();
                 $viewmodel = new FacturaModel();
                 $this->returnView($viewmodel->eliminarFactura(), true);
-        }
+        }*/
         protected function verArchivo(){
                 $this->sesionAbierta();
                 $viewmodel = new FacturaModel();
@@ -35,6 +36,11 @@ class Factura extends Controller{
                         header('Location: '.ROOT_URL.'users/login');
                 }
          }
+        protected function anularFactura(){
+                $this->sesionAbierta();
+                $viewmodel = new FacturaModel();
+                $this->returnView($viewmodel->anularFactura(), true);
+        }
 }
 
 ?>

@@ -4,7 +4,7 @@
             buttons: [
             {
                 extend: 'excel',
-                title: 'REPORTE DE SERVICIOS VIGENTES EN EL <?php echo $viewmodel['anio']; ?>',
+                title: 'REPORTE DE VENCIOMIENTOS VIGENTES EN EL <?php echo $viewmodel['anio']; ?>',
                 filename: '*',
                 header: true
 
@@ -25,11 +25,13 @@
 
 <button form="anioDespues" type="submit" class="btn btn-primary excel sombra" style="background: black">►</button>
 <p class="excel" style="font-size: 25px" value=><b><?php echo $viewmodel['anio'] ?></b></p>
-<button form="anioAntes" type="submit" class="btn btn-primary excel sombra" style="background: black">◄</button>
-
+<?php if($viewmodel['anio'] >2010) {?>
+    <button form="anioAntes" type="submit" class="btn btn-primary excel sombra" style="background: black">◄</button>
+<?php } ?>
 <div id="main-container" style="width: auto; overflow:auto; padding: 25px; background: #fff"> <!--  max-height: 800px -->
             <h3 class="center" style="text-align: center">Reporte de Vencimiento de Servicios en el año <?php echo $viewmodel['anio']; ?></h3>
 <br>
+<?php if(count($viewmodel['servicios'])>0) {?>
 		<table id="compras" style=" overflow-x: auto; ">
 
         <caption>Reporte de Servicios Vigentes en el año <?php echo $viewmodel['anio']. "-"."Realizado ".date('d/m/y') ?></caption>
@@ -43,7 +45,7 @@
                     <th>Orden</th>
                 <!-- <th >Monto</th> -->
                     <th >Proveedor</th>
-                    <th >Fecha Inicio</th>
+                    <th value="<?php echo $item['inicio'] ?>">Fecha Inicio</th>
                     <th >Fecha Fin</th>
                 <!--   <th >Meses</th>
                     <th >Meses Anio</th> -->
@@ -88,7 +90,12 @@
                 <td><?php echo 'OC ' . $item['numero'] .'-' .$item['anio'] ?></td>
                 <!-- <td><?php echo $item['moneda']." ".$item['monto']; ?></td> -->
                 <td> <?php echo $item['empresa'] ?></td>
-                <td><?php echo $item['inicio'] ?></td>
+                <td>
+                    <?php 
+                    $originalDate = "2017-03-08";
+                    $newDate = date("d/m/Y", strtotime($item['inicio'] ));
+                    echo $newDate;  ?>
+                </td>
                 <td><?php echo $item['fin'] ?></td>
                 <?php 
                     $fecha1 = new DateTime($item['inicio']);
@@ -147,6 +154,12 @@
        
 </table>
 </div>
+<?php }else{?>
+    <div class="alert alert-warning" role="alert" style="text-align:center;">
+        No se encontraron servicios vigentes en el año <?php echo $viewmodel['anio'] ?>
+    </div>
+
+<?php }?>
 <form id="anioDespues" action="<?php echo ROOT_URL; ?>orden/reporteServicios" method="post">
     <input  type="hidden" name="anio" value="<?php echo $viewmodel['anio']+1; ?>">
 </form>

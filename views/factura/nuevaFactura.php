@@ -71,7 +71,7 @@
                                 <div class="card" style="margin-top: 10px;">
                                     
                                     <div class="card-body">
-                                        <h4 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h4>
+                                        <h4 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos<b class="text-danger">*</b></h4>
     
                                         <div class="mb-3">
                                         <input class="form-control" id="loadFile" accept="application/pdf" type="file" onchange="readAsBase64()"  width="190px" height="50px"/>
@@ -88,7 +88,7 @@
                                 <div class="card" style="margin-top: 10px;">
                                     <div class="card-body">
                                         <div class="mb-3 row">
-                                            <label for="numeroFactura" class="col-sm-2 col-form-label"> N° Factura</label>
+                                            <label for="numeroFactura" class="col-sm-2 col-form-label"> N° Factura<b class="text-danger">*</b></label>
                                             <div class="col-sm-6">
                                                 <input id="numeroFactura" name="numeroFactura" type="text" class="form-control" required>
                                             </div>
@@ -96,7 +96,7 @@
                                         </div>
 
                                        <div class="mb-3 row">
-                                            <label for="monedaFactura" class="col-sm-2 col-form-label"> Total </label>
+                                            <label for="monedaFactura" class="col-sm-2 col-form-label"> Total<b class="text-danger">*</b></label>
                                             <div class="col-sm-4">
                                                 <select name="monedaFactura" id="monedaFactura" onchange="cambiarMoneda(this)" class="form-control">
                                                     <option value="$ (Pesos Uruguayos)" <?php if($viewmodel["orden"]["moneda"]=='$U (Pesos Uruguayos)') { echo "selected"; } ?>>$U (Pesos Uruguayos)</option>
@@ -267,7 +267,7 @@ document.getElementById("montoFactura").addEventListener("blur", errorMonto);
 function errorNumeroFactura (){
     var numeroFactura = document.getElementById("numeroFactura").value;
     if(numeroFactura ==""){
-        document.getElementById("numeroError").innerHTML = "El campo no puede estar vacio X";
+        document.getElementById("numeroError").innerHTML = "<span>  El campo no puede estar vacio <b>X</b></span>";
     }
     else{
         document.getElementById("numeroError").innerHTML = "";
@@ -276,7 +276,7 @@ function errorNumeroFactura (){
 function errorMonto(){
     var montoFactura = document.getElementById("montoFactura").value;
     if(montoFactura <= 0 || montoFactura ==""){
-        document.getElementById("montoRealError").innerHTML = "     El Monto no puede estar vacio o en 0 X";
+        document.getElementById("montoRealError").innerHTML = "<span>     El Total no puede estar vacio o en 0 <b>X</b></span>";
     }
     else{
         document.getElementById("montoRealError").innerHTML = "";

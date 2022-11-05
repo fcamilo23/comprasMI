@@ -242,7 +242,7 @@ if (isset($_POST['submit'])) {
         //echo $item['id'];
 
         //TODO ESTO ES PARA CARGAR EL VALOR CORRECTO EN PESOS URUGUAYOS EN LA SOLICITUD--------------------------
-        $this->query('SELECT * FROM ordenes WHERE idSolicitud = "'. $item['id'] .'"');
+        $this->query('SELECT * FROM ordenes WHERE idSolicitud = "'. $item['id'] .'"AND estado =! "inactivo"');
         $ordenes = $this->resultSet();
         $montoRealPesos = 0;
         $montoFacturadoPesos = 0;
@@ -254,7 +254,7 @@ if (isset($_POST['submit'])) {
 
             $montoRealPesos = $this->obtenerPesosUruguayos($montoRealPesos, $orden['moneda'], $anio, $orden['montoReal']);
            
-            $this->query('SELECT * FROM facturas WHERE idOrden = "'. $orden['id'] .'"');
+            $this->query('SELECT * FROM facturas WHERE idOrden = "'. $orden['id'] .'" AND estado !="inactivo"');
             $facturas = $this->resultSet();
 
             foreach ($facturas as $factura){

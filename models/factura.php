@@ -29,8 +29,8 @@ class FacturaModel extends Model{
 			
 			$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 			
-			$this->query('INSERT INTO facturas (idOrden, idProveedor,numeroFactura, monedaFactura, montoFactura, conceptoFactura,fechaFactura) 
-			VALUES (:idOrden, :idProveedor, :numeroFactura, :monedaFactura, :montoFactura, :conceptoFactura, :fechaFactura)');
+			$this->query('INSERT INTO facturas (idOrden, idProveedor,numeroFactura, monedaFactura, montoFactura, conceptoFactura,fechaFactura,estado) 
+			VALUES (:idOrden, :idProveedor, :numeroFactura, :monedaFactura, :montoFactura, :conceptoFactura, :fechaFactura,"activo")');
 			$this->bind(':idOrden', $post['idOrden']);
 			$this->bind(':idProveedor', $post['idProveedor']);
 			$this->bind(':numeroFactura', $post['numeroFactura']);
@@ -167,7 +167,7 @@ class FacturaModel extends Model{
 		);
 		return $viewmodel;
 	}
-
+/*
 	public function eliminarFactura(){
 		try{
 			$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -200,7 +200,7 @@ class FacturaModel extends Model{
 			return;
 		}
 	}
-	
+*/
 	public function verArchivo(){
 
 		
@@ -214,5 +214,42 @@ class FacturaModel extends Model{
 			header('Location: '.ROOT_URL);
 			return;
 		}
+	}
+
+	public function anularFactura(){
+	//	try{
+			$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+			if (isset($post['idFactura'])  && (isset($post['idOrden'])||isset($_SESSION['ordenActual'])||isset($_SESSION['idOrden']))){
+				$_SESSION ['idFactura'] = $post ['idFactura'];
+			}else{
+				header('Location: '.ROOT_URL);
+				return;
+			}
+
+
+			$this->query('UPDATE itemorden JOIN itemfactura ON itemorden.id = itemfactura.idItemOrden
+						SET itemorden.sinFacturar = itemorden.sinFacturar + itemfactura.cantidad
+						WHERE itemfactura.idFactura =:idFactura');
+			$this->bind(':idFactura', $_SESSION['idFactura']);
+			$this->execute();
+
+			$this->query('UPDATE facturas SET estado = "inactivo" WHERE id = :idFactura');
+			$this->bind(':idFactura', $_SESSION['idFactura']);
+			$this->execute();
+
+
+			$_SESSION['mensaje']['tipo'] = 'success';
+			$_SESSION['mensaje']['contenido'] = 'Factura anulada correctamente';
+			unset($_SESSION ['idFactura']);
+			header('Location: '.ROOT_URL.'orden/verOrden');
+			
+			return;
+	//	}catch(PDOException $e){
+			$_SESSION['mensaje']['tipo'] = 'error';
+			$_SESSION['mensaje']['contenido'] = 'Error al anular factura';
+			header('Location: '.ROOT_URL.'orden/verOrden');
+			return;
+	//	}
+
 	}
 }

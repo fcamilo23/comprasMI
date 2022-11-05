@@ -6,14 +6,13 @@
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-8">
                 <div class="card">
                     <br>
-                <h1 style="color: #001d5a; text-align:center; margin-bottom: 30px" class="center">VER FACTURA</h1>
-
+                    <h2 style="color: #001d5a; text-align:center; margin-bottom: 30px" class="center">FACTURA: <?php echo $viewmodel['numeroFactura']?></h2>
                 <div class="card-body " style="margin-bottom: 30px">
                     <div class="card">
                         <div class="card-body ">
 
                                 <h5><b>OC: </b> <?php echo $viewmodel['orden']['numeroOrden']?> - <?php echo $viewmodel['orden']['anioOrden'] ?> </h5> 
-                                <h3><b>Factura: </b> <?php echo $viewmodel['numeroFactura']?></h3>
+                                <h5><b>Numero: </b> <?php echo $viewmodel['numeroFactura']?></h3>
                                 <h5><b>Fecha: </b> <?php echo $viewmodel['fechaFactura']?></h5>
                                 <h5><b>Monto en <?php echo $viewmodel['monedaFactura']?>:</b>  <?php echo $viewmodel['montoFactura']?></h5>
                                 <hr>

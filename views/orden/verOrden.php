@@ -56,7 +56,7 @@ function mensajes(){
                 <td><input type="text" name="numero" style="display: none" value="<?php echo $viewmodel['solicitud']['id']; ?>"/>
                 <input type="submit" name="submit" value="Ir a la Solicitud" style="background: #001d5a; border: none; margin-left: 30px" class="btn btn-primary sombraAzul"/></td>
                 </form>
-<?php if($_SESSION['user_data']['rol'] != 'Consultor'){ 
+<?php if($_SESSION['user_data']['rol'] != 'Consultor' && $viewmodel['orden']['estado']=='activo' ){ 
     if($completo==false){   
         ?>
         <button type="submit" form="anexarFactura" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/anexarFactura.jpg" width="190px" height="50px" ></button>
@@ -65,13 +65,17 @@ function mensajes(){
     <?php } ?>
 
 
-<div class="container mt-5 mb-5">
+<div  class="container mt-5 mb-5">
     <div class="row d-flex justify-content-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8">
                     <div class="card">
                 <br>
-            <h2 style="color: #001d5a; margin-left: 25px" class="text-center">ORDEN OC: <?php echo $viewmodel['orden']['numero']; ?> - <?php echo $viewmodel['orden']['anio']; ?></h1>
-                
+            <h2 style="color: #001d5a; margin-left: 25px" class="text-center">ORDEN OC: <?php echo $viewmodel['orden']['numero']; ?> - <?php echo $viewmodel['orden']['anio']; ?></h2>
+            <?php if($viewmodel['orden']['estado']=='inactivo' ){ ?>   
+                    <div class="alert alert-warning" role="alert" style="text-align:center;">
+                        <h6><b>Esta Orden esta anulada</b></h6>Para volver a activarla debe ir a la Solicitu y en la sección de Ordenes de Compra, activarla.
+                    </div>
+            <?php } ?>
                         <div class="card-body">
                         <hr>
                             <h4 style="color: #001d5a;" class="m-2"><b>Solicitud SR: </b><?php echo $viewmodel['solicitud']['SR']; ?></h4>
@@ -138,7 +142,7 @@ function mensajes(){
 
                         </div>
                     </div>
-                    <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+                    <?php if($_SESSION['user_data']['rol'] != 'Consultor'&& $viewmodel['orden']['estado']=='activo' ){ ?>
 
                     <div class="card" style="margin-top: 10px;">
                         <div class="card-body" >
@@ -146,11 +150,11 @@ function mensajes(){
                             
                             <?php 
                             $read="";
-                            if(count($viewmodel['facturas'])>0){ 
+                            if(count($viewmodel['facturas'])>0 ){ 
                                 $read="readonly";
-                                ?>
-                               <p class=".text-muted">*Una vez creada una Factura no se puede editar la Orden de Compra</p>
-                            <?php
+                            ?>
+                                    <p class=".text-muted">*Una vez creada una Factura no se puede editar la Orden de Compra</p>
+                             <?php
                             }else{
                             ?>
                                 <a href="<?php echo ROOT_URL; ?>orden/editarOrden" class="float-right btn amarillo"<?php echo $read ?> >✏️ Editar Orden</a>
@@ -167,7 +171,7 @@ function mensajes(){
     </div>
 </div>
 <!-- tabla de Items -->
-                        <h3 style="color: #001d5a; margin-left: 25px" class="">Items</h3>
+                        <h1 style="color: #001d5a; margin-left: 40px" class="">Item</h1>
                         <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
 
                                 <table id="listaItems" style="width: 100%;">
@@ -238,7 +242,7 @@ function mensajes(){
                                 <hr>
 
 
-                            <?php if($_SESSION['user_data']['rol'] != 'Consultor' && $completo==false){ ?>
+                            <?php if($_SESSION['user_data']['rol'] != 'Consultor' && $completo==false && $viewmodel['orden']['estado']=='activo' ){ ?>
                                 <button type="submit" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/anexarFactura.jpg" width="190px" height="50px" ></button>
                             <?php } ?>
 
@@ -292,10 +296,16 @@ function mensajes(){
                                         <td> <?php echo $moneda; ?> <?php echo $factura['montoFactura']; ?> </td>
                                         <td><?php echo $factura['fechaFactura'] ?></td>
                                         <td>
-                                        <form id="eliminarFactura<?php echo $factura['id'] ?>" action="<?php echo ROOT_PATH; ?>factura/eliminarFactura" method="post">
-                                            <input type="hidden" name="idFactura" value="<?php echo $factura['id'] ?>">
-                                            <input type="button" name="" onclick="cartelEliminarFactura(<?php echo $factura['id'] ?>)" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
-                                        </form>
+                                        <?php if($_SESSION['user_data']['rol'] == 'Administrador' && $viewmodel['orden']['estado']=="activo" && $factura['estado']=="activo" ){ ?>
+                                            <form id="eliminarFactura<?php echo $factura['id'] ?>" action="<?php echo ROOT_PATH; ?>factura/anularFactura" method="post">
+                                                <input type="hidden" name="idFactura" value="<?php echo $factura['id'] ?>">
+                                                <input type="button" name="anular" onclick="cartelEliminarFactura(<?php echo $factura['id'] ?>)" value="Anular" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
+                                            </form>  
+                                        <?php } ?>
+                                        <?php if($factura['estado']!="activo" ){ ?>
+                                            <span un-clickable style="float:right; margin-right: 4%; border: none;" class="btn text-danger">Anulado</span>
+                                        <?php } ?>                                 
+
 
                                             <form action="<?php echo ROOT_URL; ?>factura/seleccionFactura" method="post">
                                                 <input type="hidden" name="idFactura" value="<?php echo $factura['id'] ?>">
@@ -315,7 +325,7 @@ function mensajes(){
                             </div>
                             <!-------------->
                             <hr>
-                            <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+                            <?php if($_SESSION['user_data']['rol'] != 'Consultor' && $viewmodel['orden']['estado']=='activo'){ ?>
                                 <button type="button" id="btnmodal" class="excel sombraAzul1" onclick="abrirModal()"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button>
                             <?php } ?>
 
@@ -341,7 +351,7 @@ function mensajes(){
                                             <form id="eliminarArchivo<?php echo $item['id'] ?>" action="<?php echo ROOT_PATH; ?>orden/eliminarArchivo" method="post">
                                                 <input type="hidden" name="idArchivo" value="<?php echo $item['id'] ?>">
                                             </form> 
-                                            <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+                                            <?php if($_SESSION['user_data']['rol'] != 'Consultor' && $viewmodel['orden']['estado']=='activo'){ ?>
                                                 <input type="button" name="" onclick="cartelEliminarArchivo(<?php echo $item['id'] ?>)" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
                                             <?php } ?>
 
@@ -364,7 +374,6 @@ function mensajes(){
 
                         <a href="<?php echo ROOT_URL; ?>solicitudes/verSolicitud"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
                         <hr>
-
 
 
 </body>
@@ -422,12 +431,12 @@ function readAsBase64() {
         })
 
         swalWithBootstrapButtons.fire({
-        title: 'Borrar factura?',
-        text: "Seguro que quieres borrar esta factura!",
+        title: 'Anular factura?',
+        text: "Seguro que quieres anular esta factura!. No podras revertir esta accion!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Si, borrar!',
-        cancelButtonText: 'No, borrar!',
+        confirmButtonText: 'Si, anular!',
+        cancelButtonText: 'No anular! ',
         reverseButtons: true
         }).then((result) => {
         if (result.isConfirmed) {
@@ -441,7 +450,7 @@ function readAsBase64() {
         ) {
             swalWithBootstrapButtons.fire(
             'Cancelado',
-            'No se elimino la factura ',
+            'No se anulo la factura ',
             'error'
             )
         }
