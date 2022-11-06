@@ -51,20 +51,24 @@ function mensajes(){
 
 <!---MODAL FIN---->
 <form id="editar" method="post" action="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes">       
-                <a href="<?php echo ROOT_URL; ?>orden/comprasRealizadas"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
+                <a href="<?php echo ROOT_URL; ?>orden/comprasRealizadas"><input type="button" style="width: 180px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="Compras Realizadas"/></a>
 
                 <td><input type="text" name="numero" style="display: none" value="<?php echo $viewmodel['solicitud']['id']; ?>"/>
                 <input type="submit" name="submit" value="Ir a la Solicitud" style="background: #001d5a; border: none; margin-left: 30px" class="btn btn-primary sombraAzul"/></td>
 
-                <?php if($viewmodel['orden']['entregada']=='entregada' ){ ?> <label style="font-size: 23px; margin-left: 40px" class="verde">✔️ Entregada</label> <?php }else{
+                <?php if($viewmodel['orden']['entregada']=='entregada' ){ ?> <label style="font-size: 23px; margin-left: 40px" class="verde">✔️ Entregada</label> 
+                <?php }else{ if($_SESSION['user_data']['rol'] != 'Consultor' && $viewmodel['orden']['estado']=='activo' ){
                     ?> 
-                        <input type="submit" name="submit"  id="entregar"  value="Entregada" style="display: none; background: rgb(20, 77, 3); border: none; margin-left: 30px" class="btn btn-primary sombra"/></td>
+                        
                         <input type="button" onclick="alertEntregar()" value="✔️ Confirmar Entrega" style="background: rgb(20, 77, 3); border: none; margin-left: 30px" class="btn btn-primary sombra"/></td>
                 
-                    <?php
+                    <?php }
                 } ?>
 </form>
-
+<form action="<?php echo ROOT_URL; ?>orden/entregado" method="post">
+    <input type="text" name="idOrden" style="display: none" value="<?php echo $viewmodel['orden']['id'];?>" />
+    <input type="submit" name="submit"  id="entregar"  value="Entregada" style="display: none; background: rgb(20, 77, 3); border: none; margin-left: 30px" class="btn btn-primary sombra"/></td>
+</form>
 
 
 <?php if($_SESSION['user_data']['rol'] != 'Consultor' && $viewmodel['orden']['estado']=='activo' ){ 
@@ -84,7 +88,7 @@ function mensajes(){
             <h2 style="color: #001d5a; margin-left: 25px" class="text-center">ORDEN OC: <?php echo $viewmodel['orden']['numero']; ?> - <?php echo $viewmodel['orden']['anio']; ?></h2>
             <?php if($viewmodel['orden']['estado']=='inactivo' ){ ?>   
                     <div class="alert alert-warning" role="alert" style="text-align:center;">
-                        <h6><b>Esta Orden esta anulada</b></h6>Para volver a activarla debe ir a la Solicitu y en la sección de Ordenes de Compra, activarla.
+                        <h6><b>Esta Orden esta anulada</b></h6>Para volver a activarla debe ir a la Solicitud y en la sección de Ordenes de Compra, activarla.
                     </div>
             <?php } ?>
                         <div class="card-body">
@@ -383,7 +387,6 @@ function mensajes(){
                             <br>
                             <hr>
 
-                        <a href="<?php echo ROOT_URL; ?>solicitudes/verSolicitud"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
                         <hr>
 
 

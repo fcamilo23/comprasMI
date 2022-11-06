@@ -20,12 +20,16 @@ class OrdenModel extends Model{
         $error="";
         try{
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            if(!isset($post)){
+                header('Location: '.ROOT_URL);
+                return;
+            }
 
             $procedimiento= $_SESSION['solicitudActual']['procedimiento']." ".$_SESSION['solicitudActual']['numProcedimiento']." - ".$_SESSION['solicitudActual']['anioProcedimiento'];
 
                 $error="Error al agregar la orden, no se cargaron ni servicios ni archivos";
-                $this->query('INSERT INTO   ordenes (numero, anio, moneda, montoReal, plazoEntrega, formaPago,numeroAmpliacion, idProveedor,idSolicitud,estado, procedimiento) 
-                VALUES (:numero, :anio, :moneda, :montoReal, :plazoEntrega, :formaPago,:numeroAmpliacion, :idProveedor, :idSolicitud, "activo", :procedimiento)');
+                $this->query('INSERT INTO   ordenes (numero, anio, moneda, montoReal, plazoEntrega, formaPago,numeroAmpliacion, idProveedor,idSolicitud,estado, procedimiento, entregada) 
+                VALUES (:numero, :anio, :moneda, :montoReal, :plazoEntrega, :formaPago,:numeroAmpliacion, :idProveedor, :idSolicitud, "activo", :procedimiento, "no")');
                 $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
                 $this->bind(':numero', $post['numero']);
                 $this->bind(':anio', $post['anio']);
@@ -112,13 +116,20 @@ class OrdenModel extends Model{
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if(isset($post['idOrden'])){
             $_SESSION['ordenActual'] = $post['idOrden'];
+        }else{
+            header('Location: '.ROOT_URL);
+            return;
         }
         header('Location: '.ROOT_URL.'orden/verOrden');
         return;
     }
 ///ver orden
 public function verOrden(){
+
     //este if es para detectar si abro una orden desde la vista de "compras realizadas", no deberia afectar el resto
+    if(!isset($_SESSION['ordenActual']) && !isset($_SESSION['idOrden'])){
+        header('Location: '.ROOT_URL);
+    }
         if(isset($_SESSION['idOrden'])){
             $_SESSION['ordenActual'] = $_SESSION['idOrden'];
             unset($_SESSION['idOrden']);
@@ -174,9 +185,14 @@ public function verOrden(){
     return $viewmodel;
 
 }
+///ver forma que no aparezca reenviar formulario\
 
     public function verArchivo(){
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(!isset($post)){
+            header('Location: '.ROOT_URL);
+            return;
+        }
         $this->query('SELECT * FROM archivosordenes WHERE id = :id');
         $this->bind(':id', $post['idArchivo']);
         $viewmodel=$this->single();
@@ -185,6 +201,10 @@ public function verOrden(){
 
     public function eliminarArchivo(){
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(!isset($post)){
+            header('Location: '.ROOT_URL);
+            return;
+        }
         $this->query('DELETE FROM archivosordenes WHERE id = :id');
         $this->bind(':id', $post['idArchivo']);
         $this->execute();
@@ -217,6 +237,10 @@ public function verOrden(){
     public function subirArchivos (){
 
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(!isset($post)){
+            header('Location: '.ROOT_URL);
+            return;
+        }
         if(isset($post['pdf'])){
             $mensajeError="";
             for($i=0; $i<sizeof($post['pdf']); $i++){
@@ -324,6 +348,10 @@ public function verOrden(){
 
     public function anularOrden(){
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(!isset($post['submit'])){
+            header('Location: '.ROOT_URL);
+            return;
+        }
         if(isset($post['idOrden'])&&isset($post['cambiar'])){
             if($post['cambiar'] == 'inactivo' || $post['cambiar'] == 'activo'){
                 $this->query('UPDATE ordenes SET estado = :estado WHERE id = :id');
@@ -339,6 +367,9 @@ public function verOrden(){
     }
       
     public function editarOrden(){
+        if(!isset($_SESSION['ordenActual'])){
+            header('Location: '.ROOT_URL);
+        }
 
         $this->query('SELECT * FROM proveedores');
         $proveedores = $this->resultSet();
@@ -365,10 +396,11 @@ public function verOrden(){
     }
     
     public function modificarOrden(){
-
         try{
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
+            if(!isset($post)){
+                header('Location: '.ROOT_URL);
+            }
             $proveedor = $post['idProveedor'];
 
             if(isset($post['editadoIdProveedor'])){
@@ -524,7 +556,28 @@ public function verOrden(){
         return $data;
     }
 
+    public function entregado(){
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(isset($post) && isset($post['submit'])){
+            if(isset($post['idOrden'])){
+                $_SESSION['ordenActual'] = $post['idOrden'];
+                unset($_SESSION['idOrden']);
+            }
+            if($post['submit'] == 'Entregada'){
+                $this->query('UPDATE ordenes SET entregada = "entregada" WHERE id = :id');
+                $this->bind(':id', $_SESSION['ordenActual']);
+                $this->execute();
+                $_SESSION['mensaje']['tipo'] = 'success';
+                $_SESSION['mensaje']['contenido'] = 'Servicio entregado correctamente';
+                header('Location: '.ROOT_URL.'orden/verOrden');
+            }
+        }else{
+            header('Location: '.ROOT_URL);
+        }
+    }
+
 }
+
 
 
 

@@ -118,5 +118,12 @@ class Orden extends Controller{
          }
     }
 
+    protected function entregado(){
+        $this->sesionAbierta ();
+        $viewmodel = new OrdenModel();
+        $this->returnView($viewmodel->entregado(), true);
+    }
+
+
 }
 ?>

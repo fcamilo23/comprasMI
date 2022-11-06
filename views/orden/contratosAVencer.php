@@ -68,8 +68,13 @@
 
 <!--<button type="button" tabindex="0" aria-controls="solis" class="excel sombraVerde"> <img src="<?php echo ROOT_PATH; ?>imagenes/Excel1.jpg" width="150px" height="50px" ></button>-->
 
-
-
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 style="color: #001d5a;" class="text-center">Reporte de Vencimientos de Servicios</h1>
+        </div>
+    </div>
+</div>
 
 <div id="main-container" style="width: 100%; overflow: auto; padding: 25px; background: #fff"> <!--  max-height: 800px -->
             <h3 class="center" style="text-align: center">Contratos Próximos a Vencer</h3>
@@ -207,7 +212,7 @@
 
     
 
-<div id="main-container" style="width: 100%; overflow: auto; padding: 25px; margin-top:200px; background: #fff"> <!--  max-height: 800px -->
+<div id="main-container" style="width: 100%; overflow: auto; padding: 25px; margin-top:100px; background: #fff"> <!--  max-height: 800px -->
             <h3 class="center" style="text-align: center">Contratos Vencidos</h3>
 
 		<table id="vencidos" style="width: 100%;">
