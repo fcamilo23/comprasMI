@@ -215,13 +215,16 @@ public function verOrden(){
 
 
     public function entregasPendientes(){
+
+        $this->query('SELECT * FROM proveedores');
+        $_SESSION['proveedores'] = $this->resultSet();
         
         $this->query('SELECT * FROM ordenes WHERE entregada <> "entregada" AND estado = "activo" AND plazoEntrega < (select curdate()) AND idSolicitud IN (SELECT id FROM solicitudescompra WHERE (gastos_inversiones = "Bienes de Consumo" OR gastos_inversiones = "Bienes de Uso") AND estado = "Adjudicada")');
         $row = $this->resultSet();
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
         if(isset($post) && isset($post['submit'])){
-            echo 7623;
+            //echo 7623;
             $_SESSION['idOrden'] = $post['numero'];
             header('Location: '.ROOT_URL.'orden/verOrden');
 

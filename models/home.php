@@ -5,10 +5,16 @@
 class HomeModel extends Model{
 	public function index(){
 
+        $this->query('SELECT * FROM proveedores');
+        $_SESSION['proveedores'] = $this->resultSet();
+
 	
+        $this->query('SELECT * FROM ordenes WHERE entregada <> "entregada" AND estado = "activo" AND plazoEntrega < (select curdate()) AND idSolicitud IN (SELECT id FROM solicitudescompra WHERE (gastos_inversiones = "Bienes de Consumo" OR gastos_inversiones = "Bienes de Uso") AND estado = "Adjudicada")');
+        $_SESSION['ordindex'] = $this->resultSet();
+
         $this->query('SELECT * FROM `itemOrden` 
                     JOIN ordenes ON itemOrden.idOrden = ordenes.id
-                    WHERE ordenes.estado="activo" AND (esservicio = "General" OR esservicio="Licencia") and itemOrden.fin >= (select curdate()) ORDER BY itemOrden.fin ASC limit 10');
+                    WHERE ordenes.estado="activo" AND (esservicio = "General" OR esservicio="Licencia") and itemOrden.fin >= (select curdate()) ORDER BY itemOrden.fin ASC limit 5');
         $row = $this->resultSet();
 
         return $row;

@@ -183,6 +183,14 @@
 }
 
 
+.ocultarmostrar{
+    background: rgb(217, 229, 238);
+}
+.ocultarmostrar:hover{
+    background: rgb(156, 198, 228);
+    box-shadow: 0px 2px 5px 5px #666666;
+
+}
 
 .icons:hover{
     border-radius:49%;

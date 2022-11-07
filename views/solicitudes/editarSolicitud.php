@@ -60,7 +60,7 @@
     <div style="padding: 20 40; background: rgb(239,239,239); border-radius: 5px; margin-top: 30px">
 
 
-        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Oficina Solicitante</label>
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Unidad Ejecutora</label>
         <select name="oficinaSolicitante" style="" class="form-control">
             
             <?php foreach($viewmodel as $item) : ?>
@@ -68,15 +68,15 @@
             <?php endforeach; ?>
         </select> 
 
-        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">UO</label>
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Unidad Organizativa</label>
         <input type="text" name="UO" id="UO" value="<?php echo $_SESSION['solicitudActual']['uo'] ?>" class="form-control" style="margin-top: 0px;"   >
 
 
 
-        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Referente de Compra *</label>
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Referente de Compra</label>
         <input type="text" name="referente" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['referente'] ?>"  >
         
-        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Contacto Referente *</label>
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Contacto Referente</label>
         <input type="text" name="contactoReferente" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['contactoReferente'] ?>"  >
 
 
@@ -168,7 +168,7 @@
         <div style="padding: 15 40; background: rgb(239,239,239); border-radius: 5px; margin-top: 30px">
 
             <label  style="margin-top: 0px; color: rgb(130, 130, 130)">Estado</label>
-            <select name="estado" class="form-control" style="" >
+            <select name="estado" id="estado" class="form-control" style="" >
                 <option <?php if ($_SESSION['solicitudActual']['estado'] == "Pendiente"){?> selected <?php } ?> value="Pendiente" >Pendiente</option>
                 <option <?php if ($_SESSION['solicitudActual']['estado'] == "Solicitada"){?> selected <?php } ?> value="Solicitada" >Solicitada</option>
                 <option <?php if ($_SESSION['solicitudActual']['estado'] == "Publicada"){?> selected <?php } ?> value="Publicada" >Publicada</option>
@@ -488,6 +488,16 @@ function alertDeleteItem(id){
 
 
 function alertAddCambios(){
+    const sr = document.getElementById('sr').value;
+    const p = document.getElementById('procedimiento').value;
+    const np = document.getElementById('numProcedimiento').value;
+    const ap = document.getElementById('anioProcedimiento').value;
+    const estado = document.getElementById('estado').value;
+    
+
+
+if(sr != "" && p != "---" && np != "" && np != "0" && ap != "" && ap != "0"){
+    
     Swal.fire({
             title: 'Seguro que desea guardar la edición?',
             text: "Se efectuarán los cambios una vez confirme",
@@ -508,6 +518,37 @@ function alertAddCambios(){
           
         }
 })
+}else{
+    if(estado != "Pendiente"){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Si la solicitud no tiene SR o un procedimiento definido, el estado no puede ser distinto de "Pendiente" '
+        })
+    }else{
+        Swal.fire({
+            title: 'Seguro que desea guardar la edición?',
+            text: "Se efectuarán los cambios una vez confirme",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'No, cancelar!',
+            confirmButtonText: 'Si, confirmar!'
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            document.getElementById("guardar").click();
+
+
+            
+
+          
+        }
+})
+    }
+}
+
 }
 
 

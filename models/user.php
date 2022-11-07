@@ -115,6 +115,19 @@ class UserModel extends Model{
 			$_SESSION['codigo'] = strval(rand(1111, 1000000));
 			//echo $_SESSION['codigo'];
 			sendEmailPass($_SESSION['user_data']['email'], $_SESSION['codigo']);
+			$_SESSION['enviarCorreoCC'] = '0';
+		}else{
+			if(isset($_SESSION['reenviar'])){
+				$_SESSION['codigo'] = strval(rand(1111, 1000000));
+				//echo $_SESSION['codigo'];
+				sendEmailPass($_SESSION['user_data']['email'], $_SESSION['codigo']);
+				$_SESSION['enviarCorreoCC'] = '0';
+
+				unset($_SESSION['reenviar']);
+			}else{
+				$_SESSION['noEnviarCorreo'] = '0';
+			}
+
 		}
 
 		

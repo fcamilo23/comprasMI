@@ -1,3 +1,61 @@
+<input type="text" hidden id="corr" value="<?php echo substr($_SESSION['user_data']['email'], 0, 4) . '*****' . substr($_SESSION['user_data']['email'], -4);  ?>" >
+
+<?php if(isset($_SESSION['enviarCorreoCC'])){ ?>
+
+
+
+<script>
+    
+    Swal.fire(
+    'Correo enviado!',
+    'Se le envió un código a su dirección de correo electrónico ' + document.getElementById('corr').value,
+    'success'
+    )
+</script>
+
+
+
+<?php 
+unset($_SESSION['enviarCorreoCC']);
+
+} ?>
+
+
+
+<?php if(isset($_SESSION['noEnviarCorreo'])){ ?>
+
+
+
+<script>
+
+
+        Swal.fire({
+        title: 'Ya solicitó el cambio de contraseña!',
+        text: "Por favor revise su correo, ya le hemos enviado un código de restablecimiento anteriormente a la dirección " + document.getElementById('corr').value,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: 'btn btn-success',
+        confirmButtonText: 'Reenviar código',
+        cancelButtonText: 'Ok! Tengo el código'
+        }).then((result) => {
+        if (result.isConfirmed) {
+
+            <?php $_SESSION['reenviar'] = '1'; ?>
+
+            window.location.href = 'resetPassword';
+        }
+        })
+    
+    
+</script>
+
+
+
+<?php 
+unset($_SESSION['noEnviarCorreo']); //
+
+} ?>
 <div>
 
     <form  method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
@@ -42,6 +100,11 @@
     });
 
 
+
+   
+
+
+
     function alertPass(){
         password1 = document.getElementById('password1');
         password2 = document.getElementById('password2');
@@ -65,7 +128,13 @@
                 );
             }else{
                 
-
+                if(!charIsLetter(password1.value) || !charIsNumber(password1.value)){
+                    Swal.fire(
+                    'La contraseña no cumple con los requisitos',
+                    '',
+                    'error'
+                    )
+                }else{
         Swal.fire({
             title: 'Desea confirmar contraseña?',
             text: "",
@@ -76,17 +145,33 @@
             cancelButtonText: 'No, cancelar!',
             confirmButtonText: 'Si, confirmar!'
             }).then((result) => {
-        if (result.isConfirmed) {
+                    if (result.isConfirmed) {
 
-            
+                        
 
-            document.getElementById('submit').click();
-            
+                        document.getElementById('submit').click();
+                        
 
-        }
-})
+                    }
+            })
+                            }
             }
         }
 
+    }
+
+
+     function charIsLetter(char) {
+    if (typeof char !== 'string') {
+        return false;
+    }
+    return /[a-zA-z]/.test(char);
+    }
+
+    function charIsNumber(char) {
+    if (typeof char !== 'string') {
+        return false;
+    }
+    return /[0-9]/.test(char);
     }
 </script>

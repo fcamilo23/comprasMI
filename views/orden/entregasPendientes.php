@@ -41,15 +41,16 @@
 
 		<table id="compras" style="width: 100%;">
 
-			<thead>
+			<thead style="background: rgb(40,40,40)">
                 
 				<tr>
                     <th>Id</th>
                     <th>Procedimiento</th>
                     <th>Orden</th>
                     <th>Monto</th>
-                    <th>Plazo Entrega</th>
                     <th>Proveedor</th>
+                    <th>Fecha de Entrega</th>
+                    <th>Atraso</th>
                     <th></th>
 
 
@@ -85,13 +86,35 @@
                     }
                 } ?>
                 <td><?php echo $moneda." ".$item['montoReal']; ?></td>
-                <td><?php echo $item['plazoEntrega'] ?></td>
                 <td><?php foreach($_SESSION['proveedores'] as $p) : 
                 if($p['id'] == $item['idProveedor']){ 
                     echo $p['empresa'];
                 } endforeach;?></td>
 
+                <td><?php echo $item['plazoEntrega'] ?></td>
 
+                <td style="color: rgb(180,0,0)"><strong>
+                <?php
+                                    $now = time(); // or your date as well
+                                    $your_date = strtotime($item['plazoEntrega']);
+                                    $datediff = $your_date - $now;
+                            
+                                    $res = round($datediff / (60 * 60 * 24));
+                                    if($res >= 364){
+                                        $res = $res / 365;
+                                        $año = intval($res);
+                                        if($año == 0){$año = 1;}
+                                        echo '';
+                                        echo $año;
+                                        echo ' años de atraso';
+                                    }else{
+                                        echo '';
+                                        echo $res + 1 ;
+                                        echo ' días de atraso';
+                                    }
+                                ?>
+
+                </td></strong>
 
                 
                 
@@ -99,7 +122,7 @@
                 <form id="editar" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">       
 
                     <td><input type="text" name="numero" style="display:none" value="<?php echo $item['id']; ?>"/>
-                    <input type="submit" name="submit" id="ver" value="Ampliar" style="background: #001d5a; border: none"  class="btn btn-primary sombraAzul"/></td>
+                    <input type="submit" name="submit" id="ver" value="Ampliar" style="background: rgb(40,40,40); border: none"  class="btn btn-primary sombraAzul"/></td>
                 </form>
 
 
