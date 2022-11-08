@@ -93,7 +93,7 @@ class SolicitudesModel extends Model{
                 $consulta = $consulta . "gastos_inversiones = '" . $post['gastos_inversiones'] . "'";
 
             }
-            //echo $consulta;
+            echo $consulta;
 
             if($consulta == "SELECT * FROM solicitudescompra WHERE "){$consulta = "SELECT * FROM solicitudescompra";}
             $this->query($consulta);
@@ -354,10 +354,10 @@ if (isset($_POST['submit'])) {
 
             if($post['submit'] == "Guardar Cambios"){
 
-                $this->query('SELECT * FROM solicitudescompra WHERE sr = "'. $post['sr'] .'" AND sr <> "'.$post['srActual'].'"');
-                $sr = $this->single();
+                //$this->query('SELECT * FROM solicitudescompra WHERE sr = "'. $post['sr'] .'" AND sr <> "'.$post['srActual'].'"');
+                //$sr = $this->single();
 
-                if($sr == null){
+                //if($sr == null){
                 $this->query('UPDATE solicitudescompra SET SR = :sr, planificado = :planificado, gastos_inversiones = :gastos_inversiones, grupoAS=:grupoAS, artServ=:artServ, detalle=:detalle, estado=:estado, oficinaSolicitante=:oficinaSolicitante, UO=:uo, costoAprox=:costoAprox, referente=:referente, contactoReferente=:contactoReferente, observaciones=:observaciones, procedimiento=:procedimiento, numProc=:numProcedimiento, anioProc=:anioProcedimiento WHERE id=:id'); 
                 $this->bind(':sr', $post['sr']);
 				$this->bind(':planificado', $post['planificado']);
@@ -411,9 +411,9 @@ if (isset($_POST['submit'])) {
                 $_SESSION['items'] = $this->resultSet();
 
                 header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
-            }else{
-                Messages::setMsg('Ya existe una solicitud con el SR ingresado', 'error');
-            }
+            //}else{
+             //   Messages::setMsg('Ya existe una solicitud con el SR ingresado', 'error');
+            //}
 
             }
 
@@ -543,7 +543,7 @@ if (isset($_POST['submit'])) {
 
                 
 
-                if($row == null || $post['sr'] == ""){
+                //if($row == null || $post['sr'] == ""){
 
                     $date = new DateTime("now", new DateTimeZone('America/Montevideo') );
                     $fecha = $date->format('Y-m-d H:i:s');
@@ -605,10 +605,10 @@ if (isset($_POST['submit'])) {
 
 
 
-                }else{
-                    Messages::setMsg('Ya existe una solicitud con el SR ingresado', 'error');
+                //}else{
+                //    Messages::setMsg('Ya existe una solicitud con el SR ingresado', 'error');
 
-                }
+                //}
             }else{
                 Messages::setMsg('Hay campos sin completar', 'error');
             }

@@ -84,7 +84,7 @@
 
        
     <div style="padding: 40px; margin-top: 30px; padding-top: 40px; background: rgb(239,239,239); border-radius: 5px">
-        <label  style=" color: rgb(130, 130, 130)">Oficina Solicitante</label>
+        <label  style=" color: rgb(130, 130, 130)">Unidad Ejecutora</label>
         <label  style=" color: red">*</label>
 
             <select name="oficinaSolicitante" id="oficinaSolicitante" style="" class="form-control">

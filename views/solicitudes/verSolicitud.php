@@ -187,7 +187,7 @@
 
         <div style="padding: 20 40; background: rgb(239,239,239); border-radius: 5px; margin-top: 30px">
 
-        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Oficina Solicitante</label>
+        <label  style="margin-top: 20px; color: rgb(130, 130, 130)">Unidad Ejecutora</label>
         <input type="text" name="oficinaSolicitante" class="form-control" style="margin-top: 0px;" value="<?php echo $_SESSION['solicitudActual']['oficinaSolicitante'] ?>" disabled>
 
         <label  style="margin-top: 25px; color: rgb(130, 130, 130)">UO</label>

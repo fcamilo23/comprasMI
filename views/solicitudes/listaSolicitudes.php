@@ -174,7 +174,7 @@
                     <th>Costo Estimado</th>
                     <th>Planificado</th>
                     <th>Estado</th>
-                    <th>Oficina Solicitante</th>
+                    <th>Unidad Ejecutora</th>
                     <th>Referente</th>
                     <th>Contacto</th>
                     <th style="width:90px">Fecha</th>
@@ -190,7 +190,7 @@
 			<tr ><?php foreach($viewmodel as $item) : ?>
                 <td><?php echo $item['id'] ?></td>
                 <td><?php echo $item['SR'] ?></td>
-                <td><?php if($item['numProc'] != "0" && $item['anioProc'] != "0"){echo $item['procedimiento'] . " ". $item['numProc'] . "/" . $item['anioProc'];}else{ echo "---";} ?></td>
+                <td><?php if($item['numProc'] != "0" && $item['anioProc'] != "0"){echo $item['procedimiento'] . " ". $item['numProc'] . "/" . $item['anioProc'];}else{ echo $item['procedimiento'];} ?></td>
                 <td><?php echo $item['artServ'] ?></td>
                 <td><?php echo $item['grupoAS']; ?></td>
                 <td><?php echo $item['gastos_inversiones'] ?></td>

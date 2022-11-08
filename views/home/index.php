@@ -281,7 +281,6 @@
 		document.getElementById('tag1').style= "pointer-events: none; cursor: default;";
         document.getElementById('titulo1').style.visibility = "hidden";
 
-        alert();
 
 		
   

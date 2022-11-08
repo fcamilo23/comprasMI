@@ -9,7 +9,7 @@ class HomeModel extends Model{
         $_SESSION['proveedores'] = $this->resultSet();
 
 	
-        $this->query('SELECT * FROM ordenes WHERE entregada <> "entregada" AND estado = "activo" AND plazoEntrega < (select curdate()) AND idSolicitud IN (SELECT id FROM solicitudescompra WHERE (gastos_inversiones = "Bienes de Consumo" OR gastos_inversiones = "Bienes de Uso") AND estado = "Adjudicada")');
+        $this->query('SELECT * FROM ordenes WHERE entregada <> "entregada" AND estado = "activo" AND plazoEntrega < (select curdate()) AND idSolicitud IN (SELECT id FROM solicitudescompra WHERE (gastos_inversiones = "Bienes de Consumo" OR gastos_inversiones = "Bienes de Uso") AND estado = "Adjudicada") LIMIT 5');
         $_SESSION['ordindex'] = $this->resultSet();
 
         $this->query('SELECT * FROM `itemOrden` 

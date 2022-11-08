@@ -54,7 +54,7 @@
                 <td>
                     <form action="<?php echo ROOT_PATH; ?>proveedor/seleccionarProveedor" method="POST">
                         <input type="hidden" name="id" id="id" value="<?php echo $item['id']?>">
-                        <input type="submit" name="submit" class = "btn btn-success" value="Ampliar">
+                        <input type="submit" name="submit" class = "btn azul" style="color:white" value="Ampliar">
                     </form>
                 </td>
 
