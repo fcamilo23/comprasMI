@@ -14,6 +14,9 @@
     } );
 } );
 </script>
+<nav class="navbar navbar-light bg-light" style="width: 100%;" style="z-index:1">
+        <h2 style="color: #001d5a; text-align: center;"class="center">Lista Usuarios</h2>
+</nav>  
 
 <div id="main-container" style="width: 100%; overflow: auto; padding: 55px; background: #fff">
 
