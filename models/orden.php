@@ -1,6 +1,9 @@
 <?php
 class OrdenModel extends Model{
     public function nuevaOrden(){
+        if(!isset($_SESSION['solicitudActual'])){
+            header('Location: '.ROOT_URL);
+        }
         //obtener los proovedores
         $this->query('SELECT id, empresa, razon_social, rut FROM proveedores');
         $lstProveedores = $this->resultSet();
@@ -136,8 +139,6 @@ public function verOrden(){
         }
     //----------------------------------
     
-
-
     $this->query('SELECT * FROM ordenes WHERE id = :id');
     $this->bind(':id',  $_SESSION['ordenActual'] );
     $orden = $this->single();

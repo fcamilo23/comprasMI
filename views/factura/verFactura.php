@@ -1,12 +1,15 @@
 <body>
-<a href="<?php echo ROOT_URL; ?>orden/verOrden"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
 
-    <div class="container" style="margin-bottom: 40px" >
+<a href="<?php echo ROOT_URL; ?>orden/verOrden"><input type="button" style="width: 100px; margin-left: 30px; margin-bottom: 20px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
+
+<nav class="navbar sticky-top navbar-light bg-light"">
+        <h2 style="color: #001d5a; text-align: center;"class="center">FACTURA: <?php echo $viewmodel['numeroFactura'] ?></h2>
+</nav>
+    <div class="container" style="margin-top: 40px; margin-bottom: 40px" >
         <div class="row d-flex justify-content-center ">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-8">
                 <div class="card">
                     <br>
-                    <h2 style="color: #001d5a; text-align:center; margin-bottom: 30px" class="center">FACTURA: <?php echo $viewmodel['numeroFactura']?></h2>
                 <div class="card-body " style="margin-bottom: 30px">
                     <div class="card">
                         <div class="card-body ">

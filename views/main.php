@@ -112,7 +112,7 @@
         </label>
         
 <input type="checkbox" id="check">
-<div id="menux1" class="container-menu" >
+<div id="menux1" class="container-menu" style="z-index:2;" >
     <div id="menux" class="cont-menu">
         <div style="">
             <label for="check" id="a0"><h1 style="float: right; margin-right:10px; color: grey; font-size: 40px; cursor:pointer;"></h1></p><br><br>

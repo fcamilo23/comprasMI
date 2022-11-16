@@ -1,6 +1,9 @@
 <?php
 // Start Session
 session_start();
+if (!defined('PHPUNIT_COMPOSER_INSTALL')) {
+    define('PHPUNIT_COMPOSER_INSTALL', __DIR__ . '/path/to/composer/vendors/dir/autoload.php');
+}
 
 // Include Config
 require('config.php');

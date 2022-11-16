@@ -1,5 +1,6 @@
 <?php
 class Solicitudes extends Controller{
+	
 	protected function listaSolicitudes(){
 		$this->sesionAbierta ();
 		$viewmodel = new SolicitudesModel();

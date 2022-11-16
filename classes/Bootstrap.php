@@ -42,7 +42,7 @@ class Bootstrap{
 			}
 		} else {
 			// Controller Class Does Not Exist
-			echo '<h1>Controller class does not exist</h1>';
+			//echo '<h1>Controller class does not exist</h1>';
 			header("Location: ".ROOT_URL);
 			return;
 		}

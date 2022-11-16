@@ -1,18 +1,10 @@
 <?php
+
 class SolicitudesModel extends Model{
-
-
-  
-
-
 
 	public function listaSolicitudes(){
         $this->limpiarMemoria();
         $_SESSION['items'] = array();
-
-        
-
-
 
         $this->query('SELECT * FROM solicitudescompra');
         $lstSolicitudes = $this->resultSet();
