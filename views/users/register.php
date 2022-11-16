@@ -137,20 +137,7 @@ if($_SESSION['user_data']['rol'] != 'Administrador'){
 			return false;
 		});
 
-		$("#email").blur(function(){  
-			var name = $(this).val(); 
-			$("#resultEmail").html('checking...');
-			$.ajax({
-				type : 'POST',
-				url  : "validateEmail",
-				data : $(this).serialize(),
-				success : function(data){
-					console.log(data)
-					$("#resultEmail").html(data);
-				}
-			});
-			return false;
-		});
+		
 
 	})
 

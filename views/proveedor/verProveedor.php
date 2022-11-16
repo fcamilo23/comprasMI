@@ -61,8 +61,9 @@ function mensajes(){
                                 
                                 <tr>
                                     <th>Referente</th>
-                                    <th>Telefono</th>
                                     <th>Correo</th>
+                                    <th>Telefono</th>
+
                                     <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
                                         <th></th>
                                     <?php } ?>
@@ -74,8 +75,8 @@ function mensajes(){
                             <tr>
                                 <form  id="editarReferente<?php echo $ref["id"] ?>" action="<?php echo ROOT_PATH; ?>proveedor/editarReferente" method="POST">
                                     <td><input <?php if($_SESSION['user_data']['rol'] == 'Consultor'){ ?> disabled <?php } ?> type="text" class="form-control" id="ereferente<?php echo $ref["id"] ?>" name="ereferente" value="<?php echo $ref['nombre'] ?>"></td>
-                                    <td><input <?php if($_SESSION['user_data']['rol'] == 'Consultor'){ ?> disabled <?php } ?>  type="text" class="form-control" id="etelefono" name="etelefono" value="<?php echo $ref['telefono'] ?>"></td>
                                     <td><input <?php if($_SESSION['user_data']['rol'] == 'Consultor'){ ?> disabled <?php } ?>  type="text" class="form-control" id="ecorreo" name="ecorreo" value="<?php echo $ref['email'] ?>"></td>
+                                    <td><input <?php if($_SESSION['user_data']['rol'] == 'Consultor'){ ?> disabled <?php } ?>  type="text" class="form-control" id="etelefono" name="etelefono" value="<?php echo $ref['telefono'] ?>"></td>
                                     <input type="hidden" name="id" id="id" value="<?php echo $viewmodel["id"] ?>">
                                     <input type="hidden" name="idReferente" id="idReferente" value="<?php echo $ref["id"] ?>">
                                     <input type="hidden" name="accion" id="accion" value="ediproveedor">

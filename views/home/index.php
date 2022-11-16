@@ -22,7 +22,7 @@
     <?php if(isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] == true){?> 
 
         
-<input type="button" id="ocultarBoton" onclick="ocultarBoton(this)" class="btn ocultarmostrar" style="float: right; margin-bottom: 20px" value="Ocultar Datos ▲">
+<?php if($viewmodel != null && $_SESSION['ordindex'] != null){ ?><input type="button" id="ocultarBoton" onclick="ocultarBoton(this)" class="btn ocultarmostrar" style="float: right; margin-bottom: 20px" value="Ocultar Datos ▲"> <?php } ?>
 <input type="button" id="mostrarBoton" onclick="ocultarBoton1(this)" class="btn ocultarmostrar" style="display: none; float: right; background: none; margin-bottom: 20px" value="Mostrar Datos ▼">
 
 
@@ -147,7 +147,7 @@
 
 
 
-
+<?php if($viewmodel != null){ ?>
 
 
 	
@@ -254,7 +254,8 @@
         
 	</div>
 
-    
+    <?php } ?>
+
 
 
     <?php } ?>

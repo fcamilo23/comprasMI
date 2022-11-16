@@ -31,13 +31,11 @@ unset($_SESSION['enviarCorreoCC']);
 
         Swal.fire({
         title: 'Ya solicitó el cambio de contraseña!',
-        text: "Por favor revise su correo, ya le hemos enviado un código de restablecimiento anteriormente a la dirección " + document.getElementById('corr').value,
+        text: "Por favor presione Reenviar Código y revise su correo, le reenviaremos un código de restablecimiento a la dirección " + document.getElementById('corr').value,
         icon: 'warning',
-        showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: 'btn btn-success',
-        confirmButtonText: 'Reenviar código',
-        cancelButtonText: 'Ok! Tengo el código'
+        confirmButtonText: 'Reenviar código'
         }).then((result) => {
         if (result.isConfirmed) {
 
@@ -63,6 +61,8 @@ unset($_SESSION['noEnviarCorreo']); //
     
         <div style="margin-top: 50px">
         <h1 class="center" style="text-align: center">Cambio de contraseña</h1>
+        <h5 class="center" style="text-align: center; font-size: 15px; color:grey">(La contraseña debe tener al menos 6 caracteres, una letra y un numero)</h5>
+
             <input type="text" name="code" id="code" class="form-control" style="display: inline-block; width: 100%; margin-top: 102px;" placeholder="Ingrese el código enviado" /> 
             <input type="password" name="password1" id="password1" class="form-control" style="display: inline-block; width: 100%; margin-top: 82px;" placeholder="Ingrese su nueva contraseña" /> 
         </div>    

@@ -34,7 +34,7 @@
             <tbody >
                 
 			<tr><?php foreach($viewmodel as $item) : //if($item['cedula'] != $_SESSION['user_data']['cedula']){?>
-                <td><?php echo $item['cedula'] ?></td>
+                <td><strong style="font-size: 20px" ><?php if($item['cedula'] == $_SESSION['user_data']['cedula']){ echo '👤 ';  }?></strong>​<?php echo $item['cedula'] ?> </td>
                 <td><?php echo $item['nombre'] ?></td>
                 <td><?php echo $item['apellido'] ?></td>
                 <td><?php echo $item['email'] ?></td>

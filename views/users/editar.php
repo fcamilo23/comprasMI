@@ -102,7 +102,9 @@ if($_SESSION['user_data']['rol'] == 'Consultor' && $_SESSION['usuarioActual']['c
     <input type="submit" name="submit" value="Guardar Cambios" class="btn btn-primary sombraAzul" style="margin-top: 50px">
 
     <?php if($_SESSION['user_data']['cedula'] != $_SESSION['usuarioActual']['cedula']){?>
-    <input type="submit" name="submit" value="Eliminar Usuario" class="btn btnEliminar sombraRoja" style="margin-top: 50px; margin-left: 20px; color:white">
+    <input type="submit" name="submit" id="eliminaruser" value="Eliminar Usuario" class="btn btnEliminar sombraRoja" style="display: none; margin-top: 50px; margin-left: 20px; color:white">
+    <input type="button" name="button" value="Eliminar Usuario" class="btn btnEliminar sombraRoja" onclick="alerteliminaruser()" style="margin-top: 50px; margin-left: 20px; color:white">
+
     <?php } ?>
 
 </form>
@@ -115,7 +117,31 @@ if($_SESSION['user_data']['rol'] == 'Consultor' && $_SESSION['usuarioActual']['c
 <div></div>
 
 
+<script>
+    function alerteliminaruser(){
+  
+            Swal.fire({
+                title: 'Seguro que desea eliminar este usuario?',
+                text: "Se eliminará de forma permanente, no podra deshacer esta acción",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'No, cancelar!',
+                confirmButtonText: 'Si, eliminar!'
+                }).then((result) => {
+            if (result.isConfirmed) {
 
+                document.getElementById('eliminaruser').click();
+
+                
+                //document.getElementById('resetPassword').click();
+                
+
+            }
+            })
+    }
+</script>
 <script>
 
 function alertPassword(){

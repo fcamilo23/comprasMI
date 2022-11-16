@@ -144,6 +144,7 @@ class UserModel extends Model{
 				$password = md5($post['password1']);
 				$this->query('UPDATE usuarios SET password = "'. $password .'" WHERE cedula = "'. $_SESSION['user_data']['cedula'] .'"');
 				$this->execute();
+				unset($_SESSION['codigo']);
 
 				$_SESSION['mensajePass'] = '1';
 				header('Location: '.ROOT_URL.'users/profile');
@@ -153,7 +154,7 @@ class UserModel extends Model{
 			
 
 		}
-
+		echo $_SESSION['codigo'];
 		return;
 	}
 
@@ -204,7 +205,7 @@ class UserModel extends Model{
 		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
 		if($post && $post['submit']){
-			echo 441;
+			//echo 441;
 
 			$password = md5($post['password']);
 			
