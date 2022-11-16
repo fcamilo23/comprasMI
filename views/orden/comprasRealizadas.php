@@ -101,15 +101,9 @@
 </dialog>
 </form>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1 style="color: #001d5a;" class="text-center">Compras Realizadas</h1>
-        </div>
-    </div>
-</div>
-
-
+<nav class="navbar navbar-light bg-light" style="width: 100%;">
+        <h2 style="color: #001d5a; text-align: center;"class="center">Compras Realizadas</h2>
+</nav>
 
 <div id="main-container" style="width: 100%; overflow: auto; padding: 25px; background: #fff"> <!--  max-height: 800px -->
 

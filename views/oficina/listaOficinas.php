@@ -1,7 +1,9 @@
 <body>
 <a href="<?php echo ROOT_URL; ?>"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
-  
-<div class="container mt-5 mb-5">
+<nav class="navbar navbar-light bg-light mt-2" style="width: 100%;">
+        <h2 style="color: #001d5a; text-align: center;"class="center">Unidades Organizativas</h2>
+</nav>
+<div class="container mt-2 mb-5">
     <div class="row d-flex justify-content-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10">
             <div id="main-container" style="width: 100%; overflow: auto; padding: 15px;">
