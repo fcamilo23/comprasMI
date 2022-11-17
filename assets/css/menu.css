@@ -79,6 +79,13 @@
     margin-top: 10%;
     width: 15%;
 }
+
+.cwhite{
+    color:white;
+}
+.cwhite:hover{
+    color:red;
+}
 .amarillo{
     background: rgb(255, 255, 189);
     border: 1px solid rgb(196, 196, 196);

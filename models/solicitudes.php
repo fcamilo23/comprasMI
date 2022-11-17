@@ -340,6 +340,10 @@ if (isset($_POST['submit'])) {
         $this->query('SELECT * FROM oficinas');
         $row = $this->resultSet();
 
+        $this->query('SELECT * FROM ordenes WHERE idSolicitud = "'. $_SESSION['solicitudActual']['id'] .'"');
+        $_SESSION['tieneordenes'] = $this->resultSet();
+
+
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
 		if($post && $post['submit']){
