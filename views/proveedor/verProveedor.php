@@ -146,7 +146,7 @@ function cartelModificarReferente(idReferente){
     if(nombre == ""){
         Swal.fire({
          icon: 'error',
-         title: 'Nombre de la empresa vacio',
+         title: 'Nombre del referente vacio',
         
         });
         return;
@@ -183,7 +183,7 @@ function cartelAgregarReferente(){
 
         Swal.fire({
          icon: 'error',
-         title: 'Nombre de la empresa vacio',
+         title: 'Nombre de la referente vacio',
         
         });
         return;

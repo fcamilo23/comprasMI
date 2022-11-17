@@ -14,7 +14,7 @@
     } );
 } );
 </script>
-<nav class="navbar navbar-light bg-light" style="width: 100%;" style="z-index:1">
+<nav class="navbar navbar-light bg-light mt-4" style="width: 100%;">
         <h2 style="color: #001d5a; text-align: center;"class="center">Lista Usuarios</h2>
 </nav>  
 

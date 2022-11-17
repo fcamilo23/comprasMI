@@ -1,11 +1,13 @@
 <a href="<?php echo ROOT_URL; ?>proveedor/listaProveedores"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
-
+<nav class="navbar navbar-light bg-light mt-4" style="width: 100%;" style="z-index:1">
+        <h2 style="color: #001d5a; text-align: center;"class="center">Nuevo Proveedor</h2>
+</nav> 
 <div class="container mt-5 mb-5">
     <div class="row d-flex justify-content-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="card-title">Nuevo Proveedor</h2>
+                    <h2 class="card-title"></h2>
                     <form id="nuevoProveedor"action="<?php echo ROOT_URL; ?>proveedor/agregarProveedor" method ="POST" enctype="multipart/form-data" >
                             <label for="empresa" class="form-label">Nombre Empresa</label>
                             <div class="input-group mb-3">

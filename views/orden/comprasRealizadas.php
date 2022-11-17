@@ -101,7 +101,7 @@
 </dialog>
 </form>
 
-<nav class="navbar navbar-light bg-light" style="width: 100%;">
+<nav class="navbar navbar-light bg-light mt-4" style="width: 100%;">
         <h2 style="color: #001d5a; text-align: center;"class="center">Compras Realizadas</h2>
 </nav>
 

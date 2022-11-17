@@ -83,7 +83,7 @@
 <?php } ?>
 <button class="filtrado sombra" style ="cursor: pointer; padding:5px; font-size: 25px; float:right; margin-right: 40px; border:none; background:#e9e9e9" id="abrirFiltros" > <i class="fas fa-filter" style="color:#303030" ></i> <p style="height: 10px; font-size: 20px;display: inline-block">Filtros</p></button>
 <form id="filtro" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">     
-<nav class="navbar navbar-light bg-light" style="width: 100%;" style="z-index:1">
+<nav class="navbar navbar-light bg-light mt-4" style="width: 100%;" style="z-index:1">
         <h2 style="color: #001d5a; text-align: center;"class="center">Lista Solicitudes</h2>
 </nav>  
 <dialog class="divfiltros center" id="modalfiltros" style="z-index: 1; animation: createBox .15s">
