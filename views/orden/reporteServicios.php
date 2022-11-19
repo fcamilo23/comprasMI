@@ -4,7 +4,7 @@
             buttons: [
             {
                 extend: 'excel',
-                title: 'REPORTE DE VENCIOMIENTOS VIGENTES EN EL <?php echo $viewmodel['anio']; ?>',
+                title: 'REPORTE DE VENCIMIENTOS VIGENTES EN EL <?php echo $viewmodel['anio']; ?>',
                 filename: '*',
                 header: true
 
@@ -54,6 +54,7 @@
                     <th >Monto Estimado Total</th>
                     <th>Tipo</th>
                     <th style="display:none"  >Observacion</th>
+                    <th></th>
 			</tr>
         </thead>
         <tbody>
@@ -92,11 +93,16 @@
                 <td> <?php echo $item['empresa'] ?></td>
                 <td>
                     <?php 
-                    $originalDate = "2017-03-08";
+                    
                     $newDate = date("d/m/Y", strtotime($item['inicio'] ));
                     echo $newDate;  ?>
                 </td>
-                <td><?php echo $item['fin'] ?></td>
+                <td>
+                <?php
+                    $newDate1 = date("d/m/Y", strtotime($item['fin'] ));
+                    echo $newDate1;  
+                ?>
+                </td>
                 <?php 
                     $fecha1 = new DateTime($item['inicio']);
                     $fecha2 = new DateTime($item['fin']);
@@ -147,8 +153,13 @@
                     <?php echo $moneda." ".$item['monto'] ?>
                 </td>
                 <td> <?php echo $item['esservicio'] ?></td>
+                <form id="verOrden" method="post" action="<?php echo ROOT_PATH; ?>orden/seleccionarOrden">       
                 <td style="display:none" >
-                    <?php echo "hola".$item['observacion'] ?>
+                    <?php echo $item['observacion'] ?>
+                </td>
+                <td><input type="text" name="idOrden" style="display:none" value="<?php echo $item['id']; ?>"/>
+                    <input type="submit" name="submit" id="ver" value="Ampliar" style="background: rgb(230,230,230); color:black; border: 1px solid grey"  class="btn btn-primary sombra"/></td>
+                </form>
             </tr><?php endforeach;?>
         </tbody>
        

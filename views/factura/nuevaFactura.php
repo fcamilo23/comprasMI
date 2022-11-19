@@ -60,6 +60,7 @@
                                         <h6><b>PROCEDIMIENTO: </b> <?php echo $viewmodel['orden']["procedimiento"]?></h6>
                                         <h6><b>ORDEN: </b> <?php echo $viewmodel['orden']["numero"]?>-<?php echo $viewmodel['orden']["anio"]?></h6>
                                         <h6><b>Monto de la Orden:</b><?php echo $moneda." ".$viewmodel['orden']["montoReal"]?></h6>
+                                        <h6><b>Sin facturar:</b><?php echo $moneda." ".$viewmodel['orden']["precioFacturado"]?></h6>
                                         <hr>
                                         <h6><b>PROVEEDOR: </b><?php echo $viewmodel["empresa"]?></h6>
                                         <h6><b>Razon Social: </b><?php echo $viewmodel["razon_social"]?></h6>
@@ -97,22 +98,19 @@
                                             </div>
                                             <div id="numeroError" style="color:red"></div>
                                         </div>
-
+                                        <input type="hidden" name="monedaFactura" id="monedaFactura" value="<?php echo $viewmodel["orden"]["moneda"] ?>" >
                                        <div class="mb-3 row">
-                                            <label for="monedaFactura" class="col-sm-2 col-form-label"> Total<b class="text-danger">*</b></label>
-                                            <div class="col-sm-4">
-                                                <select name="monedaFactura" id="monedaFactura" onchange="cambiarMoneda(this)" class="form-control">
-                                                    <option value="$ (Pesos Uruguayos)" <?php if($viewmodel["orden"]["moneda"]=='$U (Pesos Uruguayos)') { echo "selected"; } ?>>$U (Pesos Uruguayos)</option>
-                                                    <option value="U$S (Dolares)" <?php if($viewmodel["orden"]["moneda"]=='U$S (Dolares)') { echo "selected"; } ?>>US$ (Dólares)</option>
-                                                    <option value="U.I.(Unidades Indexadas)" <?php if($viewmodel["orden"]["moneda"]=='U.I.(Unidades Indexadas)') { echo "selected"; } ?> >U.I.(Unidades Indexadas)</option>
-                                                    <option value="U.R. (Unidades Reajustables)" <?php if($viewmodel["orden"]["moneda"]=='U.R. (Unidades Reajustables)') { echo "selected"; } ?> >U.R. (Unidades Reajustables)</option>
-                                                    <option value="€ (Euro)" <?php if($viewmodel["orden"]["moneda"]=='€ (Euro)') { echo "selected"; } ?> >€ (Euro)</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-4">
-                                            <input id="montoFactura" name="montoFactura" type="number" class="form-control" placeholder="Monto"required>
+                                       <div class="input-group ">
+                                        
+                                            <label style="border-left: 20px;" for="monedaFactura" class="col-sm-2 col-form-label">Total <b class="text-danger">*</b></label>
+                                            
+                                            
+                                            <span class="input-group-text" style="border-top-left-radius:5px; border-bottom-left-radius:5px"> <?php echo $viewmodel["orden"]["moneda"] ?> </span>
+                                     
+                                            <?php $montoMax = $viewmodel['orden']["montoReal"] - $viewmodel['orden']["precioFacturado"]; ?>
+                                             <input id="montoFactura" name="montoFactura" style="max-width: 275px" step="0.001" min="0" max="<?php echo $montoMax ?>" type="number" class="form-control" placeholder="Monto"required>
 
-                                            </div>
+                                        </div>
                                             <div id="montoRealError" class="center2" style="color:red"></div>
                                         </div>
 
@@ -283,7 +281,12 @@ function errorMonto(){
         document.getElementById("montoRealError").innerHTML = "<span>     El Total no puede estar vacio o en 0 <b>X</b></span>";
     }
     else{
-        document.getElementById("montoRealError").innerHTML = "";
+        if(montoFactura > <?php echo $montoMax ?>){
+            document.getElementById("montoRealError").innerHTML = "<span>     El valor supera la facturación de la orden, valor maximo <?php echo $montoMax ?></span>";
+        }
+        else{
+            document.getElementById("montoRealError").innerHTML = "";
+        }
     }
 }
 

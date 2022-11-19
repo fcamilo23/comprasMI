@@ -1,53 +1,53 @@
 <?php
 class Orden extends Controller{
     protected function nuevaOrden(){
-        $this->sesionAbierta ();
+        $this->sesionAbierta ("Operador");
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->nuevaOrden(), true);
     }
     protected function agregarOrden(){
-        $this->sesionAbierta ();
+        $this->sesionAbierta ("Operador");
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->agregarOrden(), true);
     }
 
     protected function verOrden(){
-        $this->sesionAbierta ();
+        $this->sesionAbierta ("");
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->verOrden(), true);
     }
 
     protected function verArchivo(){
-        $this->sesionAbierta ();
+        $this->sesionAbierta ("");
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->verArchivo(), true);
     }
 
     protected function eliminarArchivo(){
-        $this->sesionAbierta ();
+        $this->sesionAbierta ("Operador");
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->eliminarArchivo(), true);
     }
 
     protected function subirArchivos (){
-        $this->sesionAbierta ();
+        $this->sesionAbierta ("Operador");
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->subirArchivos(), true);
     }
 
     protected function editarOrden(){
-        $this->sesionAbierta ();
+        $this->sesionAbierta ("Operador");
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->editarOrden(), true);
     }
 
     protected function modificarOrden(){
-        $this->sesionAbierta ();
+        $this->sesionAbierta ("Operador");
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->modificarOrden(), true);
     }
     protected function seleccionarOrden(){
-        $this->sesionAbierta ();
+        $this->sesionAbierta ("");
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->seleccionarOrden(), true);
     }
@@ -59,20 +59,20 @@ class Orden extends Controller{
     }  
     */
     protected function anularOrden(){
-        $this->sesionAbierta ();
+        $this->sesionAbierta ("Operador");
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->anularOrden(), true);
     }
 
     protected function entregasPendientes(){
-        $this->sesionAbierta ();
+        $this->sesionAbierta ("");
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->entregasPendientes(), true);
     }
 
 
     protected function reporteServicios(){
-        $this->sesionAbierta ();
+        $this->sesionAbierta ("");
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->reporteServicios(), true);
     }
@@ -101,25 +101,36 @@ class Orden extends Controller{
     }
 
     protected function comprasRealizadas(){
-        $this->sesionAbierta ();
+        $this->sesionAbierta ("");
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->comprasRealizadas(), true);
     }
 
     protected function contratosAVencer(){
-        $this->sesionAbierta ();
+        $this->sesionAbierta ("");
 		$viewmodel = new OrdenModel();
 		$this->returnView($viewmodel->contratosAVencer(), true);
 	}
     
-    protected function sesionAbierta () {
+    protected function sesionAbierta ($filtro) {
         if (!isset($_SESSION['is_logged_in']) ||$_SESSION['is_logged_in'] == false){
              header('Location: '.ROOT_URL.'users/login');
+         }
+         //si es operador filtra si es operador o administrador
+         if($filtro == 'Operador'){
+                if($_SESSION['user_data']['rol'] == 'Consultor'){
+                    header('Location: '.ROOT_URL);
+                }
+         }
+         if($filtro == 'Administrador'){
+            if($_SESSION['user_data']['rol'] != 'Administrador'){
+                header('Location: '.ROOT_URL);
+            }
          }
     }
 
     protected function entregado(){
-        $this->sesionAbierta ();
+        $this->sesionAbierta ("Operador");
         $viewmodel = new OrdenModel();
         $this->returnView($viewmodel->entregado(), true);
     }

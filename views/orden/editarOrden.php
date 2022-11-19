@@ -267,7 +267,7 @@
 
                                         <div class="input-group mb-1">
                                             <label for="nuevoPrecioItem" id="mtotal1" class="m-2 form-label" style="font-weight: normal" ><b class="text-danger">*</b></label>
-                                            <input class="miniinput2 form-control" id="nuevoPrecioItem" name="nuevoPrecioItem" type="number" min="1" class="m-2 form-control">
+                                            <input class="miniinput2 form-control" id="nuevoPrecioItem" name="nuevoPrecioItem" type="number"step="0.001"  min="1" class="m-2 form-control">
                                         </div>
                                         <div class="input-group mb-1">
                                             <label for="nuevoTipoItem" class="m-2 form-label" style="font-weight: normal"> Es servicio:<b class="text-danger">*</b></label>

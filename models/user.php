@@ -200,6 +200,10 @@ class UserModel extends Model{
 	}
 	
 	public function login(){
+		
+		if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] == true){
+			header('Location: '.ROOT_URL);
+		}
 		// Sanitize POST
 
 		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);

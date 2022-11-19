@@ -22,12 +22,24 @@ function mensajes(){
 
 <body onload="mensajes()">
 
-<?php $completo=true; 
+<?php 
+$completo=1; 
  foreach($viewmodel['items'] as $item) {
     if($item['sinFacturar']>0 ){
-    $completo=false;
+    $completo=0;
     }
  }
+ $suma = 0;
+ foreach($viewmodel['facturas'] as $factura) {
+    if($factura['estado'] == 'activo'){
+        $suma = $suma + $factura['montoFactura'];
+    }
+}
+    if($suma==$viewmodel['orden']['montoReal']){
+        $completo=$completo+2;
+    }
+
+
 ?>
 
 <!---MODAL---->
@@ -72,23 +84,30 @@ function mensajes(){
 
 
 <?php if($_SESSION['user_data']['rol'] != 'Consultor' && $viewmodel['orden']['estado']=='activo' ){ 
-    if($completo==false){   
+    if($completo<=0){   
         ?>
         <button type="submit" form="anexarFactura" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/anexarFactura.jpg" width="190px" height="50px" ></button>
 <?php } ?>    
     <button type="button" id="btnmodal" class="excel sombraAzul1" onclick="abrirModal()"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button>
     <?php } ?>
-
+<br>
+<br>
+<br>
+<nav class="navbar navbar-light bg-light mt-" style="width: 100%;">
+        <h2 style="color: #001d5a; text-align: center;"class="center">ORDEN OC: <?php echo $viewmodel['orden']['numero']; ?> - <?php echo $viewmodel['orden']['anio']; ?></h2>
+</nav>
 
 <div  class="container mt-5 mb-5">
     <div class="row d-flex justify-content-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8">
                     <div class="card">
-                <br>
-            <h2 style="color: #001d5a; margin-left: 25px" class="text-center">ORDEN OC: <?php echo $viewmodel['orden']['numero']; ?> - <?php echo $viewmodel['orden']['anio']; ?></h2>
+
             <?php if($viewmodel['orden']['estado']=='inactivo' ){ ?>   
                     <div class="alert alert-warning" role="alert" style="text-align:center;">
-                        <h6><b>Esta Orden esta anulada</b></h6>Para volver a activarla debe ir a la Solicitud y en la sección de Ordenes de Compra, activarla.
+                        <h6><b>Esta Orden esta anulada</b></h6>
+                    <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
+                        Para volver a activarla debe ir a la Solicitud y en la sección de Ordenes de Compra, activarla.
+                    <?php } ?>
                     </div>
             <?php } ?>
                         <div class="card-body">
@@ -120,8 +139,8 @@ function mensajes(){
                             <div class="input-group mb-1">   
                                 <h4 style="color: #001d5a;"  class="m-2"><b>Monto Total:</b> <?php  echo $monedaOrden." ". $viewmodel["orden"]["montoReal"] ?></h4>
                             </div>
-                            <div class="input-group mb-1">  
-                                <h4 style="color: #001d5a;"  class="m-2"><b>Fecha Entrega:</b>     <?php  echo$viewmodel["orden"]["plazoEntrega"] ?></h4>
+                            <div class="input-group mb-1">   
+                                <h4 style="color: #001d5a;"  class="m-2"><b>Fecha Entrega: </b><?php  echo date("d/m/Y", strtotime( $viewmodel["orden"]["plazoEntrega"] )); ?></h4>
                             </div>
                             <div class="input-group mb-1"> 
                                 <h4 style="color: #001d5a;"   class="m-2"><b>Nº Amplición:</b> <?php  echo$viewmodel["orden"]["numeroAmpliacion"] ?></h4>
@@ -200,8 +219,8 @@ function mensajes(){
                                             <th style="width: 30%">Descripcion</th>
                                             <th >Monto (<?php echo $monedaOrden ?>) </th>
                                             <th >Servicio</th>
-                                            <th >Inicio (y-m-d)</th>
-                                            <th >Fin (y-m-d)</th>
+                                            <th >Inicio (d-m-y)</th>
+                                            <th >Fin (d-m-y)</th>
                                             <th>Obs.</th>
                                             
                                         </tr>
@@ -221,8 +240,8 @@ function mensajes(){
                                             <th ><?php echo $item['descripcion'] ?> </th>
                                             <th ><?php echo $item['monto'] ?> </th>
                                             <th ><?php echo $item['esservicio'] ?> </th>
-                                            <th ><?php if($item['esservicio'] == "No"){echo 'N/A';}else{echo $item['inicio'];} ?></th>
-                                            <th ><?php if($item['esservicio'] == "No"){echo 'N/A';}else{ echo $item['fin'];} ?> </th>
+                                            <th ><?php if($item['esservicio'] == "No"){echo 'N/A';}else{ echo date("d/m/Y", strtotime( $item['inicio'])); } ?></th>
+                                            <th ><?php if($item['esservicio'] == "No"){echo 'N/A';}else{ echo date("d/m/Y", strtotime( $item['fin']));} ?> </th>
                                             <th >
                                                 <?php if($item['observacion'] != "")
                                                 { ?>
@@ -257,7 +276,7 @@ function mensajes(){
                                 <hr>
 
 
-                            <?php if($_SESSION['user_data']['rol'] != 'Consultor' && $completo==false && $viewmodel['orden']['estado']=='activo' ){ ?>
+                            <?php if($_SESSION['user_data']['rol'] != 'Consultor' && $completo<=0 && $viewmodel['orden']['estado']=='activo' ){ ?>
                                 <button type="submit" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/anexarFactura.jpg" width="190px" height="50px" ></button>
                             <?php } ?>
 
@@ -270,9 +289,24 @@ function mensajes(){
                                  
                                 ?>
                                 <h1 style="color: #001d5a; margin-left: 25px" class="">Facturas</h1>
-                                <?php  if($completo==true){   ?>
-                                <h5 style=" margin-left: 25px" class="text-muted">*Ya se facturaron todos los item de la Orden</h5>
-                                <?php  }   ?>
+                                <?php  if($completo==3){   ?>
+                                <h5 style=" margin-left: 25px" class="text-muted">*Ya se facturaron todos los ítems de la Orden</h5>
+                                <?php  }else{
+                                            if($completo==2){ ?>
+                                            <div class="alert alert-warning" role="alert" style="margin-left: 25px">
+                                                <p><b>Atencion!</b> Se facturó el monto total de la Orden, pero no todos los ítems</p>
+                                                <p>Se recomienda revisar la/s factura/s por la inconcluencia</p>
+                                            </div>
+                                            <?php
+                                            }else{
+                                                if($completo==1){ ?>
+                                                    <div class="alert alert-warning" role="alert" style="margin-left: 25px">
+                                                        <p><b>Atencion!</b> Se facturó todos los ítems, pero los montos no coinciden</p>
+                                                        <p>Se recomienda revisar la/s factura/s por la inconcluencia</p>
+                                                    </div>
+                                            <?php }
+                                            }
+                                        } ?>
                                 <table id="pdf"style="width: 100%">
                                     <thead>
                                         
@@ -309,17 +343,21 @@ function mensajes(){
 
                                             ?>
                                         <td> <?php echo $moneda; ?> <?php echo $factura['montoFactura']; ?> </td>
-                                        <td><?php echo $factura['fechaFactura'] ?></td>
+                                        <td><?php echo date("d/m/Y", strtotime( $factura['fechaFactura'])); ?></td>
                                         <td>
                                         <?php if($_SESSION['user_data']['rol'] == 'Administrador' && $viewmodel['orden']['estado']=="activo" && $factura['estado']=="activo" ){ ?>
                                             <form id="eliminarFactura<?php echo $factura['id'] ?>" action="<?php echo ROOT_PATH; ?>factura/anularFactura" method="post">
                                                 <input type="hidden" name="idFactura" value="<?php echo $factura['id'] ?>">
-                                                <input type="button" name="anular" onclick="cartelEliminarFactura(<?php echo $factura['id'] ?>)" value="Anular" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
+                                                <input type="button" name="anular" onclick="cartelEliminarFactura(<?php echo $factura['id'] ?>)" value=" Anular " style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
                                             </form>  
                                         <?php } ?>
                                         <?php if($factura['estado']!="activo" ){ ?>
                                             <span un-clickable style="float:right; margin-right: 4%; border: none;" class="btn text-danger">Anulado</span>
-                                        <?php } ?>                                 
+                                        <?php }else{ 
+                                                if($viewmodel['orden']['estado'] != 'activo'){?> 
+                                                <span un-clickable style="float:right; margin-right: 4%; border: none;" class="btn text-danger">             </span>
+                                        <?php   } 
+                                            }?>                                 
 
 
                                             <form action="<?php echo ROOT_URL; ?>factura/seleccionFactura" method="post">

@@ -155,11 +155,7 @@ public function verOrden(){
     $this->query('SELECT id, nombre FROM archivosordenes WHERE idOrden = :idOrden');
     $this->bind(':idOrden',  $_SESSION['ordenActual'] );
     $archivos = $this->resultSet();
-
-    $this->query('SELECT * FROM servicios WHERE idOrden = :idOrden');
-    $this->bind(':idOrden',  $_SESSION['ordenActual'] );
-    $servicios = $this->resultSet();
-    
+   
     $this->query('SELECT * FROM proveedores WHERE id = :id');
     $this->bind(':id', $orden['idProveedor']);
     $proveedor = $this->single();
@@ -180,7 +176,6 @@ public function verOrden(){
         'proveedor' => $proveedor,
         'facturas' => $facturas,
         'solicitud' => $solicitud,
-        'servicios' => $servicios,
         'items' => $items
     );
     return $viewmodel;
@@ -352,7 +347,7 @@ public function verOrden(){
 
     public function anularOrden(){
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        if(!isset($post['submit'])){
+        if(!isset($post['cambiar'])){
             header('Location: '.ROOT_URL);
             return;
         }
@@ -373,6 +368,16 @@ public function verOrden(){
     public function editarOrden(){
         if(!isset($_SESSION['ordenActual'])){
             header('Location: '.ROOT_URL);
+        }
+        $this->query('SELECT id FROM facturas WHERE idOrden = :idOrden');
+        $this->bind(':idOrden', $_SESSION['ordenActual']);
+        $factura = $this->resultSet();
+        //si hay al menos una factura no se puede editar
+        if(count($factura) > 0){
+            $_SESSION['mensaje']['tipo'] = 'error';
+            $_SESSION['mensaje']['contenido'] = 'No se puede editar una orden que ya tiene una factura asociada';
+            header('Location: '.ROOT_URL.'orden/verOrden');
+            return;
         }
 
         $this->query('SELECT * FROM proveedores');

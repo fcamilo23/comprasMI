@@ -185,6 +185,9 @@ function readAsBase64() {
 
 
                             <hr>
+                            <h4 id="proveedorNombre" style="color: #001d5a; margin-left: 25px"></h4>
+                            <h5 id="proveedorRazon" style="color: #001d5a; margin-left: 25px"></h5>
+                            <h5 id="proveedorRut" style="color: #001d5a; margin-left: 25px"></h5>
                             <div id="main-container" style="width: 100%; overflow: auto; padding: 25px; max-height: 500px"> <!--  max-height: 800px -->
                             
                                 <table id="proveedores"style="width: 100%; background: #b4bacc">
@@ -286,7 +289,7 @@ function readAsBase64() {
                                 <hr>
                                 <div class="card-body">
                                 <div class="mb-3">
-                                    <label for="formFile" class="form-label">Subir PDF (*No es obligatorio, puede hacerlo mas adelante)</label>
+                                    <label for="formFile" class="form-label">Subir PDF<b class="text-danger">*</b></label>
                                     <input class="form-control" id="loadFile" accept="application/pdf" type="file" onchange="readAsBase64()"  width="190px" height="50px"/>
                                 </div>
 
@@ -394,7 +397,7 @@ function readAsBase64() {
 
                                         <div class="input-group mb-1">
                                             <label for="nuevoPrecioItem" id="mtotal1" class="m-2 form-label" style="font-weight: normal" ><b class="text-danger">*</b></label>
-                                            <input class="miniinput2 form-control" id="nuevoPrecioItem" name="nuevoPrecioItem" type="number" min="1" class="m-2 form-control">
+                                            <input class="miniinput2 form-control" id="nuevoPrecioItem" name="nuevoPrecioItem" type="number" min="1" step="0.001" class="m-2 form-control">
                                             <span id="precioError" class="center2" style="color:red; position: static;" ></span>
 
                                         </div>
@@ -653,6 +656,16 @@ function readAsBase64() {
             return  false;
         }
     }
+    function existeName(name){
+        var inputs = document.getElementsByTagName('input');
+        for (var i = 0; i < inputs.length; i++) {
+            if (inputs[i].getAttribute('name') == name) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     function validarFormulario(event){
         comprobarNumero();
         let mensaje ="";
@@ -666,7 +679,10 @@ function readAsBase64() {
             mensaje = "<hr><h4>Debe seleccionar una moneda </h4><hr>"+mensaje;
             event.preventDefault();
         }
-
+        if(!existeName("pdfnombre[]")){
+            mensaje = "<hr><h4>Debe subir un archivo</h4><hr>"+mensaje;
+            event.preventDefault();
+        }
         
         var numeroAnioError = document.getElementById("numeroAnioError").innerHTML;
         if(numeroAnioError.length > 1){
@@ -714,6 +730,8 @@ function readAsBase64() {
         document.getElementById("confirmarProveedor").style.display = "none";
         document.getElementById("main-container").style.display = "none";
         document.getElementById("idProveedor").value = id;
+        document.getElementById("proveedorRazon").innerHTML = razon_social;
+        document.getElementById("proveedorRut").innerHTML = rut;
         document.getElementById("proveedorNombre").innerHTML = empresa ;
     }
 

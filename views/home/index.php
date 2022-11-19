@@ -92,7 +92,7 @@
                         echo $p['empresa'];
                     } endforeach;?></td>
 
-                    <td><?php echo $item['plazoEntrega'] ?></td>
+                    <td><?php echo date("d/m/Y", strtotime( $item['plazoEntrega'])); ?></td>
 
                     <td style="color: rgb(180,0,0)"><strong>
                     <?php
@@ -210,7 +210,7 @@
                                             }
                             ?>
                 
-                <td><?php if($item['fin'] == ""){echo 'N/A';}else{ $date = new DateTime($item['fin'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y'); }?></td>
+                <td><?php if($item['fin'] == ""){echo 'N/A';}else{ $date = new DateTime($item['fin'], new DateTimeZone('America/Montevideo') ); echo $date->format('d/m/Y'); }?></td>
                 <td><strong>
                 <?php
                     $now = time(); // or your date as well

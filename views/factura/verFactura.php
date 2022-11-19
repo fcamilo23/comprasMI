@@ -16,7 +16,7 @@
 
                                 <h5><b>OC: </b> <?php echo $viewmodel['orden']['numeroOrden']?> - <?php echo $viewmodel['orden']['anioOrden'] ?> </h5> 
                                 <h5><b>Numero: </b> <?php echo $viewmodel['numeroFactura']?></h3>
-                                <h5><b>Fecha: </b> <?php echo $viewmodel['fechaFactura']?></h5>
+                                <h5><b>Fecha: </b> <?php echo date("d/m/Y", strtotime( $viewmodel['fechaFactura']));?></h5>
                                 <h5><b>Monto en <?php echo $viewmodel['monedaFactura']?>:</b>  <?php echo $viewmodel['montoFactura']?></h5>
                                 <hr>
                                 <h5><b>Concepto: </h5>

@@ -9,7 +9,9 @@ class FacturaModel extends Model{
 		$this->query('SELECT * FROM itemOrden WHERE idOrden = :idOrden');
 		$this->bind(':idOrden', $post['idOrden']);
 		$items = $this->resultSet();
-		$this->query('SELECT * FROM ordenes WHERE id = :idOrden');
+		$this->query('SELECT ordenes.* ,sum(facturas.montoFactura) as precioFacturado FROM ordenes 
+		JOIN facturas ON ordenes.id = facturas.idOrden
+		WHERE ordenes.id = :idOrden AND facturas.estado = "activo"');
 		$this->bind(':idOrden', $post['idOrden']);
 		$orden = $this->single();
 		$viewmodel = array(
