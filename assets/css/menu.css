@@ -75,6 +75,36 @@
     color:#343534;
 }
 
+
+
+
+  .cartelito  {
+    color: rgb(91, 133, 41);
+    margin-left: 30%;
+    display: none;
+
+    
+    }
+    .cartelito1  {
+        color: rgb(168, 160, 42);
+        margin-left: 30%;
+        display: none;
+    
+        
+    }
+#carteles:hover~#cartelito{
+    display: block;
+}
+
+
+#carteles1:hover~#cartelito1{
+    display: block;
+}
+
+
+
+
+
 .res{
     margin-top: 10%;
     width: 15%;

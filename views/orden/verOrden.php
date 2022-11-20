@@ -68,18 +68,14 @@ $completo=1;
                 <td><input type="text" name="numero" style="display: none" value="<?php echo $viewmodel['solicitud']['id']; ?>"/>
                 <input type="submit" name="submit" value="Ir a la Solicitud" style="background: #001d5a; border: none; margin-left: 30px" class="btn btn-primary sombraAzul"/></td>
 
-                <?php if($viewmodel['orden']['entregada']=='entregada' ){ ?> <label style="font-size: 23px; margin-left: 40px" class="verde">✔️ Entregada</label> 
-                <?php }else{ if($_SESSION['user_data']['rol'] != 'Consultor' && $viewmodel['orden']['estado']=='activo' ){
-                    ?> 
-                        
-                        <input type="button" onclick="alertEntregar()" value="✔️ Confirmar Entrega" style="background: rgb(20, 77, 3); border: none; margin-left: 30px" class="btn btn-primary sombra"/></td>
                 
-                    <?php }
-                } ?>
 </form>
 <form action="<?php echo ROOT_URL; ?>orden/entregado" method="post">
     <input type="text" name="idOrden" style="display: none" value="<?php echo $viewmodel['orden']['id'];?>" />
     <input type="submit" name="submit"  id="entregar"  value="Entregada" style="display: none; background: rgb(20, 77, 3); border: none; margin-left: 30px" class="btn btn-primary sombra"/></td>
+
+    <input type="text" name="idOrden" style="display: none" value="<?php echo $viewmodel['orden']['id'];?>" />
+    <input type="submit" name="submit"  id="desentregar"  value="Desentregar" style="display: none; background: rgb(20, 77, 3); border: none; margin-left: 30px" class="btn btn-primary sombra"/></td>
 </form>
 
 
@@ -112,6 +108,7 @@ $completo=1;
             <?php } ?>
                         <div class="card-body">
                         <hr>
+                        <?php if($viewmodel['orden']['entregada']=='entregada' ){ ?> <label style="font-size: 23px; margin-left: 40px; float: right" class="verde">✔️ Entregada</label> <?php } ?>
                             <h4 style="color: #001d5a;" class="m-2"><b>Solicitud SR: </b><?php echo $viewmodel['solicitud']['SR']; ?></h4>
                             <h4 style="color: #001d5a;"  class="m-2"><b>Procedimiento:</b> <?php echo $viewmodel['solicitud']['procedimiento']." ".$viewmodel['solicitud']['numProc']." ".$viewmodel['solicitud']['anioProc']; ?> </h4>
                             <hr>
@@ -181,7 +178,7 @@ $completo=1;
                     <div class="card" style="margin-top: 10px;">
                         <div class="card-body" >
                             <div class="col-12 center" style="text-align: center;">
-                            
+
                             <?php 
                             $read="";
                             if(count($viewmodel['facturas'])>0 ){ 
@@ -192,10 +189,30 @@ $completo=1;
                             }else{
                             ?>
                                 <a href="<?php echo ROOT_URL; ?>orden/editarOrden" class="float-right btn amarillo"<?php echo $read ?> >✏️ Editar Orden</a>
+
+                                <?php
+                                } ?>
+                                <?php if($viewmodel['orden']['entregada']!='entregada' && $_SESSION['user_data']['rol'] != 'Consultor' && $viewmodel['orden']['estado']=='activo'){?> 
+                                        <input type="button" id="carteles"  onclick="alertEntregar()" value="✔️ Entregada Total" style="background: rgb(20, 77, 3); border: none; margin-left: 30px" class="btn btn-primary sombra cartel"/></td>
+
+                                    <?php } ?>
+
+                                    <?php if($viewmodel['orden']['entregada']=='entregada' && $_SESSION['user_data']['rol'] != 'Consultor' && $viewmodel['orden']['estado']=='activo'){?> 
+                                        
+                                        <input type="button" id="carteles1" onclick="alertDesentregar()" value="Deshacer Entrega" style="border: none; margin-left: 30px; color: rgb(168, 160, 42);" class="btn sombra carteles1"/></td>
+                                
+                                    <?php } ?>
+                                   
+                                    <br><br>
+                                    <label id="cartelito" class="cartelito"  for="">Si la orden fue totalmente entregada presiona aquí</label>
+                                    <label id="cartelito1" class="cartelito1"  for="">La orden se volverá a marcar como aún no entregada</label>
+
+
                             </div>
-                            <?php } ?>
+                            
                         </div>
                     </div> 
+
                     
                     <?php } ?>
 
@@ -574,6 +591,33 @@ function readAsBase64() {
 
                     
                     entregar.click();
+                    
+
+
+                }
+                })
+
+        }
+
+        function alertDesentregar(){
+            
+            const desentregar = document.getElementById("desentregar");
+            
+            Swal.fire({
+                title: 'Estás seguro?',
+                text: "La orden quedará como aún no entregada",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, confirmar!',
+                cancelButtonText: 'No, cancelar!'
+
+                }).then((result) => {
+                if (result.isConfirmed) {
+
+                    
+                    desentregar.click();
                     
 
 

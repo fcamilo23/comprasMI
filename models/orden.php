@@ -580,6 +580,14 @@ public function verOrden(){
                 $_SESSION['mensaje']['contenido'] = 'Servicio entregado correctamente';
                 header('Location: '.ROOT_URL.'orden/verOrden');
             }
+            if($post['submit'] == 'Desentregar'){
+                $this->query('UPDATE ordenes SET entregada = "no" WHERE id = :id');
+                $this->bind(':id', $_SESSION['ordenActual']);
+                $this->execute();
+                $_SESSION['mensaje']['tipo'] = 'success';
+                $_SESSION['mensaje']['contenido'] = 'La orden quedó pendiente de entrega';
+                header('Location: '.ROOT_URL.'orden/verOrden');
+            }
         }else{
             header('Location: '.ROOT_URL);
         }
