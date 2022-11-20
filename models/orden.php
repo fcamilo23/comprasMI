@@ -529,11 +529,15 @@ public function verOrden(){
         $this->query('SELECT * FROM proveedores');
         $_SESSION['proveedores'] = $this->resultSet();
         
+        //obtener la fecha actual pero con un anio menos
+        $fechaActual = date('Y-m-d');
+        $fechaActual = strtotime ( '-1 year' , strtotime ( $fechaActual ) ) ;
+        $fechaActual = date ( 'Y-m-d' , $fechaActual );
     
         $this->query('SELECT * FROM `itemOrden` 
                     JOIN ordenes ON itemOrden.idOrden = ordenes.id
-                    WHERE ordenes.estado="activo" AND (esservicio = "General" OR esservicio="Licencia")and itemOrden.fin < (select curdate()) ORDER BY itemOrden.fin ASC');
-        $_SESSION['vencidos'] = $this->resultSet();
+                    WHERE ordenes.estado="activo" AND (esservicio = "General" OR esservicio="Licencia")and itemOrden.fin >= "'.$fechaActual.'" and itemOrden.fin < (select curdate()) ORDER BY itemOrden.fin ASC');
+        $_SESSION['vencidos'] = $this->resultSet(); 
 
 
         $this->query('SELECT * FROM `itemOrden` 

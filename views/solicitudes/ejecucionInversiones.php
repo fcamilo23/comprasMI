@@ -158,9 +158,11 @@
                      <th>Procedimiento</th>
                      <th>Grupo Art/Serv</th>
                      <th>Gastos e Inversiones</th>
+                     <th>Planificado</th>
                      <th>Monto Estimado ($U)</th>
                      <th>Monto Real ($U)</th>
                      <th>Monto Facturado ($U)</th>
+                     
                      <th>Observaciones</th>
  
  
@@ -185,6 +187,7 @@
                  <td><?php if($item['numProc'] != "0" && $item['anioProc'] != "0"){echo $item['procedimiento'] . " ". $item['numProc'] . "/" . $item['anioProc'];}else{ echo "---";} ?></td>
                  <td><?php echo $item['grupoAS']; ?></td>
                  <td><?php echo $item['gastos_inversiones'] ?></td>
+                 <td><?php echo $item['planificado']; ?>
                  <td>$<?php echo number_format($item['costoAprox']) ?></td>
                  <td>$<?php echo number_format($item['montoRealOrden']) ?></td>
                  <td>$<?php echo number_format($item['montoRealFacturado']) ?></td>
@@ -210,10 +213,13 @@
              <td></td>
              <td></td>
              <td></td>
+             
+
 
              </tr>
              
              <tr class="total " style="background: rgb(30,30,30)">
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -222,7 +228,6 @@
                 <td style="font-weight: bold;">$U <?php echo number_format($totalreal); ?></td>
                 <td style="font-weight: bold;">$U <?php echo number_format($totalfacturado); ?></td>
                 <td style="font-weight: bold;"></td>
-
              </tr>
              </tbody>
 
