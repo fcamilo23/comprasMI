@@ -98,11 +98,11 @@ class ProveedorModel extends Model{
             $this->execute();
             $_SESSION['mensaje']['tipo'] = 'success';
             $_SESSION['mensaje']['contenido'] = 'Referente editado';
-            header('Location: '.ROOT_URL.'proveedor/verProveedor');
+            header('Location: '.ROOT_URL.'proveedor/verProveedor#ref');
         }catch(PDOException $e){
             $_SESSION['mensaje']['tipo'] = 'error';
             $_SESSION['mensaje']['contenido'] = 'Error al editar el referente';
-            header('Location: '.ROOT_URL.'proveedor/verProveedor');
+            header('Location: '.ROOT_URL.'proveedor/verProveedor#ref');
         }
         return;
      }
@@ -129,11 +129,11 @@ class ProveedorModel extends Model{
             $this->execute();
             $_SESSION['mensaje']['tipo'] = 'success';
             $_SESSION['mensaje']['contenido'] = 'Referente agregado';
-            header('Location: '.ROOT_URL.'proveedor/verProveedor');
+            header('Location: '.ROOT_URL.'proveedor/verProveedor#ref');
             }catch(PDOException $e){
                 $_SESSION['mensaje']['tipo'] = 'error';
                 $_SESSION['mensaje']['contenido'] = 'Error al agregar el referente';
-                header('Location: '.ROOT_URL.'proveedor/verProveedor');
+                header('Location: '.ROOT_URL.'proveedor/verProveedor#ref');
             }
         }
         return;

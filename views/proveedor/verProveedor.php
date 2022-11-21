@@ -19,6 +19,36 @@ function mensajes(){
     } 
 </script>
 <body>
+<div class="modal" tabindex="-1" role="dialog" id="modalModificar">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">MODIFICAR REFERENTE</h5>
+
+        </div>
+        <div class="modal-body" id="mensajeOrden">
+            <div class="form-group">
+            <form  id="editarReferente" action="<?php echo ROOT_PATH; ?>proveedor/editarReferente" method="POST">
+                <label for="ereferente">Referente</label>
+                <input type="text" class="form-control" id="ereferente" name="ereferente">
+                <label class="mt-3" for="ecorreo">Correo</label>
+                <input type="email" class="form-control" id="ecorreo" name="ecorreo">
+                <label class="mt-3" for="etelefono">Telefono</label>
+                <input type="text" class="form-control" id="etelefono" name="etelefono">
+                <input type="hidden" name="accion" id="accion" value="ediproveedor">
+                <input type="hidden" name="id" id="id" value="<?php echo $viewmodel["id"] ?>">
+                <input type="hidden" name="idReferente" id="idReferente" >
+            </form>
+        </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" onclick="cartelConfirmarModificar()">CONFIRMAR</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarModificarReferente()">CANCELAR</button>
+        </div>
+        </div>
+    </div>
+</div>
+
 <?php if(isset($viewmodel["orden"]) && $viewmodel["orden"] != ""){ ?>
 <!-- <form  action="<?php echo ROOT_PATH; ?>orden/seleccionarOrden" method="POST">
         <input type="hidden" name="idOrden" value="<?php echo $viewmodel['orden']; ?>">
@@ -64,7 +94,7 @@ function mensajes(){
                         <hr>
                     <div id="main-container" style="width: 100%; overflow: auto; padding: 15px;">
 
-                        <table style="width: 100%; border: 2px solid rgb(235,235,235)">
+                        <table id="ref" style="width: 100%; border: 2px solid rgb(235,235,235)">
                         
 
                             <thead>
@@ -83,10 +113,10 @@ function mensajes(){
                             <tr>
                             <?php foreach($viewmodel['referentes'] as $ref) : ?>
                             <tr>
-                                <form  id="editarReferente<?php echo $ref["id"] ?>" action="<?php echo ROOT_PATH; ?>proveedor/editarReferente" method="POST">
-                                    <td><input <?php if($_SESSION['user_data']['rol'] == 'Consultor'){ ?> disabled <?php } ?> type="text" class="form-control" id="ereferente<?php echo $ref["id"] ?>" name="ereferente" value="<?php echo $ref['nombre'] ?>"></td>
-                                    <td><input <?php if($_SESSION['user_data']['rol'] == 'Consultor'){ ?> disabled <?php } ?>  type="text" class="form-control" id="ecorreo" name="ecorreo" value="<?php echo $ref['email'] ?>"></td>
-                                    <td><input <?php if($_SESSION['user_data']['rol'] == 'Consultor'){ ?> disabled <?php } ?>  type="text" class="form-control" id="etelefono" name="etelefono" value="<?php echo $ref['telefono'] ?>"></td>
+                                
+                                    <td><input disabled type="text" class="form-control" id="referente<?php echo $ref["id"] ?>" name="" value="<?php echo $ref['nombre'] ?>"></td>
+                                    <td><input disabled type="text" class="form-control" id="correo<?php echo $ref["id"] ?>" name="" value="<?php echo $ref['email'] ?>"></td>
+                                    <td><input disabled type="text" class="form-control" id="telefono<?php echo $ref["id"] ?>" name="" value="<?php echo $ref['telefono'] ?>"></td>
                                     <input type="hidden" name="id" id="id" value="<?php echo $viewmodel["id"] ?>">
                                     <input type="hidden" name="idReferente" id="idReferente" value="<?php echo $ref["id"] ?>">
                                     <input type="hidden" name="accion" id="accion" value="ediproveedor">
@@ -100,19 +130,19 @@ function mensajes(){
                                 
                                 <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
 
-                                <form id="nuevoReferente" action="<?php echo ROOT_PATH; ?>proveedor/agregarReferente" method="POST">
-                                    <td><input type="text" class="form-control" id="nreferente" name="nreferente">
-                                        <span style="position : static; width:100%; color:red" id="nreferenteError"></span>
-                                    </td>
+                                    <form id="nuevoReferente" action="<?php echo ROOT_PATH; ?>proveedor/agregarReferente" method="POST">
+                                        <td><input type="text" class="form-control" id="nreferente" name="nreferente">
+                                            <span style="position : static; width:100%; color:red" id="nreferenteError"></span>
+                                        </td>
 
-                                    <td><input type="text" class="form-control" id="ncorreo" name="ncorreo"></td>
-                                    <td><input type="text" class="form-control" id="ntelefono" name="ntelefono"></td>
-                                    <td>
-                                    
-                                    <input type="hidden" name="id" id="id" value="<?php echo $viewmodel["id"] ?>">
-                                    <input type="button" onclick="cartelAgregarReferente();" id="nuevo-ref" class = "btn btn-primary azul" value=" + ">
-                                </form>
-                                <?php } ?>
+                                        <td><input type="text" class="form-control" id="ncorreo" name="ncorreo"></td>
+                                        <td><input type="text" class="form-control" id="ntelefono" name="ntelefono"></td>
+                                        <td>
+                                        
+                                        <input type="hidden" name="id" id="id" value="<?php echo $viewmodel["id"] ?>">
+                                        <input type="button" onclick="cartelAgregarReferente();" id="nuevo-ref" class = "btn btn-primary azul" value=" + ">
+                                    </form>
+                                    <?php } ?>
 
                                 </td>
 
@@ -150,9 +180,23 @@ function mensajes(){
         }
     }
 
+    function cartelModificarReferente(id){
+    //abrir modal modalModificar
+    $('#modalModificar').modal('show');
+        var referente = document.getElementById("referente"+id).value;
+        var correo = document.getElementById("correo"+id).value;
+        var telefono = document.getElementById("telefono"+id).value;
+        document.getElementById("idReferente").value = id;
+        document.getElementById("ereferente").value = referente;
+        document.getElementById("ecorreo").value = correo;
+        document.getElementById("etelefono").value = telefono;
+    }
+    function cerrarModificarReferente (){
+        $('#modalModificar').modal('hide');
+    }
   
-function cartelModificarReferente(idReferente){
-    var nombre = document.getElementById('ereferente'+idReferente).value;
+function cartelConfirmarModificar (){
+    var nombre = document.getElementById('ereferente').value;
     if(nombre == ""){
         Swal.fire({
          icon: 'error',
@@ -174,7 +218,7 @@ function cartelModificarReferente(idReferente){
         }).then((result) => {
             if (result.isConfirmed) {
                 //enviar formulario
-                document.getElementById("editarReferente"+idReferente).submit();
+                document.getElementById("editarReferente").submit();
             }else{
                 //crear mensaje de cancelado
                 Swal.fire({
