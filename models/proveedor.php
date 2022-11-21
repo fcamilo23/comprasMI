@@ -15,9 +15,14 @@ class ProveedorModel extends Model{
             if($post['id'] != ''){
                 $_SESSION['proveedorActual'] = $post['id'];
             }
-            if($post['idProveedor'] != ''){
+            if(isset($post['idProveedor']) && $post['idProveedor'] != ''){
                 $_SESSION['proveedorActual'] = $post['idProveedor'];
-            }     
+            }
+            if(isset($post['idOrden']) && $post['idOrden'] != ''){
+                $_SESSION['ordenProveedor'] = $post['idOrden'];
+            }else{
+                $_SESSION['ordenProveedor'] = '';
+            }
         }
         header('Location: '.ROOT_URL.'proveedor/verProveedor');
 
@@ -41,26 +46,21 @@ class ProveedorModel extends Model{
                 $this->bind(':rut', $post['rut']);
                 $this->execute();
 
-            }catch(PDOException $e){
-                $_SESSION['mensaje']['tipo'] = 'error';
-                $_SESSION['mensaje']['contenido'] = 'Error al agregar el proveedor';
-                header('Location: '.ROOT_URL.'proveedor/listaProveedores'); 
-            }
-            if ($this->lastInsertId()){
-                $this->query('SELECT * FROM proveedores WHERE id = :id AND empresa = :empresa AND razon_social = :razon_social AND rut = :rut AND telefono = :telefono AND email = :email');
-                $this->bind(':id', $this->lastInsertId());
-                $this->bind(':empresa', $post['empresa']);
-                $this->bind(':razon_social', $post['razon_social']);
-                $this->bind(':telefono', $post['telefono']);
-                $this->bind(':email', $post['email']);
-                $this->bind(':rut', $post['rut']);
+                $this->query('SELECT * FROM proveedores ORDER BY id DESC LIMIT 1');
                 $rows = $this->resultSet();
                 if(count($rows) > 0){
                     $_SESSION['proveedorActual']= $rows[0]['id'];
                     header('Location: '.ROOT_URL.'proveedor/verProveedor');
+                    return;
                 }else{
                     header('Location: '.ROOT_URL.'proveedor/listaProveedores');
+                    return;
                 }
+
+            }catch(PDOException $e){
+                $_SESSION['mensaje']['tipo'] = 'error';
+                $_SESSION['mensaje']['contenido'] = 'Error al agregar el proveedor';
+                header('Location: '.ROOT_URL.'proveedor/listaProveedores'); 
             }
         }
         header('Location: '.ROOT_URL.'proveedor/listaProveedores');
@@ -76,6 +76,9 @@ class ProveedorModel extends Model{
         $this->bind(':id', $_SESSION['proveedorActual']);
         $referentes = $this->resultSet();
         $row['referentes'] = $referentes;
+        if(isset($_SESSION['ordenProveedor']) && $_SESSION['ordenProveedor'] != ''){
+           $row['orden'] = $_SESSION['ordenProveedor'];
+        }
         return $row;
     }
 

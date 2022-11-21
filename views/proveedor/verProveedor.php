@@ -19,7 +19,17 @@ function mensajes(){
     } 
 </script>
 <body>
+<?php if(isset($viewmodel["orden"]) && $viewmodel["orden"] != ""){ ?>
+<!-- <form  action="<?php echo ROOT_PATH; ?>orden/seleccionarOrden" method="POST">
+        <input type="hidden" name="idOrden" value="<?php echo $viewmodel['orden']; ?>">
+        <input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/>
+    </form>
+    <br> -->
+    <a href="<?php echo ROOT_URL; ?>orden/verOrden"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
+
+<?php }else{?>
 <a href="<?php echo ROOT_URL; ?>proveedor/listaProveedores"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="☰  Lista"/></a>
+<?php }?>
 <div class="container mt-5 mb-5">
     <div class="row d-flex justify-content-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10">

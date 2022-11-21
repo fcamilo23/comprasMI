@@ -164,8 +164,9 @@ $completo=1;
                 </div>
                     <div class="card" style="margin-top: 10px;">
                         <div class="card-body">
-                                <form action="<?php echo ROOT_URL; ?>proveedor/seleccionarProveedor" target='_blank' method="POST">
-                                    <input type="hidden" name="idProveedor" value="<?php echo $viewmodel['proveedor']['id']; ?>">
+                                <form action="<?php echo ROOT_URL; ?>proveedor/seleccionarProveedor" method="POST">
+                                    <input type="hidden" name="id" value="<?php echo $viewmodel['proveedor']['id']; ?>">
+                                    <input type="hidden" name="idOrden" value="<?php echo $viewmodel['orden']['id']; ?>">
                                     <h4 style="color: #001d5a;" ><b>Proveedor:</b><input name="submit" class="btn btn-light btn-lg active" value="<?php  echo $viewmodel["proveedor"]["empresa"] ?>" type="submit"> </h4>
                                     <h4 style="color: #001d5a;"  ><b>Razon Social: </b><?php  echo $viewmodel["proveedor"]["razon_social"] ?></h4>
                                     <h4 style="color: #001d5a;" ><b>RUT: </b><?php  echo $viewmodel["proveedor"]["rut"] ?></h4>

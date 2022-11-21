@@ -8,8 +8,17 @@
                 filename: '*',
                 header: true
 
-            }
-
+            }/* ,
+            {
+                extend: 'csv',
+                text: 'Copy all data',
+                exportOptions: {
+                    modifier: {
+                        search: 'none'
+                    },
+                    columns: [1,2,3,4,5,6,7,8,9]
+                }
+            }*/
             ],
 
             paging: false,
@@ -51,7 +60,7 @@
                     <th >Meses Anio</th> -->
                     <th style="min-width:40px; max-width:90px;" >Monto Mensual</th> 
                     <th >Monto Estimado Anual</th>
-                    <th >Monto Estimado Total</th>
+                    <th >Monto Total</th>
                     <th>Tipo</th>
                     <th style="display:none"  >Observacion</th>
                     <th></th>
