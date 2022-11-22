@@ -48,7 +48,7 @@ $completo=1;
     <dialog class="divfiltros center " id="modalSubirArchivo" style="margin-top:50px; z-index: 1; animation: createBox .15s">
  
             <h3 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h3>
-                <div class="card-body">
+                <div class="card-body"> 
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Seleccione archivo</label>
                     <input class="form-control" id="loadFile" accept="application/pdf" type="file" onchange="readAsBase64()"  width="190px" height="50px"/>

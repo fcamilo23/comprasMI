@@ -518,11 +518,11 @@
 
                 <td>
 
-                    <form action="<?php echo ROOT_PATH; ?>solicitudes/eliminarArchivo" method="post">
+                    <form id="eliminarArchivo<?php echo $item['id'] ?>" action="<?php echo ROOT_PATH; ?>solicitudes/eliminarArchivo" method="post">
                             <input type="hidden" name="id" value="<?php echo $item['id'] ?>">
                             
                             <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
-                                <input type="button" name="" value="✖" style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
+                                <input type="button" name="" value="✖" onclick="deleteFileAlert(<?php echo $item['id'] ?>)"style="float:right; margin-right: 4%; border: none; color:white;" class="btn btnEliminar sombraRoja"/>
                             <?php } ?>
                     </form>  
                     <form action="<?php echo ROOT_PATH; ?>solicitudes/verArchivo" method="post">
@@ -587,9 +587,7 @@ function cartelAnularOrden(id, accion){
 
 
 <script>
-function deleteFileAlert(){
-            
-            const eliminar = document.getElementById("deleteFile");
+function deleteFileAlert(id){
             
             Swal.fire({
                 title: 'Estás seguro?',
@@ -603,12 +601,9 @@ function deleteFileAlert(){
 
                 }).then((result) => {
                 if (result.isConfirmed) {
-
                     
-                    eliminar.click();
-                    
-
-
+                    //enviar formulario
+                    document.getElementById('eliminarArchivo'+id).submit();
                 }
                 })
 

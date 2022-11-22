@@ -30,6 +30,7 @@ class Solicitudes extends Controller{
 	}
 
 	protected function nuevaNovedad(){
+		$this->sesionAbierta ();
 		$viewmodel = new SolicitudesModel();
 		$this->returnView($viewmodel->nuevaNovedad(), true);
 	}

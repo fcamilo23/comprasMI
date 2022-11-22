@@ -26,7 +26,7 @@
             order: [[0, 'desc']],
             dom: 'lBfrtip',
             searching: false,
-            ///poner titulo al excel
+            
         } );
     } );
 </script>

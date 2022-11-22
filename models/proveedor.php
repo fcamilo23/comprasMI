@@ -148,12 +148,13 @@ class ProveedorModel extends Model{
 
     public function realizarEditadoProveedor(){
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        try{
         if($post['empresa'] == ''){
             $_SESSION['mensaje']['tipo'] = 'error';
             $_SESSION['mensaje']['contenido'] = 'El campo empresa no puede estar vacio';
             header('Location: '.ROOT_URL.'proveedor/verProveedor');
         }
-        try{
+        
             $this->query('UPDATE proveedores SET empresa = :empresa, razon_social = :razon_social, rut = :rut, telefono = :telefono, email = :email WHERE id = :id');
             $this->bind(':empresa', $post['empresa']);
             $this->bind(':razon_social', $post['razon_social']);
