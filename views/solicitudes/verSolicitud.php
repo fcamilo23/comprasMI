@@ -207,8 +207,11 @@
 
         </div>
         <div style="padding: 35 40; background: rgb(239,239,239); border-radius: 5px; margin-top: 30px">
-
-        <label  style=" color: rgb(130, 130, 130); font-size:20px">Fecha de Emisión: <?php echo $_SESSION['solicitudActual']['fechaHora'] ?></label>
+        <?php
+        $fecha = $_SESSION['solicitudActual']['fechaHora'];
+        $fecha = date("d/m/Y H:i", strtotime($fecha));
+         ?>
+        <label  style=" color: rgb(130, 130, 130); font-size:20px">Fecha de Emisión: <?php echo $fecha ?></label>
 
 
         </div>
@@ -402,8 +405,13 @@
                     }
                     ?>
                     <td class="<?php echo $text ?>"> <?php echo $moneda; ?> <?php echo $orden['montoReal']; ?> </td>
+                    <?php 
                     
-                    <td class="<?php echo $text ?>"><?php echo $orden['plazoEntrega']; ?></td>
+                    $fecha = $orden['plazoEntrega'];
+                    $fechaPlazo = date("d/m/Y", strtotime($fecha));
+
+                    ?>
+                    <td class="<?php echo $text ?>"><?php echo $fechaPlazo ?></td>
 
                     <td>
                         <form  action="<?php echo ROOT_PATH; ?>orden/seleccionarOrden" method="POST">
@@ -471,7 +479,7 @@
 			</thead>
             <tbody >
             <tr><?php foreach($_SESSION['novedades'] as $item) : ?>
-                <td><?php $date = new DateTime($item['fecha'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y H:i:s') ?></td>
+                <td><?php $date = new DateTime($item['fecha'], new DateTimeZone('America/Montevideo') ); echo $date->format('d/m/Y H:i:s') ?></td>
 
                 <td><?php echo $item['texto'] ?></td>
             </tr> <?php endforeach; ?>
@@ -557,7 +565,6 @@ function cartelAnularOrden(id, accion){
         reverseButtons: true
         }).then((result) => {
         if (result.isConfirmed) {
-            //enviar a
 
             document.getElementById('anularOrden'+id).submit();
 
@@ -576,7 +583,7 @@ function cartelAnularOrden(id, accion){
     }
 </script>
 
-=======
+
 
 
 <script>

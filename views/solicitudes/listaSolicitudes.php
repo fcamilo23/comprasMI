@@ -202,7 +202,7 @@
                 <td><?php echo $item['oficinaSolicitante'] ?></td>
                 <td><?php echo $item['referente'] ?></td>
                 <td><?php echo $item['contactoReferente'] ?></td>
-                <td><?php $date = new DateTime($item['fechaHora'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y') ?></td>
+                <td><?php $date = new DateTime($item['fechaHora'], new DateTimeZone('America/Montevideo') ); echo $date->format('d/m/Y') ?></td>
                 <td><?php echo $item['detalle'] ?></td>
                 <td><?php echo $item['observaciones'] ?></td>
                 <form id="editar" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">       

@@ -140,8 +140,8 @@
                 if($p['id'] == $item['idProveedor']){ 
                     echo $p['empresa'];
                 } endforeach;?></td>
-                <td><?php if($item['inicio'] == ""){echo 'N/A';}else{ $date = new DateTime($item['inicio'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y'); }?></td>
-                <td><?php if($item['fin'] == ""){echo 'N/A';}else{ $date = new DateTime($item['fin'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y'); }?></td>
+                <td><?php if($item['inicio'] == ""){echo 'N/A';}else{ $date = new DateTime($item['inicio'], new DateTimeZone('America/Montevideo') ); echo $date->format('d/m/Y'); }?></td>
+                <td><?php if($item['fin'] == ""){echo 'N/A';}else{ $date = new DateTime($item['fin'], new DateTimeZone('America/Montevideo') ); echo $date->format('d/m/Y'); }?></td>
                 <td><strong>
                 <?php
                     $now = time(); // or your date as well
@@ -272,8 +272,8 @@
                 if($p['id'] == $item['idProveedor']){ 
                     echo $p['empresa'];
                 } endforeach;?></td>
-                <td><?php if($item['inicio'] == ""){echo 'N/A';}else{ $date = new DateTime($item['inicio'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y'); }?></td>
-                <td><?php if($item['fin'] == ""){echo 'N/A';}else{ $date = new DateTime($item['fin'], new DateTimeZone('America/Montevideo') ); echo $date->format('d-m-Y'); }?></td>
+                <td><?php if($item['inicio'] == ""){echo 'N/A';}else{ $date = new DateTime($item['inicio'], new DateTimeZone('America/Montevideo') ); echo $date->format('d/m/Y'); }?></td>
+                <td><?php if($item['fin'] == ""){echo 'N/A';}else{ $date = new DateTime($item['fin'], new DateTimeZone('America/Montevideo') ); echo $date->format('d/m/Y'); }?></td>
 
                 <form id="verOrden" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">       
 

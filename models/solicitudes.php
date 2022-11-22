@@ -341,6 +341,9 @@ if (isset($_POST['submit'])) {
         $row = $this->resultSet();
 
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(!isset($_SESSION['solicitudActual'])){
+            header('Location: '.ROOT_URL);
+        }
 
 		if($post && $post['submit']){
 

@@ -237,8 +237,8 @@ $completo=1;
                                             <th style="width: 30%">Descripcion</th>
                                             <th >Monto (<?php echo $monedaOrden ?>) </th>
                                             <th >Servicio</th>
-                                            <th >Inicio (d-m-y)</th>
-                                            <th >Fin (d-m-y)</th>
+                                            <th >Inicio (d/m/y)</th>
+                                            <th >Fin (d/m/y)</th>
                                             <th>Obs.</th>
                                             
                                         </tr>

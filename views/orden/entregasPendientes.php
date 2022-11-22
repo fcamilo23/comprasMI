@@ -5,7 +5,7 @@
              buttons: [
                 {
                 extend: 'excelHtml5',
-                title: 'Entregas Pendientes <?php echo date('d-m-Y'); ?>'
+                title: 'Entregas Pendientes <?php echo date('d/m/Y'); ?>'
             }
              ],
              order: [[2, 'desc']],
@@ -91,7 +91,7 @@
                     echo $p['empresa'];
                 } endforeach;?></td>
 
-                <td><?php echo date("d-m-Y", strtotime($item['plazoEntrega'] )); ?></td>
+                <td><?php echo date("d/m/Y", strtotime($item['plazoEntrega'] )); ?></td>
 
                 <td style="color: rgb(180,0,0)"><strong>
                 <?php

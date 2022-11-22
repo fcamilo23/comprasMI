@@ -6,7 +6,8 @@
                 extend: 'excel',
                 title: 'REPORTE DE VENCIMIENTOS VIGENTES EN EL <?php echo $viewmodel['anio']; ?>',
                 filename: '*',
-                header: true
+                header: true,
+                bom: true,
 
             }/* ,
             {

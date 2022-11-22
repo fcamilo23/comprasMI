@@ -12,7 +12,7 @@
                 
                 } ,
                 {
-                "targets": [4],
+                "targets": [4],//si se quire sacar la fecha hacer esto [4]
                 "visible": false,
                 }
             
@@ -153,7 +153,12 @@
                     }
                 } ?>
                 <td><?php echo $moneda." ".$item['montoReal']; ?></td>
-                <td><?php echo $item['plazoEntrega'] ?></td>
+                <?php
+                $fecha = $item['plazoEntrega'];
+                $fecha = date("d/m/Y", strtotime($fecha));
+                ?>
+
+                <td><?php echo $fecha ; ?> </td>
                 <td><?php foreach($_SESSION['proveedores'] as $p) : 
                 if($p['id'] == $item['idProveedor']){ 
                     echo $p['empresa'];
