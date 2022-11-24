@@ -540,7 +540,7 @@ if(sr != "" && p != "---" && np != "" && np != "0" && ap != "" && ap != "0"){
         }
 })
 }else{
-    if(estado != "Pendiente" && estado != "Cancelada" &&  estado != "En Espera"){
+    if(estado != "Pendiente" && estado != "Cancelada" &&  estado != "En Espera" &&  estado != "Solicitada"){
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
