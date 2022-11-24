@@ -9,7 +9,16 @@
              buttons: [
                 {
                 extend: 'excelHtml5',
+                text: 'EXCEL ⭳',
+                bom: true,
                 title: 'Ejecución de Inversiones <?php echo date('d-m-Y'); ?>'
+            },
+            {
+                extend: 'csv',
+                title: 'Ejecución de Inversiones <?php echo date('d-m-Y'); ?>',
+                bom: true,
+                text: 'CSV ⭳',
+
             }
              ],
              order: [[2, 'desc']],
@@ -18,11 +27,8 @@
                  "targets": [],
                  "searchable": false,
                  
-                 } ,
-                 {
-                 "targets": [0,1,2,3,4,5,6,7],
-                 "orderable": false,
-                 }
+                 } 
+
              
                 ]
              

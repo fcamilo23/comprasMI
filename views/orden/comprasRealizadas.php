@@ -3,7 +3,19 @@
        $(document).ready(function() {
         $('#compras').DataTable( {
             buttons: [
-                'excel'
+                {
+                extend: 'excelHtml5',
+                text: 'EXCEL ⭳',
+                bom: true,
+                title: 'Compras Realizadas'
+            },
+            {
+                extend: 'csv',
+                title: 'Compras Realizadas',
+                bom: true,
+                text: 'CSV ⭳',
+
+            }
             ],
             dom: 'lBfrtip',
             "columnDefs": [ {

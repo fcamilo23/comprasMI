@@ -4,22 +4,23 @@
             buttons: [
             {
                 extend: 'excel',
+                text: 'EXCEL ⭳',
                 title: 'REPORTE DE VENCIMIENTOS VIGENTES EN EL <?php echo $viewmodel['anio']; ?>',
                 filename: '*',
                 header: true,
                 bom: true,
 
-            }/* ,
+            },
             {
                 extend: 'csv',
-                text: 'Copy all data',
+                bom: true,
+                text: 'CSV ⭳',
                 exportOptions: {
                     modifier: {
-                        search: 'none'
-                    },
-                    columns: [1,2,3,4,5,6,7,8,9]
+                        page: 'all'
+                    }
                 }
-            }*/
+            }
             ],
 
             paging: false,

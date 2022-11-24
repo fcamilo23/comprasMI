@@ -3,7 +3,7 @@
 <script>
     Swal.fire({
         title: '',
-        text: "Debes ser Operador o Administrador para agregar una novedad",
+        text: "Debes ser Operador o Administrador para agregar una orden",
         icon: 'warning',
         showCancelButton: false,
         confirmButtonColor: '#3085d6',
@@ -412,11 +412,12 @@ function readAsBase64() {
                                         <hr>
                                         
                                         <div class="input-group mb-1" >
+                                            
                                             <label for="entrega" class=" m-2 form-label" style="font-weight: normal">Inicio: </label>
-                                            <input id="nuevoInicioItem" name="nuevoInicioItem" type="date" class="miniinput2 form-control" disabled>
+                                            <input id="nuevoInicioItem" name="nuevoInicioItem" type="date" min="2010-01-01" max="2050-01-01" class="miniinput2 form-control" disabled>
                                             <div id="inicioError" class="invalid-feedback"></div>
                                             <label for="fin" class="m-2 form-label" style="font-weight: normal">  Finalización:</label> 
-                                            <input id="nuevoFinItem" name="nuevoFinItem" type="date" class="miniinput2 form-control" disabled>
+                                            <input id="nuevoFinItem" name="nuevoFinItem" type="date" min="2010-01-01" max="2050-01-01" class="miniinput2 form-control" disabled>
                                         </div>
                                         <span id="fechasError" class="center2"style="color:red; position: static;" ></span>
                                         <hr>
@@ -524,11 +525,30 @@ function readAsBase64() {
             if(inicio == ""){
                 document.getElementById("inicioError").innerHTML = "La fecha de inicio no puede estar vacia";
                 error=true;
-            }
+            }else{
+                if(inicio > "2050-01-01"){
+                    document.getElementById("fechasError").innerHTML = "El inicio no puede ser mayor a 01/01/2050";
+                    error=true;
+                }
+                    if(inicio < "2010-01-01"){
+                        document.getElementById("fechasError").innerHTML = "El inicio no puede ser menor a 01/01/2010";
+                        error=true;
+                    }
+                }
             if(fin == ""){
                 document.getElementById("fechasError").innerHTML = "La fecha de fin no puede estar vacia";
                 error=true;
-            }
+            }else{
+                if(fin > "2050-01-01"){
+                    document.getElementById("fechasError").innerHTML = "El fin no puede ser mayor a 01/01/2050";
+                    error=true;
+                }
+                    if(fin < "2010-01-01"){
+                        document.getElementById("fechasError").innerHTML = "El fin no puede ser menor a 01/01/2010";
+                        error=true;
+                    }
+                }
+            
             if(inicio > fin){
                 document.getElementById("fechasError").innerHTML = "La fecha de inicio no puede ser mayor a la fecha de fin";
                 error=true;

@@ -344,8 +344,8 @@
 
 $(document).ready(function(){
     $('#add').attr('disabled',true);
-    $('#cant, #uni').keyup(function(){
-        if($('#cant').val().length !=0 && $('#uni').val().length !=0)
+    $('#cant, #uni, #desc, #totalItem').keyup(function(){
+        if($('#cant').val().length !=0 && $('#uni').val().length !=0 && $('#desc').val().length !=0 && $('#totalItem').val().length !=0)
             $('#add').attr('disabled', false);            
         else
             $('#add').attr('disabled',true);

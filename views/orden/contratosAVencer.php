@@ -3,8 +3,26 @@
        $(document).ready(function() {
         $('#compras').DataTable( {
             buttons: [
-                'excel'
-            ],order: [],
+            {
+                extend: 'excel',
+                text: 'EXCEL ⭳',
+                title: 'CONTRATOS A VENCER',
+                filename: '*',
+                header: true,
+                bom: true,
+
+            },
+            {
+                extend: 'csv',
+                title: 'CONTRATOS A VENCER',
+                filename: '*',
+                header: true,
+                bom: true,
+                text: 'CSV ⭳',
+
+            }
+            ], 
+            order: [],
             dom: 'lBfrtip',
             "columnDefs": [ {
                 "targets": [],

@@ -5,7 +5,16 @@
              buttons: [
                 {
                 extend: 'excelHtml5',
+                text: 'EXCEL ⭳',
+                bom: true,
                 title: 'Entregas Pendientes <?php echo date('d/m/Y'); ?>'
+            },
+            {
+                extend: 'csv',
+                title: 'Entregas Pendientes <?php echo date('d/m/Y'); ?>',
+                bom: true,
+                text: 'CSV ⭳',
+
             }
              ],
              order: [[2, 'desc']],
@@ -21,6 +30,28 @@
                  }
              
                 ]
+                /*
+                 [
+            {
+                extend: 'excel',
+                text: 'EXCEL ⭳',
+                title: 'CONTRATOS A VENCER',
+                filename: '*',
+                header: true,
+                bom: true,
+
+            },
+            {
+                extend: 'csv',
+                title: 'CONTRATOS A VENCER',
+                filename: '*',
+                header: true,
+                bom: true,
+                text: 'CSV ⭳',
+
+            }
+            ],
+                */
              
  
          } );

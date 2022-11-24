@@ -283,8 +283,8 @@
 <script>
     $(document).ready(function(){
     $('#alerta').attr('disabled',true);
-    $('#cant, #uni').keyup(function(){
-        if($('#cant').val().length !=0 && $('#uni').val().length !=0)
+    $('#cant, #uni, #desc, #total').keyup(function(){
+        if($('#cant').val().length !=0 && $('#uni').val().length !=0 && $('#desc').val().length !=0 && $('#total').val().length !=0)
             $('#alerta').attr('disabled', false);            
         else
             $('#alerta').attr('disabled',true);

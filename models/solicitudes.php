@@ -292,7 +292,7 @@ if (isset($_POST['submit'])) {
         $_SESSION['items'] = $this->resultSet();
 
 
-        $this->query('SELECT * FROM novedades WHERE idSolicitud="'.$_SESSION['solicitudActual']['id'].'" ORDER BY id DESC');
+        $this->query('SELECT * FROM novedades WHERE idSolicitud="'.$_SESSION['solicitudActual']['id'].'" ORDER BY fecha DESC');
         $_SESSION['novedades'] = $this->resultSet();
 
         $this->query('SELECT * FROM archivosSolicitudes WHERE idSolicitud="'.$_SESSION['solicitudActual']['id'].'"');
@@ -313,8 +313,13 @@ if (isset($_POST['submit'])) {
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
 		if($post && $post['submit']){
-            $date = new DateTime("now", new DateTimeZone('America/Montevideo') );
-            $fecha = $date->format('Y-m-d H:i:s');
+            if($post['fecha'] == ''){
+                $date = new DateTime("now", new DateTimeZone('America/Montevideo') );
+                $fecha = $date->format('Y-m-d H:i:s');
+            }else{
+                $fecha = $post['fecha'];
+            }
+
             $this->query('INSERT INTO novedades(idSolicitud, texto, fecha) VALUES("'. $_SESSION['solicitudActual']['id'] .'","'. $post['texto'] .'", "'. $fecha. '")');
             $this->execute();
 

@@ -33,7 +33,24 @@
   <div class="panel-body">
 
     <form id="registerUser" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
+        <?php //obtener fecha de hoy con hora zona horaria argentina o uruguay
+        date_default_timezone_set('America/Montevideo');
+        $fecha = date('Y-m-d H:i');
+        //restarle un año a la fecha
+        $fecha2 = strtotime ( '-1 year' , strtotime ( $fecha ) ) ;
+        $fecha2 = date ( 'Y-m-d H:i' , $fecha2 );
+        //un anio mas
+        $fecha3 = strtotime ( '+1 year' , strtotime ( $fecha ) ) ;
+        $fecha3 = date ( 'Y-m-d H:i' , $fecha3 );
 
+        ?>
+        <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon3">Fecha y hora: </span>
+        <input id="fecha" type="datetime-local" style="max-width:200px;"rows="2" min="<?php echo $fecha2 ?>" max="<?php echo $fecha3 ?>" value="<?php echo $fecha ?>" name="fecha"  class="form-control" required>
+        </div>
+        <hr>
+        <div class="form-group">
+		</div>
 		<div class="form-group">
     		<textarea id="texto" type="text" rows="7" name="texto" placeholder="Ingrese la novedad..." required class="form-control"></textarea>
 		</div>

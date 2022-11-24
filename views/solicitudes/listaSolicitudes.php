@@ -5,7 +5,20 @@
        $(document).ready(function() {
         $('#solis').DataTable( {
             buttons: [
-                'excel'
+
+                {
+                extend: 'excelHtml5',
+                text: 'EXCEL ⭳',
+                bom: true,
+                title: 'Lista de solicitudes'
+            },
+            {
+                extend: 'csv',
+                title: 'Lista de solicitudes',
+                bom: true,
+                text: 'CSV ⭳',
+
+            }
             ],
             order: [[0, 'desc']],
             dom: 'lBfrtip',
