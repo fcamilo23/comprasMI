@@ -24,7 +24,7 @@
                 
                 } ,
                 {
-                "targets": [4],//si se quire sacar la fecha hacer esto [4]
+                "targets": [],//si se quire sacar la fecha hacer esto [4]
                 "visible": false,
                 }
             
@@ -72,19 +72,10 @@
 
 		</select> 
 
-        <label  style="margin-top: 15px; color: rgb(130, 130, 130)">Articulos o Servicios</label>
-        <select style ="" name="servicio" class="form-control" onchange="mostrarFecha(this)" >
-            <option value="0" >Ambos</option>
-            <option value="Si" >Servicios</option>
-            <option value="No" >Artículos</option>
 
-            
-
-		</select> 
-
-        <div id="fechas" style="" hidden>
+        <div id="fechas" style="" >
     <div style="border: 1px solid rgb(200,200,200); padding: 20px; border-radius: 5px; margin-top: 20px">
-        <strong ><label class="" style="color:grey; text-align: center; margin-bottom: 15px">Fecha de Inicio</label></strong>
+        <strong ><label class="" style="color:grey; text-align: center; margin-bottom: 15px">Fecha de Entrega</label></strong>
         <div style="">
             <label class="" style="display: inline-block; color:grey" for="">Desde</label>
             <input class="form-control" style="display: inline-block;  width: 150px;" id="fechaIni" type="date" name="fechaIni" onchange="cambiarFecha(this)">
@@ -93,15 +84,7 @@
         </div>
         </div>
 
-        <div style="border: 1px solid rgb(200,200,200); padding: 20px; border-radius: 5px; margin-top: 20px">
-        <strong ><label class="" style="color:grey; text-align: center; margin-bottom: 15px">Fecha de Finalización</label></strong>
-        <div style="">
-            <label class="" style="display: inline-block; color:grey" for="">Desde</label>
-            <input class="form-control" style="display: inline-block;  width: 150px;" id="fechaIni1" type="date" name="fechaIni1" onchange="cambiarFecha1(this)">
-            <label class="" style="display: inline-block; color:grey; margin-left: 40px" for="">Hasta</label>
-            <input class="form-control" style="display: inline-block; width: 40%; " id="fechaFin1" type="date" disabled name="fechaFin1"><br>
-        </div>
-        </div>
+       
 
         </div>
 
@@ -128,7 +111,7 @@
                     <th>Procedimiento</th>
                     <th>Orden</th>
                     <th>Monto</th>
-                    <th>Plazo Entrega</th>
+                    <th>Fecha Entrega</th>
                     <th>Proveedor</th>
                     <th></th>
 

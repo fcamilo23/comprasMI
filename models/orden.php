@@ -274,8 +274,8 @@ public function verOrden(){
     }
 
     public function comprasRealizadas(){
-
-        $this->query('SELECT * FROM ordenes');
+        $con = 'SELECT * FROM ordenes WHERE estado = "activo"';
+        $this->query($con);
         $row = $this->resultSet();
 
         $this->query('SELECT * FROM proveedores');
@@ -293,7 +293,7 @@ public function verOrden(){
 
             if($_POST['submit'] == 'Filtrar'){
 
-                $consulta = "SELECT * FROM ordenes WHERE ";
+                $consulta = $con;
     
                /* if($post['fechaIni'] != "" && $post['fechaFin'] != "" ){
                     if($post['fechaIni'] != $post['fechaFin']){
@@ -307,36 +307,24 @@ public function verOrden(){
                
     
                 if($post['procedimiento'] != '0'){
-                    $consulta = $consulta . "procedimiento = '" . $post['procedimiento'] . "'";
-                    if($post['servicio'] != '0' ){$consulta .= " AND ";}
+                    $consulta = $consulta . "AND procedimiento LIKE '" . $post['procedimiento'] . "%'";
     
                 }
     
-                if($post['servicio'] != '0'){
-                    $consulta = $consulta . "servicio = '" . $post['servicio'] . "'";
-
-
                     if($post['fechaIni'] != "" && $post['fechaFin'] != "" ){
 
                         if($post['fechaIni'] == $post['fechaFin']){
-                            $consulta = $consulta . " AND fechaInicio LIKE '" . $post['fechaIni'] . "%'";
+                            $consulta = $consulta . " AND plazoEntrega LIKE '" . $post['fechaIni'] . "%'";
                         }else{
-                            $consulta = $consulta . " AND fechaInicio BETWEEN '" . $post['fechaIni'] . "' AND '" . $post['fechaFin'] . "'";
+                            $consulta = $consulta . " AND plazoEntrega BETWEEN '" . $post['fechaIni'] . "' AND '" . $post['fechaFin'] . "'";
                         
                         }
 
 
-                        if($post['fechaIni1'] != "" && $post['fechaFin1'] != ""){
-                            if($post['fechaIni1'] == $post['fechaFin1']){
-                                $consulta = $consulta . " AND fechaFin LIKE '" . $post['fechaIni1'] . "%'";
-                            }else{
-                                $consulta = $consulta . " AND fechaFin BETWEEN '" . $post['fechaIni1'] . "' AND '" . $post['fechaFin1'] . "'";
-                            }
-                           
-                        }
+                        
                     }
     
-                }
+                
                 if($consulta == "SELECT * FROM ordenes WHERE "){$consulta = "SELECT * FROM ordenes";}
                 $this->query($consulta);
                 $row = $this->resultSet();
