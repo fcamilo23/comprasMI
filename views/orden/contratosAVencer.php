@@ -328,10 +328,10 @@
 
     <script>
         function abrirModel(){
-            $('#modalanio').modal('show');
+            document.getElementById("modalanio").style.display = "block";
         }
         function cerrarModel(){
-            $('#modalanio').modal('hide');
+            document.getElementById("modalanio").style.display = "none";
         }
 
        

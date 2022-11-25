@@ -85,7 +85,7 @@ if($_SESSION['user_data']['rol'] == 'Consultor' && $_SESSION['usuarioActual']['c
     <input required class="form-control" name="apellido" style="font-size: 20px; width: 100%; margin: 0px" value="<?php echo $_SESSION['usuarioActual']['apellido']; ?>" /> <br>
     
     <label  style="float: left; margin-top: 5px; color: rgb(130, 130, 130)">Email:</label>
-    <input required class="form-control" name="email" style="font-size: 20px; width: 100%; margin: 0px"value="<?php echo $_SESSION['usuarioActual']['email']; ?>" /> <br>
+    <input type="email" required class="form-control" name="email" style="font-size: 20px; width: 100%; margin: 0px"value="<?php echo $_SESSION['usuarioActual']['email']; ?>" /> <br>
     
     <label  style="float: left; margin-top: 5px; color: rgb(130, 130, 130)">Rol:</label>
     <?php if($_SESSION['user_data']['rol'] == 'Administrador'){ ?>
