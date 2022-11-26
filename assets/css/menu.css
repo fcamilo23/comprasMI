@@ -477,11 +477,6 @@ tr:not(.exclude, .total, .semaforoRojo, .semaforoVerde, .semaforoAmarillo):hover
 }
 
 
-
-
-
-
-
 #check{
     display: none;
 }
@@ -504,6 +499,7 @@ tr:not(.exclude, .total, .semaforoRojo, .semaforoVerde, .semaforoAmarillo):hover
     opacity: 0;
     visibility: hidden;
     z-index: 1;
+    height: 150vh;
 }
 #check:checked ~ .container-menu{
     opacity: 1;
@@ -518,9 +514,6 @@ input::-webkit-inner-spin-button {
 
 
 
-input{
-    
-}
 
 
 .semaforoRojo{
@@ -562,6 +555,7 @@ input{
     position: relative;
     transition: all 500ms ease;
     transform: translateX(-100%);
+    height: 150vh;
 }
 #check:checked ~ .container-menu .cont-menu{
     transform: translateX(0%);

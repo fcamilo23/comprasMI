@@ -17,8 +17,11 @@ function mensajes(){
         $_SESSION['mensaje']['contenido'] = '';
         } ?>
     } 
+
+
 </script>
 <body>
+    
 <div class="modal" tabindex="-1" role="dialog" id="modalModificar">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -183,6 +186,8 @@ function mensajes(){
     function cartelModificarReferente(id){
     //abrir modal modalModificar
     $('#modalModificar').modal('show');
+    $('.modal-backdrop').css('min-height', '100%');
+    $('.modal-backdrop').css('min-width', '100%');
         var referente = document.getElementById("referente"+id).value;
         var correo = document.getElementById("correo"+id).value;
         var telefono = document.getElementById("telefono"+id).value;

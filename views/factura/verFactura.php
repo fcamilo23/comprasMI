@@ -2,7 +2,7 @@
 
 <a href="<?php echo ROOT_URL; ?>orden/verOrden"><input type="button" style="width: 100px; margin-left: 30px; margin-bottom: 20px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
 
-<nav class="navbar sticky-top navbar-light bg-light"">
+<nav class="navbar sticky-top navbar-light bg-light" style="z-index:1" >
         <h2 style="color: #001d5a; text-align: center;"class="center">FACTURA: <?php echo $viewmodel['numeroFactura'] ?></h2>
 </nav>
     <div class="container" style="margin-top: 40px; margin-bottom: 40px" >
