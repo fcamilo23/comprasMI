@@ -84,10 +84,10 @@ class ProveedorModel extends Model{
 
     public function editarReferente(){
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-         if($post['ereferente'] == ''){
+         if(!isset($post['ereferente']) || $post['ereferente'] != ''){
             $_SESSION['mensaje']['tipo'] = 'error';
             $_SESSION['mensaje']['contenido'] = 'El campo nombre del Referente no puede estar vacio';
-            header('Location: '.ROOT_URL.'proveedor/verProveedor');
+            header('Location: '.ROOT_URL);
         }
         try{
             $this->query('UPDATE referentes SET nombre = :nombre, telefono = :telefono, email = :email WHERE id = :id');
@@ -109,6 +109,15 @@ class ProveedorModel extends Model{
 
     public function agregarReferente(){
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(!isset($post['nreferente']) || $post['nreferente'] == ''){
+            header('Location: '.ROOT_URL);
+            return;
+        }
+        if($post['nreferente'] == ''){
+            $_SESSION['mensaje']['tipo'] = 'error';
+            $_SESSION['mensaje']['contenido'] = 'El campo nombre del Referente no puede estar vacio';
+            header('Location: '.ROOT_URL.'proveedor/verProveedor');
+        }
         //controlar si el nombre se repite
         $this->query('SELECT * FROM referentes WHERE nombre = :nombre AND idProveedor = :idProveedor');
         $this->bind(':nombre', $post['nreferente']);
