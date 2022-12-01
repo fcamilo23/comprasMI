@@ -176,17 +176,7 @@
                  </tr>
              </thead>
              <tbody >
-             <tr class="exclude">
-             <td></td>
-             <td></td>
-             <td></td>
-             <td></td>
-             <td></td>
-             <td></td>
-             <td></td>
-             <td></td>
-
-             </tr>
+            
              <?php $totalestimado=0; $totalreal=0; $totalfacturado=0; foreach($viewmodel as $item) : ?>
                 <tr >
                 <td><?php echo $item['detalle'] ?></td>
@@ -210,19 +200,7 @@
  
              </tr> <?php endforeach; ?>
 
-             <tr class="exclude">
-             <td></td>
-             <td></td>
-             <td></td>
-             <td></td>
-             <td></td>
-             <td></td>
-             <td></td>
-             <td></td>
-             
-
-
-             </tr>
+            
              
              <tr class="total " style="background: rgb(30,30,30)">
                 <td></td>
