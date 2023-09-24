@@ -16,7 +16,7 @@
 <div class="row col-12" style="background: white;  height: 200%"> 
 <div class="text-center center inicio"  >
 <div class="center" style=" width: 100%">
-	<img src="<?php echo ROOT_PATH; ?>imagenes/asd.png" alt="" style="margin-bottom: 50px" class="homeimg">
+	<!--<img src="<?php echo ROOT_PATH; ?>imagenes/asd.png" alt="" style="margin-bottom: 50px" class="homeimg"> --> 
 
 	
     <?php if(isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] == true){?> 

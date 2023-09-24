@@ -359,7 +359,7 @@ th, td{
 }
 
 thead{
-	background-color: #001d5a;
+	background-color: #025396;
 	border-bottom: solid 5px #000d27;
 	color: white;
 }
@@ -550,7 +550,7 @@ input::-webkit-inner-spin-button {
 .cont-menu{
     width: 100%;
     max-width: 350px;
-    background: #00133a;
+    background: #014780;
     height: 100vh;
     position: relative;
     transition: all 500ms ease;
@@ -726,7 +726,11 @@ section{
     background: white;
     width: 100%;
     border-radius: 5px;
-    padding: 20px;
+    padding: 60px;
+
+    -webkit-box-shadow: 0px 0px 5px 5px #b8b8b8;
+    -webkit-transform:scale(1.0);transform:scale(1.0);
+    
 }
 
 .iconmargen{
