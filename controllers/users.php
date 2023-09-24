@@ -11,15 +11,28 @@ class Users extends Controller{
 	}
 
 	protected function listaUsuarios(){
+		$this->sesionAbierta ();
 		$viewmodel = new UserModel();
 		$this->returnView($viewmodel->listaUsuarios(), true);
 	}
 
 
 	protected function profile(){
+		$this->sesionAbierta ();
 		$viewmodel = new UserModel();
 		$this->returnView($viewmodel->profile(), true);
 	}
+	protected function resetPassword(){
+		$viewmodel = new UserModel();
+		$this->returnView($viewmodel->resetPassword(), true);
+	}
+
+	protected function editar(){
+		$viewmodel = new UserModel();
+		$this->returnView($viewmodel->editar(), true);
+	}
+
+	
 
 
 
@@ -30,10 +43,10 @@ class Users extends Controller{
 		}
 		else{
 			if(!isValidatedcedula(new UserModel(), $_POST["cedula"])){
-				echo "<label class=rojo>Ya existe un usuario con este cedula</label>"; 
+				echo "<label class=rojo>Ya existe un usuario con esta CI</label>"; 
 			}
 			else{
-				echo "<label class=verde>cedula disponible</label>"; 
+				echo "<label class=verde>CI disponible</label>"; 
 			}
 		}
 	}
@@ -59,13 +72,13 @@ class Users extends Controller{
 		$this->returnView($viewmodel->login(), true);
 	}
 
-	protected function loginWithFacebook(){
+/*	protected function loginWithFacebook(){
 		$viewmodel = new UserModel();
 		return $viewmodel->loginWithFacebook();
 	
 		// $this->returnView($viewmodel->loginWithFacebook(), false);
 	}
-
+*/
 	protected function logout(){
 		unset($_SESSION['is_logged_in']);
 		unset($_SESSION['user_data']);
@@ -73,4 +86,12 @@ class Users extends Controller{
 		// Redirect
 		header('Location: '.ROOT_URL);
 	}
+	
+	protected function sesionAbierta () {
+		if (!isset($_SESSION['is_logged_in']) ||$_SESSION['is_logged_in'] == false){
+			 header('Location: '.ROOT_URL.'users/login');
+		 }
+	}
+	
+
 }

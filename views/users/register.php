@@ -1,7 +1,32 @@
-<div class="row col-12" style="margin-top: 50px; padding: 25px">
+<?php
+if($_SESSION['user_data']['rol'] != 'Administrador'){
+	?>
+	<script>
+    Swal.fire({
+        title: '',
+        text: "Solo los administradores tienen acceso al registro de usuarios",
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ok'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            window.location="<?php echo ROOT_URL; ?>";
+        }
+        })
 
-<div class="col-9 panel panel-default center" >
-  <div style="margin-top: 80px; margin-bottom: 50px;" class="panel-heading center">
+</script>
+
+	<?php
+}else{
+?>
+<div class="container mt-5 mb-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8">
+            <div class="card">
+                <div class="card-body">
+				<div style="margin-top: 80px; margin-bottom: 50px;" class="panel-heading center">
     <h1 style="color: #001d5a" class="panel-title">Registrar usuario</h1>
   </div>
   <div class="panel-body">
@@ -46,8 +71,36 @@
     	<input style="margin-top: 25px; margin-bottom: 15px;border: none;"  class="btn btn-primary sombraAzul" name="submit" type="submit" value="Registrar" />
     </form>
   </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
 <script type="text/javascript">
 	let cedulaInput = document.getElementById("cedula");
@@ -84,20 +137,7 @@
 			return false;
 		});
 
-		$("#email").blur(function(){  
-			var name = $(this).val(); 
-			$("#resultEmail").html('checking...');
-			$.ajax({
-				type : 'POST',
-				url  : "validateEmail",
-				data : $(this).serialize(),
-				success : function(data){
-					console.log(data)
-					$("#resultEmail").html(data);
-				}
-			});
-			return false;
-		});
+		
 
 	})
 
@@ -124,3 +164,6 @@
             widget_cloudinary.open()
         }, false)
 </script>
+
+
+<?php } ?>

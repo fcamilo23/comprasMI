@@ -1,0 +1,594 @@
+<?php
+class OrdenModel extends Model{
+    public function nuevaOrden(){
+        if(!isset($_SESSION['solicitudActual'])){
+            header('Location: '.ROOT_URL);
+        }
+        //obtener los proovedores
+        $this->query('SELECT id, empresa, razon_social, rut FROM proveedores');
+        $lstProveedores = $this->resultSet();
+        //obtener los items de la solicitud
+        $this->query('SELECT * FROM item WHERE idSolicitud = :id_solicitud');
+        $this->bind(':id_solicitud', $_SESSION['solicitudActual']['id']);
+        $lstItems = $this->resultSet();
+        $viewmodel = array(
+            'proveedores' => $lstProveedores,
+            'items' => $lstItems
+        );
+         return $viewmodel;
+    }
+
+    public function agregarOrden(){
+
+        $error="";
+        try{
+            $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            if(!isset($post)){
+                header('Location: '.ROOT_URL);
+                return;
+            }
+
+            $procedimiento= $_SESSION['solicitudActual']['procedimiento']." ".$_SESSION['solicitudActual']['numProcedimiento']." - ".$_SESSION['solicitudActual']['anioProcedimiento'];
+
+                $error="Error al agregar la orden, no se cargaron ni servicios ni archivos";
+                $this->query('INSERT INTO   ordenes (numero, anio, moneda, montoReal, plazoEntrega, formaPago,numeroAmpliacion, idProveedor,idSolicitud,estado, procedimiento, entregada) 
+                VALUES (:numero, :anio, :moneda, :montoReal, :plazoEntrega, :formaPago,:numeroAmpliacion, :idProveedor, :idSolicitud, "activo", :procedimiento, "no")');
+                $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+                $this->bind(':numero', $post['numero']);
+                $this->bind(':anio', $post['anio']);
+                $this->bind(':moneda', $post['moneda']);
+                $this->bind(':montoReal', $post['montoReal']);
+                $this->bind(':formaPago', $post['formaPago']);
+                $this->bind(':plazoEntrega', $post['plazoEntrega']);
+                $this->bind(':numeroAmpliacion', $post['numeroAmpliacion']);
+                $this->bind(':idProveedor', $post['idProveedor']);
+                $this->bind(':procedimiento', $procedimiento);
+                $this->execute();
+
+                $this->query('SELECT fechaPrimerOrden FROM solicitudescompra WHERE id = "'. $_SESSION['solicitudActual']['id'] .'"');
+                $fechaPrimerOrden = $this->single();
+                if($fechaPrimerOrden['fechaPrimerOrden'] == NULL){
+                    $this->query('UPDATE solicitudescompra SET fechaPrimerOrden = "'. date('Y/m/d') .'" WHERE id = "'.$_SESSION['solicitudActual']['id'].'" ');
+                    $this->execute();
+                }
+
+                $this->query('SELECT id FROM ordenes WHERE idSolicitud = :idSolicitud AND numero = :numero AND anio = :anio LIMIT 1' );
+                $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+                $this->bind(':numero', $post['numero']);
+                $this->bind(':anio', $post['anio']);
+                $this->execute();
+                $idOrden = $this->single();
+
+                $error = "Error al agregar los items a la orden";
+                if(isset($post['itemdescripcion'])){
+                    for($i=0;$i<sizeof($post['itemdescripcion']);$i++){
+                        $inicio=null;
+                        $fin=null;
+                        if($post['itemtipo'][$i] == 'General' || $post['itemtipo'][$i] == 'Licencia'  ){
+                            $inicio = $post['iteminicio'][$i];
+                            $fin = $post['itemfin'][$i];
+                        }
+
+                        $this->query('INSERT INTO itemOrden (descripcion, cantidad, unidad, monto, idOrden, idSolicitud, moneda, idItemSolicitud,esservicio,inicio,fin,sinFacturar,observacion) 
+                                                VALUES (:descripcion, :cantidad, :unidad, :monto, :idOrden,:idSolicitud,:moneda,:idItemSolicitud,:esservicio,:inicio,:fin,:cantidad,:observacion)');
+                        $this->bind(':descripcion', $post['itemdescripcion'][$i]);
+                        $this->bind(':cantidad', $post['itemcantidad'][$i]);
+                        $this->bind(':unidad', $post['itemunidad'][$i]);
+                        $this->bind(':monto', $post['itemprecio'][$i]);
+                        $this->bind(':idOrden', $idOrden['id']);
+                        $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+                        $this->bind(':moneda', $post['moneda']);
+                        $this->bind(':idItemSolicitud', $post['itemidsolicitud'][$i]);
+                        $this->bind(':esservicio', $post['itemtipo'][$i]);
+                        $this->bind(':inicio',$inicio);
+                        $this->bind(':fin', $fin);
+                        $this->bind(':observacion', $post['itemobservacion'][$i]);
+                        $this->execute();
+                    }
+                }
+                if(isset($post['pdf'])){
+                    $error="Error al cargar los archivo/s adjunto/s:";
+                    for($i=0; $i<sizeof($post['pdf']); $i++){
+                        $error=$error.$post['pdfnombre'][$i]." ";
+                        $this->query('INSERT INTO archivosordenes (`idSolicitud`,`idOrden`, `nombre`, `pdf`) VALUES(:idSolicitud, :idOrden, :nombre, :pdf)');
+                        $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+                        $this->bind(':idOrden', $idOrden['id']);
+                        $this->bind(':nombre', $post['pdfnombre'][$i]);
+                        $this->bind(':pdf', $post['pdf'][$i]);
+        
+                        $this->execute();
+                    }
+                }
+
+                $_SESSION['mensaje']['tipo'] = 'success';
+                $_SESSION['mensaje']['contenido'] = 'Orden agregada correctamente';
+                header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+                return;
+        }catch(PDOException $e){
+                $_SESSION['mensaje']['tipo'] = 'error';
+                $_SESSION['mensaje']['contenido'] = $error;
+                header('Location: '.ROOT_URL.'solicitudes/verSolicitud');
+                return;      
+        }
+
+    }
+   
+
+
+    public function seleccionarOrden(){
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(isset($post['idOrden'])){
+            $_SESSION['ordenActual'] = $post['idOrden'];
+        }else{
+            header('Location: '.ROOT_URL);
+            return;
+        }
+        header('Location: '.ROOT_URL.'orden/verOrden');
+        return;
+    }
+///ver orden
+public function verOrden(){
+
+    //este if es para detectar si abro una orden desde la vista de "compras realizadas", no deberia afectar el resto
+    if(!isset($_SESSION['ordenActual']) && !isset($_SESSION['idOrden'])){
+        header('Location: '.ROOT_URL);
+    }
+        if(isset($_SESSION['idOrden'])){
+            $_SESSION['ordenActual'] = $_SESSION['idOrden'];
+            unset($_SESSION['idOrden']);
+        }
+    //----------------------------------
+    
+    $this->query('SELECT * FROM ordenes WHERE id = :id');
+    $this->bind(':id',  $_SESSION['ordenActual'] );
+    $orden = $this->single();
+
+    $this->query('SELECT * FROM itemOrden WHERE idOrden = :idOrden');
+    $this->bind(':idOrden',  $_SESSION['ordenActual'] );
+    $items = $this->resultSet();
+
+    ///obtener solicitud
+    $this->query('SELECT * FROM solicitudescompra WHERE id = :id');
+    $this->bind(':id',  $orden['idSolicitud'] );
+    $solicitud = $this->single();
+    
+    $this->query('SELECT id, nombre FROM archivosordenes WHERE idOrden = :idOrden');
+    $this->bind(':idOrden',  $_SESSION['ordenActual'] );
+    $archivos = $this->resultSet();
+   
+    $this->query('SELECT * FROM proveedores WHERE id = :id');
+    $this->bind(':id', $orden['idProveedor']);
+    $proveedor = $this->single();
+    
+    $this->query('SELECT * FROM facturas WHERE idOrden = :idOrden');
+    $this->bind(':idOrden',  $_SESSION['ordenActual'] );
+    $facturas = $this->resultSet();
+
+    if(isset($post) && isset($post['submit'])){
+        header('Location: '.ROOT_URL.'home/cotizaciones');
+
+    }
+
+    
+    $viewmodel = array(
+        'orden' => $orden,
+        'archivos' => $archivos,
+        'proveedor' => $proveedor,
+        'facturas' => $facturas,
+        'solicitud' => $solicitud,
+        'items' => $items
+    );
+    return $viewmodel;
+
+}
+///ver forma que no aparezca reenviar formulario\
+
+    public function verArchivo(){
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(!isset($post)){
+            header('Location: '.ROOT_URL);
+            return;
+        }
+        $this->query('SELECT * FROM archivosordenes WHERE id = :id');
+        $this->bind(':id', $post['idArchivo']);
+        $viewmodel=$this->single();
+        return $viewmodel;
+    }
+
+    public function eliminarArchivo(){
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(!isset($post)){
+            header('Location: '.ROOT_URL);
+            return;
+        }
+        $this->query('DELETE FROM archivosordenes WHERE id = :id');
+        $this->bind(':id', $post['idArchivo']);
+        $this->execute();
+        header('Location: '.ROOT_URL.'orden/verOrden');
+        return;
+    }
+
+
+
+    public function entregasPendientes(){
+
+        $this->query('SELECT * FROM proveedores');
+        $_SESSION['proveedores'] = $this->resultSet();
+        
+        $this->query('SELECT * FROM ordenes WHERE entregada <> "entregada" AND estado = "activo" AND plazoEntrega < (select curdate()) AND idSolicitud IN (SELECT id FROM solicitudescompra WHERE (gastos_inversiones = "Bienes de Consumo" OR gastos_inversiones = "Bienes de Uso") AND estado = "Adjudicada")');
+        $row = $this->resultSet();
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        if(isset($post) && isset($post['submit'])){
+            //echo 7623;
+            $_SESSION['idOrden'] = $post['numero'];
+            header('Location: '.ROOT_URL.'orden/verOrden');
+
+
+        }
+        
+        return $row;
+    }
+
+
+
+
+    public function subirArchivos (){
+
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(!isset($post)){
+            header('Location: '.ROOT_URL);
+            return;
+        }
+        if(isset($post['pdf'])){
+            $mensajeError="";
+            for($i=0; $i<sizeof($post['pdf']); $i++){
+                try{
+                $this->query('INSERT INTO archivosordenes (`idSolicitud`,`idOrden`, `nombre`, `pdf`) VALUES(:idSolicitud, :idOrden, :nombre, :pdf)');
+                $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+                $this->bind(':idOrden', $_SESSION['ordenActual']);
+                $this->bind(':nombre', $post['pdfnombre'][$i]);
+                $this->bind(':pdf', $post['pdf'][$i]);
+
+                $this->execute();
+                }catch(PDOException $e){
+                    $mensajeError = $mensajeError."Error al subir el archivo ".$post['pdfnombre'][$i].". ";
+                }
+            }
+            if($mensajeError==""){
+                $_SESSION['mensaje']['tipo'] = 'success';
+                $_SESSION['mensaje']['contenido'] = 'Archivos subidos correctamente';
+                header('Location: '.ROOT_URL.'orden/verOrden#archivos');
+                return;
+            }else{
+                $_SESSION['mensaje']['tipo'] = 'error';
+                $_SESSION['mensaje']['contenido'] = $mensajeError;
+                header('Location: '.ROOT_URL.'orden/verOrden#archivos');
+                return;
+            }
+        }else{
+            $_SESSION['mensaje']['tipo'] = 'error';
+            $_SESSION['mensaje']['contenido'] = 'No tenia ningun archivo en la lista';
+            header('Location: '.ROOT_URL.'orden/verOrden#archivos');
+        }
+    }
+
+    public function comprasRealizadas(){
+        $con = 'SELECT * FROM ordenes WHERE estado = "activo"';
+        $this->query($con);
+        $row = $this->resultSet();
+
+        $this->query('SELECT * FROM proveedores');
+        $_SESSION['proveedores'] = $this->resultSet();
+
+
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(isset($post) && isset($post['submit'])){
+            if($post['submit'] == 'Ampliar'){
+                $_SESSION['idOrden'] = $post['numero'];
+                header('Location: '.ROOT_URL.'orden/verOrden');
+
+            }
+
+
+            if($_POST['submit'] == 'Filtrar'){
+
+                $consulta = $con;
+    
+               /* if($post['fechaIni'] != "" && $post['fechaFin'] != "" ){
+                    if($post['fechaIni'] != $post['fechaFin']){
+                        $consulta = $consulta . "fechaHora BETWEEN '" . $post['fechaIni'] . "' AND '" . $post['fechaFin'] . "'";
+                    }else{
+                        $consulta = $consulta . "fechaHora LIKE '" . $post['fechaIni'] . "%'";
+                    }
+                    if($post['estado'] != '0' || $post['planificado'] != '0' || $post['procedimiento'] != '0' || $post['gastos_inversiones'] != '0'){$consulta .= " AND ";}
+                }
+    */
+               
+    
+                if($post['procedimiento'] != '0'){
+                    $consulta = $consulta . "AND procedimiento LIKE '" . $post['procedimiento'] . "%'";
+    
+                }
+    
+                    if($post['fechaIni'] != "" && $post['fechaFin'] != "" ){
+
+                        if($post['fechaIni'] == $post['fechaFin']){
+                            $consulta = $consulta . " AND plazoEntrega LIKE '" . $post['fechaIni'] . "%'";
+                        }else{
+                            $consulta = $consulta . " AND plazoEntrega BETWEEN '" . $post['fechaIni'] . "' AND '" . $post['fechaFin'] . "'";
+                        
+                        }
+
+
+                        
+                    }
+    
+                
+                if($consulta == "SELECT * FROM ordenes WHERE "){$consulta = "SELECT * FROM ordenes";}
+                $this->query($consulta);
+                $row = $this->resultSet();
+            }
+        }
+        return $row;
+    }
+
+    public function anularOrden(){
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(!isset($post['cambiar'])){
+            header('Location: '.ROOT_URL);
+            return;
+        }
+        if(isset($post['idOrden'])&&isset($post['cambiar'])){
+            if($post['cambiar'] == 'inactivo' || $post['cambiar'] == 'activo'){
+                $this->query('UPDATE ordenes SET estado = :estado WHERE id = :id');
+                $this->bind(':id', $post['idOrden']);
+                $this->bind(':estado', $post['cambiar']);
+                $this->execute();
+                $_SESSION['mensaje']['tipo'] = 'success';
+                $_SESSION['mensaje']['contenido'] = 'Cambio realizado correctamente';
+                header('Location: '.ROOT_URL.'solicitudes/verSolicitud#ordenes');
+                return;
+            }
+        }
+    }
+      
+    public function editarOrden(){
+        if(!isset($_SESSION['ordenActual'])){
+            header('Location: '.ROOT_URL);
+        }
+        $this->query('SELECT id FROM facturas WHERE idOrden = :idOrden');
+        $this->bind(':idOrden', $_SESSION['ordenActual']);
+        $factura = $this->resultSet();
+        //si hay al menos una factura no se puede editar
+        if(count($factura) > 0){
+            $_SESSION['mensaje']['tipo'] = 'error';
+            $_SESSION['mensaje']['contenido'] = 'No se puede editar una orden que ya tiene una factura asociada';
+            header('Location: '.ROOT_URL.'orden/verOrden');
+            return;
+        }
+
+        $this->query('SELECT * FROM proveedores');
+        $proveedores = $this->resultSet();
+
+        $this->query('SELECT * FROM item WHERE idSolicitud = :idSolicitud');
+        $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+        $itemsSolicitud = $this->resultSet();
+
+
+        $this->query('SELECT * FROM itemOrden WHERE idOrden = :idOrden');
+        $this->bind(':idOrden', $_SESSION['ordenActual']);
+        $itemsOrden = $this->resultSet();
+
+        $this->query('SELECT *, p.empresa as nombreEmpresa FROM ordenes o JOIN proveedores p on o.idProveedor = p.id WHERE o.id = :id');
+        $this->bind(':id', $_SESSION['ordenActual']);
+        $orden = $this->single();
+        $viewmodel = array(
+            'proveedores' => $proveedores,
+            'orden' => $orden,
+            'itemsSolicitud' => $itemsSolicitud,
+            'itemsOrden' => $itemsOrden
+        );
+        return $viewmodel;
+    }
+    
+    public function modificarOrden(){
+        try{
+            $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            if(!isset($post)){
+                header('Location: '.ROOT_URL);
+            }
+            $proveedor = $post['idProveedor'];
+
+            if(isset($post['editadoIdProveedor'])){
+                $proveedor = $post['editadoIdProveedor'];
+            }
+            if(isset($post['quitarItem'])){
+                for($i = 0; $i < sizeof($post['quitarItem']); $i++){
+                    $this->query('DELETE FROM itemOrden WHERE id = :id');
+                    $this->bind(':id', $post['quitarItem'][$i]);
+                    $this->execute();
+                }
+            }
+
+            if(isset($post['itemdescripcion'])){
+                for($i=0;$i<sizeof($post['itemdescripcion']);$i++){
+                    $inicio=null;
+                    $fin=null;
+                    if($post['itemtipo'][$i] == 'General' || $post['itemtipo'][$i] == 'Licencia'  ){
+                        $inicio = $post['iteminicio'][$i];
+                        $fin = $post['itemfin'][$i];
+                    }
+
+                    $this->query('INSERT INTO itemOrden (descripcion, cantidad, unidad, monto, idOrden, idSolicitud, moneda, idItemSolicitud,esservicio,inicio,fin,sinFacturar,observacion) 
+                    VALUES (:descripcion, :cantidad, :unidad, :monto, :idOrden,:idSolicitud,:moneda,:idItemSolicitud,:esservicio,:inicio,:fin,:cantidad,:observacion)');                    $this->bind(':descripcion', $post['itemdescripcion'][$i]);
+                    $this->bind(':cantidad', $post['itemcantidad'][$i]);
+                    $this->bind(':unidad', $post['itemunidad'][$i]);
+                    $this->bind(':monto', $post['itemprecio'][$i]);
+                    $this->bind(':idOrden', $_SESSION['ordenActual']);
+                    $this->bind(':idSolicitud', $_SESSION['solicitudActual']['id']);
+                    $this->bind(':moneda', $post['moneda']);
+                    $this->bind(':idItemSolicitud', $post['itemidsolicitud'][$i]);
+                    $this->bind(':esservicio', $post['itemtipo'][$i]);
+                    $this->bind(':inicio',$inicio);
+                    $this->bind(':fin', $fin);
+                    $this->bind(':observacion', $post['itemobservacion'][$i]);
+                    $this->execute();
+                }
+            }
+
+
+            $this->query('UPDATE ordenes SET moneda = :moneda, montoReal = :montoReal, plazoEntrega = :plazoEntrega, formaPago = :formaPago, idProveedor = :idProveedor, numeroAmpliacion = :numeroAmpliacion WHERE id = :id');
+            $this->bind(':id', $_SESSION['ordenActual']);
+            $this->bind(':moneda', $post['moneda']);
+            $this->bind(':montoReal', $post['montoReal']);
+            $this->bind(':formaPago', $post['formaPago']);
+            $this->bind(':plazoEntrega', $post['plazoEntrega']);
+
+            $this->bind(':idProveedor', $proveedor);
+            $this->bind(':numeroAmpliacion', $post['numeroAmpliacion']);
+
+            $this->execute();
+            $_SESSION['mensaje']['tipo'] = 'success';
+            $_SESSION['mensaje']['contenido'] = 'Orden modificada correctamente';
+            header('Location: '.ROOT_URL.'orden/verOrden');
+            return;
+
+        }catch(PDOException $e){
+            $_SESSION['mensaje']['tipo'] = 'error';
+            $_SESSION['mensaje']['contenido'] = 'Error al modificar la orden ...Prueba de nuevo mas tarde';
+            header('Location: '.ROOT_URL.'orden/verOrden');
+            return;      
+        }
+
+    }
+/*
+    public function eliminarOrden(){
+        try{
+         
+            // eliminar facturas, archivosfacturas, archivosOrdenes y ordenes
+            $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            //select de todas las facturas
+            $this->query('SELECT * FROM facturas WHERE idOrden = :idOrden');
+            $this->bind(':idOrden', $post['idOrden']);
+            $facturas = $this->resultSet();
+            //eliminar archivosfacturas
+            foreach($facturas as $factura){
+                $this->query('DELETE FROM archivosfacturas WHERE idFactura = :idFactura');
+                $this->bind(':idFactura', $factura['id']);
+                $this->execute();
+            }
+            //eliminar facturas
+            $this->query('DELETE FROM facturas WHERE idOrden = :idOrden');
+            $this->bind(':idOrden', $post['idOrden']);
+            $this->execute();
+            //eliminar archivosOrdenes
+            $this->query('DELETE FROM archivosordenes WHERE idOrden = :idOrden');
+            $this->bind(':idOrden', $post['idOrden']);
+            $this->execute();
+    
+            //eliminar orden
+            $this->query('DELETE FROM ordenes WHERE id = :idOrden');
+            $this->bind(':idOrden', $post['idOrden']);
+            $this->execute();
+            $_SESSION['ordenActual'] = null;
+            $_SESSION['mensaje']['tipo'] = 'success';
+            $_SESSION['mensaje']['contenido'] = 'Orden eliminada correctamente';
+            header('Location: '.ROOT_URL.'solicitudes/versolicitud');
+        }catch(PDOException $e){
+            $_SESSION['mensaje']['tipo'] = 'error';
+            $_SESSION['mensaje']['contenido'] = 'Error al eliminar la orden ...Prueba de nuevo mas tarde ';
+            header('Location: '.ROOT_URL.'solicitudes/versolicitud');
+        }
+    }
+*/
+    public function contratosAVencer (){
+
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(isset($post) && isset($post['submit'])){
+            if($post['submit'] == 'Ampliar'){
+                $_SESSION['idOrden'] = $post['numero'];      
+
+            }
+            header('Location: '.ROOT_URL.'orden/verOrden');
+        }
+
+        
+        $this->query('SELECT * FROM proveedores');
+        $_SESSION['proveedores'] = $this->resultSet();
+        
+        //obtener la fecha actual pero con un anio menos
+        $fechaActual = date('Y-m-d');
+        $fechaActual = strtotime ( '-1 year' , strtotime ( $fechaActual ) ) ;
+        $fechaActual = date ( 'Y-m-d' , $fechaActual );
+    
+        $this->query('SELECT * FROM `itemOrden` 
+                    JOIN ordenes ON itemOrden.idOrden = ordenes.id
+                    WHERE ordenes.estado="activo" AND (esservicio = "General" OR esservicio="Licencia")and itemOrden.fin >= "'.$fechaActual.'" and itemOrden.fin < (select curdate()) ORDER BY itemOrden.fin ASC');
+        $_SESSION['vencidos'] = $this->resultSet(); 
+
+
+        $this->query('SELECT * FROM `itemOrden` 
+                    JOIN ordenes ON itemOrden.idOrden = ordenes.id
+                    WHERE ordenes.estado="activo" AND (esservicio = "General" OR esservicio="Licencia") and itemOrden.fin >= (select curdate()) ORDER BY itemOrden.fin ASC');
+        $row = $this->resultSet();
+
+        return $row;
+    }
+
+    public function reporteServicios(){
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(!isset($post['anio'])){
+            header('Location: '.ROOT_URL);
+        }
+
+        $this->query('SELECT * FROM `itemOrden` 
+                    JOIN ordenes ON itemOrden.idOrden = ordenes.id
+                    JOIN proveedores ON proveedores.id = ordenes.idProveedor
+                    WHERE (esservicio = "General" OR esservicio="Licencia") and itemOrden.fin >= :inicioAnio AND itemOrden.inicio <= :finAnio 
+                    ORDER BY itemOrden.fin ASC');
+        $this->bind(':inicioAnio', $post['anio']."-01-01");
+        $this->bind(':finAnio', $post['anio']."-12-31");
+
+        $row = $this->resultSet();
+        $data = array();
+        $data['anio'] = $post['anio'];
+        $data['servicios'] = $row;  
+        return $data;
+    }
+
+    public function entregado(){
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if(isset($post) && isset($post['submit'])){
+            if(isset($post['idOrden'])){
+                $_SESSION['ordenActual'] = $post['idOrden'];
+                unset($_SESSION['idOrden']);
+            }
+            if($post['submit'] == 'Entregada'){
+                $this->query('UPDATE ordenes SET entregada = "entregada" WHERE id = :id');
+                $this->bind(':id', $_SESSION['ordenActual']);
+                $this->execute();
+                $_SESSION['mensaje']['tipo'] = 'success';
+                $_SESSION['mensaje']['contenido'] = 'Servicio entregado correctamente';
+                header('Location: '.ROOT_URL.'orden/verOrden');
+            }
+            if($post['submit'] == 'Desentregar'){
+                $this->query('UPDATE ordenes SET entregada = "no" WHERE id = :id');
+                $this->bind(':id', $_SESSION['ordenActual']);
+                $this->execute();
+                $_SESSION['mensaje']['tipo'] = 'success';
+                $_SESSION['mensaje']['contenido'] = 'La orden quedó pendiente de entrega';
+                header('Location: '.ROOT_URL.'orden/verOrden');
+            }
+        }else{
+            header('Location: '.ROOT_URL);
+        }
+    }
+
+}
+
+
+
+
+
+?>

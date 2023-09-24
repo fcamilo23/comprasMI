@@ -43,7 +43,7 @@ class UserModel extends Model{
 
 
 				
-				header('Location: '.ROOT_URL.'users/profile');
+				header('Location: '.ROOT_URL.'');
 			}
 		}
 		return;
@@ -66,6 +66,22 @@ class UserModel extends Model{
 
 	
 	public function listaUsuarios(){
+
+		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+		if(isset($post) && isset($post['submit'])){
+				if($post['submit'] == 'Editar'){
+
+					$this->query('SELECT * FROM usuarios WHERE cedula = "'. $post['ciuser'] .'"');
+					$_SESSION['usuarioActual'] = $this->single();
+
+					header('Location: '.ROOT_URL.'users/editar');
+
+
+				}
+
+		}
+
         
         $this->query('SELECT * FROM usuarios');
         $lstUsuarios = $this->resultSet();
@@ -78,22 +94,123 @@ class UserModel extends Model{
 
 
 	public function profile(){
-		$n = $_SESSION['user_data']['cedula'];
-		$this->query('SELECT * FROM puntuaciones WHERE cedula = "' . $n . '"');
-		$row = $this->resultSet();
-        
+	
+		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+		if(isset($post) && isset($post['submit'])){
 
+			$_SESSION['usuarioActual'] = $_SESSION['user_data'];
+			header('Location: '.ROOT_URL.'users/editar');
+
+		}
+
+
+        
+		
+		return;
+	}
+
+	public function resetPassword(){
+		require './assets/utils/mail.php';
+		if(!isset($_SESSION['codigo'])){
+			$_SESSION['codigo'] = strval(rand(1111, 1000000));
+			//echo $_SESSION['codigo'];
+			sendEmailPass($_SESSION['user_data']['email'], $_SESSION['codigo']);
+			$_SESSION['enviarCorreoCC'] = '0';
+		}else{
+			if(isset($_SESSION['reenviar'])){
+				$_SESSION['codigo'] = strval(rand(1111, 1000000));
+				//echo $_SESSION['codigo'];
+				sendEmailPass($_SESSION['user_data']['email'], $_SESSION['codigo']);
+				$_SESSION['enviarCorreoCC'] = '0';
+
+				unset($_SESSION['reenviar']);
+			}else{
+				$_SESSION['noEnviarCorreo'] = '0';
+			}
+
+		}
+
+		
+	
+		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+		if(isset($post) && isset($post['submit'])){
+
+			
+			if($post['code'] != $_SESSION['codigo']){
+				Messages::setMsg('El código ingresado no es correcto, intente de nuevo', 'error');
+
+			}else{
+				
+				$password = md5($post['password1']);
+				$this->query('UPDATE usuarios SET password = "'. $password .'" WHERE cedula = "'. $_SESSION['user_data']['cedula'] .'"');
+				$this->execute();
+				unset($_SESSION['codigo']);
+
+				$_SESSION['mensajePass'] = '1';
+				header('Location: '.ROOT_URL.'users/profile');
+				unset($_SESSION['codigo']);
+
+			}
+			
+
+		}
+		echo $_SESSION['codigo'];
+		return;
+	}
+
+
+
+	public function editar(){
+		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+		if(isset($post) && isset($post['submit'])){
+			if($post['submit'] == 'Guardar Cambios'){
+
+				
+				$this->query('UPDATE usuarios SET cedula = "'.$post['ci'].'", nombre = "'.$post['nombre'].'", apellido = "'.$post['apellido'].'", email = "'.$post['email'].'", rol = "'.$post['rol'].'" WHERE cedula = "'. $post['ciActual'].'" ');
+				$this->execute();
+
+				if($_SESSION['user_data']['cedula'] == $post['ciActual']){
+					$_SESSION['user_data']['cedula'] = $post['ci'];
+					$_SESSION['user_data']['nombre'] = $post['nombre'];
+					$_SESSION['user_data']['apellido'] = $post['apellido'];
+					$_SESSION['user_data']['email'] = $post['email'];
+					$_SESSION['user_data']['rol'] = $post['rol'];
+				}
+
+				header('Location: '.ROOT_URL.'users/listaUsuarios');
+
+			}
+
+			if($post['submit'] == 'Eliminar Usuario'){
+
+				$this->query('DELETE FROM usuarios WHERE cedula = "'.$post['ciActual'].'"');
+				$this->execute();
+
+				header('Location: '.ROOT_URL.'users/listaUsuarios');
+
+
+				
+			}
+
+			
+		}
         
 		
 		return;
 	}
 	
 	public function login(){
+		
+		if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] == true){
+			header('Location: '.ROOT_URL);
+		}
 		// Sanitize POST
 
 		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
 		if($post && $post['submit']){
+			//echo 441;
+
 			$password = md5($post['password']);
 			
 			$password = "";
@@ -109,13 +226,17 @@ class UserModel extends Model{
 
 			$row = $this->single();
 
+
 			if($row){
+				//echo $post['cedula'];
+
 				if($row['password'] == md5($row['codigo'])){
+					
 				$_SESSION['setPass'] = $post['cedula'];
 				header('Location: '.ROOT_URL.'users/setPass');
 					
 				}else{
-
+				$_SESSION['actualizarRep'] = '0';
 				$_SESSION['is_logged_in'] = true;
 				$_SESSION['user_data'] = array(
 					"cedula"	=> $row['cedula'],
@@ -125,10 +246,10 @@ class UserModel extends Model{
 					"rol"	=> $row['rol'],
 				);
 				?>
-					<h1>llegamos aca1</h1>
+
 				<?php
 				
-				header('Location: '.ROOT_URL.'users/profile');
+				header('Location: '.ROOT_URL.'');
 			}
 
 			} else {
