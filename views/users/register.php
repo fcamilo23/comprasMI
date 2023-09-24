@@ -24,22 +24,22 @@ if($_SESSION['user_data']['rol'] != 'Administrador'){
 <div class="container mt-5 mb-5">
     <div class="row d-flex justify-content-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8">
-            <div class="card">
+            <div class="card padding">
                 <div class="card-body">
 				<div style="margin-top: 80px; margin-bottom: 50px;" class="panel-heading center">
-    <h1 style="color: #001d5a" class="panel-title">Registrar usuario</h1>
+    <h1 style="color: #025396; text-align: center" class="panel-title">Registrar usuario</h1>
   </div>
   <div class="panel-body">
     <form id="registerUser" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
 
 		<div class="form-group">
-    		<label style="margin-top: 25px; color: #001d5a" >CI</label>
+    		<label style="margin-top: 25px; color: #025396" >CI</label>
     		<input id="cedula" type="text" name="cedula" class="form-control" />
 			<label id="resultcedula"></label>
 		</div>
 
 		<div class="form-group">
-		<label style="margin-top: 25px; color: #001d5a">Rol</label>
+		<label style="margin-top: 25px; color: #025396">Rol</label>
 			<select name="rol" class="form-control">
 				<option value="Consultor" selected>Consultor</option>
 				<option value="Operador">Operador</option>
@@ -50,18 +50,18 @@ if($_SESSION['user_data']['rol'] != 'Administrador'){
 
 		
 		<div class="form-group">
-    		<label style="margin-top: 25px; color: #001d5a">Email</label>
+    		<label style="margin-top: 25px; color: #025396">Email</label>
     		<input id="email" type="email" name="email" class="form-control" />
-			<span style="margin-top: 25px; color: #001d5a" style="color: blue" id="resultEmail"></span>
+			<span style="margin-top: 25px; color: #025396" style="color: blue" id="resultEmail"></span>
     	</div>
 
 		<div class="form-group">
-    		<label style="margin-top: 25px; color: #001d5a">Nombre</label>
+    		<label style="margin-top: 25px; color: #025396">Nombre</label>
     		<input type="text" name="nombre" class="form-control" />
     	</div>
 
 		<div class="form-group">
-    		<label style="margin-top: 25px; color: #001d5a">Apellido</label>
+    		<label style="margin-top: 25px; color: #025396">Apellido</label>
     		<input type="text" name="apellido" class="form-control" />
     	</div>
 

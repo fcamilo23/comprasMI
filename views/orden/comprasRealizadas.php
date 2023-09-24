@@ -91,13 +91,13 @@
 
         </div>
 
-        <input type="submit" name="submit"  class="btn sombraAzul center " style="color:white; float:right; margin-right: 2%; width: 100px; margin-top:40px; background: #001d5a" value="Filtrar"/>
+        <input type="submit" name="submit"  class="btn sombraAzul center " style="color:white; float:right; margin-right: 2%; width: 100px; margin-top:40px; background: #025396" value="Filtrar"/>
         <button  class="btn sombra center " style="color:white; float:right; margin-right: 4%; width: 100px; margin-top:40px; background: #999999">Limpiar </button>
 </dialog>
 </form>
 
 <nav class="navbar navbar-light bg-light mt-4" style="width: 100%;">
-        <h2 style="color: #001d5a; text-align: center;"class="center">Compras Realizadas</h2>
+        <h2 style="color: #025396; text-align: center;"class="center">Compras Realizadas</h2>
 </nav>
 
 <div id="main-container" style="width: 100%; overflow: auto; padding: 25px; background: #fff"> <!--  max-height: 800px -->
@@ -167,7 +167,7 @@
                 <form id="verOrden" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">       
 
                 <td><input type="text" name="numero" style="display:none" value="<?php echo $item['id']; ?>"/>
-                <input type="submit" name="submit" id="ver" value="Ampliar" style="background: #001d5a; border: none"  class="btn btn-primary sombraAzul"/></td>
+                <input type="submit" name="submit" id="ver" value="Ampliar" style="background: #025396; border: none"  class="btn btn-primary sombraAzul"/></td>
                 </form>
 
 

@@ -55,7 +55,7 @@
 
         </div>
 
-        <input type="submit" name="submit"  class="btn sombraAzul center " style="color:white; float:right; margin-right: 2%; width: 100px; margin-top:40px; background: #001d5a" value="Confirmar"/>
+        <input type="submit" name="submit"  class="btn sombraAzul center " style="color:white; float:right; margin-right: 2%; width: 100px; margin-top:40px; background: #025396" value="Confirmar"/>
         <label  id="cerrarFiltros" class="btn sombra center " style="color:white; float:right; margin-right: 4%; width: 100px; margin-top:40px; background: #999999">Cancelar </label>
 </dialog>
 </form>
@@ -227,7 +227,7 @@
                     <input type="text" style="display: none" name="anioc" value="<?php echo $item['anio']; ?> ">
                 <!-- <form id="editar" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">       
                  <td><input type="text" name="numero" style="display: none" value="<?php echo $item['id']; ?>"/>
-                 <input type="submit" name="submit" value="Ampliar" style="background: #001d5a; border: none" class="btn btn-primary sombraAzul"/></td>
+                 <input type="submit" name="submit" value="Ampliar" style="background: #025396; border: none" class="btn btn-primary sombraAzul"/></td>
                  </form> -->
                  <?php $i++ ?>
  

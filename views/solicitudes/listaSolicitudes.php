@@ -92,12 +92,12 @@
 
 <!--<button type="button" tabindex="0" aria-controls="solis" class="excel sombraVerde"> <img src="<?php echo ROOT_PATH; ?>imagenes/Excel1.jpg" width="150px" height="50px" ></button>-->
 <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
-    <a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaSolicitud"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaSoli.jpg" width="190px" height="50px" ></button></a>
+    <a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaSolicitud"><button type="button" class="excel sombraAzul1 botones"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaSoli.jpg" width="190px" height="50px" ></button></a>
 <?php } ?>
 <button class="filtrado sombra" style ="cursor: pointer; padding:5px; font-size: 25px; float:right; margin-right: 40px; border:none; background:#e9e9e9" id="abrirFiltros" > <i class="fas fa-filter" style="color:#303030" ></i> <p style="height: 10px; font-size: 20px;display: inline-block">Filtros</p></button>
 <form id="filtro" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">     
 <nav class="navbar navbar-light bg-light mt-4" style="width: 100%;" style="z-index:1">
-        <h2 style="color: #001d5a; text-align: center;"class="center">Lista Solicitudes</h2>
+        <h2 style="color: #025396; text-align: center;"class="center">Lista Solicitudes</h2>
 </nav>  
 <dialog class="divfiltros center" id="modalfiltros" style="z-index: 1; animation: createBox .15s">
 <h2 class="" style="display: inline-block; ">Filtros</h2>
@@ -167,7 +167,7 @@
 
         </div>
 
-        <input type="submit" name="submit"  class="btn sombraAzul center " style="color:white; float:right; margin-right: 2%; width: 100px; margin-top:40px; background: #001d5a" value="Filtrar"/>
+        <input type="submit" name="submit"  class="btn sombraAzul center " style="color:white; float:right; margin-right: 2%; width: 100px; margin-top:40px; background: #025396" value="Filtrar"/>
         <button  class="btn sombra center " style="color:white; float:right; margin-right: 4%; width: 100px; margin-top:40px; background: #999999">Limpiar </button>
 </dialog>
 </form>
@@ -220,7 +220,7 @@
                 <td><?php echo $item['observaciones'] ?></td>
                 <form id="editar" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">       
                 <td><input type="text" name="numero" style="display: none" value="<?php echo $item['id']; ?>"/>
-                <input type="submit" name="submit" value="Ampliar" style="background: #001d5a; border: none" class="btn btn-primary sombraAzul"/></td>
+                <input type="submit" name="submit" value="Ampliar" style="background: #025396; border: none" class="btn btn-primary sombraAzul"/></td>
                 </form>
 
 			</tr> <?php endforeach; ?>

@@ -89,7 +89,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h1 style="color: #001d5a;" class="text-center">Reporte de Vencimientos de Servicios</h1>
+            <h1 style="color: #025396;" class="text-center">Reporte de Vencimientos de Servicios</h1>
         </div>
     </div>
 </div>

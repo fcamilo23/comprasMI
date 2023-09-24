@@ -195,7 +195,7 @@
                 
                 <!-- <form id="editar" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">       
                  <td><input type="text" name="numero" style="display: none" value="<?php echo $item['id']; ?>"/>
-                 <input type="submit" name="submit" value="Ampliar" style="background: #001d5a; border: none" class="btn btn-primary sombraAzul"/></td>
+                 <input type="submit" name="submit" value="Ampliar" style="background: #025396; border: none" class="btn btn-primary sombraAzul"/></td>
                  </form> -->
  
              </tr> <?php endforeach; ?>

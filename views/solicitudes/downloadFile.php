@@ -63,7 +63,7 @@ th, td{
 }
 
 thead{
-	background-color: #001d5a;
+	background-color: #025396;
 	border-bottom: solid 5px #000d27;
 	color: white;
 }

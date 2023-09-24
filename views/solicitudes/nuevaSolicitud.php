@@ -6,7 +6,7 @@
 <dialog class="divfiltros center" id="modalconfirmar" style="z-index: 1; animation: createBox .15s; margin-top: 30%;">
 <h2 class="" style="display: inline-block; ">Desea confirmar la nueva solicitud?</h2>
 
-           <label type="submit" name="submit"  class="btn sombraAzul center " style="color:white; float:right; margin-right: 2%; width: 100px; margin-top:40px; background: #001d5a" >Cancelar</label>
+           <label type="submit" name="submit"  class="btn sombraAzul center " style="color:white; float:right; margin-right: 2%; width: 100px; margin-top:40px; background: #025396" >Cancelar</label>
            <input type="submit" id="submit" name="submit" class="btn btn-primary" value="Confirmar" onclick="const myTimeout = setTimeout(document.getElementById('confirm').click(), 1500"; style="color:white; float:right; margin-right: 4%; width: 100px; margin-top:40px; background: #999999"/>
  
 </dialog>
@@ -22,7 +22,7 @@
 
 <a href="<?php echo ROOT_URL; ?>solicitudes/listaSolicitudes"><input type="button" style="width: 100px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="◄ Atrás"/></a>
 <div class="row col-12 center" style="background: white; width: 70%; padding: 40px; border: 1px solid rgba(220, 220, 220); border-bottom: none; border-radius: 5px; margin-top: 3%" >
-    <h1 class="center " style="text-align: center; color: #001d5a">Nueva Solicitud</h1>
+    <h1 class="center " style="text-align: center; color: #025396">Nueva Solicitud</h1>
 </div>
 <div class="row col-12 center" style="background: white; width: 70%; padding: 40px; border: 1px solid rgba(220, 220, 220); border-radius: 5px; border-top: none; " >
     <div class="col-lg-6 center borderright">
@@ -111,7 +111,7 @@
 
 
     </div> 
-    <div class="col-lg-6 center borderleft">
+    <div style="margin-top: -20px" class="col-lg-6 center borderleft">
         <!--
         <label style="margin-top: 20px; color: rgb(130, 130, 130)">Cantidad | Unidad</label>
         <div class="input-group">

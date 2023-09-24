@@ -27,7 +27,7 @@
 <?php } ?>
 
 <nav class="navbar navbar-light bg-light mt-4" style="width: 100%;" style="z-index:1">
-        <h2 style="color: #001d5a; text-align: center;"class="center">Lista Proveedores</h2>
+        <h2 style="color: #025396; text-align: center;"class="center">Lista Proveedores</h2>
 </nav> 
 
 <div id="main-container" style="width: 100%; overflow: auto; padding: 55px; background: #fff">

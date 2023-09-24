@@ -351,7 +351,7 @@
 <?php if($_SESSION['user_data']['rol'] != 'Consultor'){ ?>
     <a href="<?php echo ROOT_PATH; ?>orden/nuevaOrden"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaOrden.jpg" width="190px" height="50px" ></button></a>
 <?php } ?>
-<h1 style="color: #001d5a; margin-left: 25px" class="">Órdenes de Compra</h1>
+<h1 style="color: #025396; margin-left: 25px" class="">Órdenes de Compra</h1>
 
 <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
 
@@ -416,7 +416,7 @@
                     <td>
                         <form  action="<?php echo ROOT_PATH; ?>orden/seleccionarOrden" method="POST">
                             <input type="hidden" name="idOrden" value="<?php echo $orden['idOrden']; ?>">
-                            <button style="background: #001d5a; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul">VER</button>
+                            <button style="background: #025396; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul">VER</button>
                         </form>
                     </td>
                     <td>
@@ -463,7 +463,7 @@
     <a href="<?php echo ROOT_PATH; ?>solicitudes/nuevaNovedad"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevaNovedad.jpg" width="218px" height="48px" ></button></a>
 <?php } ?>
 
-<h1  class="" style="color: #001d5a; margin-left: 25px">Novedades</h1>
+<h1  class="" style="color: #025396; margin-left: 25px">Novedades</h1>
 
 <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
 
@@ -503,7 +503,7 @@
         <a  href="<?php echo ROOT_PATH; ?>solicitudes/nuevoArchivo"><button type="button" class="excel sombraAzul1"> <img src="<?php echo ROOT_PATH; ?>imagenes/nuevoArchivo.jpg" width="200px" height="48px" ></button></a>
     <?php } ?>
 
-    <h1  class="" style="color: #001d5a; margin-left: 25px">Archivos</h1>
+    <h1  class="" style="color: #025396; margin-left: 25px">Archivos</h1>
 		<table id="solis" style="width: 100%; margin-top: 30px;">
 			<thead>
 				<tr>
@@ -528,7 +528,7 @@
                     <form action="<?php echo ROOT_PATH; ?>solicitudes/verArchivo" method="post">
                         <input type="hidden" name="id" value="<?php echo $item['id'] ?>">
                         
-                       <input type="submit" name="submit" value="Ver" style="background: #001d5a; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul"/>
+                       <input type="submit" name="submit" value="Ver" style="background: #025396; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul"/>
                         
                     </form>   
                                          

@@ -103,7 +103,7 @@ function readAsBase64() {
 <form id="formOrden" onsubmit="validarFormulario(event)" action="<?php echo ROOT_URL; ?>orden/agregarOrden" method ="POST" enctype="multipart/form-data" >
 <input type="hidden" value="<?php echo $_SESSION['solicitudActual']['procedimiento']." ".$_SESSION['solicitudActual']['numProcedimiento']." - ".$_SESSION['solicitudActual']['anioProcedimiento'] ?>" name="procedimiento">
 <nav class="navbar sticky-top navbar-light bg-light" style="z-index:1">
-        <h2 style="color: #001d5a; text-align: center;"class="center">Nueva Orden de Compra</h2>
+        <h2 style="color: #025396; text-align: center;"class="center">Nueva Orden de Compra</h2>
 </nav> 
 <div class="container"  >
 
@@ -115,7 +115,7 @@ function readAsBase64() {
             <div class="card" style="margin-bottom: 40px; margin-top: 50px">
                 
                 <div class="card-body " >
-                    <h3 style="color: #001d5a; margin-left: 25px" class="">Datos:</h3>
+                    <h3 style="color: #025396; margin-left: 25px" class="">Datos:</h3>
                     <hr>
 
                             <label for="numero" class="form-label"></label>
@@ -180,14 +180,14 @@ function readAsBase64() {
                             <input id="idProveedor" name="idProveedor" type="hidden" >
                             <!--  -->
                             <div>
-                            <h3 style="color: #001d5a; margin-left: 25px" class="">Proveedor:</h3>
+                            <h3 style="color: #025396; margin-left: 25px" class="">Proveedor:</h3>
                             </div>
 
 
                             <hr>
-                            <h4 id="proveedorNombre" style="color: #001d5a; margin-left: 25px"></h4>
-                            <h5 id="proveedorRazon" style="color: #001d5a; margin-left: 25px"></h5>
-                            <h5 id="proveedorRut" style="color: #001d5a; margin-left: 25px"></h5>
+                            <h4 id="proveedorNombre" style="color: #025396; margin-left: 25px"></h4>
+                            <h5 id="proveedorRazon" style="color: #025396; margin-left: 25px"></h5>
+                            <h5 id="proveedorRut" style="color: #025396; margin-left: 25px"></h5>
                             <div id="main-container" style="width: 100%; overflow: auto; padding: 25px; max-height: 500px"> <!--  max-height: 800px -->
                             
                                 <table id="proveedores"style="width: 100%; background: #b4bacc">
@@ -221,7 +221,7 @@ function readAsBase64() {
                 
                 <div class="card" style="margin-top: 10px; margin-bottom: 50px">    
                     <div class="card-body ">
-                        <h3 style="color: #001d5a; margin-left: 25px" class="">Items</h3>
+                        <h3 style="color: #025396; margin-left: 25px" class="">Items</h3>
                         <hr>
                         <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
 
@@ -285,7 +285,7 @@ function readAsBase64() {
                 <div class="card" style="margin-top: 10px">    
                     <div class="card-body ">
                             
-                                <h3 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h3>
+                                <h3 style="color: #025396; margin-left: 25px" class="">Subir Archivos</h3>
                                 <hr>
                                 <div class="card-body">
                                 <div class="mb-3">

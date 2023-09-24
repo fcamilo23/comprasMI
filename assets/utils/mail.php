@@ -25,14 +25,14 @@ function sendEmail($email, $key){
         $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
-        $mail->setFrom('minteriorgc@outlook.com', 'Gestion de Compras MI');
+        $mail->setFrom('minteriorgc@outlook.com', 'Sistema de Gestion de Compras');
         $mail->addAddress($email, $email);     //Add a recipient
 
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = 'Registro';
         // $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-        $mail->Body = 'Se le ha creado una cuenta para el sistema de Gestion de Compras del Ministerio del Interior. Por favor ingrese con su CI sin puntos ni guiones y el password "'. $key . '". Luego podrá ingresar un password propio. Gracias!';
+        $mail->Body = 'Se le ha creado una cuenta para el sistema de Gestion de Compras. Por favor ingrese con su CI sin puntos ni guiones y el password "'. $key . '". Luego se le solicitará ingresar un password propio. Gracias!';
 
         $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 

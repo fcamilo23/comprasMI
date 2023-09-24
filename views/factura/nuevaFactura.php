@@ -19,7 +19,7 @@
 </script>
 <body>
 <nav class="navbar sticky-top navbar-light bg-light" style="z-index:1">
-        <h2 style="color: #001d5a; text-align: center;"class="center">Agregar Factura</h2>
+        <h2 style="color: #025396; text-align: center;"class="center">Agregar Factura</h2>
 </nav> 
 <form id="formFactura" onsubmit="validarFormulario(event)" action="<?php echo ROOT_URL; ?>factura/agregarFactura" method="POST" enctype="multipart/form-data">
 
@@ -28,7 +28,7 @@
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-8">
                 <div class="card">
                         <div class="card-body ">
-                        <h4 style="color: #001d5a; margin-left: 25px" class="">Datos de la Orden:</h4>
+                        <h4 style="color: #025396; margin-left: 25px" class="">Datos de la Orden:</h4>
 
                             <input type="hidden" name="idOrden" value="<?php echo $viewmodel['orden']['id']; ?>">
                             <input type="hidden" name="idProveedor" value="<?php echo $viewmodel['idProveedor']; ?>">
@@ -73,7 +73,7 @@
                                 <div class="card" style="margin-top: 10px;">
                                     
                                     <div class="card-body">
-                                        <h4 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos<b class="text-danger">*</b></h4>
+                                        <h4 style="color: #025396; margin-left: 25px" class="">Subir Archivos<b class="text-danger">*</b></h4>
                                         <hr>
                                         <div class="mb-3">
                                         <input class="form-control" id="loadFile" accept="application/pdf" type="file" onchange="readAsBase64()"  width="190px" height="50px"/>
@@ -89,7 +89,7 @@
 
                                 <div class="card" style="margin-top: 10px;">
                                     <div class="card-body">
-                                        <h4 style="color: #001d5a; margin-left: 25px" class="">Datos:</h4>
+                                        <h4 style="color: #025396; margin-left: 25px" class="">Datos:</h4>
                                         <hr>
                                         <div class="mb-3 row">
                                             <label for="numeroFactura" class="col-sm-2 col-form-label"> N° Factura<b class="text-danger">*</b></label>
@@ -163,7 +163,7 @@
             <div class="card text-center" style="margin-top: 40px; margin-bottom: 50px;">                
                 <div class="card-body ">
             
-            <h4 style="color: #001d5a; margin-left: 25px" class="">Items:</h4>
+            <h4 style="color: #025396; margin-left: 25px" class="">Items:</h4>
             <hr>
                         <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
 

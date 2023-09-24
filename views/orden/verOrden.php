@@ -47,7 +47,7 @@ $completo=1;
 
     <dialog class="divfiltros center " id="modalSubirArchivo" style="margin-top:50px; z-index: 1; animation: createBox .15s">
  
-            <h3 style="color: #001d5a; margin-left: 25px" class="">Subir Archivos</h3>
+            <h3 style="color: #025396; margin-left: 25px" class="">Subir Archivos</h3>
                 <div class="card-body"> 
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Seleccione archivo</label>
@@ -66,7 +66,7 @@ $completo=1;
                 <a href="<?php echo ROOT_URL; ?>orden/comprasRealizadas"><input type="button" style="width: 180px; margin-left: 30px"class="btn btn-primary azul sombraAzul1" value="Compras Realizadas"/></a>
 
                 <td><input type="text" name="numero" style="display: none" value="<?php echo $viewmodel['solicitud']['id']; ?>"/>
-                <input type="submit" name="submit" value="Ir a la Solicitud" style="background: #001d5a; border: none; margin-left: 30px" class="btn btn-primary sombraAzul"/></td>
+                <input type="submit" name="submit" value="Ir a la Solicitud" style="background: #025396; border: none; margin-left: 30px" class="btn btn-primary sombraAzul"/></td>
 
                 
 </form>
@@ -90,7 +90,7 @@ $completo=1;
 <br>
 <br>
 <nav class="navbar navbar-light bg-light mt-" style="width: 100%;">
-        <h2 style="color: #001d5a; text-align: center;"class="center">ORDEN OC: <?php echo $viewmodel['orden']['numero']; ?> - <?php echo $viewmodel['orden']['anio']; ?></h2>
+        <h2 style="color: #025396; text-align: center;"class="center">ORDEN OC: <?php echo $viewmodel['orden']['numero']; ?> - <?php echo $viewmodel['orden']['anio']; ?></h2>
 </nav>
 
 <div  class="container mt-5 mb-5">
@@ -109,8 +109,8 @@ $completo=1;
                         <div class="card-body">
                         <hr>
                         <?php if($viewmodel['orden']['entregada']=='entregada' ){ ?> <label style="font-size: 23px; margin-left: 40px; float: right" class="verde">✔️ Entregada</label> <?php } ?>
-                            <h4 style="color: #001d5a;" class="m-2"><b>Solicitud SR: </b><?php echo $viewmodel['solicitud']['SR']; ?></h4>
-                            <h4 style="color: #001d5a;"  class="m-2"><b>Procedimiento:</b> <?php echo $viewmodel['solicitud']['procedimiento']." ".$viewmodel['solicitud']['numProc']." ".$viewmodel['solicitud']['anioProc']; ?> </h4>
+                            <h4 style="color: #025396;" class="m-2"><b>Solicitud SR: </b><?php echo $viewmodel['solicitud']['SR']; ?></h4>
+                            <h4 style="color: #025396;"  class="m-2"><b>Procedimiento:</b> <?php echo $viewmodel['solicitud']['procedimiento']." ".$viewmodel['solicitud']['numProc']." ".$viewmodel['solicitud']['anioProc']; ?> </h4>
                             <hr>
                             <div class="input-group mb-3">
                             <?php    
@@ -134,17 +134,17 @@ $completo=1;
                                             }
                             ?>
                             <div class="input-group mb-1">   
-                                <h4 style="color: #001d5a;"  class="m-2"><b>Monto Total:</b> <?php  echo $monedaOrden." ". $viewmodel["orden"]["montoReal"] ?></h4>
+                                <h4 style="color: #025396;"  class="m-2"><b>Monto Total:</b> <?php  echo $monedaOrden." ". $viewmodel["orden"]["montoReal"] ?></h4>
                             </div>
                             <div class="input-group mb-1">   
-                                <h4 style="color: #001d5a;"  class="m-2"><b>Fecha Entrega: </b><?php  echo date("d/m/Y", strtotime( $viewmodel["orden"]["plazoEntrega"] )); ?></h4>
+                                <h4 style="color: #025396;"  class="m-2"><b>Fecha Entrega: </b><?php  echo date("d/m/Y", strtotime( $viewmodel["orden"]["plazoEntrega"] )); ?></h4>
                             </div>
                             <div class="input-group mb-1"> 
-                                <h4 style="color: #001d5a;"   class="m-2"><b>Nº Amplición:</b> <?php  echo$viewmodel["orden"]["numeroAmpliacion"] ?></h4>
+                                <h4 style="color: #025396;"   class="m-2"><b>Nº Amplición:</b> <?php  echo$viewmodel["orden"]["numeroAmpliacion"] ?></h4>
                             </div>  
 
                             <div class="input-group mb-1">  
-                                <h4 style="color: #001d5a;"  class="m-2"><b>Forma de Pago:</b></h4>
+                                <h4 style="color: #025396;"  class="m-2"><b>Forma de Pago:</b></h4>
                             </div>
 
                             
@@ -167,9 +167,9 @@ $completo=1;
                                 <form action="<?php echo ROOT_URL; ?>proveedor/seleccionarProveedor" method="POST">
                                     <input type="hidden" name="id" value="<?php echo $viewmodel['proveedor']['id']; ?>">
                                     <input type="hidden" name="idOrden" value="<?php echo $viewmodel['orden']['id']; ?>">
-                                    <h4 style="color: #001d5a;" ><b>Proveedor:</b><input name="submit" class="btn btn-light btn-lg active" value="<?php  echo $viewmodel["proveedor"]["empresa"] ?>" type="submit"> </h4>
-                                    <h4 style="color: #001d5a;"  ><b>Razon Social: </b><?php  echo $viewmodel["proveedor"]["razon_social"] ?></h4>
-                                    <h4 style="color: #001d5a;" ><b>RUT: </b><?php  echo $viewmodel["proveedor"]["rut"] ?></h4>
+                                    <h4 style="color: #025396;" ><b>Proveedor:</b><input name="submit" class="btn btn-light btn-lg active" value="<?php  echo $viewmodel["proveedor"]["empresa"] ?>" type="submit"> </h4>
+                                    <h4 style="color: #025396;"  ><b>Razon Social: </b><?php  echo $viewmodel["proveedor"]["razon_social"] ?></h4>
+                                    <h4 style="color: #025396;" ><b>RUT: </b><?php  echo $viewmodel["proveedor"]["rut"] ?></h4>
                                 </form>
 
                         </div>
@@ -223,7 +223,7 @@ $completo=1;
     </div>
 </div>
 <!-- tabla de Items -->
-                        <h1 style="color: #001d5a; margin-left: 40px" class="">Item</h1>
+                        <h1 style="color: #025396; margin-left: 40px" class="">Item</h1>
                         <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
 
                                 <table id="listaItems" style="width: 100%;">
@@ -306,7 +306,7 @@ $completo=1;
                                 if ($viewmodel["facturas"] != null) {
                                  
                                 ?>
-                                <h1 style="color: #001d5a; margin-left: 25px" class="">Facturas</h1>
+                                <h1 style="color: #025396; margin-left: 25px" class="">Facturas</h1>
                                 <?php  if($completo==3){   ?>
                                 <h5 style=" margin-left: 25px" class="text-muted">*Ya se facturaron todos los ítems de la Orden</h5>
                                 <?php  }else{
@@ -380,7 +380,7 @@ $completo=1;
 
                                             <form action="<?php echo ROOT_URL; ?>factura/seleccionFactura" method="post">
                                                 <input type="hidden" name="idFactura" value="<?php echo $factura['id'] ?>">
-                                                <input type="submit" name="submit" value="Ver" style="background: #001d5a; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul"/>
+                                                <input type="submit" name="submit" value="Ver" style="background: #025396; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul"/>
                                             </form>
                                          </td>
                                          
@@ -405,7 +405,7 @@ $completo=1;
                                 if ($viewmodel["archivos"] != null) {
                                  
                                 ?>
-                                <h1 style="color: #001d5a; margin-left: 25px" class="">Archivos Adjuntos</h1>
+                                <h1 style="color: #025396; margin-left: 25px" class="">Archivos Adjuntos</h1>
                                 <table id="pdf"style="width: 100%">
                                     <thead>
                                         
@@ -428,7 +428,7 @@ $completo=1;
 
                                             <form action="<?php echo ROOT_URL; ?>orden/verArchivo" method="post">
                                                 <input type="hidden" name="idArchivo" value="<?php echo $item['id'] ?>">
-                                                <input type="submit" name="submit" value="Ver" style="background: #001d5a; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul"/>
+                                                <input type="submit" name="submit" value="Ver" style="background: #025396; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul"/>
                                             </form>
                                          </td>
          

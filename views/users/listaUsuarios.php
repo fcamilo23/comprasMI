@@ -15,7 +15,7 @@
 } );
 </script>
 <nav class="navbar navbar-light bg-light mt-4" style="width: 100%;">
-        <h2 style="color: #001d5a; text-align: center;"class="center">Lista Usuarios</h2>
+        <h2 style="color: #025396; text-align: center;"class="center">Lista Usuarios</h2>
 </nav>  
 
 <div id="main-container" style="width: 100%; overflow: auto; padding: 55px; background: #fff">
@@ -45,7 +45,7 @@
                 <?php if($_SESSION['user_data']['rol'] == 'Administrador'){ ?><td>
                 <form id="editarUser" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
                 <input type="text" name="ciuser" value="<?php echo $item['cedula'] ?>" style="display:none" />    
-                <input type="submit" name="submit" value="Editar" style="background: #001d5a; border: none" class="btn btn-primary "/>
+                <input type="submit" name="submit" value="Editar" style="background: #025396; border: none" class="btn btn-primary "/>
                 <!--<input type="submit" value="Eliminar" style="color: #fff; border: none" class="btn btnEliminar "/>-->
                 </form>
                 </td> <?php } ?>

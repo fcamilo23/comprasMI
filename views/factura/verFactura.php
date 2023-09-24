@@ -3,7 +3,7 @@
 <a href="<?php echo ROOT_URL; ?>orden/verOrden"><input type="button" style="width: 100px; margin-left: 30px; margin-bottom: 20px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
 
 <nav class="navbar sticky-top navbar-light bg-light" style="z-index:1" >
-        <h2 style="color: #001d5a; text-align: center;"class="center">FACTURA: <?php echo $viewmodel['numeroFactura'] ?></h2>
+        <h2 style="color: #025396; text-align: center;"class="center">FACTURA: <?php echo $viewmodel['numeroFactura'] ?></h2>
 </nav>
     <div class="container" style="margin-top: 40px; margin-bottom: 40px" >
         <div class="row d-flex justify-content-center ">
@@ -82,7 +82,7 @@
 
                                             <form action="<?php echo ROOT_URL; ?>factura/verArchivo" method="post">
                                             <input type="hidden" id="idArchivo" name="idArchivo" value="<?php echo $archivo['idArchivo']; ?>">
-                                                <input type="submit" name="submit" value="Ver" style="background: #001d5a; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul"/>
+                                                <input type="submit" name="submit" value="Ver" style="background: #025396; width: 100px; float:right; margin-right: 5%; border: none" class="btn btn-primary sombraAzul"/>
                                             </form>
                                             </td>
                                         </tr>

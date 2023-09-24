@@ -11,14 +11,14 @@
 
 <a href="<?php echo ROOT_URL; ?>orden/verOrden"><input type="button" style="width: 100px; margin-left: 30px; margin-bottom: 10px"class="btn btn-primary azul sombraAzul1" value="◄   Atrás"/></a>
 <nav class="navbar sticky-top navbar-light bg-light" style="z-index:1">
-        <h2 style="color: #001d5a; text-align: center;"class="center">Editar Orden</h2>
+        <h2 style="color: #025396; text-align: center;"class="center">Editar Orden</h2>
 </nav> 
 <div class="container mt-3 mb-3">
     <div class="row d-flex justify-content-center">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-10">
             <div class="card">
                 <div class="card-body">
-                    <h3 style="color: #001d5a; margin-left: 25px" class="">Datos</h3>
+                    <h3 style="color: #025396; margin-left: 25px" class="">Datos</h3>
                      <hr>
                              <!-- aqui se va a guardar proveedor -->
                              <input type="hidden" id="idProveedor" name="idProveedor" value="<?php  echo $viewmodel["orden"]["idProveedor"] ?>" />
@@ -107,7 +107,7 @@
             <div class="card">
                 <div class="card-body" id="todoItems">
 
-                    <h3 style="color: #001d5a; margin-left: 20px" class="">Items<b class="text-danger">*</b></h3>
+                    <h3 style="color: #025396; margin-left: 20px" class="">Items<b class="text-danger">*</b></h3>
                     <hr>
                         <div id="main-container" style="width: 100%; overflow: auto; padding: 15px; max-height: 800px">
 

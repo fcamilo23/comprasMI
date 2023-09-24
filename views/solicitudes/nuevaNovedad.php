@@ -28,7 +28,7 @@
                 <div class="card-body">
 				<div style="margin-top: 80px; margin-bottom: 50px;" class="panel-heading center">
   </div>
-  <h1 style="color: #001d5a; margin-bottom: 40px" class="panel-title">Agregar Novedad</h1>
+  <h1 style="color: #025396; margin-bottom: 40px" class="panel-title">Agregar Novedad</h1>
 
   <div class="panel-body">
 
